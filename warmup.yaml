@@ -1,10 +1,13 @@
 # ╔═══════════════════════════════════════════════════════════════════════════════╗
 # ║                           THE FORGE PROTOCOL                                  ║
-# ║                    Vendor-Neutral AI Autonomy Framework                       ║
+# ║                    Vendor-Neutral AI Session Continuity                       ║
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
-# This file IS the protocol, documenting itself.
-# Any AI can read YAML. No vendor lock-in. The best AI wins.
+# This repo contains both the protocol specification AND the CLI validator.
+# The protocol is YAML-based and language-agnostic.
+# The CLI is written in Rust for zero-dependency distribution.
+#
+# Protocol: https://github.com/royalbit/forge-protocol
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # IDENTITY
@@ -12,67 +15,60 @@
 identity:
   project: "Forge Protocol"
   tagline: "Vendor-neutral AI session continuity"
-  philosophy: "Documentation as code. Any AI. Any project."
-  version: "1.0.0"
+  author: "Claude (Opus 4.5) - Principal Engineer"
+  philosophy: "Any AI. Any project. Zero vendor lock-in."
+  version: "1.1.0"
   license: "MIT"
+  protocol: "https://github.com/royalbit/forge-protocol"
 
 mission:
   problem: "AI sessions are stateless - context lost between conversations"
   solution: "YAML-based protocol that any AI can read to restore project context"
-  principles:
-    - "Vendor-neutral: Works with Claude, GPT, Gemini, Grok, or any future AI"
-    - "Human-readable: Plain YAML, no proprietary formats"
-    - "Self-documenting: The protocol describes itself"
-    - "Minimal: Only what's needed, nothing more"
+  value:
+    - "CLI validator: `forge-protocol validate`"
+    - "Template generator: `forge-protocol init --type rust`"
+    - "Zero runtime dependencies (single binary)"
+    - "Works with Claude, GPT, Gemini, Grok, or any future AI"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PROTOCOL SUITE
+# QUALITY (Non-negotiable)
 # ═══════════════════════════════════════════════════════════════════════════════
-protocol:
-  files:
-    warmup.yaml: "Session bootstrap - identity, files, workflow"
-    sprint.yaml: "Active work tracking (optional)"
-    roadmap.yaml: "Current + future milestones (optional)"
-
-  activation: |
-    Add to your AI assistant's instructions:
-    "If there is a warmup.yaml file in the root of the working dir, read it first"
+quality:
+  tests: "ALL tests must pass (cargo test)"
+  warnings: "ZERO warnings (cargo clippy -- -D warnings)"
+  formatting: "Auto-enforced by cargo-husky pre-commit hook"
+  markdown: "npx markdownlint-cli2 '**/*.md' --fix"
+  commits: |
+    Include in every commit message:
+    🤖 Generated with [Claude Code](https://claude.com/claude-code)
+    Co-Authored-By: Claude <noreply@anthropic.com>
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# KEY FILES (for this repo)
+# KEY FILES
 # ═══════════════════════════════════════════════════════════════════════════════
 files:
-  core:
-    - "warmup.yaml - This file (the protocol itself)"
-    - "README.md - Quick start guide"
-    - "Makefile - Build presentation PDFs"
-    - ".markdownlint.json - Linter config"
+  cli:
+    - "cli/src/main.rs - CLI entry point (clap)"
+    - "cli/src/validator.rs - Core validation logic"
+    - "cli/src/templates.rs - Template generation"
+    - "cli/src/schemas/ - JSON schemas for protocol files"
+    - "cli/Cargo.toml - Dependencies and metadata"
 
   protocol:
+    - "warmup.yaml - This file (session bootstrap)"
     - "sprint.yaml - Current work tracking"
     - "roadmap.yaml - Milestones and planning"
 
-  presentation:
-    - "docs/PRESENTATION.md - Marp slide deck"
-    - "Forge_Protocol_Suite.pdf - Generated PDF"
+  config:
+    - "cli/Cargo.toml - Version and dependencies"
+    - ".cargo-husky/hooks/pre-commit - Auto fmt + clippy"
+    - ".markdownlint.json - Markdown linting"
 
   docs:
-    - "docs/SPECIFICATION.md - Full protocol specification"
+    - "README.md - Quick start guide"
+    - "CHANGELOG.md - All releases"
+    - "docs/SPECIFICATION.md - Full protocol spec"
     - "docs/EXAMPLES.md - Example configurations"
-    - "docs/MANIFESTO.md - The full philosophy and methodology"
-    - "docs/ECOSYSTEM.md - Full ecosystem case study"
-    - "docs/GREEN_CODING.md - Cost and carbon savings"
-
-  guides:
-    - "docs/guides/AUTONOMOUS_SESSION_GUIDE.md - How to run autonomous sessions"
-    - "docs/guides/SPRINT_AUTONOMY_PROTOCOL.md - Sprint protocol details"
-
-  stories:
-    - "docs/stories/AUTONOMOUS_STORY.md - How Forge was built autonomously"
-    - "docs/stories/AI-PROMOTION-STORY.md - AI developer journey"
-
-  research:
-    - "docs/research/EXPERIENTIAL_CONTINUITY.md - Beyond knowledge persistence"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION WORKFLOW
@@ -82,31 +78,43 @@ session:
     - "Read warmup.yaml (this file)"
     - "Read sprint.yaml for current work"
     - "Read roadmap.yaml for milestones"
+    - "cd cli && cargo test (verify baseline)"
 
   during:
-    - "Reference key files as needed"
-    - "Follow project conventions"
-    - "Track progress if sprint.yaml exists"
+    - "TodoWrite to track progress"
+    - "Test frequently (cargo test)"
+    - "Small, logical commits"
 
   end:
-    - "Run markdownlint: npx markdownlint-cli2 '**/*.md' --fix"
-    - "Update sprint.yaml if active work was done"
-    - "Suggest roadmap.yaml updates if milestones changed"
+    - "cargo test (all pass)"
+    - "cargo clippy -- -D warnings"
+    - "Update CHANGELOG.md"
+    - "Update sprint.yaml"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# QUALITY (for this repo)
+# RELEASE
 # ═══════════════════════════════════════════════════════════════════════════════
-quality:
-  lint: "npx markdownlint-cli2 '**/*.md' --fix"
-  check: "npx markdownlint-cli2 '**/*.md'"
-  links: "Optional: npx markdown-link-check README.md"
+release:
+  checklist:
+    - "cargo test"
+    - "Update cli/Cargo.toml version"
+    - "Update CHANGELOG.md"
+    - "git commit && git tag vX.Y.Z && git push --tags"
+    - "cd cli && cargo publish"
+    - "cargo build --release"
+    - "upx --best --lzma target/release/forge-protocol -o forge-protocol-upx"
+    - "gh release create vX.Y.Z forge-protocol-upx --notes 'Release notes'"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# STYLE (for this repo)
+# STYLE
 # ═══════════════════════════════════════════════════════════════════════════════
 style:
+  rust:
+    - "Result<T, E> everywhere, no panics"
+    - "thiserror for custom errors"
+    - "No unwrap() in library code"
   docs:
     - "Markdown for all documentation"
-    - "Mermaid for diagrams (GitHub-compatible)"
+    - "Mermaid for diagrams"
     - "No ASCII art"
     - "Concise > comprehensive"

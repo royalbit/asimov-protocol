@@ -1,6 +1,6 @@
 [package]
 name = "forge-protocol"
-version = "0.1.0"
+version = "1.1.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "CLI validator for the Forge Protocol - vendor-neutral AI session continuity"
