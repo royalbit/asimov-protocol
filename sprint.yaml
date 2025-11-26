@@ -1,7 +1,7 @@
 # Current Sprint
 
 sprint:
-  current: "Initial public release"
+  current: "Documentation consolidation"
   started: "2025-11-25"
   status: done
 
@@ -12,6 +12,10 @@ sprint:
     - "[x] Example configurations"
     - "[x] Markdown linting"
     - "[x] GitHub repo published"
+    - "[x] Migrated MANIFESTO.md from Forge"
+    - "[x] Migrated guides (session, sprint)"
+    - "[x] Migrated stories (autonomous dev, AI promotion)"
+    - "[x] Migrated research (experiential continuity)"
 
   next_up:
     - "Gather community feedback"
@@ -19,5 +23,5 @@ sprint:
     - "Consider CLI tooling"
 
   notes: |
-    v1.0.0 shipped. Protocol extracted from Forge calculator project
-    into standalone repo. Ready for adoption.
+    v1.0.0 shipped. Full documentation now consolidated here.
+    Protocol extracted from Forge calculator into standalone repo.

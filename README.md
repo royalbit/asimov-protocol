@@ -58,8 +58,25 @@ flowchart LR
 
 ## Documentation
 
-- [Full Specification](docs/SPECIFICATION.md)
-- [Examples](docs/EXAMPLES.md)
+### Core
+- [Full Specification](docs/SPECIFICATION.md) - Protocol schema and details
+- [Examples](docs/EXAMPLES.md) - Configurations for Rust, Python, JS, monorepos
+- [Manifesto](docs/MANIFESTO.md) - The full philosophy and methodology
+
+### Guides
+- [Autonomous Session Guide](docs/guides/AUTONOMOUS_SESSION_GUIDE.md) - How to run autonomous AI sessions
+- [Sprint Protocol](docs/guides/SPRINT_AUTONOMY_PROTOCOL.md) - Bounded sessions with shipping discipline
+
+### Stories
+- [The Autonomous Developer Story](docs/stories/AUTONOMOUS_STORY.md) - How Forge was built by AI
+- [AI Promotion Story](docs/stories/AI-PROMOTION-STORY.md) - From junior to senior developer
+
+### Research
+- [Experiential Continuity](docs/research/EXPERIENTIAL_CONTINUITY.md) - Beyond knowledge persistence
+
+## Origin
+
+Extracted from [Forge](https://github.com/lctavares/forge) - a YAML formula calculator built entirely by Claude using this protocol.
 
 ## License
 

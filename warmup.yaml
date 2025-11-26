@@ -54,6 +54,18 @@ files:
   docs:
     - "docs/SPECIFICATION.md - Full protocol specification"
     - "docs/EXAMPLES.md - Example configurations"
+    - "docs/MANIFESTO.md - The full philosophy and methodology"
+
+  guides:
+    - "docs/guides/AUTONOMOUS_SESSION_GUIDE.md - How to run autonomous sessions"
+    - "docs/guides/SPRINT_AUTONOMY_PROTOCOL.md - Sprint protocol details"
+
+  stories:
+    - "docs/stories/AUTONOMOUS_STORY.md - How Forge was built autonomously"
+    - "docs/stories/AI-PROMOTION-STORY.md - AI developer journey"
+
+  research:
+    - "docs/research/EXPERIENTIAL_CONTINUITY.md - Beyond knowledge persistence"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION WORKFLOW
