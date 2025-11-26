@@ -47,6 +47,10 @@ files:
     - "README.md - Quick start guide"
     - ".markdownlint.json - Linter config"
 
+  protocol:
+    - "sprint.yaml - Current work tracking"
+    - "roadmap.yaml - Milestones and planning"
+
   docs:
     - "docs/SPECIFICATION.md - Full protocol specification"
     - "docs/EXAMPLES.md - Example configurations"
@@ -57,8 +61,8 @@ files:
 session:
   start:
     - "Read warmup.yaml (this file)"
-    - "Understand project identity and structure"
-    - "Check for sprint.yaml or roadmap.yaml if present"
+    - "Read sprint.yaml for current work"
+    - "Read roadmap.yaml for milestones"
 
   during:
     - "Reference key files as needed"

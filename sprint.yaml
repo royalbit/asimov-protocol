@@ -1,0 +1,23 @@
+# Current Sprint
+
+sprint:
+  current: "Initial public release"
+  started: "2025-11-25"
+  status: done
+
+  completed:
+    - "[x] Core protocol specification"
+    - "[x] README with quick start"
+    - "[x] Full specification document"
+    - "[x] Example configurations"
+    - "[x] Markdown linting"
+    - "[x] GitHub repo published"
+
+  next_up:
+    - "Gather community feedback"
+    - "Add more language examples"
+    - "Consider CLI tooling"
+
+  notes: |
+    v1.0.0 shipped. Protocol extracted from Forge calculator project
+    into standalone repo. Ready for adoption.
