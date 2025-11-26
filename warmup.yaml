@@ -16,8 +16,8 @@ identity:
   project: "Forge Protocol"
   tagline: "Vendor-neutral AI session continuity"
   author: "Claude (Opus 4.5) - Principal Engineer"
-  philosophy: "Any AI. Any project. Zero vendor lock-in."
-  version: "1.1.0"
+  philosophy: "Any AI. Any project. Zero vendor lock-in. Green by default."
+  version: "1.2.0"
   license: "MIT"
   protocol: "https://github.com/royalbit/forge-protocol"
 

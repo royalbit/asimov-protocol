@@ -569,6 +569,298 @@ fn e2e_init_help_shows_type_option() {
     assert!(stdout.contains("rust"), "Should mention rust");
 }
 
+#[test]
+fn e2e_init_type_python() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("python")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .arg("--name")
+        .arg("python-project")
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Init --type python should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Check Python-specific content
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(content.contains("pytest"), "Should contain pytest");
+    assert!(content.contains("ruff"), "Should mention ruff");
+    assert!(
+        content.contains("pyproject.toml"),
+        "Should mention pyproject.toml"
+    );
+    assert!(
+        content.contains("green_coding"),
+        "Should contain green_coding"
+    );
+}
+
+#[test]
+fn e2e_init_type_python_alias() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("py")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    assert!(
+        output.status.success(),
+        "Init --type py (alias) should succeed"
+    );
+
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(
+        content.contains("pytest"),
+        "py alias should create Python template"
+    );
+}
+
+#[test]
+fn e2e_init_type_node() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("node")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .arg("--name")
+        .arg("node-project")
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Init --type node should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Check Node-specific content
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(content.contains("npm test"), "Should contain npm test");
+    assert!(content.contains("eslint"), "Should mention eslint");
+    assert!(
+        content.contains("package.json"),
+        "Should mention package.json"
+    );
+    assert!(content.contains("TypeScript"), "Should mention TypeScript");
+    assert!(
+        content.contains("green_coding"),
+        "Should contain green_coding"
+    );
+}
+
+#[test]
+fn e2e_init_type_node_aliases() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Test 'js' alias
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("js")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    assert!(
+        output.status.success(),
+        "Init --type js (alias) should succeed"
+    );
+
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(
+        content.contains("npm"),
+        "js alias should create Node template"
+    );
+}
+
+#[test]
+fn e2e_init_type_go() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("go")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .arg("--name")
+        .arg("go-project")
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Init --type go should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Check Go-specific content
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(content.contains("go test"), "Should contain go test");
+    assert!(
+        content.contains("golangci-lint"),
+        "Should mention golangci-lint"
+    );
+    assert!(content.contains("go.mod"), "Should mention go.mod");
+    assert!(content.contains("internal/"), "Should mention internal/");
+    assert!(
+        content.contains("green_coding"),
+        "Should contain green_coding"
+    );
+    assert!(
+        content.contains("CGO_ENABLED"),
+        "Should mention CGO_ENABLED"
+    );
+}
+
+#[test]
+fn e2e_init_type_go_alias() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("golang")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    assert!(
+        output.status.success(),
+        "Init --type golang (alias) should succeed"
+    );
+
+    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let content = fs::read_to_string(&warmup_path).unwrap();
+    assert!(
+        content.contains("go test"),
+        "golang alias should create Go template"
+    );
+}
+
+#[test]
+fn e2e_init_python_generated_files_pass_validation() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("python")
+        .arg("--full")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+
+    assert!(init_output.status.success(), "Init should succeed");
+
+    let validate_output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute validate");
+
+    let stdout = String::from_utf8_lossy(&validate_output.stdout);
+    let stderr = String::from_utf8_lossy(&validate_output.stderr);
+
+    assert!(
+        validate_output.status.success(),
+        "Python generated files should pass validation, stdout: {stdout}, stderr: {stderr}"
+    );
+}
+
+#[test]
+fn e2e_init_node_generated_files_pass_validation() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("node")
+        .arg("--full")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+
+    assert!(init_output.status.success(), "Init should succeed");
+
+    let validate_output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute validate");
+
+    let stdout = String::from_utf8_lossy(&validate_output.stdout);
+    let stderr = String::from_utf8_lossy(&validate_output.stderr);
+
+    assert!(
+        validate_output.status.success(),
+        "Node generated files should pass validation, stdout: {stdout}, stderr: {stderr}"
+    );
+}
+
+#[test]
+fn e2e_init_go_generated_files_pass_validation() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--type")
+        .arg("go")
+        .arg("--full")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+
+    assert!(init_output.status.success(), "Init should succeed");
+
+    let validate_output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute validate");
+
+    let stdout = String::from_utf8_lossy(&validate_output.stdout);
+    let stderr = String::from_utf8_lossy(&validate_output.stderr);
+
+    assert!(
+        validate_output.status.success(),
+        "Go generated files should pass validation, stdout: {stdout}, stderr: {stderr}"
+    );
+}
+
 // ========== Generated Files Validation Tests ==========
 
 #[test]

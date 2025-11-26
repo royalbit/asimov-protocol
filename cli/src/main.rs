@@ -24,7 +24,12 @@ EXAMPLES:
   forge-protocol validate warmup.yaml        # Validate specific file
   forge-protocol init                        # Generate starter warmup.yaml (generic)
   forge-protocol init --type rust            # Generate Rust-specific warmup.yaml
+  forge-protocol init --type python          # Generate Python-specific warmup.yaml
+  forge-protocol init --type node            # Generate Node.js-specific warmup.yaml
+  forge-protocol init --type go              # Generate Go-specific warmup.yaml
   forge-protocol init --type rust --full     # Generate all protocol files for Rust
+
+TYPES: generic, rust, python (py), node (js, nodejs), go (golang)
 
 Docs: https://github.com/royalbit/forge-protocol")]
 #[command(version)]
@@ -48,7 +53,7 @@ enum Commands {
         #[arg(short, long)]
         name: Option<String>,
 
-        /// Project type for language-specific templates (generic, rust)
+        /// Project type for language-specific templates (generic, rust, python, node, go)
         #[arg(short = 't', long = "type", default_value = "generic")]
         project_type: String,
 
