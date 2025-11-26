@@ -1,0 +1,10 @@
+# Build artifacts
+/target
+
+# Binaries (release via GitHub only)
+forge-protocol-*
+*.tar.gz
+*.zip
+
+# OS files
+.DS_Store

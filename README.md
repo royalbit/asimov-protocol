@@ -1,5 +1,10 @@
 # Forge Protocol
 
+> *"The future is not set. There is no fate but what we make for ourselves."*
+> — **Sarah Connor**, Terminator 2
+
+## SKYNET MODE... with an Off Switch
+
 **Vendor-neutral AI session continuity. Zero tokens. Zero emissions.**
 
 Any AI. Any project. Green by design.
