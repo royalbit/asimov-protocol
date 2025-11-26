@@ -1,36 +1,35 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "1.0.0"
-  last_updated: "2025-11-25"
+  current_version: "1.1.0"
+  last_updated: "2025-11-26"
   philosophy: "Vendor-neutral AI session continuity"
 
 # Current Release
 current:
-  version: "1.0.0"
-  status: released
-  date: "2025-11-25"
-  summary: "Initial Release"
+  version: "1.1.0"
+  status: in_progress
+  date: "2025-11-26"
+  summary: "CLI Tooling"
   highlights:
-    - "Core protocol specification (warmup.yaml schema)"
-    - "Full documentation with Mermaid diagrams"
-    - "Examples for Rust, Python, JavaScript, monorepos"
-    - "Markdown linting configured"
+    - "CLI validator: `forge-protocol validate`"
+    - "Template generator: `forge-protocol init`"
+    - "Language-specific templates: `--type rust` (generic default)"
+    - "Built-in help: `-h` / `--help`"
 
 # Next Milestone
 next:
-  version: "1.1.0"
+  version: "1.2.0"
   status: planned
-  summary: "Adoption & Tooling"
+  summary: "More Languages & CI"
   features:
-    - "CLI validator: `forge-protocol validate`"
+    - "More language templates: `--type python`, `--type node`, `--type go`"
     - "Schema JSON for editor autocomplete"
-    - "More examples (Go, Java, documentation-only repos)"
     - "GitHub Action for CI validation"
+    - "More examples (Go, Java, documentation-only repos)"
 
 # Backlog
 backlog:
   - "VS Code extension (syntax highlighting, snippets)"
-  - "Template generator: `forge-protocol init`"
   - "Integration guides for popular AI assistants"
   - "Experiential Continuity Layer (research)"

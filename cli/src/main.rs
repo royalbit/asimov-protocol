@@ -4,7 +4,7 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
     is_protocol_file, roadmap_template, sprint_template, validate_directory, validate_file,
-    warmup_template,
+    warmup_template, ProjectType,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -22,8 +22,9 @@ Validates protocol files against the Forge Protocol specification:
 EXAMPLES:
   forge-protocol validate                    # Validate all protocol files in cwd
   forge-protocol validate warmup.yaml        # Validate specific file
-  forge-protocol init                        # Generate starter warmup.yaml
-  forge-protocol init --full                 # Generate all protocol files
+  forge-protocol init                        # Generate starter warmup.yaml (generic)
+  forge-protocol init --type rust            # Generate Rust-specific warmup.yaml
+  forge-protocol init --type rust --full     # Generate all protocol files for Rust
 
 Docs: https://github.com/royalbit/forge-protocol")]
 #[command(version)]
@@ -46,6 +47,10 @@ enum Commands {
         /// Project name (defaults to current directory name)
         #[arg(short, long)]
         name: Option<String>,
+
+        /// Project type for language-specific templates (generic, rust)
+        #[arg(short = 't', long = "type", default_value = "generic")]
+        project_type: String,
 
         /// Generate all protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
         #[arg(long)]
@@ -74,10 +79,11 @@ fn main() -> ExitCode {
         Commands::Validate { path } => cmd_validate(&path),
         Commands::Init {
             name,
+            project_type,
             full,
             output,
             force,
-        } => cmd_init(name, full, &output, force),
+        } => cmd_init(name, &project_type, full, &output, force),
         Commands::Check { file } => cmd_validate(&file),
     }
 }
@@ -162,9 +168,24 @@ fn cmd_validate(path: &Path) -> ExitCode {
     }
 }
 
-fn cmd_init(name: Option<String>, full: bool, output: &Path, force: bool) -> ExitCode {
+fn cmd_init(
+    name: Option<String>,
+    project_type_str: &str,
+    full: bool,
+    output: &Path,
+    force: bool,
+) -> ExitCode {
     println!("{}", "Forge Protocol Init".bold().green());
     println!();
+
+    // Parse project type
+    let project_type: ProjectType = match project_type_str.parse() {
+        Ok(pt) => pt,
+        Err(e) => {
+            eprintln!("{} {}", "Error:".bold().red(), e);
+            return ExitCode::FAILURE;
+        }
+    };
 
     // Determine project name
     let project_name = name.unwrap_or_else(|| {
@@ -174,8 +195,13 @@ fn cmd_init(name: Option<String>, full: bool, output: &Path, force: bool) -> Exi
             .unwrap_or_else(|| "my-project".to_string())
     });
 
+    println!("  Project: {}", project_name.bright_blue());
+    println!("  Type: {}", project_type.to_string().bright_yellow());
+    println!();
+
     // Files to generate
-    let mut files: Vec<(&str, String)> = vec![("warmup.yaml", warmup_template(&project_name))];
+    let mut files: Vec<(&str, String)> =
+        vec![("warmup.yaml", warmup_template(&project_name, project_type))];
 
     if full {
         files.push(("sprint.yaml", sprint_template()));

@@ -29,5 +29,5 @@ pub mod validator;
 
 // Re-export main types
 pub use error::{Error, Result};
-pub use templates::{roadmap_template, sprint_template, warmup_template};
+pub use templates::{roadmap_template, sprint_template, warmup_template, ProjectType};
 pub use validator::{is_protocol_file, validate_directory, validate_file, ValidationResult};
