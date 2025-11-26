@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-11-26
+
+### Added
+
+- **Python Template**: `--type python` with pytest, ruff, mypy, pyproject.toml
+- **Node.js Template**: `--type node` with npm, eslint, prettier, TypeScript
+- **Go Template**: `--type go` with go test, golangci-lint, CGO_ENABLED=0, UPX
+- **Template Aliases**: `py`, `js`, `javascript`, `nodejs`, `golang`
+- **Green Coding Core**: All templates include `green_coding` section by default
+- **ADR-001**: Architecture Decision Record for Green Coding By Default
+- **More Tests**: 75 total tests (40 unit + 34 e2e + 1 doctest)
+
+### Changed
+
+- Updated SPECIFICATION.md to v1.1.0 with green_coding as recommended field
+- Added Design Principle #5: "Green by default"
+
+### Philosophy
+
+Every project initialized with `forge-protocol init` is now a green-coding project.
+This is our moat: local-first tools over cloud AI for routine tasks.
+
 ## [1.1.0] - 2025-11-26
 
 ### Added

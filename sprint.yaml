@@ -14,33 +14,30 @@ rules:
 # CURRENT SPRINT
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v1.1.0 - CLI Tooling Release"
+  current: "v1.2.0 - Multi-Language Templates"
   started: "2025-11-26"
   status: done
 
   completed:
-    - "[x] CLI validator: forge-protocol validate"
-    - "[x] Template generator: forge-protocol init"
-    - "[x] Language-specific templates: --type rust"
-    - "[x] Built-in help: -h / --help"
-    - "[x] Unit tests (37 tests)"
-    - "[x] E2E tests (25 tests)"
-    - "[x] Pre-commit hooks (fmt + clippy)"
-    - "[x] Update warmup.yaml for Rust project"
-    - "[x] Create CHANGELOG.md"
-    - "[x] Build release binary with UPX (4.5MB -> 1.3MB)"
-    - "[x] Publish to crates.io"
-    - "[x] Create GitHub release v1.1.0"
+    - "[x] --type python template (pytest, ruff, mypy)"
+    - "[x] --type node template (npm, eslint, prettier, TypeScript)"
+    - "[x] --type go template (go test, golangci-lint, CGO_ENABLED)"
+    - "[x] Template aliases: py, js, javascript, nodejs, golang"
+    - "[x] Green coding in ALL templates by default"
+    - "[x] Unit tests (40 tests)"
+    - "[x] E2E tests (34 tests)"
+    - "[x] ADR-001: Green Coding By Default"
+    - "[x] Update SPECIFICATION.md with green_coding"
 
   next_up:
-    - "v1.2.0: More language templates (python, node, go)"
-    - "GitHub Action for CI validation"
+    - "v1.3.0: GitHub Action for CI validation"
     - "JSON Schema for editor autocomplete"
 
   notes: |
-    v1.1.0 SHIPPED!
-    - crates.io: https://crates.io/crates/forge-protocol
-    - GitHub: https://github.com/royalbit/forge-protocol/releases/tag/v1.1.0
+    v1.2.0 - Multi-Language Templates
+    - All `forge-protocol init` projects are now green-coding projects
+    - 75 total tests (40 unit + 34 e2e + 1 doctest)
+    - See docs/adr/001-green-coding-by-default.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES

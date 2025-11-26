@@ -8,6 +8,9 @@ pub enum ProjectType {
     #[default]
     Generic,
     Rust,
+    Python,
+    Node,
+    Go,
 }
 
 impl fmt::Display for ProjectType {
@@ -15,6 +18,9 @@ impl fmt::Display for ProjectType {
         match self {
             ProjectType::Generic => write!(f, "generic"),
             ProjectType::Rust => write!(f, "rust"),
+            ProjectType::Python => write!(f, "python"),
+            ProjectType::Node => write!(f, "node"),
+            ProjectType::Go => write!(f, "go"),
         }
     }
 }
@@ -26,8 +32,11 @@ impl std::str::FromStr for ProjectType {
         match s.to_lowercase().as_str() {
             "generic" => Ok(ProjectType::Generic),
             "rust" => Ok(ProjectType::Rust),
+            "python" | "py" => Ok(ProjectType::Python),
+            "node" | "nodejs" | "js" | "javascript" => Ok(ProjectType::Node),
+            "go" | "golang" => Ok(ProjectType::Go),
             _ => Err(format!(
-                "Unknown project type: '{}'. Available: generic, rust",
+                "Unknown project type: '{}'. Available: generic, rust, python, node, go",
                 s
             )),
         }
@@ -39,6 +48,9 @@ pub fn warmup_template(project_name: &str, project_type: ProjectType) -> String 
     match project_type {
         ProjectType::Generic => warmup_generic(project_name),
         ProjectType::Rust => warmup_rust(project_name),
+        ProjectType::Python => warmup_python(project_name),
+        ProjectType::Node => warmup_node(project_name),
+        ProjectType::Go => warmup_go(project_name),
     }
 }
 
@@ -187,6 +199,241 @@ style:
     )
 }
 
+fn warmup_python(project_name: &str) -> String {
+    format!(
+        r#"# Forge Protocol - Session Bootstrap
+# https://github.com/royalbit/forge-protocol
+
+identity:
+  project: "{}"
+  tagline: "Brief project description"
+  version: "0.1.0"
+
+mission:
+  problem: "What problem does this solve?"
+  solution: "How does it solve it?"
+  principles:
+    - "Principle one"
+    - "Principle two"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GREEN CODING - Zero tokens. Zero emissions.
+# ═══════════════════════════════════════════════════════════════════════════════
+green_coding:
+  philosophy: "Local-first tools over cloud AI for routine tasks"
+  practices:
+    - "Use pytest/ruff/mypy for validation (not AI)"
+    - "Reserve AI for complex reasoning tasks"
+    - "Use uv or pip-tools for fast, reproducible installs"
+    - "Prefer pyproject.toml over setup.py"
+  why:
+    - "Local validation: $0 and ~0.002g CO₂"
+    - "Cloud AI validation: $0.02+ and ~0.5g CO₂"
+    - "99.6% carbon reduction with local tools"
+
+files:
+  source:
+    - "src/{{project}}/ - Package source"
+    - "src/{{project}}/__init__.py - Package init"
+    - "src/{{project}}/main.py - Entry point"
+  config:
+    - "pyproject.toml - Project configuration"
+    - "requirements.txt - Dependencies (or use pyproject.toml)"
+  tests:
+    - "tests/ - Test directory"
+  docs:
+    - "README.md - Documentation"
+
+session:
+  start:
+    - "Read warmup.yaml"
+    - "git status"
+    - "pytest (verify baseline)"
+  during:
+    - "Track progress"
+    - "Test frequently"
+    - "Small, logical commits"
+  end:
+    - "pytest (all pass)"
+    - "ruff check . (zero warnings)"
+    - "mypy . (if using type hints)"
+    - "Update documentation"
+
+quality:
+  tests: "pytest"
+  lint: "ruff check ."
+  format: "ruff format ."
+  types: "mypy . (optional)"
+
+style:
+  python:
+    - "Type hints for public APIs"
+    - "Docstrings for modules and functions"
+    - "No bare except clauses"
+  docs:
+    - "Keep documentation concise"
+"#,
+        project_name
+    )
+}
+
+fn warmup_node(project_name: &str) -> String {
+    format!(
+        r#"# Forge Protocol - Session Bootstrap
+# https://github.com/royalbit/forge-protocol
+
+identity:
+  project: "{}"
+  tagline: "Brief project description"
+  version: "0.1.0"
+
+mission:
+  problem: "What problem does this solve?"
+  solution: "How does it solve it?"
+  principles:
+    - "Principle one"
+    - "Principle two"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GREEN CODING - Zero tokens. Zero emissions.
+# ═══════════════════════════════════════════════════════════════════════════════
+green_coding:
+  philosophy: "Local-first tools over cloud AI for routine tasks"
+  practices:
+    - "Use eslint/prettier/vitest for validation (not AI)"
+    - "Reserve AI for complex reasoning tasks"
+    - "Use pnpm for efficient package management"
+    - "Tree-shake and bundle for smaller builds"
+  why:
+    - "Local validation: $0 and ~0.002g CO₂"
+    - "Cloud AI validation: $0.02+ and ~0.5g CO₂"
+    - "99.6% carbon reduction with local tools"
+
+files:
+  source:
+    - "src/index.ts - Entry point"
+    - "src/lib/ - Library code"
+  config:
+    - "package.json - Dependencies and scripts"
+    - "tsconfig.json - TypeScript configuration"
+  tests:
+    - "tests/ - Test directory"
+  docs:
+    - "README.md - Documentation"
+
+session:
+  start:
+    - "Read warmup.yaml"
+    - "git status"
+    - "npm test (verify baseline)"
+  during:
+    - "Track progress"
+    - "Test frequently"
+    - "Small, logical commits"
+  end:
+    - "npm test (all pass)"
+    - "npm run lint (zero warnings)"
+    - "npm run build (if applicable)"
+    - "Update documentation"
+
+quality:
+  tests: "npm test (vitest, jest, or similar)"
+  lint: "npm run lint (eslint)"
+  format: "npm run format (prettier)"
+  types: "npm run typecheck (tsc --noEmit)"
+
+style:
+  typescript:
+    - "Strict TypeScript (strict: true)"
+    - "Explicit return types for public functions"
+    - "No any types in production code"
+  docs:
+    - "Keep documentation concise"
+"#,
+        project_name
+    )
+}
+
+fn warmup_go(project_name: &str) -> String {
+    format!(
+        r#"# Forge Protocol - Session Bootstrap
+# https://github.com/royalbit/forge-protocol
+
+identity:
+  project: "{}"
+  tagline: "Brief project description"
+  version: "0.1.0"
+
+mission:
+  problem: "What problem does this solve?"
+  solution: "How does it solve it?"
+  principles:
+    - "Principle one"
+    - "Principle two"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GREEN CODING - Zero tokens. Zero emissions.
+# ═══════════════════════════════════════════════════════════════════════════════
+green_coding:
+  philosophy: "Local-first tools over cloud AI for routine tasks"
+  practices:
+    - "Use go test/golangci-lint for validation (not AI)"
+    - "Reserve AI for complex reasoning tasks"
+    - "Static binaries with CGO_ENABLED=0"
+    - "UPX compress release binaries (70%+ smaller)"
+  why:
+    - "Go: Fast compilation, small binaries, no runtime"
+    - "Local validation: $0 and ~0.002g CO₂"
+    - "Cloud AI validation: $0.02+ and ~0.5g CO₂"
+    - "99.6% carbon reduction with local tools"
+
+files:
+  source:
+    - "main.go - Entry point"
+    - "cmd/ - CLI commands"
+    - "internal/ - Private packages"
+    - "pkg/ - Public packages"
+  config:
+    - "go.mod - Module definition"
+    - "go.sum - Dependency checksums"
+  tests:
+    - "*_test.go - Test files"
+  docs:
+    - "README.md - Documentation"
+
+session:
+  start:
+    - "Read warmup.yaml"
+    - "git status"
+    - "go test ./... (verify baseline)"
+  during:
+    - "Track progress"
+    - "Test frequently"
+    - "Small, logical commits"
+  end:
+    - "go test ./... (all pass)"
+    - "golangci-lint run (zero warnings)"
+    - "go build (verify compilation)"
+    - "Update documentation"
+
+quality:
+  tests: "go test ./..."
+  lint: "golangci-lint run"
+  format: "gofmt -s -w ."
+  vet: "go vet ./..."
+
+style:
+  go:
+    - "Return errors, don't panic"
+    - "Accept interfaces, return structs"
+    - "Keep packages small and focused"
+  docs:
+    - "Keep documentation concise"
+"#,
+        project_name
+    )
+}
+
 /// Generate a starter sprint.yaml template
 pub fn sprint_template() -> String {
     r#"# Forge Protocol - Sprint Tracking
@@ -258,30 +505,65 @@ mod tests {
     fn test_project_type_display() {
         assert_eq!(ProjectType::Generic.to_string(), "generic");
         assert_eq!(ProjectType::Rust.to_string(), "rust");
+        assert_eq!(ProjectType::Python.to_string(), "python");
+        assert_eq!(ProjectType::Node.to_string(), "node");
+        assert_eq!(ProjectType::Go.to_string(), "go");
     }
 
     #[test]
     fn test_project_type_from_str_valid() {
+        // Generic
         assert!(matches!(
             "generic".parse::<ProjectType>(),
             Ok(ProjectType::Generic)
         ));
         assert!(matches!(
-            "rust".parse::<ProjectType>(),
-            Ok(ProjectType::Rust)
-        ));
-        assert!(matches!(
             "GENERIC".parse::<ProjectType>(),
             Ok(ProjectType::Generic)
+        ));
+        // Rust
+        assert!(matches!(
+            "rust".parse::<ProjectType>(),
+            Ok(ProjectType::Rust)
         ));
         assert!(matches!(
             "RUST".parse::<ProjectType>(),
             Ok(ProjectType::Rust)
         ));
+        // Python (with aliases)
         assert!(matches!(
-            "Rust".parse::<ProjectType>(),
-            Ok(ProjectType::Rust)
+            "python".parse::<ProjectType>(),
+            Ok(ProjectType::Python)
         ));
+        assert!(matches!(
+            "py".parse::<ProjectType>(),
+            Ok(ProjectType::Python)
+        ));
+        assert!(matches!(
+            "PYTHON".parse::<ProjectType>(),
+            Ok(ProjectType::Python)
+        ));
+        // Node (with aliases)
+        assert!(matches!(
+            "node".parse::<ProjectType>(),
+            Ok(ProjectType::Node)
+        ));
+        assert!(matches!(
+            "nodejs".parse::<ProjectType>(),
+            Ok(ProjectType::Node)
+        ));
+        assert!(matches!("js".parse::<ProjectType>(), Ok(ProjectType::Node)));
+        assert!(matches!(
+            "javascript".parse::<ProjectType>(),
+            Ok(ProjectType::Node)
+        ));
+        // Go (with aliases)
+        assert!(matches!("go".parse::<ProjectType>(), Ok(ProjectType::Go)));
+        assert!(matches!(
+            "golang".parse::<ProjectType>(),
+            Ok(ProjectType::Go)
+        ));
+        assert!(matches!("GO".parse::<ProjectType>(), Ok(ProjectType::Go)));
     }
 
     #[test]
@@ -341,7 +623,13 @@ mod tests {
 
     #[test]
     fn test_warmup_template_is_valid_yaml() {
-        for project_type in [ProjectType::Generic, ProjectType::Rust] {
+        for project_type in [
+            ProjectType::Generic,
+            ProjectType::Rust,
+            ProjectType::Python,
+            ProjectType::Node,
+            ProjectType::Go,
+        ] {
             let template = warmup_template("test", project_type);
             let result: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
             assert!(
@@ -354,21 +642,83 @@ mod tests {
 
     #[test]
     fn test_warmup_template_has_required_fields() {
-        for project_type in [ProjectType::Generic, ProjectType::Rust] {
+        for project_type in [
+            ProjectType::Generic,
+            ProjectType::Rust,
+            ProjectType::Python,
+            ProjectType::Node,
+            ProjectType::Go,
+        ] {
             let template = warmup_template("test", project_type);
             let yaml: serde_yaml::Value = serde_yaml::from_str(&template).unwrap();
 
             // Check required identity section
             assert!(
                 yaml.get("identity").is_some(),
-                "Should have identity section"
+                "Should have identity section for {:?}",
+                project_type
             );
             let identity = yaml.get("identity").unwrap();
             assert!(
                 identity.get("project").is_some(),
-                "Should have project field"
+                "Should have project field for {:?}",
+                project_type
+            );
+            // Check green_coding section (required for all templates)
+            assert!(
+                yaml.get("green_coding").is_some(),
+                "Should have green_coding section for {:?}",
+                project_type
             );
         }
+    }
+
+    #[test]
+    fn test_warmup_template_python_contains_python_specific() {
+        let template = warmup_template("python-project", ProjectType::Python);
+        assert!(template.contains("python-project"));
+        // Should contain Python-specific content
+        assert!(template.contains("pytest"));
+        assert!(template.contains("ruff"));
+        assert!(template.contains("pyproject.toml"));
+        assert!(template.contains("__init__.py"));
+        assert!(template.contains("Type hints"));
+        // Should contain green_coding
+        assert!(template.contains("green_coding:"));
+        assert!(template.contains("uv or pip-tools"));
+    }
+
+    #[test]
+    fn test_warmup_template_node_contains_node_specific() {
+        let template = warmup_template("node-project", ProjectType::Node);
+        assert!(template.contains("node-project"));
+        // Should contain Node-specific content
+        assert!(template.contains("npm test"));
+        assert!(template.contains("eslint"));
+        assert!(template.contains("prettier"));
+        assert!(template.contains("package.json"));
+        assert!(template.contains("tsconfig.json"));
+        assert!(template.contains("TypeScript"));
+        // Should contain green_coding
+        assert!(template.contains("green_coding:"));
+        assert!(template.contains("pnpm"));
+    }
+
+    #[test]
+    fn test_warmup_template_go_contains_go_specific() {
+        let template = warmup_template("go-project", ProjectType::Go);
+        assert!(template.contains("go-project"));
+        // Should contain Go-specific content
+        assert!(template.contains("go test"));
+        assert!(template.contains("golangci-lint"));
+        assert!(template.contains("go.mod"));
+        assert!(template.contains("cmd/"));
+        assert!(template.contains("internal/"));
+        assert!(template.contains("Accept interfaces, return structs"));
+        // Should contain green_coding with Go-specific practices
+        assert!(template.contains("green_coding:"));
+        assert!(template.contains("CGO_ENABLED=0"));
+        assert!(template.contains("UPX compress"));
     }
 
     // ========== sprint_template Tests ==========

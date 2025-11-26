@@ -1,32 +1,44 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "1.1.0"
+  current_version: "1.2.0"
   last_updated: "2025-11-26"
-  philosophy: "Vendor-neutral AI session continuity"
+  philosophy: "Vendor-neutral AI session continuity. Green by default."
 
 # Current Release
 current:
-  version: "1.1.0"
-  status: in_progress
+  version: "1.2.0"
+  status: released
   date: "2025-11-26"
-  summary: "CLI Tooling"
+  summary: "Multi-Language Templates"
+  highlights:
+    - "Language templates: `--type python`, `--type node`, `--type go`"
+    - "Template aliases: `py`, `js`, `golang`"
+    - "Green coding in all templates by default"
+    - "75 tests (40 unit + 34 e2e + 1 doctest)"
+
+# Previous Release
+previous:
+  version: "1.1.0"
+  status: released
+  date: "2025-11-26"
+  summary: "CLI Tooling & Green Coding Core"
   highlights:
     - "CLI validator: `forge-protocol validate`"
     - "Template generator: `forge-protocol init`"
     - "Language-specific templates: `--type rust` (generic default)"
+    - "Green coding as protocol core (ADR-001)"
     - "Built-in help: `-h` / `--help`"
 
 # Next Milestone
 next:
-  version: "1.2.0"
+  version: "1.3.0"
   status: planned
-  summary: "More Languages & CI"
+  summary: "CI & Editor Support"
   features:
-    - "More language templates: `--type python`, `--type node`, `--type go`"
-    - "Schema JSON for editor autocomplete"
     - "GitHub Action for CI validation"
-    - "More examples (Go, Java, documentation-only repos)"
+    - "JSON Schema for editor autocomplete"
+    - "More examples (Java, documentation-only repos)"
 
 # Backlog
 backlog:
