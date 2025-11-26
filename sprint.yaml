@@ -16,7 +16,7 @@ rules:
 sprint:
   current: "v1.1.0 - CLI Tooling Release"
   started: "2025-11-26"
-  status: in_progress
+  status: done
 
   completed:
     - "[x] CLI validator: forge-protocol validate"
@@ -26,13 +26,11 @@ sprint:
     - "[x] Unit tests (37 tests)"
     - "[x] E2E tests (25 tests)"
     - "[x] Pre-commit hooks (fmt + clippy)"
-
-  tasks:
-    - "[ ] Update warmup.yaml for Rust project"
-    - "[ ] Create CHANGELOG.md"
-    - "[ ] Build release binary with UPX"
-    - "[ ] Publish to crates.io"
-    - "[ ] Create GitHub release"
+    - "[x] Update warmup.yaml for Rust project"
+    - "[x] Create CHANGELOG.md"
+    - "[x] Build release binary with UPX (4.5MB -> 1.3MB)"
+    - "[x] Publish to crates.io"
+    - "[x] Create GitHub release v1.1.0"
 
   next_up:
     - "v1.2.0: More language templates (python, node, go)"
@@ -40,8 +38,9 @@ sprint:
     - "JSON Schema for editor autocomplete"
 
   notes: |
-    Project evolved from docs-only to Rust CLI.
-    Following Forge's patterns for releases and quality gates.
+    v1.1.0 SHIPPED!
+    - crates.io: https://crates.io/crates/forge-protocol
+    - GitHub: https://github.com/royalbit/forge-protocol/releases/tag/v1.1.0
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES
