@@ -65,22 +65,48 @@ forge-protocol init --full           # Generate all three protocol files
 - Git-friendly (diffable, mergeable)
 - No vendor lock-in
 
-## Green Coding
+## Green Coding & ESG Impact
 
-**Local validation = less compute = less CO₂**
+**Local validation = less compute = less CO₂ = ESG compliance**
 
-| Approach | Cost per File | Carbon |
-| -------- | ------------- | ------ |
-| AI validation | $0.002-0.04 | ~0.5g CO₂ |
-| Local CLI | $0 | ~0.002g CO₂ |
-| **Savings** | **100%** | **99.6%** |
+| Approach | Cost per File | Carbon | Speed |
+| -------- | ------------- | ------ | ----- |
+| AI validation | $0.02+ | ~0.5g CO₂ | 1-3s |
+| Local CLI | **$0** | **~0.002g CO₂** | **<100ms** |
+| **Savings** | **100%** | **99.6%** | **20x faster** |
 
-Why we're green-first:
+### Why This Matters
 
-- **UPX compressed binary**: 4.5MB → 1.3MB (71% smaller downloads)
-- **Rust**: Zero runtime, minimal memory footprint
-- **Local-first**: No API calls, no network round-trips, instant results
-- **Team savings**: $1,000-$7,300/year for a 10-person team
+**For Developers:**
+- Instant validation (<100ms vs 1-3s cloud latency)
+- Works offline - no API keys, no rate limits
+- 1.3MB binary - installs in seconds
+
+**For Teams:**
+- $1,000-$7,300/year savings (10-person team)
+- No cloud AI costs for routine validation
+- Consistent, reproducible results
+
+**For Enterprise & Government:**
+- **ESG Compliance**: Measurable carbon reduction (99.6%)
+- **Scope 3 Emissions**: Reduce supply chain software carbon
+- **Sustainability Reports**: Quantifiable green coding metrics
+- **Cost Control**: Predictable $0 validation costs at scale
+
+**For the Planet:**
+- 99.6% carbon reduction per validation
+- No data center compute for routine tasks
+- Efficient Rust binary - minimal energy footprint
+
+### Implementation
+
+```bash
+# Install once (1.3MB)
+cargo install forge-protocol
+
+# Validate forever ($0, ~0.002g CO₂ per run)
+forge-protocol validate
+```
 
 *Ship fast. Ship small. Ship green.*
 
