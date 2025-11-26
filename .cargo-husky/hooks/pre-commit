@@ -1,0 +1,23 @@
+#!/bin/bash
+# Forge Protocol pre-commit hook - mirrors CI checks
+# Auto-installed by cargo-husky on `cargo test`
+
+set -e
+
+# Get the repo root directory
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+CLI_DIR="$REPO_ROOT/cli"
+
+echo "Running pre-commit checks..."
+
+if [ -d "$CLI_DIR" ]; then
+    cd "$CLI_DIR"
+
+    echo "Checking formatting..."
+    cargo fmt --all -- --check
+
+    echo "Running clippy..."
+    cargo clippy -- -D warnings
+fi
+
+echo "Pre-commit checks passed!"
