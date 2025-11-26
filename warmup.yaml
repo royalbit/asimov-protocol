@@ -1,0 +1,89 @@
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                           THE FORGE PROTOCOL                                  ║
+# ║                    Vendor-Neutral AI Autonomy Framework                       ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+#
+# This file IS the protocol, documenting itself.
+# Any AI can read YAML. No vendor lock-in. The best AI wins.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# IDENTITY
+# ═══════════════════════════════════════════════════════════════════════════════
+identity:
+  project: "Forge Protocol"
+  tagline: "Vendor-neutral AI session continuity"
+  philosophy: "Documentation as code. Any AI. Any project."
+  version: "1.0.0"
+  license: "MIT"
+
+mission:
+  problem: "AI sessions are stateless - context lost between conversations"
+  solution: "YAML-based protocol that any AI can read to restore project context"
+  principles:
+    - "Vendor-neutral: Works with Claude, GPT, Gemini, Grok, or any future AI"
+    - "Human-readable: Plain YAML, no proprietary formats"
+    - "Self-documenting: The protocol describes itself"
+    - "Minimal: Only what's needed, nothing more"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROTOCOL SUITE
+# ═══════════════════════════════════════════════════════════════════════════════
+protocol:
+  files:
+    warmup.yaml: "Session bootstrap - identity, files, workflow"
+    sprint.yaml: "Active work tracking (optional)"
+    roadmap.yaml: "Current + future milestones (optional)"
+
+  activation: |
+    Add to your AI assistant's instructions:
+    "If there is a warmup.yaml file in the root of the working dir, read it first"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KEY FILES (for this repo)
+# ═══════════════════════════════════════════════════════════════════════════════
+files:
+  core:
+    - "warmup.yaml - This file (the protocol itself)"
+    - "README.md - Quick start guide"
+    - ".markdownlint.json - Linter config"
+
+  docs:
+    - "docs/SPECIFICATION.md - Full protocol specification"
+    - "docs/EXAMPLES.md - Example configurations"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SESSION WORKFLOW
+# ═══════════════════════════════════════════════════════════════════════════════
+session:
+  start:
+    - "Read warmup.yaml (this file)"
+    - "Understand project identity and structure"
+    - "Check for sprint.yaml or roadmap.yaml if present"
+
+  during:
+    - "Reference key files as needed"
+    - "Follow project conventions"
+    - "Track progress if sprint.yaml exists"
+
+  end:
+    - "Run markdownlint: npx markdownlint-cli2 '**/*.md' --fix"
+    - "Update sprint.yaml if active work was done"
+    - "Suggest roadmap.yaml updates if milestones changed"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QUALITY (for this repo)
+# ═══════════════════════════════════════════════════════════════════════════════
+quality:
+  lint: "npx markdownlint-cli2 '**/*.md' --fix"
+  check: "npx markdownlint-cli2 '**/*.md'"
+  links: "Optional: npx markdown-link-check README.md"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# STYLE (for this repo)
+# ═══════════════════════════════════════════════════════════════════════════════
+style:
+  docs:
+    - "Markdown for all documentation"
+    - "Mermaid for diagrams (GitHub-compatible)"
+    - "No ASCII art"
+    - "Concise > comprehensive"
