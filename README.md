@@ -1,6 +1,8 @@
 # Forge Protocol
 
-Vendor-neutral AI session continuity. Any AI. Any project.
+**Vendor-neutral AI session continuity. Zero tokens. Zero emissions.**
+
+Any AI. Any project. Green by design.
 
 ## The Problem
 
@@ -31,12 +33,58 @@ session:
 2. Tell your AI: *"If there is a warmup.yaml file, read it first"*
 3. That's it. Session continuity restored.
 
+## CLI Validator
+
+Install from [crates.io](https://crates.io/crates/forge-protocol):
+
+```bash
+cargo install forge-protocol
+```
+
+Validate your protocol files:
+
+```bash
+forge-protocol validate              # Validate all files in current directory
+forge-protocol validate warmup.yaml  # Validate specific file
+```
+
+Generate templates:
+
+```bash
+forge-protocol init                  # Generate warmup.yaml (generic)
+forge-protocol init --type rust      # Generate Rust-specific template
+forge-protocol init --full           # Generate all three protocol files
+```
+
+**Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
+
 ## Why YAML?
 
 - Every AI can read it
 - Humans can read it
 - Git-friendly (diffable, mergeable)
 - No vendor lock-in
+
+## Green Coding
+
+**Local validation = less compute = less CO₂**
+
+| Approach | Cost per File | Carbon |
+| -------- | ------------- | ------ |
+| AI validation | $0.002-0.04 | ~0.5g CO₂ |
+| Local CLI | $0 | ~0.002g CO₂ |
+| **Savings** | **100%** | **99.6%** |
+
+Why we're green-first:
+
+- **UPX compressed binary**: 4.5MB → 1.3MB (71% smaller downloads)
+- **Rust**: Zero runtime, minimal memory footprint
+- **Local-first**: No API calls, no network round-trips, instant results
+- **Team savings**: $1,000-$7,300/year for a 10-person team
+
+*Ship fast. Ship small. Ship green.*
+
+See [Green Coding Economics](docs/GREEN_CODING.md) for the full analysis.
 
 ## Protocol Suite
 
