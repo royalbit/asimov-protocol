@@ -11,11 +11,13 @@ Green by design. Best experienced with Claude Code.
 
 ## The Problem
 
-AI sessions are stateless. Every conversation starts from zero. Context about your project, conventions, and progress is lost.
+AI hallucinates. It invents project conventions. It forgets rules mid-session. It "remembers" things that never happened. Context compaction makes it worse—your carefully explained requirements get compressed into oblivion.
 
 ## The Solution
 
-A simple YAML file (`warmup.yaml`) that any AI can read to restore project context.
+**Ground AI in file-based truth.**
+
+A simple YAML file (`warmup.yaml`) that any AI can read to restore project context. Not from memory. From disk.
 
 ```yaml
 # warmup.yaml - minimal example
@@ -37,6 +39,32 @@ session:
 1. Create `warmup.yaml` in your project root
 2. Tell your AI: *"If there is a warmup.yaml file, read it first"*
 3. That's it. Session continuity restored.
+
+## The Anti-Hallucination Foundation
+
+"Hallucination" is a misnomer. **AI is working exactly as designed**—the limitations are architectural (by design) or vendor-imposed (business decisions).
+
+| AI Limitation | Why It Happens | Forge Protocol Fix |
+|---------------|----------------|-------------------|
+| Forgets your rules | Auto-compact compresses context | Re-read `warmup.yaml` from disk |
+| Invents conventions | Generates "probable" text, not facts | Structured rules in files |
+| Wrong after cutoff | Training data ends (mine: Jan 2025) | Project-specific truth in YAML |
+| Lost in the middle | Attention degrades mid-context | Key info in scannable format |
+| Confident mistakes | Trained for plausibility, not accuracy | Deterministic validation |
+
+**The Pattern:**
+
+```
+AI memory (lossy, probabilistic)   → "Hallucinations"
+File truth (stable, deterministic) → Reliability
+```
+
+**The Forge Protocol doesn't fix AI. It compensates for architectural limitations.**
+
+- Don't let AI *imagine* your project context → **read it from warmup.yaml**
+- Don't let AI *imagine* your financial calculations → **execute them locally with [Forge](https://github.com/royalbit/forge)**
+
+📖 **[Read the full analysis: AI_REALITY.md](docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
 
 ## CLI Validator
 
@@ -449,6 +477,7 @@ See [Component 4: Self-Healing](docs/components/4-SELF_HEALING.md) for details.
 
 ### Reference
 - [Full Specification](docs/SPECIFICATION.md) - Protocol schema and details
+- [AI Reality](docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
 - [Vendor Implementation](docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
 - [Presentation](docs/PRESENTATION.md) - Marp slide deck
 
