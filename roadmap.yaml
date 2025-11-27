@@ -6,31 +6,33 @@ metadata:
   philosophy: "Vendor-neutral AI session continuity. Green by default."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# TOP PRIORITY: SPECIFICATION v2.0 - SKYNET MODE Edition
+# PROTOCOL GOALS - Everything must align with these
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# CRITICAL: The current specification (v1.1.0) documents a MINIMAL protocol
-# but Forge Protocol's own warmup.yaml uses UNDOCUMENTED features that make
-# SKYNET MODE actually work. We're not eating our own dog food.
+# 1. ANTI-HALLUCINATION - Ground AI in file-based truth
+# 2. SELF-HEALING - Recovery from context compaction
+# 3. SESSION CONTINUITY - Maintain context across sessions
+# 4. AUTONOMOUS DEVELOPMENT - SKYNET MODE that actually works
+# 5. GREEN CODING - Local validation over cloud AI
 #
-# Problems to solve:
-#   1. SKYNET MODE (5-component system) not in spec
-#   2. Self-Healing Protocol not in spec
-#   3. Bootstrap chain (CLAUDE.md → warmup → checkpoint) not documented
-#   4. "2hr checkpoint" is FICTION - need to study REAL compaction patterns
-#   5. .claude_checkpoint.yaml exists in .gitignore but is NEVER WRITTEN
-#   6. warmup.yaml is 676 lines - needs modular structure (bin/)
-#
-# Research required:
-#   - Study Forge (royalbit/forge) daily work to understand REAL patterns
-#   - When does /compact actually trigger?
-#   - What ACTUALLY survives compaction?
-#   - What recovery patterns ACTUALLY work?
+# Features that don't serve these goals don't belong here.
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Previous Releases
+# ═══════════════════════════════════════════════════════════════════════════════
+# RELEASED VERSIONS
+# ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "2.0.0"
+    status: released
+    date: "2025-11-27"
+    summary: "Self-Healing Based on Real Data + AI Reality Documentation"
+    highlights:
+      - "ADR-003: Compaction every 10-20 min (not 2hr fiction)"
+      - "AI_REALITY.md: Why 'hallucinations' are features, not bugs"
+      - "Problem→Solution mapping for all AI limitations"
+      - "Recovery > Survival strategy"
+
   - version: "1.4.0"
     status: released
     date: "2025-11-26"
@@ -52,64 +54,81 @@ previous:
     status: released
     date: "2025-11-26"
     summary: "Multi-Language Templates"
-    highlights:
-      - "Python, Node, Go templates"
-      - "Green coding in all templates"
 
   - version: "1.1.0"
     status: released
     date: "2025-11-26"
     summary: "CLI Tooling"
-    highlights:
-      - "Validator and template generator"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v2.0.0 - SPECIFICATION REWRITE (IN PROGRESS)
+# CURRENT: v2.1.0 - SELF-HEALING COMPLETENESS
+# ═══════════════════════════════════════════════════════════════════════════════
+# Goal: Make self-healing actually work end-to-end (SELF-HEALING)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "2.0.0"
-  status: in_progress
-  summary: "SPECIFICATION v2.0 - Based on Real Compaction Data"
-  priority: TOP
-  date: "2025-11-27"
-
-  completed:
-    - "[x] Research: Analyzed forge-protocol git log for compaction patterns"
-    - "[x] Research: Documented real compaction frequency (10-20 min, not 2hr)"
-    - "[x] Research: Identified why self-healing was broken"
-    - "[x] ADR-003: Self-Healing Based on Real Compaction Data"
-    - "[x] SPECIFICATION.md v2.0 with SKYNET MODE"
-    - "[x] CLAUDE.md: Ultra-short for survival"
-    - "[x] warmup.yaml: Realistic checkpoint triggers"
-    - "[x] CHANGELOG.md: v2.0.0 release notes"
-
-  remaining:
-    - "[ ] Run tests (cargo test)"
-    - "[ ] Run clippy (zero warnings)"
-    - "[ ] Commit and tag v2.0.0"
-    - "[ ] Push to GitHub"
-
-  research_findings:
-    compaction_frequency: "Every 10-20 minutes with MAX_THINKING_TOKENS=200000"
-    context_fill_rate: "1-3 heavy turns fills 200k context"
-    session_compactions: "5-10 compactions per 1.5hr session"
-    key_insight: "Recovery > Survival - re-read from disk, don't try to survive"
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# NEXT MILESTONE: v2.1.0 - Modular Structure Implementation
-# ═══════════════════════════════════════════════════════════════════════════════
-next:
   version: "2.1.0"
   status: planned
-  summary: "Modular Protocol Structure (.forge/ directory)"
-  features:
-    - "Split warmup.yaml into .forge/ modules"
-    - "Update CLI to generate modular structure"
-    - "Implement checkpoint file writing in autonomous flow"
-    - "Add forge-protocol checkpoint command"
+  summary: "Self-Healing Completeness"
+  priority: HIGH
 
-# Backlog (after v2.1.0)
+  # Checkpoint schema: Bootstrap chain depends on checkpoint but it's not validated
+  # CLAUDE.md validation: Self-healing depends on CLAUDE.md but it's not validated
+  # Self-healing test: We claim it works but have no systematic test
+  features:
+    - "Checkpoint schema: Define .claude_checkpoint.yaml schema in SPECIFICATION.md"
+    - "Checkpoint validation: Add checkpoint validation to CLI"
+    - "CLAUDE.md validation: Warn if CLAUDE.md missing or >20 lines"
+    - "Self-healing test: Create test scenario simulating post-compaction confusion"
+    - "Generate example checkpoint in --skynet setup"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NEXT: v2.2.0 - ANTI-HALLUCINATION HARDENING
+# ═══════════════════════════════════════════════════════════════════════════════
+# Goal: Prevent "lost in the middle" and context overflow (ANTI-HALLUCINATION)
+# ═══════════════════════════════════════════════════════════════════════════════
+next:
+  version: "2.2.0"
+  status: planned
+  summary: "Anti-Hallucination Hardening"
+  priority: HIGH
+
+  # Size guidelines: Large files trigger 'lost in middle' - critical info ignored
+  # Structure guidance: LLMs attend better to beginning/end, ignore middle
+  # Modular structure: Monolithic warmup.yaml doesn't scale - Forge uses bin/
+  features:
+    - "Size guidelines: Document max sizes (CLAUDE.md: 20 lines, warmup: 200 lines)"
+    - "Size warnings: Add file size warnings to CLI validation"
+    - "Structure guidance: Document critical rules at TOP, reference in MIDDLE, recovery at BOTTOM"
+    - "Structure linting: Add warmup.yaml structure validation to CLI"
+    - "Modular structure: Design .forge/ directory for splitting large configs"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FUTURE MILESTONES
+# ═══════════════════════════════════════════════════════════════════════════════
+future:
+  # v2.3.0: Multi-day/multi-session workflows (SESSION CONTINUITY)
+  - version: "2.3.0"
+    status: planned
+    summary: "Multi-Session Continuity"
+    features:
+      - "Session handoff: Document session-end and session-start workflows"
+      - "Session-end command: Add CLI command to finalize session state"
+      - "Staleness detection: Warn when warmup.yaml older than code changes"
+
+  # v2.4.0: Clear what works where (HONEST COMMUNICATION)
+  - version: "2.4.0"
+    status: planned
+    summary: "Vendor Clarity"
+    features:
+      - "Compatibility matrix: Document file format (universal) vs SKYNET (Claude only)"
+      - "Vendor checklist: What other AI tools need to implement"
+      - "Vendor status: Track which vendors support which features"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BACKLOG - Lower priority, may be dropped
+# ═══════════════════════════════════════════════════════════════════════════════
 backlog:
-  - "CI & Editor Support: GitHub Action, JSON Schema for autocomplete"
-  - "Extensions: VS Code extension, integration guides"
-  - "Research: Experiential Continuity Layer"
+  - "CI Integration: GitHub Action for protocol validation"
+  - "JSON Schema: Editor autocomplete for protocol files"
+  - "VS Code Extension: Syntax highlighting, validation"
+  - "Experiential Continuity: Research on cross-session memory"
