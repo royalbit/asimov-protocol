@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-11-26
+
+### Added
+
+- **SKYNET MODE Setup**: `forge-protocol init --skynet` - Complete autonomous session setup
+  - Generates all protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
+  - Creates CLAUDE.md with Self-Healing Protocol instructions
+  - Creates pre-commit hooks (.hooks/ for non-Rust, cargo-husky instructions for Rust)
+  - Updates .gitignore with checkpoint file entry
+- **New Project Types**: Flutter (`--type flutter`) and Docs (`--type docs`)
+- **SKYNET Setup Guide**: `docs/SKYNET_SETUP.md` - Per-project-type setup checklists
+- **Vendor Implementation Guide**: `docs/VENDOR_IMPLEMENTATION.md` - What AI tools need for SKYNET MODE
+
+### Changed
+
+- Honest vendor compatibility: SKYNET MODE requires Claude Code (documented)
+- Presentation reduced from 51 slides to 14 (lean pitch deck)
+- README updated with clear compatibility matrix
+
+### Usage
+
+```bash
+# Full SKYNET MODE setup for a Python project
+forge-protocol init --type python --skynet
+
+# This creates:
+# ✓ warmup.yaml, sprint.yaml, roadmap.yaml
+# ✓ CLAUDE.md (auto-loaded by Claude Code)
+# ✓ .hooks/pre-commit + .hooks/install.sh
+# ✓ .gitignore updated with .claude_checkpoint.yaml
+```
+
 ## [1.3.0] - 2025-11-26
 
 ### Added
