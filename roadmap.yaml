@@ -186,7 +186,7 @@ future:
       Templates for real-world production stacks based on battle-tested configs.
       Each template includes stack-specific quality gates and commands.
     features:
-      - "--type rust-axum: Backend API template (Axum + MongoDB/Postgres)"
+      - "--type rust-axum: Backend API template (Axum + YugabyteDB + Redis Streams)"
       - "--type rust-grpc: gRPC services template (tonic + protobuf)"
       - "--type flutter: Mobile app template (Flutter + Dart analyzer)"
       - "--type shell: Demo/orchestration scripts (shellcheck)"
