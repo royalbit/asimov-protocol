@@ -88,18 +88,26 @@ SKYNET MODE is the complete autonomous AI development system. It consists of fiv
 
 **Remove any component and the system breaks.**
 
-### Platform Requirements
+### Platform Requirements (The Hard Truth)
 
-| Feature | Any AI | Claude Code |
-|---------|--------|-------------|
-| Protocol files (paste/upload) | Yes | Yes |
-| SKYNET MODE (unattended) | No | Yes |
-| Self-Healing Protocol | No | Yes |
+**SKYNET MODE is Claude Code exclusive. This will probably never change.**
 
-SKYNET MODE requires Claude Code because it depends on:
-- Auto-loaded config (CLAUDE.md)
-- File system access mid-session
-- Re-read capability after compaction
+| AI Tool | Protocol Files | SKYNET MODE | Why |
+|---------|---------------|-------------|-----|
+| **Claude Code** | ✓ | ✓ | Has all 4 required features |
+| **ChatGPT** | Manual paste | **Never** | Cloud-sandboxed, no filesystem |
+| **Copilot** | N/A | **Never** | Autocomplete, not conversation |
+| **Cursor** | ✓ | **Unlikely** | Missing terminal→context flow |
+| **Gemini** | Manual paste | **Never** | Context resets, no local access |
+
+SKYNET MODE requires **four architectural features** that only Claude Code has:
+
+1. **Persistent context that compacts** - The problem we're solving
+2. **Terminal visibility** - How hook output reaches the AI
+3. **File re-read mid-session** - How warmup.yaml gets reloaded
+4. **Auto-loaded config** - Bootstrap instruction (CLAUDE.md)
+
+Other AI tools have **different architectures for different use cases**. They're not going to rebuild their products to support this. See [VENDOR_IMPLEMENTATION.md](VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
 ## The Bootstrap Chain
 
