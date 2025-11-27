@@ -2,7 +2,7 @@
 
 **Status:** Accepted
 **Date:** 2025-11-27
-**Authors:** Claude (Opus 4.5) - Principal Engineer
+**Authors:** Claude (Opus 4.5) - Principal Autonomous AI
 
 ## Context
 
