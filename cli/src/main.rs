@@ -3,8 +3,9 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
-    check_markdown_file, find_markdown_files, fix_markdown_file, is_protocol_file,
-    roadmap_template, sprint_template, validate_directory, validate_file, warmup_template,
+    check_markdown_file, claude_md_template, find_markdown_files, fix_markdown_file,
+    hook_installer_template, is_protocol_file, precommit_hook_template, roadmap_template,
+    sprint_template, uses_cargo_husky, validate_directory, validate_file, warmup_template,
     ProjectType,
 };
 use std::path::{Path, PathBuf};
@@ -28,9 +29,18 @@ EXAMPLES:
   forge-protocol init --type python          # Generate Python-specific warmup.yaml
   forge-protocol init --type node            # Generate Node.js-specific warmup.yaml
   forge-protocol init --type go              # Generate Go-specific warmup.yaml
+  forge-protocol init --type flutter         # Generate Flutter-specific warmup.yaml
+  forge-protocol init --type docs            # Generate docs/architecture warmup.yaml
   forge-protocol init --full                 # Generate all protocol files
+  forge-protocol init --skynet               # Full SKYNET MODE setup
 
-TYPES: generic, rust, python (py), node (js, nodejs), go (golang)
+TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
+
+SKYNET MODE (--skynet): Full autonomous session setup
+  - All protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
+  - CLAUDE.md (auto-loaded by Claude Code)
+  - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
+  - .gitignore update (exclude checkpoint file)
 
 GREEN CODING - Why This Matters:
   - Local validation: $0/file, ~0.002g CO2, <100ms
@@ -64,13 +74,17 @@ enum Commands {
         #[arg(short, long)]
         name: Option<String>,
 
-        /// Project type for language-specific templates (generic, rust, python, node, go)
+        /// Project type for language-specific templates (generic, rust, python, node, go, flutter, docs)
         #[arg(short = 't', long = "type", default_value = "generic")]
         project_type: String,
 
         /// Generate all protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
         #[arg(long)]
         full: bool,
+
+        /// Full SKYNET MODE setup (protocol files + CLAUDE.md + hooks + .gitignore)
+        #[arg(long)]
+        skynet: bool,
 
         /// Output directory (defaults to current directory)
         #[arg(short, long, default_value = ".")]
@@ -109,9 +123,10 @@ fn main() -> ExitCode {
             name,
             project_type,
             full,
+            skynet,
             output,
             force,
-        } => cmd_init(name, &project_type, full, &output, force),
+        } => cmd_init(name, &project_type, full, skynet, &output, force),
         Commands::Check { file } => cmd_validate(&file),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
     }
@@ -201,10 +216,17 @@ fn cmd_init(
     name: Option<String>,
     project_type_str: &str,
     full: bool,
+    skynet: bool,
     output: &Path,
     force: bool,
 ) -> ExitCode {
+    // --skynet implies --full
+    let full = full || skynet;
+
     println!("{}", "Forge Protocol Init".bold().green());
+    if skynet {
+        println!("{}", "  SKYNET MODE enabled".bold().cyan());
+    }
     println!();
 
     // Parse project type
@@ -237,7 +259,11 @@ fn cmd_init(
         files.push(("roadmap.yaml", roadmap_template()));
     }
 
-    // Write files
+    if skynet {
+        files.push(("CLAUDE.md", claude_md_template(&project_name, project_type)));
+    }
+
+    // Write protocol files
     for (filename, content) in &files {
         let file_path = output.join(filename);
 
@@ -261,10 +287,160 @@ fn cmd_init(
         }
     }
 
+    // SKYNET MODE: Generate hooks and update .gitignore
+    if skynet {
+        println!();
+
+        // For Rust projects, show cargo-husky instructions instead of creating hooks
+        if uses_cargo_husky(project_type) {
+            println!("{}", "  Hooks (Rust/cargo-husky):".dimmed());
+            println!(
+                "    {}",
+                "Add to Cargo.toml [dev-dependencies]:".bright_black()
+            );
+            println!(
+                "    {}",
+                "cargo-husky = { version = \"1\", features = [\"precommit-hook\", \"run-cargo-clippy\", \"run-cargo-fmt\"] }".bright_black()
+            );
+            println!("    {}", "Then run: cargo test".bright_black());
+        } else {
+            // Create .hooks directory and files
+            let hooks_dir = output.join(".hooks");
+            if let Err(e) = std::fs::create_dir_all(&hooks_dir) {
+                eprintln!(
+                    "  {} Failed to create .hooks directory - {}",
+                    "ERROR".bold().red(),
+                    e
+                );
+                return ExitCode::FAILURE;
+            }
+
+            // Pre-commit hook
+            let precommit_path = hooks_dir.join("pre-commit");
+            if !precommit_path.exists() || force {
+                let hook_content = precommit_hook_template(project_type);
+                match std::fs::write(&precommit_path, hook_content) {
+                    Ok(_) => {
+                        // Make executable on Unix
+                        #[cfg(unix)]
+                        {
+                            use std::os::unix::fs::PermissionsExt;
+                            let _ = std::fs::set_permissions(
+                                &precommit_path,
+                                std::fs::Permissions::from_mode(0o755),
+                            );
+                        }
+                        println!("  {} {}", "CREATE".bold().green(), precommit_path.display());
+                    }
+                    Err(e) => {
+                        eprintln!(
+                            "  {} {} - {}",
+                            "ERROR".bold().red(),
+                            precommit_path.display(),
+                            e
+                        );
+                    }
+                }
+            } else {
+                println!(
+                    "  {} {} (use --force to overwrite)",
+                    "SKIP".yellow(),
+                    precommit_path.display()
+                );
+            }
+
+            // Install script
+            let install_path = hooks_dir.join("install.sh");
+            if !install_path.exists() || force {
+                let install_content = hook_installer_template();
+                match std::fs::write(&install_path, install_content) {
+                    Ok(_) => {
+                        #[cfg(unix)]
+                        {
+                            use std::os::unix::fs::PermissionsExt;
+                            let _ = std::fs::set_permissions(
+                                &install_path,
+                                std::fs::Permissions::from_mode(0o755),
+                            );
+                        }
+                        println!("  {} {}", "CREATE".bold().green(), install_path.display());
+                    }
+                    Err(e) => {
+                        eprintln!(
+                            "  {} {} - {}",
+                            "ERROR".bold().red(),
+                            install_path.display(),
+                            e
+                        );
+                    }
+                }
+            }
+        }
+
+        // Update .gitignore
+        let gitignore_path = output.join(".gitignore");
+        let checkpoint_entry = ".claude_checkpoint.yaml";
+
+        let needs_update = if gitignore_path.exists() {
+            match std::fs::read_to_string(&gitignore_path) {
+                Ok(content) => !content.contains(checkpoint_entry),
+                Err(_) => true,
+            }
+        } else {
+            true
+        };
+
+        if needs_update {
+            let mut content = if gitignore_path.exists() {
+                std::fs::read_to_string(&gitignore_path).unwrap_or_default()
+            } else {
+                String::new()
+            };
+
+            if !content.is_empty() && !content.ends_with('\n') {
+                content.push('\n');
+            }
+            content.push_str("\n# SKYNET MODE checkpoint (session-specific)\n");
+            content.push_str(checkpoint_entry);
+            content.push('\n');
+
+            match std::fs::write(&gitignore_path, content) {
+                Ok(_) => {
+                    println!(
+                        "  {} .gitignore (added {})",
+                        "UPDATE".bold().green(),
+                        checkpoint_entry
+                    );
+                }
+                Err(e) => {
+                    eprintln!("  {} .gitignore - {}", "ERROR".bold().red(), e);
+                }
+            }
+        } else {
+            println!(
+                "  {} .gitignore (already has {})",
+                "SKIP".yellow(),
+                checkpoint_entry
+            );
+        }
+    }
+
     println!();
     println!("{}", "Next steps:".bold());
     println!("  1. Edit warmup.yaml with your project details");
-    println!("  2. Run: forge-protocol validate");
+    if skynet {
+        if !uses_cargo_husky(project_type) {
+            println!("  2. Install hooks: ./.hooks/install.sh");
+            println!("  3. Launch: claude --dangerously-skip-permissions");
+            println!("  4. Start: run warmup → punch it");
+        } else {
+            println!("  2. Add cargo-husky to Cargo.toml and run: cargo test");
+            println!("  3. Launch: claude --dangerously-skip-permissions");
+            println!("  4. Start: run warmup → punch it");
+        }
+    } else {
+        println!("  2. Run: forge-protocol validate");
+    }
     println!();
 
     ExitCode::SUCCESS
