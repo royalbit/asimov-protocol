@@ -1,5 +1,6 @@
 # Forge Protocol
 
+[![CI](https://github.com/royalbit/forge-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/forge-protocol/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/v/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
 [![Downloads](https://img.shields.io/crates/d/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
 [![License](https://img.shields.io/crates/l/forge-protocol.svg)](https://github.com/royalbit/forge-protocol/blob/main/LICENSE)
