@@ -454,6 +454,9 @@ See [Self-Healing Deep Dive](docs/SELF-HEALING.md) for the full technical specif
 - [ADR-001: Green Coding By Default](docs/adr/001-green-coding-by-default.md) - Why all projects are green
 - [ADR-002: Self-Healing Protocol](docs/adr/002-self-healing-protocol.md) - Unattended autonomy via recovery
 
+### Vendor Integration
+- [Vendor Implementation Guide](docs/VENDOR_IMPLEMENTATION.md) - What AI tools need for SKYNET MODE
+
 ### Guides
 - [Autonomous Session Guide](docs/guides/AUTONOMOUS_SESSION_GUIDE.md) - How to run autonomous AI sessions
 - [Sprint Protocol](docs/guides/SPRINT_AUTONOMY_PROTOCOL.md) - Bounded sessions with shipping discipline
