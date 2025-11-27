@@ -22,6 +22,29 @@
 #   Trust (human) + Protocols (AI guardrails) = Safe Autonomy
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# SELF-HEALING PROTOCOL - Survives Auto-Compact (CRITICAL FOR AUTONOMY)
+# ═══════════════════════════════════════════════════════════════════════════════
+self_healing:
+  checkpoint_file: ".claude_checkpoint.yaml"
+
+  mandatory_triggers:
+    every_2_hours:
+      - "Write progress to .claude_checkpoint.yaml"
+      - "Re-read this warmup.yaml completely"
+      - "Verify: 4hr max, 1 milestone, no scope creep"
+    before_any_commit:
+      - "Re-read quality gates"
+      - "Verify: cargo test passes, zero warnings"
+    when_confused:
+      - "STOP → re-read .claude_checkpoint.yaml → re-read warmup.yaml"
+
+  core_rules_summary:
+    - "4hr MAX session, 1 milestone, NO scope creep"
+    - "Tests pass + ZERO warnings → then commit"
+    - "NO 'let me also', NO 'while I'm here'"
+    - "Done > Perfect. Ship it."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # IDENTITY
 # ═══════════════════════════════════════════════════════════════════════════════
 identity:
