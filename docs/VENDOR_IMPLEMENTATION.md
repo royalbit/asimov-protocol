@@ -1,360 +1,252 @@
 # Vendor Implementation Guide
 
-> **For AI coding tool vendors who want to support SKYNET MODE**
+> **The Hard Truth About AI Tool Compatibility**
 
-## Executive Summary
+## Executive Summary: The Uncomfortable Reality
 
-The Forge Protocol enables **8-10 hour unattended autonomous AI sessions** with self-healing capabilities. Currently, only **Claude Code** fully supports this because it has the required features.
+**SKYNET MODE works with Claude Code. It will probably never work with other AI tools.**
 
-This document specifies what other AI coding tools (ChatGPT, GitHub Copilot, Cursor, Cody, etc.) need to implement for full Forge Protocol compatibility.
+This document explains why, without the marketing-friendly spin.
 
-## Why This Matters
+## The Brutal Truth
 
-| With SKYNET MODE | Without |
-|------------------|---------|
-| 8-10hr unattended sessions | Manual intervention every 30-60min |
-| Self-healing after context loss | Rules forgotten, quality degrades |
-| 50-100x developer velocity | Standard AI-assisted velocity |
-| "Sleep and wake up to results" | Constant babysitting required |
-
-**User demand:** As the Forge Protocol gains adoption, users will request these features from their preferred AI tools.
-
-## Required Capabilities
-
-### 1. Auto-Loaded Configuration File
-
-**What:** A file that is automatically read at session start, before any user input.
-
-**Why:** Bootstraps the AI with project context, rules, and self-healing instructions.
-
-**Implementation:**
+### What SKYNET MODE Requires
 
 ```
-Priority order (check each, use first found):
-1. .ai/config.yaml      (vendor-neutral, recommended)
-2. .forge/warmup.yaml   (Forge Protocol native)
-3. CLAUDE.md            (Claude Code compatible)
-4. .cursorrules         (Cursor compatible)
-5. .github/copilot.md   (Copilot compatible)
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    SKYNET MODE REQUIREMENTS                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  1. Persistent conversation context that compacts                       │
+│     └── The PROBLEM we're solving                                       │
+│                                                                         │
+│  2. Terminal/shell visibility                                           │
+│     └── How hook output reaches the AI                                  │
+│                                                                         │
+│  3. File system read access mid-session                                 │
+│     └── How the AI re-reads warmup.yaml                                 │
+│                                                                         │
+│  4. Auto-loaded config file (CLAUDE.md)                                 │
+│     └── Bootstrap instruction that survives compaction                  │
+│                                                                         │
+│  ALL FOUR are required. Missing any one breaks the chain.               │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Requirements:**
-- [ ] File is read automatically at session/conversation start
-- [ ] Contents are injected into system context
-- [ ] File is re-read after context compaction (critical!)
-- [ ] Supports YAML and Markdown formats
+### Why Other AI Tools Can't Do This
 
-**Example auto-load behavior:**
+| AI Tool | Persistent Context | Terminal Visibility | File Re-read | Auto-config | Verdict |
+|---------|-------------------|---------------------|--------------|-------------|---------|
+| **Claude Code** | ✓ | ✓ | ✓ | ✓ | **Works** |
+| **ChatGPT** | ✗ (resets) | ✗ | ✗ | ✗ | **Never** |
+| **GitHub Copilot** | ✗ (no conversation) | ✗ | ✗ | ✗ | **Never** |
+| **Cursor** | Partial | Partial | Limited | ✓ | **Unlikely** |
+| **Gemini** | ✗ (resets) | ✗ | ✗ | ✗ | **Never** |
+| **Cody** | ✗ | ✗ | Limited | ✗ | **Never** |
+
+**"Never" means:** These tools would need to fundamentally rebuild their architecture. There's no business case for this.
+
+### The Architecture Problem
+
+**ChatGPT, Gemini, etc.:**
+- No persistent filesystem access
+- Context doesn't "compact" - it resets or truncates
+- No way to execute hooks or see terminal output
+- Cloud-based, sandboxed, no local integration
+
+**GitHub Copilot:**
+- Not a conversation - it's autocomplete
+- No context to compact in the first place
+- No session state, no memory
+- Completely different use case
+
+**Cursor:**
+- Has `.cursorrules` (auto-config) ✓
+- Has some file access ✓
+- But: Does terminal output flow into AI context? **Unclear**
+- But: Can it re-read files after compaction? **Unlikely**
+- Even if partial, hook refresh mechanism probably won't work
+
+### The Hook Refresh Mechanism (ADR-006)
+
+This is the v2.1.0 innovation that makes SKYNET MODE resilient:
+
 ```
-Session Start
-     │
-     ▼
-┌─────────────────────┐
-│ Check for config    │
-│ files in priority   │
-│ order               │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Read and inject     │
-│ into system context │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Ready for user      │
-│ input               │
-└─────────────────────┘
-```
-
-### 2. File System Access
-
-**What:** Ability to read and write files on the local filesystem during a session.
-
-**Why:**
-- Read `warmup.yaml` for full protocol rules
-- Write `.claude_checkpoint.yaml` for session state
-- Re-read files after context compaction
-
-**Requirements:**
-- [ ] Read arbitrary files by path
-- [ ] Write files to disk
-- [ ] Access persists throughout session
-- [ ] Works in both interactive and autonomous modes
-
-**Security model suggestion:**
-```yaml
-# .ai/permissions.yaml
-allow:
-  read:
-    - "**/*.yaml"
-    - "**/*.md"
-    - "**/*.json"
-    - "src/**/*"
-  write:
-    - ".claude_checkpoint.yaml"
-    - ".ai/session_state.yaml"
-deny:
-  - "**/.env*"
-  - "**/secrets/**"
+Git commit triggers → Pre-commit hook runs → forge-protocol refresh outputs banner
+                                                         │
+                                                         ▼
+                                            Terminal shows SKYNET MODE reminder
+                                                         │
+                                                         ▼
+                                            Claude Code SEES terminal output
+                                                         │
+                                                         ▼
+                                            Fresh context injection (not compacted!)
+                                                         │
+                                                         ▼
+                                            AI knows to re-read warmup.yaml
 ```
 
-### 3. Context Compaction Recovery
+**Why this CAN'T work for other AIs:**
 
-**What:** After context is compressed/summarized, the AI must re-read configuration files.
+1. **No terminal visibility**: ChatGPT/Gemini can't see what your local terminal prints
+2. **No local execution**: They can't run hooks because they're cloud-sandboxed
+3. **No file re-read**: Even if they saw "re-read warmup.yaml", they can't do it
 
-**Why:** Rules defined in warmup.yaml get lost during compaction. The AI needs to reload them from disk.
+The hook mechanism exploits **Claude Code's unique architecture**: a local CLI that runs in your terminal with full filesystem access and persistent conversational context.
 
-**This is the critical feature most tools lack.**
+## What Other AIs CAN Use
 
-**Requirements:**
-- [ ] Detect when context compaction occurs
-- [ ] Automatically re-read auto-load config files
-- [ ] Preserve "re-read warmup.yaml" instruction through compaction
-- [ ] Notify AI that compaction occurred (so it can checkpoint)
+### The Protocol Files (Universal)
 
-**Implementation approaches:**
+Anyone can use these files - just paste them:
 
-**Option A: Automatic re-injection**
-```
-Context Compaction Triggered
-           │
-           ▼
-┌─────────────────────┐
-│ Compress/summarize  │
-│ conversation        │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Re-read config      │◄── CRITICAL STEP
-│ files from disk     │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Inject fresh config │
-│ into new context    │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Add system note:    │
-│ "Context compacted, │
-│  config reloaded"   │
-└─────────────────────┘
-```
+| File | How to Use | Limitation |
+|------|------------|------------|
+| `warmup.yaml` | Paste at session start | Must re-paste after context loss |
+| `sprint.yaml` | Paste when asking about work | Manual sync |
+| `roadmap.yaml` | Paste when planning | Manual sync |
 
-**Option B: Protected instructions**
-- Mark certain instructions as "survive compaction"
-- At minimum, preserve: "After compaction, re-read .ai/config.yaml"
+**This works but is manual.** When context resets, you lose everything and start over.
 
-### 4. Checkpoint File Support
-
-**What:** AI can write session state to a designated checkpoint file.
-
-**Why:** Enables recovery after compaction, crashes, or session resume.
-
-**Requirements:**
-- [ ] Write to `.claude_checkpoint.yaml` or `.ai/checkpoint.yaml`
-- [ ] Standard checkpoint format (see below)
-- [ ] Periodic writes (every 2 hours recommended)
-- [ ] Write before risky operations
-
-**Standard checkpoint format:**
-```yaml
-# .ai/checkpoint.yaml
-timestamp: "2025-11-26T15:30:00Z"
-session_started: "2025-11-26T12:00:00Z"
-tool: "cursor"  # or "copilot", "chatgpt", etc.
-tool_version: "1.2.3"
-
-milestone: "Add user authentication"
-completed:
-  - "Created auth middleware"
-  - "Added JWT token generation"
-in_progress: "Writing login endpoint tests"
-next_steps:
-  - "Implement logout"
-  - "Add refresh token support"
-
-rules_reminder:
-  - "4hr max session"
-  - "ONE milestone only"
-  - "Tests must pass before commit"
-
-# Recovery instruction
-recovery: "Re-read warmup.yaml, then continue from in_progress"
-```
-
-### 5. Autonomous Execution Mode
-
-**What:** AI can work without requiring approval for each action.
-
-**Why:** Unattended sessions require the AI to make decisions independently.
-
-**Requirements:**
-- [ ] Execute file operations without per-action approval
-- [ ] Run shell commands without per-command approval
-- [ ] User opt-in required (security)
-- [ ] Configurable scope/permissions
-
-**Example opt-in:**
-```bash
-# Claude Code
-claude --dangerously-skip-permissions
-
-# Proposed standard
-ai-tool --autonomous
-ai-tool --trust-protocol  # Trust Forge Protocol guardrails
-```
-
-## Compatibility Levels
-
-### Level 0: No Support
-- Can paste warmup.yaml content manually
-- No file access, no auto-load, no recovery
-- **Tools:** ChatGPT (web), most chat interfaces
-
-### Level 1: Basic Support
-- Auto-loads config file at session start
-- Has file system access
-- No compaction recovery
-- **Tools:** Cursor (partial)
-
-### Level 2: Full Support (SKYNET MODE)
-- Auto-loads config
-- File system access
-- **Compaction recovery** (re-reads config)
-- Checkpoint support
-- Autonomous mode
-- **Tools:** Claude Code
-
-### Level 3: Enhanced Support
-- All Level 2 features
-- Native Forge Protocol integration
-- Protocol validation built-in
-- Checkpoint UI/visualization
-- **Tools:** (none yet)
-
-## Testing Compliance
-
-Vendors can test their implementation:
+### The Validation CLI (Universal)
 
 ```bash
-# Install test suite
 cargo install forge-protocol
-
-# Run compatibility check
-forge-protocol vendor-check
-
-# Expected output for Level 2:
-# ✓ Auto-load config: .ai/config.yaml detected and loaded
-# ✓ File system access: read/write working
-# ✓ Compaction recovery: config re-loaded after simulated compaction
-# ✓ Checkpoint support: .ai/checkpoint.yaml written successfully
-# ✓ Autonomous mode: available with --autonomous flag
-#
-# RESULT: Level 2 (Full SKYNET MODE support)
+forge-protocol validate          # Works anywhere
+forge-protocol lint-docs         # Works anywhere
+forge-protocol init              # Works anywhere
 ```
 
-## Implementation Priority
+The CLI is just a Rust binary. It doesn't need AI integration.
 
-For vendors looking to add support, prioritize in this order:
+## The Uncomfortable Questions
 
-| Priority | Feature | Impact |
-|----------|---------|--------|
-| **P0** | Auto-load config | Enables basic protocol support |
-| **P0** | File system access | Required for everything else |
-| **P1** | Compaction recovery | **Unlocks SKYNET MODE** |
-| **P2** | Checkpoint support | Enables session resume |
-| **P2** | Autonomous mode | Enables unattended operation |
+### Q: Will other vendors implement these features?
 
-**P1 (Compaction Recovery) is the key differentiator.** This is what makes 8-10 hour unattended sessions possible.
+**Probably not.** Here's why:
 
-## Reference Implementation
+1. **No business case**: Anthropic built Claude Code for autonomous coding. OpenAI/Google are focused on chat interfaces and API access. Different products, different goals.
 
-Claude Code's implementation can serve as reference:
+2. **Architecture would need rebuild**: Adding persistent filesystem access and terminal integration to ChatGPT would require rebuilding from scratch. It's not a feature request - it's a different product.
 
-| Feature | Claude Code Implementation |
-|---------|---------------------------|
-| Auto-load | Reads `CLAUDE.md` at session start |
-| File access | Full read/write via tools |
-| Compaction recovery | CLAUDE.md re-injected after /compact |
-| Checkpoint | AI writes to any file path |
-| Autonomous | `--dangerously-skip-permissions` flag |
+3. **Security model conflicts**: ChatGPT's value is being sandboxed and safe. Giving it filesystem access creates liability.
 
-## Proposing to Vendors
+4. **Market positioning**: Copilot is autocomplete. Cursor is IDE integration. Claude Code is autonomous agent. They solve different problems.
 
-When requesting these features from vendors, reference this document:
+### Q: What if I prefer ChatGPT/Copilot?
 
-**GitHub Issues:**
-- Title: "Support Forge Protocol for AI autonomous sessions"
-- Link: https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md
-- Key request: "Implement compaction recovery (re-read config after context compression)"
+Use them for what they're good at:
+- **ChatGPT**: Brainstorming, research, explanations, one-off code generation
+- **Copilot**: Autocomplete, inline suggestions, small completions
+- **Claude Code**: Autonomous multi-hour coding sessions
 
-**Template:**
-```markdown
-## Feature Request: Forge Protocol Support
+Different tools for different jobs. The Forge Protocol is specifically designed for **autonomous development**, which currently only Claude Code supports.
 
-The Forge Protocol enables 8-10 hour unattended AI coding sessions with
-self-healing capabilities. Currently only Claude Code supports this.
+### Q: Is this vendor lock-in?
 
-**What's needed:**
-1. Auto-load config file at session start
-2. Re-read config after context compaction (CRITICAL)
-3. File system access for checkpoints
+**Yes, for SKYNET MODE.** There's no sugarcoating this.
 
-**Spec:** https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md
+The protocol FILES are vendor-neutral. The SELF-HEALING mechanism is Claude Code exclusive.
 
-**User impact:** 50-100x developer velocity, unattended autonomous sessions
+If another vendor builds a tool with:
+- Local CLI execution
+- Terminal output visibility
+- Persistent context with compaction
+- Filesystem access mid-session
+- Auto-loaded config files
 
-This is becoming a standard for AI-assisted development. Please consider
-implementing compatibility.
-```
+...then SKYNET MODE would work there too. But as of November 2025, only Claude Code has all five.
 
-## Vendor Tracker
+### Q: Should I wait for other tools to catch up?
 
-| Vendor | Level | Auto-load | File Access | Compaction Recovery | Notes |
-|--------|-------|-----------|-------------|---------------------|-------|
-| **Claude Code** | 2 | ✓ | ✓ | ✓ | Full support |
-| Cursor | 1 | ✓ | Partial | ✗ | Has .cursorrules |
-| GitHub Copilot | 0 | ✗ | ✗ | ✗ | Chat only |
-| ChatGPT | 0 | ✗ | ✗ | ✗ | No file access |
-| Cody | 0 | ✗ | ✗ | ✗ | Limited |
-| Amazon Q | ? | ? | ? | ? | Needs testing |
-| Windsurf | ? | ? | ? | ? | Needs testing |
+**No.** Claude Code exists now and works. Waiting for hypothetical future competitors is leaving productivity on the table.
 
-*Last updated: 2025-11-26*
+The protocol is designed so that IF alternatives emerge, migration is easy (it's just YAML files). But there's no indication that ChatGPT, Copilot, or others are building toward this architecture.
 
-## FAQ
+## Compatibility Matrix (Honest Version)
 
-### Q: Why not just use longer context windows?
+| Feature | Claude Code | Everyone Else |
+|---------|-------------|---------------|
+| Read warmup.yaml | Auto + re-read | Manual paste |
+| Self-healing | ✓ Full | ✗ None |
+| Hook refresh | ✓ Works | ✗ Can't |
+| Checkpoints | ✓ Auto-written | ✗ Manual |
+| 8-10hr unattended | ✓ Yes | ✗ No |
+| Quality gates | ✓ Enforced | ✗ Trust-based |
+| Context recovery | ✓ Automatic | ✗ Start over |
 
-Longer context delays but doesn't prevent compaction. At some point, every tool must compress. The question is: what happens after?
+## The Bottom Line
 
-### Q: Can't the AI just "remember" the rules?
+**The Forge Protocol has two layers:**
 
-No. Summarization doesn't preserve importance. Rules get compressed into vague summaries. The only reliable solution is re-reading from disk.
+1. **Protocol Files** (warmup.yaml, sprint.yaml, roadmap.yaml)
+   - Universal
+   - Any AI can read them (if you paste them)
+   - Useful but manual
 
-### Q: Why YAML for config?
+2. **SKYNET MODE** (Self-healing, hooks, autonomous sessions)
+   - Claude Code exclusive
+   - Requires specific architecture
+   - No realistic path for other vendors
 
-- Every AI can parse it (if they have file access)
-- Human readable/editable
-- Git-friendly (diffable, mergeable)
-- Schema-validatable
+**Stop hoping other tools will "catch up."** They're building different products for different use cases. If you want SKYNET MODE, use Claude Code. If you prefer other tools, use the protocol files manually and accept the limitations.
 
-### Q: Is this vendor lock-in to Claude Code?
-
-Currently, yes—because other vendors haven't implemented the required features. This document exists to change that. The protocol itself is vendor-neutral; the implementation requirements are universal.
-
-## Contact
-
-- **Protocol repo:** https://github.com/royalbit/forge-protocol
-- **Issues:** https://github.com/royalbit/forge-protocol/issues
-- **Discussions:** https://github.com/royalbit/forge-protocol/discussions
+This isn't marketing. It's reality.
 
 ---
 
-*The Forge Protocol is open source (MIT). Vendors are encouraged to implement full support and join the ecosystem.*
+## For Vendors (If You're Actually Interested)
+
+If you're a vendor and genuinely want to implement SKYNET MODE compatibility, here's what you'd need to build:
+
+### Minimum Requirements
+
+1. **Local CLI that runs in user's terminal**
+   - Not a web interface
+   - Not a cloud API
+   - Actual local process with shell access
+
+2. **Persistent conversational context**
+   - That compacts/summarizes (not resets)
+   - With detectable compaction events
+
+3. **Terminal output flows into context**
+   - AI sees stdout/stderr from commands
+   - Including hook output
+
+4. **Filesystem access mid-session**
+   - Read files on demand
+   - Not just at session start
+
+5. **Auto-loaded config file**
+   - Read before first user message
+   - Re-read after compaction
+
+### Implementation Notes
+
+- The hook refresh works because hook output is **new input** that arrives after compaction
+- "Re-read warmup.yaml" must be short enough to survive summarization
+- Checkpoint files should be in `.gitignore` (session state, not code)
+
+### Testing
+
+If you implement this, test with:
+
+```bash
+# 1. Start session, read warmup.yaml
+# 2. Work until context compacts (~15min heavy usage)
+# 3. Make a commit (triggers hook)
+# 4. Verify AI sees protocol refresh banner
+# 5. Verify AI re-reads warmup.yaml
+# 6. Verify rules are restored
+```
+
+If all six steps work, you have SKYNET MODE compatibility.
+
+---
+
+*Last updated: 2025-11-27*
+
+*This document is intentionally blunt. The Forge Protocol's value is in honest assessment of what's possible, not in marketing fiction about vendor-neutral futures that aren't coming.*

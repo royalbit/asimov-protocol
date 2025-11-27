@@ -136,32 +136,44 @@ forge-protocol refresh --verbose     # Include quality gates from warmup.yaml
 - Git-friendly (diffable, mergeable)
 - No vendor lock-in for file format
 
-## Compatibility
+## Compatibility (The Hard Truth)
 
-The Forge Protocol has two layers with different compatibility:
+**SKYNET MODE works with Claude Code. It will probably never work with other AI tools.**
 
-| Feature | Any AI | Claude Code |
-|---------|--------|-------------|
-| **File Format** | | |
-| warmup.yaml / sprint.yaml / roadmap.yaml | ✓ (paste/upload) | ✓ (auto-read) |
-| Protocol validation CLI | ✓ | ✓ |
-| Documentation linting | ✓ | ✓ |
-| **Advanced Features** | | |
-| SKYNET MODE (unattended autonomy) | ✗ | ✓ |
-| Self-Healing Protocol | ✗ | ✓ |
-| 8-10hr autonomous sessions | ✗ | ✓ |
-| Auto-checkpoint & recovery | ✗ | ✓ |
+| AI Tool | Protocol Files | SKYNET MODE | Verdict |
+|---------|---------------|-------------|---------|
+| **Claude Code** | ✓ Auto-read | ✓ Full support | **Use this** |
+| **ChatGPT** | ✓ Manual paste | ✗ Never | Different architecture |
+| **GitHub Copilot** | ✗ N/A | ✗ Never | It's autocomplete, not conversation |
+| **Cursor** | ✓ .cursorrules | ✗ Unlikely | Missing hook visibility |
+| **Gemini** | ✓ Manual paste | ✗ Never | Cloud-sandboxed |
 
-**Why the difference?**
+### Why "Never"?
 
-Self-Healing requires:
-1. **Auto-loaded config file** (CLAUDE.md) - Only Claude Code has this
-2. **File system access** - ChatGPT/Copilot can't read files mid-session
-3. **Re-read from disk** - After context compaction, reload rules
+SKYNET MODE requires **four architectural features**:
 
-Other AI tools (ChatGPT, Copilot, Cursor) can use the **file format** - paste warmup.yaml at session start. But when context compacts, you're back to manual recovery.
+1. **Persistent context that compacts** (the problem we solve)
+2. **Terminal visibility** (how hooks reach the AI)
+3. **File re-read mid-session** (how warmup.yaml gets reloaded)
+4. **Auto-loaded config** (bootstrap instruction)
 
-**Bottom line:** The protocol files are universal. SKYNET MODE is Claude Code exclusive (for now)
+**ChatGPT/Gemini**: Cloud-sandboxed, no filesystem, context resets (doesn't compact)
+**Copilot**: Not a conversation—it's autocomplete. No context to compact.
+**Cursor**: Has config files, but hook output probably doesn't flow into AI context
+
+These aren't missing features. They're **different products for different use cases**.
+
+### What Other AIs CAN Use
+
+| Layer | What | Compatibility |
+|-------|------|---------------|
+| **Protocol Files** | warmup.yaml, sprint.yaml, roadmap.yaml | Universal (paste manually) |
+| **CLI Tools** | validate, lint-docs, init | Universal (it's just Rust) |
+| **SKYNET MODE** | Self-healing, hooks, autonomy | **Claude Code only** |
+
+**Is this vendor lock-in?** Yes, for SKYNET MODE. The files are portable. The magic isn't.
+
+See [VENDOR_IMPLEMENTATION.md](docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
 ## Green Coding & ESG Impact
 
