@@ -19,6 +19,20 @@ AI hallucinates. It invents project conventions. It forgets rules mid-session. I
 
 A simple YAML file (`warmup.yaml`) that any AI can read to restore project context. Not from memory. From disk.
 
+## Core Goals
+
+The Forge Protocol exists to solve five specific problems. **Features that don't serve these goals don't belong here.**
+
+| Goal | Problem It Solves |
+|------|-------------------|
+| **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
+| **SELF-HEALING** | Rules lost after compaction → Re-read from disk |
+| **SESSION CONTINUITY** | Context lost between sessions → Checkpoint files |
+| **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
+| **GREEN CODING** | Cloud AI for routine tasks → Local validation |
+
+This is the filter for scope creep. If a proposed feature doesn't directly serve one of these goals, it doesn't belong in the protocol.
+
 ```yaml
 # warmup.yaml - minimal example
 identity:
