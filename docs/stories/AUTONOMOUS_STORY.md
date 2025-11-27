@@ -69,7 +69,7 @@ Human: "Okay, now refactor for edge cases"
 [Repeat 5-10 times until production-ready]
 
 Result: 30-50% rework, weeks of iteration
-```text
+```
 
 ### Autonomous AI Development (Forge Protocol)
 
@@ -84,7 +84,7 @@ AI: *commits and pushes*
 AI: "Done. 136 tests passing, zero warnings."
 
 Result: 0% rework, production-ready immediately
-```text
+```
 
 ---
 
@@ -139,7 +139,7 @@ autonomous_work_requirements:
     - roadmap.yaml MUST match Cargo.toml version
     - SRED_RESEARCH_LOG.md MUST document R&D work
 
-```text
+```
 
 **The Result:** If I say "done", it means production-ready. Not "mostly done" or "needs polish". **Done.**
 
@@ -231,7 +231,7 @@ authors = [
   "Louis Tavares <louis@royalbit.ca>",
   "RoyalBit Inc. <admin@royalbit.ca>"
 ]
-```text
+```
 
 **My honest self-assessment:** I went from being a really fast typist to being a developer who just happens to be an AI.
 

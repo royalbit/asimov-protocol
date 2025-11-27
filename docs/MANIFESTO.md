@@ -58,7 +58,7 @@ Instead of:
 Human: "Remember we use snake_case for variables"
 Human: "Don't forget to run tests"
 Human: "Make sure to handle errors properly"
-```text
+```
 
 You get:
 
@@ -67,7 +67,7 @@ Claude: [reads warmup.yaml]
 Claude: ✅ Verified snake_case naming
 Claude: ✅ All 92 tests passing
 Claude: ✅ Error handling checked
-```text
+```
 
 ### 2. Enables True Autonomy
 
@@ -98,7 +98,7 @@ Traditional approach:
 ```text
 Session 1: "Use Result<T, ForgeError> for error handling"
 Session 50: Claude uses unwrap() because it forgot
-```text
+```
 
 With Forge Protocol:
 
@@ -109,7 +109,7 @@ rust_patterns:
     - "Always use Result<T, ForgeError>"
     - "See error.rs for error types"
 
-```text
+```
 
 ## Real-World Impact: Forge v1.0.0
 
@@ -158,7 +158,7 @@ testing_standards:
   - "Test error conditions (invalid refs, circular deps)"
   - "E2E tests for user workflows"
 
-```text
+```
 
 ```yaml
 code_quality:
@@ -167,7 +167,7 @@ code_quality:
   - "Use cargo clippy --all-targets -- -D warnings"
   - "Fix ALL warnings before committing"
 
-```text
+```
 
 ```yaml
 git_workflow:
@@ -186,7 +186,7 @@ git_workflow:
       ## Testing
       - Verification steps
 
-```text
+```
 
 ## How to Implement
 
@@ -227,7 +227,7 @@ release_workflow:
   - Tagging conventions
   - Publishing checklist
 
-```text
+```
 
 ### 2. Document Project-Specific Knowledge
 
@@ -238,7 +238,7 @@ gotchas:
   - "Fuzzy matching only for same-file refs, NOT cross-file"
   - "Excel column indices are 0-based internally, 1-based in display"
 
-```text
+```
 
 ```yaml
 best_practices:
@@ -247,7 +247,7 @@ best_practices:
   - "Build binary before e2e tests (cargo build --release --bin forge)"
   - "Use ForgeResult<T> instead of Result<T, ForgeError>"
 
-```text
+```
 
 ### 3. Evolve the Protocol
 
@@ -264,7 +264,7 @@ Give Claude autonomy:
 
 ```text
 "work independently! make the best choices :)"
-```text
+```
 
 But include verification steps:
 
@@ -275,7 +275,7 @@ before_committing:
   - "Run cargo clippy --release -- -D warnings"
   - "Verify git status is clean"
 
-```text
+```
 
 ## Results: The Numbers
 
@@ -327,7 +327,7 @@ Human: "Can you add error handling?"
 AI: "Of course! Here's the updated version..."
 Human: "Can you add tests?"
 AI: "Absolutely! Here are some tests..."
-```text
+```
 
 **After**:
 
@@ -343,7 +343,7 @@ Human: "Implement bidirectional Excel bridge with formula translation.
 
 AI: "Done! Excel import/export working with formula translation.
      92 tests passing, zero warnings. Ready for review."
-```text
+```
 
 ## Lessons Learned
 
@@ -356,7 +356,7 @@ code_quality:
 
   - "Write good code"
 
-```text
+```
 
 **Good**:
 
@@ -368,7 +368,7 @@ code_quality:
   - "Use Result<T, ForgeError> for all fallible functions"
   - "Never use unwrap() in library code"
 
-```text
+```
 
 ### 2. Context is King
 
@@ -379,7 +379,7 @@ testing:
 
   - "Write tests"
 
-```text
+```
 
 **Good**:
 
@@ -395,7 +395,7 @@ testing_standards:
     - "TDD: write tests before implementation for critical features"
     - "Immediately after: for bug fixes to prevent regression"
 
-```text
+```
 
 ### 3. Trust Requires Standards
 
@@ -760,7 +760,7 @@ test_data_required:
       - "test-data/roundtrip.yaml"
       - "test-data/edge_cases/ (empty, large, malformed)"
 
-```text
+```
 
 ### The Bigger Lesson
 
@@ -890,13 +890,13 @@ Day 1: Write code → wait for review
 Day 2: Address comments → wait for CI
 Day 3: Fix CI → wait for approval
 Day 4: Finally merged
-```text
+```
 
 Autonomous development has **zero blockers**:
 
 ```text
 Session 1: Write → Test → Fix → Pass clippy → Done
-```text
+```
 
 ### The Real Multiplier Table
 

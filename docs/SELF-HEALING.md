@@ -163,7 +163,7 @@ After ANY context compaction, confusion, or uncertainty, RE-READ:
 
 ## Commands
 
-```bash
+```
 # Your language-specific commands
 cargo test                    # Rust
 flutter test                  # Flutter

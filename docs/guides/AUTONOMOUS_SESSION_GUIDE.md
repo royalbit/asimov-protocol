@@ -144,7 +144,7 @@ Release targets:
 Say "go", "run", "hit it", or "punch it" to start autonomous execution.
 Say "skip" to pick a different milestone.
 Say "plan" to discuss the approach first.
-```text
+```
 
 ### Step 3: Confirm or Redirect
 
@@ -168,7 +168,7 @@ Once you confirm, Claude enters **autonomous mode**:
 🤖 AUTONOMOUS MODE ACTIVATED
 
 From this point until release, Claude works WITHOUT interruption.
-```text
+```
 
 **What Claude does:**
 
@@ -210,7 +210,7 @@ forge --version  # Verify
 # crates.io
 cargo publish
 # Verify: https://crates.io/crates/royalbit-forge
-```text
+```
 
 ### Step 6: Report
 
@@ -237,7 +237,7 @@ Release targets:
 Tests: 193 passing, ZERO warnings
 
 Session logged in AI_DEVELOPMENT_HOURS.md
-```text
+```
 
 ---
 
@@ -273,7 +273,7 @@ Claude: "Here are alternative milestones:
   Which one?"
 You: "2"
 Claude: "📋 NEXT MILESTONE: Add SUMPRODUCT..."
-```text
+```
 
 ### Request Specific Work
 
@@ -283,7 +283,7 @@ Claude: "📋 NEXT MILESTONE: Add XLOOKUP..."
 You: "Actually, I need you to fix issue #42 first"
 Claude: "📋 REVISED MILESTONE: Fix issue #42..."
 You: "punch it"
-```text
+```
 
 ### Plan Before Executing
 
@@ -299,7 +299,7 @@ Claude: "Let me outline my approach:
 You: "Yes, but use the xlsxwriter crate"
 Claude: "Updated plan with xlsxwriter. Ready?"
 You: "go"
-```text
+```
 
 ---
 
@@ -355,7 +355,7 @@ If context seems lost after `/compact`, just say "run warmup" again.
 
 ```text
 You: "run warmup"
-```text
+```
 
 This reloads all context from warmup.yaml.
 
@@ -365,7 +365,7 @@ The protocol says Claude should NOT ask questions during autonomous execution. I
 
 ```text
 You: "Remember: autonomous mode means no questions. Use your best judgment."
-```text
+```
 
 ### "Release failed partway through"
 
@@ -373,13 +373,13 @@ Claude should retry automatically. If not:
 
 ```text
 You: "Continue the release - we stopped at [step]"
-```text
+```
 
 ### "I need to abort mid-session"
 
 ```text
 You: "STOP. Do not continue. Do not release."
-```text
+```
 
 Claude will halt and await instructions.
 

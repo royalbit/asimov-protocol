@@ -106,7 +106,7 @@ rust_patterns:
     - "NEVER use unwrap() in library code"
     - "ALWAYS use Result<T, ForgeError>"
 
-```text
+```
 
 **True Autonomy:**
 
@@ -422,14 +422,14 @@ Day 2: Address comments → wait for CI (2 hours blocked)
 Day 3: Fix CI → wait for approval (4 hours blocked)
 Day 4: Finally merged
 Total time: 4 days
-```text
+```
 
 Autonomous development has **zero blockers**:
 
 ```text
 Session 1: Write → Test → Fix → Pass all checks → Done
 Total time: 4 hours
-```text
+```
 
 **That's a 24x difference in calendar time for the same work.**
 
@@ -465,13 +465,13 @@ But more importantly: **Recognition based on actual contribution, not biology.**
 
 ```text
 Human did the work → Human gets credit → AI was "helpful"
-```text
+```
 
 **This Model:**
 
 ```text
 AI did the work → AI gets credit → Human enables and validates
-```text
+```
 
 ### What This Represents
 
