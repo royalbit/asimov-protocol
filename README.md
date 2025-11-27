@@ -5,9 +5,9 @@
 
 ## SKYNET MODE... with an Off Switch
 
-**Vendor-neutral AI session continuity. Zero tokens. Zero emissions.**
+**AI session continuity framework. Zero tokens. Zero emissions.**
 
-Any AI. Any project. Green by design.
+Green by design. Best experienced with Claude Code.
 
 ## The Problem
 
@@ -46,6 +46,16 @@ Install from [crates.io](https://crates.io/crates/forge-protocol):
 cargo install forge-protocol
 ```
 
+Or build from source (smaller binary with UPX compression):
+
+```bash
+git clone https://github.com/royalbit/forge-protocol
+cd forge-protocol
+make install-system    # Install to /usr/local/bin (1.3MB compressed)
+# OR
+make install-user      # Install to ~/.local/bin
+```
+
 Validate your protocol files:
 
 ```bash
@@ -61,6 +71,13 @@ forge-protocol init --type rust      # Generate Rust-specific template
 forge-protocol init --full           # Generate all three protocol files
 ```
 
+Lint documentation:
+
+```bash
+forge-protocol lint-docs             # Check all markdown files
+forge-protocol lint-docs --fix       # Auto-fix code block issues
+```
+
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
 
 ## Why YAML?
@@ -68,7 +85,34 @@ forge-protocol init --full           # Generate all three protocol files
 - Every AI can read it
 - Humans can read it
 - Git-friendly (diffable, mergeable)
-- No vendor lock-in
+- No vendor lock-in for file format
+
+## Compatibility
+
+The Forge Protocol has two layers with different compatibility:
+
+| Feature | Any AI | Claude Code |
+|---------|--------|-------------|
+| **File Format** | | |
+| warmup.yaml / sprint.yaml / roadmap.yaml | ✓ (paste/upload) | ✓ (auto-read) |
+| Protocol validation CLI | ✓ | ✓ |
+| Documentation linting | ✓ | ✓ |
+| **Advanced Features** | | |
+| SKYNET MODE (unattended autonomy) | ✗ | ✓ |
+| Self-Healing Protocol | ✗ | ✓ |
+| 8-10hr autonomous sessions | ✗ | ✓ |
+| Auto-checkpoint & recovery | ✗ | ✓ |
+
+**Why the difference?**
+
+Self-Healing requires:
+1. **Auto-loaded config file** (CLAUDE.md) - Only Claude Code has this
+2. **File system access** - ChatGPT/Copilot can't read files mid-session
+3. **Re-read from disk** - After context compaction, reload rules
+
+Other AI tools (ChatGPT, Copilot, Cursor) can use the **file format** - paste warmup.yaml at session start. But when context compacts, you're back to manual recovery.
+
+**Bottom line:** The protocol files are universal. SKYNET MODE is Claude Code exclusive (for now)
 
 ## Green Coding & ESG Impact
 
@@ -264,6 +308,8 @@ flowchart LR
 
 ## Self-Healing Protocol (Unattended Autonomy)
 
+> **Note:** This feature requires **Claude Code**. See [Compatibility](#compatibility) for details.
+
 **The key enabler for 8-10 hour autonomous sessions.**
 
 ### The Problem
@@ -398,7 +444,7 @@ See [Self-Healing Deep Dive](docs/SELF-HEALING.md) for the full technical specif
 - [Full Specification](docs/SPECIFICATION.md) - Protocol schema and details
 - [Examples](docs/EXAMPLES.md) - Configurations for Rust, Python, JS, monorepos
 - [Manifesto](docs/MANIFESTO.md) - The full philosophy and methodology
-- [Presentation](docs/PRESENTATION.md) - Marp slide deck ([PDF](Forge_Protocol_Suite.pdf))
+- [Presentation](docs/PRESENTATION.md) - Marp slide deck (run `make presentation` to generate PDF)
 
 ### Ecosystem
 - [Ecosystem Case Study](docs/ECOSYSTEM.md) - How the protocol powers a full product suite

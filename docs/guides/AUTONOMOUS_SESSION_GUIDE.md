@@ -6,6 +6,23 @@
 
 ---
 
+## Requirements
+
+| Requirement | Notes |
+|-------------|-------|
+| **Claude Code** | This guide is Claude Code specific |
+| **warmup.yaml** | Protocol file in project root |
+| **CLAUDE.md** | Auto-loaded config (for Self-Healing) |
+
+**Why Claude Code?** Autonomous sessions require:
+- `--dangerously-skip-permissions` flag (Claude Code only)
+- File system access (read/write files)
+- Self-Healing Protocol (CLAUDE.md auto-load)
+
+Other AI tools can use the warmup.yaml file format (paste it at session start), but cannot run unattended autonomous sessions.
+
+---
+
 ## Prerequisites: Launching Claude Code for Autonomy
 
 For **true autonomous mode** (no permission interrupts), launch Claude Code with:
@@ -332,20 +349,19 @@ Claude will warn if approaching 4-hour limit.
 
 ---
 
-## Surviving /compact
+## Surviving /compact (Self-Healing Protocol)
 
-When Claude Code CLI runs `/compact`, context is compressed. The essential protocol survives via the `compact_survival` section in warmup.yaml:
+When Claude Code CLI runs `/compact`, context is compressed. Rules may be lost.
 
-**Always retained:**
+**The Self-Healing Protocol handles this automatically:**
 
-- ZERO warnings policy
-- Release to ALL targets
-- 4-hour maximum
-- ONE milestone per session
-- Essential file locations
-- Release commands
+1. CLAUDE.md contains "re-read warmup.yaml after compaction"
+2. Every 2 hours, AI writes checkpoint + re-reads warmup.yaml
+3. If confused, AI re-reads from disk
 
-If context seems lost after `/compact`, just say "run warmup" again.
+**Manual recovery:** If context seems lost after `/compact`, just say "run warmup" again.
+
+See [Self-Healing Protocol](../SELF-HEALING.md) for full details.
 
 ---
 

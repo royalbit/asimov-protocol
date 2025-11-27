@@ -1,14 +1,30 @@
-# Forge Protocol - Documentation Build
+# Forge Protocol - Build & Documentation
 #
-# Targets for generating presentation PDFs from Marp markdown
+# Targets for building the CLI and generating presentation PDFs
 
-.PHONY: help presentation presentation-pdf presentation-pptx lint clean
+.PHONY: help build build-static build-compressed install-system install-user \
+        presentation presentation-pdf presentation-pptx lint lint-fix \
+        install-tools clean distclean
 
 # Check if marp-cli is installed
 HAS_MARP := $(shell command -v marp 2> /dev/null)
 
+# Binary name and paths
+BINARY := forge-protocol
+RELEASE_BIN := cli/target/release/$(BINARY)
+MUSL_BIN := cli/target/x86_64-unknown-linux-musl/release/$(BINARY)
+
 help:
 	@echo "🔥 Forge Protocol - Available Commands"
+	@echo ""
+	@echo "Build:"
+	@echo "  make build              - Build release binary"
+	@echo "  make build-static       - Build static musl binary"
+	@echo "  make build-compressed   - Build UPX-compressed static binary"
+	@echo ""
+	@echo "Install:"
+	@echo "  make install-system     - Install to /usr/local/bin (requires sudo)"
+	@echo "  make install-user       - Install to ~/.local/bin"
 	@echo ""
 	@echo "Presentation:"
 	@echo "  make presentation       - Generate PDF presentation"
@@ -22,6 +38,50 @@ help:
 	@echo "Utilities:"
 	@echo "  make install-tools      - Show installation commands"
 	@echo "  make clean              - Remove generated files"
+	@echo "  make distclean          - Remove all build artifacts"
+
+# ==============================================================================
+# Build Targets
+# ==============================================================================
+
+build:
+	@echo "🔨 Building release binary..."
+	cd cli && cargo build --release
+	@echo "✅ Built: $(RELEASE_BIN)"
+	@ls -lh $(RELEASE_BIN)
+
+build-static:
+	@echo "🔨 Building static musl binary..."
+	cd cli && cargo build --release --target x86_64-unknown-linux-musl
+	@echo "✅ Built: $(MUSL_BIN)"
+	@ls -lh $(MUSL_BIN)
+
+build-compressed: build-static
+	@echo "📦 Compressing with UPX..."
+	upx --best --lzma $(MUSL_BIN)
+	@echo "✅ Compressed: $(MUSL_BIN)"
+	@ls -lh $(MUSL_BIN)
+
+# ==============================================================================
+# Install Targets
+# ==============================================================================
+
+install-system: build-compressed
+	@echo "📥 Installing to /usr/local/bin..."
+	sudo install -m 755 $(MUSL_BIN) /usr/local/bin/$(BINARY)
+	@echo "✅ Installed: /usr/local/bin/$(BINARY)"
+	@forge-protocol --version
+
+install-user: build-compressed
+	@echo "📥 Installing to ~/.local/bin..."
+	@mkdir -p ~/.local/bin
+	install -m 755 $(MUSL_BIN) ~/.local/bin/$(BINARY)
+	@echo "✅ Installed: ~/.local/bin/$(BINARY)"
+	@~/.local/bin/forge-protocol --version
+
+# ==============================================================================
+# Presentation Targets
+# ==============================================================================
 
 presentation: presentation-pdf
 	@echo ""
@@ -74,3 +134,8 @@ clean:
 	@echo "🧹 Cleaning generated files..."
 	@rm -f Forge_Protocol_Suite.pdf Forge_Protocol_Suite.pptx
 	@echo "✅ Clean complete"
+
+distclean: clean
+	@echo "🧹 Cleaning build artifacts..."
+	cd cli && cargo clean
+	@echo "✅ Distclean complete"

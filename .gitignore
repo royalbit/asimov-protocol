@@ -6,6 +6,10 @@ forge-protocol-*
 *.tar.gz
 *.zip
 
+# Generated presentations (regenerate with `make presentation`)
+*.pdf
+*.pptx
+
 # OS files
 .DS_Store
 

@@ -2,6 +2,21 @@
 
 > **The key enabler for unattended 8-10 hour autonomous AI sessions.**
 
+## Requirements
+
+| Requirement | Why |
+|-------------|-----|
+| **Claude Code** | Auto-loads CLAUDE.md, has file system access |
+| **CLAUDE.md** | Triggers re-read after compaction |
+| **warmup.yaml** | Contains full protocol rules on disk |
+
+**This feature is Claude Code exclusive.** Other AI tools (ChatGPT, Copilot, Cursor) lack the required capabilities:
+- No auto-loaded config file
+- No file system access mid-session
+- No ability to re-read files after context compaction
+
+See the main [README Compatibility section](../README.md#compatibility) for details.
+
 ## Executive Summary
 
 The Self-Healing Protocol solves a fundamental problem with long AI sessions: context compaction loses rules. Instead of trying to make rules survive compaction (fragile), we make the AI re-read rules from disk after compaction (reliable).
@@ -437,12 +452,17 @@ You can, but CLAUDE.md is auto-loaded while warmup.yaml requires explicit readin
 
 ### Q: Does this work with other AI assistants?
 
-In theory, yes. Any AI that:
-1. Reads CLAUDE.md (or equivalent)
-2. Can read files from disk
-3. Has some form of context management
+**No.** Self-Healing requires capabilities that only Claude Code currently provides:
 
-The protocol is designed to be vendor-agnostic.
+| Capability | Claude Code | ChatGPT | Copilot | Cursor |
+|------------|-------------|---------|---------|--------|
+| Auto-load config file | ✓ (CLAUDE.md) | ✗ | ✗ | ✓ (.cursorrules) |
+| Read files mid-session | ✓ | ✗ | ✗ | Limited |
+| Re-read after compaction | ✓ | ✗ | ✗ | ? |
+
+The **file format** (warmup.yaml) is vendor-neutral - any AI can parse it if you paste it. But the **Self-Healing mechanism** requires Claude Code's specific features.
+
+If other vendors add equivalent capabilities in the future, the protocol could work there too.
 
 ## Conclusion
 
@@ -453,5 +473,7 @@ Instead of hoping rules survive compaction, we accept that they won't and build 
 ```
 Start session → Go to sleep → Wake up to completed work
 ```
+
+**Requirements:** Claude Code (for now). If other AI tools add auto-load config + file system access, the protocol will work there too.
 
 **Ship fast. Ship small. Ship green. Ship while you sleep.**

@@ -43,6 +43,16 @@ For true unattended autonomy (user goes to sleep, wakes up to results), we need:
 2. No manual intervention required
 3. Recovery from context loss, not prevention of it
 
+### Platform Requirement
+
+**This solution requires Claude Code.** The mechanism depends on:
+
+- **Auto-loaded config** (CLAUDE.md) - Only Claude Code has this
+- **File system access** - Read files mid-session
+- **Re-read capability** - Reload files after compaction
+
+Other AI tools (ChatGPT, Copilot, Cursor) cannot implement Self-Healing because they lack these capabilities. The **file format** (warmup.yaml) is universal, but the **recovery mechanism** is Claude Code exclusive.
+
 ## Decision
 
 **Implement a Self-Healing Protocol that recovers from compaction rather than trying to survive it.**
@@ -132,13 +142,14 @@ Separation provides defense in depth. If one mechanism fails, others remain.
 ### Positive
 
 - **True unattended autonomy**: 8-10hr sessions that follow rules
-- **Portable**: Travels with git, works on any machine
-- **AI-agnostic**: Works with any AI that reads CLAUDE.md
+- **Portable**: Travels with git, works on any machine with Claude Code
+- **File format universal**: warmup.yaml can be used with any AI (paste)
 - **Battle-tested**: Deployed across 9 production projects
 - **No external dependencies**: Pure YAML, no services required
 
 ### Negative
 
+- **Claude Code exclusive**: Self-Healing requires Claude Code's specific features
 - **Additional files**: CLAUDE.md and checkpoint file
 - **Slight overhead**: Checkpoint writes every 2 hours
 - **Not guaranteed**: Short instructions may still be lost (defense in depth helps)
