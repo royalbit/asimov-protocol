@@ -3,8 +3,9 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
-    is_protocol_file, roadmap_template, sprint_template, validate_directory, validate_file,
-    warmup_template, ProjectType,
+    check_markdown_file, find_markdown_files, fix_markdown_file, is_protocol_file,
+    roadmap_template, sprint_template, validate_directory, validate_file, warmup_template,
+    ProjectType,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -85,6 +86,18 @@ enum Commands {
         /// File to check
         file: PathBuf,
     },
+
+    /// Lint markdown documentation for common issues
+    #[command(name = "lint-docs")]
+    LintDocs {
+        /// Directory or file to lint (defaults to current directory)
+        #[arg(default_value = ".")]
+        path: PathBuf,
+
+        /// Auto-fix issues (repairs broken code block closers)
+        #[arg(long)]
+        fix: bool,
+    },
 }
 
 fn main() -> ExitCode {
@@ -100,6 +113,7 @@ fn main() -> ExitCode {
             force,
         } => cmd_init(name, &project_type, full, &output, force),
         Commands::Check { file } => cmd_validate(&file),
+        Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
     }
 }
 
@@ -254,4 +268,98 @@ fn cmd_init(
     println!();
 
     ExitCode::SUCCESS
+}
+
+fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
+    println!("{}", "Forge Protocol Documentation Linter".bold().green());
+    println!();
+
+    // Collect files to check
+    let files = if path.is_file() {
+        vec![path.to_path_buf()]
+    } else {
+        find_markdown_files(path)
+    };
+
+    if files.is_empty() {
+        println!("  {} No markdown files found", "SKIP".yellow());
+        return ExitCode::SUCCESS;
+    }
+
+    println!("  {} {} markdown file(s)", "Scanning".dimmed(), files.len());
+    println!();
+
+    let mut total_errors = 0;
+    let mut files_with_errors = 0;
+    let mut files_fixed = 0;
+
+    for file in &files {
+        if fix {
+            // Fix mode
+            match fix_markdown_file(file) {
+                Ok(result) => {
+                    if result.fixed {
+                        files_fixed += 1;
+                        println!("  {} {}", "FIXED".bold().green(), file.display());
+                    }
+                }
+                Err(e) => {
+                    eprintln!("  {} {} - {}", "ERROR".bold().red(), file.display(), e);
+                }
+            }
+        } else {
+            // Check mode
+            match check_markdown_file(file) {
+                Ok(result) => {
+                    if !result.is_ok() {
+                        files_with_errors += 1;
+                        for error in &result.errors {
+                            println!(
+                                "  {}:{} {}",
+                                file.display().to_string().bright_blue(),
+                                error.line.to_string().yellow(),
+                                error.message
+                            );
+                            total_errors += 1;
+                        }
+                    }
+                }
+                Err(e) => {
+                    eprintln!("  {} {} - {}", "ERROR".bold().red(), file.display(), e);
+                }
+            }
+        }
+    }
+
+    println!();
+
+    if fix {
+        if files_fixed > 0 {
+            println!(
+                "{} Fixed {} file(s)",
+                "Success:".bold().green(),
+                files_fixed
+            );
+        } else {
+            println!(
+                "{} No issues to fix in {} file(s)",
+                "Success:".bold().green(),
+                files.len()
+            );
+        }
+        ExitCode::SUCCESS
+    } else if total_errors > 0 {
+        println!(
+            "{} {} error(s) in {} file(s)",
+            "Error:".bold().red(),
+            total_errors,
+            files_with_errors
+        );
+        println!();
+        println!("  Run with {} to auto-fix", "--fix".bold());
+        ExitCode::FAILURE
+    } else {
+        println!("{} {} file(s) OK", "Success:".bold().green(), files.len());
+        ExitCode::SUCCESS
+    }
 }

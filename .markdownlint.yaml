@@ -1,0 +1,37 @@
+# Markdownlint configuration for Forge Protocol projects
+# Copy this file to your project root
+
+# Default state for all rules
+default: true
+
+# Line length - disabled for prose flexibility
+MD013: false
+
+# Allow duplicate headings in different sections
+MD024:
+  siblings_only: true
+
+# Allow trailing punctuation in headings (for ? in FAQ)
+MD026:
+  punctuation: ".,;:!"
+
+# Allow inline HTML (for badges, etc.)
+MD033: false
+
+# Allow bare URLs (common in docs)
+MD034: false
+
+# Allow emphasis as heading (# **Bold heading**)
+MD036: false
+
+# Allow code blocks without language specifier
+MD040: false
+
+# Allow first line to not be a heading
+MD041: false
+
+# Allow multiple blank lines (for visual separation)
+MD012: false
+
+# Allow hard tabs
+MD010: false

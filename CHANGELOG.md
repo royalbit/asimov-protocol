@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-11-26
+
+### Added
+
+- **Documentation Linter**: `forge-protocol lint-docs` - Checks markdown for common issues
+- **Auto-fix Flag**: `--fix` repairs broken code block closers automatically
+- **Nested Fence Support**: Handles both ` ``` ` and ` ~~~ ` fences correctly
+- **Markdown Standards Guide**: `docs/MARKDOWN_STANDARDS.md` - Documentation-as-code quality enforcement
+- **More Tests**: 79 total tests (44 unit + 34 e2e + 1 doctest)
+
+### The Problem Solved
+
+Code blocks closed with ` ```text ` instead of ` ``` ` break markdown rendering. This bug is common in AI-generated documentation and copy-paste errors. The linter catches and fixes it automatically.
+
+```bash
+# Check all markdown files
+forge-protocol lint-docs .
+
+# Auto-fix issues
+forge-protocol lint-docs --fix .
+```
+
 ## [1.2.0] - 2025-11-26
 
 ### Added

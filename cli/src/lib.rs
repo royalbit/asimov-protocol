@@ -23,11 +23,16 @@
 //! ```
 
 pub mod error;
+pub mod markdown;
 pub mod schemas;
 pub mod templates;
 pub mod validator;
 
 // Re-export main types
 pub use error::{Error, Result};
+pub use markdown::{
+    check_file as check_markdown_file, find_markdown_files, fix_file as fix_markdown_file,
+    LintError, LintResult,
+};
 pub use templates::{roadmap_template, sprint_template, warmup_template, ProjectType};
 pub use validator::{is_protocol_file, validate_directory, validate_file, ValidationResult};

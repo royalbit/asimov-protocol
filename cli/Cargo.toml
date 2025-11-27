@@ -1,6 +1,6 @@
 [package]
 name = "forge-protocol"
-version = "1.2.0"
+version = "1.3.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "SKYNET MODE with an Off Switch - AI autonomy protocol with 50-100x velocity (Forge: 13,844 LOC, 34 releases in ~45h). Zero tokens, 99.6% carbon reduction."
@@ -33,6 +33,9 @@ thiserror = "1.0"
 
 # Pretty output
 colored = "2.1"
+
+# Directory traversal (for lint-docs)
+walkdir = "2.5"
 
 [dev-dependencies]
 # Testing
