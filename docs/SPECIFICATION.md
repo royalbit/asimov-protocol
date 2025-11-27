@@ -610,3 +610,4 @@ Paste warmup.yaml content at session start. Note: Self-healing won't work withou
 - [ADR-003: Self-Healing Based on Real Compaction Data](adr/003-self-healing-real-compaction-data.md)
 - [ADR-004: Distributed SQL with YugabyteDB](adr/004-distributed-sql-yugabytedb.md)
 - [ADR-005: Event-Driven with Redis Streams](adr/005-event-driven-redis-streams.md)
+- [ADR-006: Git Hook Protocol Refresh](adr/006-git-hook-protocol-refresh.md)

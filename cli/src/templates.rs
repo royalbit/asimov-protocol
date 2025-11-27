@@ -808,9 +808,16 @@ flutter test 2>/dev/null || true"#
 
 set -e
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROTOCOL REFRESH - Injects rules into fresh context (survives compaction)
+# ═══════════════════════════════════════════════════════════════════════════════
+if command -v forge-protocol &> /dev/null; then
+    forge-protocol refresh
+fi
+
 {}
 
-# Forge Protocol checks
+# Forge Protocol validation
 if command -v forge-protocol &> /dev/null; then
     echo "Validating protocol files..."
     forge-protocol validate . || true

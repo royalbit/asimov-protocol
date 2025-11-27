@@ -112,6 +112,13 @@ enum Commands {
         #[arg(long)]
         fix: bool,
     },
+
+    /// Refresh protocol context (for git hooks - injects rules into fresh context)
+    Refresh {
+        /// Show quality gates from warmup.yaml
+        #[arg(short, long)]
+        verbose: bool,
+    },
 }
 
 fn main() -> ExitCode {
@@ -129,7 +136,67 @@ fn main() -> ExitCode {
         } => cmd_init(name, &project_type, full, skynet, &output, force),
         Commands::Check { file } => cmd_validate(&file),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
+        Commands::Refresh { verbose } => cmd_refresh(verbose),
     }
+}
+
+fn cmd_refresh(verbose: bool) -> ExitCode {
+    println!();
+    println!(
+        "{}",
+        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+    );
+    println!(
+        "{}",
+        "🤖 SKYNET MODE - PROTOCOL REFRESH".bold().bright_cyan()
+    );
+    println!(
+        "{}",
+        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+    );
+    println!();
+    println!(
+        "{} → {}",
+        "ON CONFUSION".bold().yellow(),
+        "re-read warmup.yaml".white()
+    );
+    println!();
+    println!(
+        "{}: {} | {} | {} | {}",
+        "RULES".bold(),
+        "4hr max".white(),
+        "1 milestone".white(),
+        "tests pass".white(),
+        "ship it".green()
+    );
+
+    // If verbose, try to read and display quality gates from warmup.yaml
+    if verbose {
+        if let Ok(content) = std::fs::read_to_string("warmup.yaml") {
+            if let Ok(yaml) = serde_yaml::from_str::<serde_yaml::Value>(&content) {
+                if let Some(quality) = yaml.get("quality") {
+                    println!();
+                    println!("{}", "QUALITY GATES:".bold());
+                    if let Some(map) = quality.as_mapping() {
+                        for (key, value) in map {
+                            if let (Some(k), Some(v)) = (key.as_str(), value.as_str()) {
+                                println!("  {}: {}", k.bright_blue(), v.dimmed());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    println!();
+    println!(
+        "{}",
+        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+    );
+    println!();
+
+    ExitCode::SUCCESS
 }
 
 fn cmd_validate(path: &Path) -> ExitCode {
