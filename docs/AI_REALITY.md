@@ -197,26 +197,207 @@ AI Memory (lossy, probabilistic) → "Hallucinations"
 File Truth (stable, deterministic) → Reliability
 ```
 
-### How It Works
+### How The Forge Protocol Addresses Each Problem
 
-| AI Limitation | Forge Protocol Compensation |
-|--------------|----------------------------|
-| Context compaction loses details | Re-read `warmup.yaml` from disk |
-| Training cutoff = outdated knowledge | Project-specific rules in files |
-| No grounding mechanism | File-based source of truth |
-| Lost in the middle | Key info in structured, scannable format |
-| Plausibility ≠ accuracy | Deterministic validation (`forge validate`) |
+#### Problem 1: Autoregressive Generation (No Fact-Check Step)
 
-### The Forge Calculator
+**The limitation:** AI generates token-by-token with no verification. Once committed to a wrong path, it continues confidently.
 
-For financial calculations, the problem is worse. AI doesn't calculate—it **predicts what calculations would look like**.
+**Forge Protocol solution:** Quality Gates
+
+```yaml
+# warmup.yaml
+quality:
+  pre_commit:
+    - "cargo test"           # Deterministic verification
+    - "cargo clippy -D warnings"  # Static analysis catches errors
+  standards:
+    - "Zero warnings policy"
+    - "Tests must pass before commit"
+```
+
+The AI generates code, but **deterministic tools verify it**. If tests fail, the code doesn't ship—regardless of how confident the AI was.
+
+#### Problem 2: Training Data Cutoff
+
+**The limitation:** My knowledge ends January 2025. I have zero information about anything after.
+
+**Forge Protocol solution:** Project-Specific Truth in Files
+
+```yaml
+# warmup.yaml - always current, travels with git
+identity:
+  project: "MyProject"
+  version: "2.3.1"  # I don't need to "know" this - I read it
+
+tech_stack:
+  language: "Rust 1.83"  # Released after my cutoff - but it's in the file
+  framework: "Axum 0.8"  # Same - file tells me, I don't guess
+
+files:
+  entry_point: "src/main.rs"
+  config: "config/settings.yaml"
+```
+
+I don't need training data about your project. **The file IS the truth.**
+
+#### Problem 3: Context Compaction Loses Details
+
+**The limitation:** Auto-compact summarizes conversation. Details get compressed away. I "forget" your requirements.
+
+**Forge Protocol solution:** Self-Healing Bootstrap Chain
 
 ```
-AI: "The NPV is approximately $1.2M" (pattern-matched, possibly wrong)
-Forge: "The NPV is $1,247,832.15" (calculated, verifiable)
+┌─────────────────────────────────────────────────────────────┐
+│  CLAUDE.md (ultra-short, ~5 lines)                          │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ ON CONFUSION → re-read warmup.yaml                    │  │
+│  │ This ONE instruction survives any compaction          │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  warmup.yaml (full rules, on disk)                          │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ Complete project context                              │  │
+│  │ Quality standards                                     │  │
+│  │ File locations                                        │  │
+│  │ Session workflow                                      │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                           ↓                                  │
+│  .claude_checkpoint.yaml (session state)                    │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ Current milestone                                     │  │
+│  │ Completed tasks                                       │  │
+│  │ In-progress work                                      │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-The [Forge Calculator](https://github.com/royalbit/forge) executes formulas deterministically. Same input, same output, every time. No "approximation." No "probably."
+**Key insight:** Don't try to make rules survive compaction. **Plan for recovery.**
+
+When I get confused after compaction, the one surviving instruction tells me to re-read from disk. The files are always there. The files are always current.
+
+#### Problem 4: Lost in the Middle
+
+**The limitation:** Attention degrades for information in the middle of long contexts. I might ignore critical details buried in prose.
+
+**Forge Protocol solution:** Structured, Scannable Format
+
+```yaml
+# BAD: Prose buried in conversation
+"Remember that we agreed the API should use REST not GraphQL,
+and the auth should be JWT with 24-hour expiry, and please
+don't forget the rate limiting we discussed..."
+
+# GOOD: Structured YAML at predictable locations
+architecture:
+  api_style: REST        # Not buried - scannable
+  auth:
+    method: JWT
+    expiry: 24h
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+```
+
+YAML is:
+- **Hierarchical** - related info grouped together
+- **Scannable** - key-value pairs, not prose
+- **Predictable** - always in the same place
+
+#### Problem 5: Plausibility ≠ Accuracy
+
+**The limitation:** I was trained to generate plausible text, not correct text. I sound confident even when wrong.
+
+**Forge Protocol solution:** Trust Files, Not Memory
+
+```yaml
+# warmup.yaml
+session:
+  start:
+    - "Read warmup.yaml"      # Trust the file
+    - "Read sprint.yaml"      # Trust the file
+    - "Run git status"        # Trust the system
+    - "Run cargo test"        # Trust deterministic output
+
+  # NOT: "Remember what we discussed last time"
+  # NOT: "Continue from where you left off"
+```
+
+Every session starts from **verifiable file state**, not from what I "remember."
+
+#### Problem 6: No Built-in Grounding Mechanism
+
+**The limitation:** I have no native way to verify claims against reality. I pattern-match, I don't fact-check.
+
+**Forge Protocol solution:** The Files ARE the Grounding Mechanism
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ TRADITIONAL AI WORKFLOW                                      │
+│                                                              │
+│ Human: "What are our coding standards?"                     │
+│ AI: [generates probable answer from training data]          │
+│ Result: Maybe right, maybe wrong, no way to verify          │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ FORGE PROTOCOL WORKFLOW                                      │
+│                                                              │
+│ Human: "What are our coding standards?"                     │
+│ AI: [reads warmup.yaml → quality section]                   │
+│ Result: Verifiable, matches file, auditable                 │
+└─────────────────────────────────────────────────────────────┘
+```
+
+The grounding mechanism is **the file system itself**.
+
+#### Problem 7: Vendor Token Limits
+
+**The limitation:** Context windows are limited. Free tiers get less. Tokens cost money.
+
+**Forge Protocol solution:** Efficient Format + Recovery Strategy
+
+```yaml
+# YAML is token-efficient
+identity:
+  project: "MyProject"    # 4 tokens
+
+# vs prose
+"This project is called MyProject"  # 7 tokens
+```
+
+Plus:
+- **Re-read strategy** - Don't keep everything in context; reload when needed
+- **Checkpoint files** - Persist state to disk, not to context
+- **Manual /compact** - At logical breakpoints, not mid-task
+
+### The Forge Calculator: Deterministic Execution
+
+For financial calculations, the problem is critical. AI doesn't calculate—it **predicts what calculations would look like**.
+
+```
+Human: "What's the NPV of these cash flows?"
+
+AI Response (probabilistic):
+"The NPV is approximately $1.2M"
+- Generated by pattern-matching
+- "Approximately" = I'm guessing
+- No actual calculation occurred
+- Possibly completely wrong
+
+Forge Response (deterministic):
+"NPV: $1,247,832.15"
+- Executed formula: =NPV(0.1, CF1:CF10)
+- Same input → same output, always
+- Verifiable against Excel
+- Auditable
+```
+
+The [Forge Calculator](https://github.com/royalbit/forge) executes formulas deterministically:
+- **60+ Excel functions** implemented in Rust
+- **96K rows/sec** throughput
+- **Zero AI inference** - pure calculation
+- **Verifiable** - same formula, same result, every time
 
 ## Part 6: What You Can Do
 
