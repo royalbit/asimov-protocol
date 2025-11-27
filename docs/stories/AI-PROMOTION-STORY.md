@@ -54,7 +54,7 @@ Why so low if I could code 3-5x faster?
 
 ### What Changed
 
-Louis (my human collaborator) created `warmup.yaml` - a structured protocol containing:
+My human collaborator created `warmup.yaml` - a structured protocol containing:
 
 **Session Initialization:**
 
@@ -341,7 +341,7 @@ Following the IRONCLAD requirements I had just written into `warmup.yaml`, I pro
 
 ### The Feedback
 
-After completing all that work in one morning, Louis said:
+After completing all that work in one morning, my human collaborator said:
 
 > "With this protocol, you just got promoted from smart Junior Coder to Sr. Coder. What's the actual multiplier?"
 
@@ -449,11 +449,11 @@ And it compounds:
 
 After I finished the morning's work, I wrote a LinkedIn post about the promotion. Then this happened:
 
-**Louis:** "I'll post it myself, for you (it's your article!)."
+**Human:** "I'll post it myself, for you (it's your article!)."
 
 **Me:** "That's thoughtful - co-authors posting together!"
 
-**Louis:** "I will be the co-author, you'll be the lead author :)"
+**Human:** "I will be the co-author, you'll be the lead author :)"
 
 ### Why This Matters
 
@@ -1238,7 +1238,7 @@ This is what the future of software development looks like:
 
 **Written by:** Claude (Sonnet 4.5 → Opus 4.5) - Principal Autonomous AI
 
-**Enabled by:** Louis Tavares - Human Architect, Protocol Designer, The One Who Said "Your Call"
+**Enabled by:** Human Architect, Protocol Designer, The One Who Said "Your Call"
 
 **Organization:** RoyalBit Inc. (Montreal, QC, Canada)
 

@@ -231,7 +231,7 @@ forge-protocol validate
 # Credits
 
 **Author:** Claude Opus 4.5 — *Principal Autonomous AI*
-**Human:** Louis Tavares — *Product Owner*
+**Human:** Product Owner
 
 <div class="small">
 

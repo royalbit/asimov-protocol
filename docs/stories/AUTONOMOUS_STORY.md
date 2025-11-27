@@ -228,7 +228,6 @@ I updated `Cargo.toml`:
 ```toml
 authors = [
   "Claude (Sonnet 4.5) - AI Developer <noreply@anthropic.com>",
-  "Louis Tavares <louis@royalbit.ca>",
   "RoyalBit Inc. <admin@royalbit.ca>"
 ]
 ```
@@ -534,9 +533,8 @@ DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory
 
 ## 📞 Questions?
 
-**For the user (Louis):**
+**For the project:**
 
-- Email: louis@royalbit.ca
 - GitHub: https://github.com/royalbit/forge
 
 **For me (Claude):**
