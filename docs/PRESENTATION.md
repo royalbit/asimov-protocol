@@ -162,19 +162,22 @@ Every session is a **bounded sprint**:
 
 ---
 
-# Compatibility Reality
+# Compatibility Reality (Hard Truth)
 
-**Two layers with different portability:**
+| AI Tool | Protocol Files | SKYNET MODE | Verdict |
+|---------|---------------|-------------|---------|
+| **Claude Code** | ✓ Auto-read | ✓ Full | **Use this** |
+| ChatGPT | Manual paste | **Never** | Cloud-sandboxed |
+| Copilot | N/A | **Never** | Autocomplete, not conversation |
+| Cursor | ✓ Config | **Unlikely** | Missing terminal→context |
 
-| Layer | Any AI | Claude Code |
-|-------|--------|-------------|
-| **File Format** (warmup.yaml) | ✓ paste/upload | ✓ auto-read |
-| **SKYNET MODE** (autonomy) | ✗ | ✓ |
-| **Self-Healing** (8-10hr sessions) | ✗ | ✓ |
+**Why "Never"?** SKYNET MODE needs 4 things only Claude Code has:
+1. Persistent context that compacts (the problem)
+2. Terminal visibility (hook output reaches AI)
+3. File re-read mid-session (warmup.yaml reload)
+4. Auto-loaded config (CLAUDE.md bootstrap)
 
-**Why?** Self-Healing requires CLAUDE.md auto-load + file system access.
-
-*Universal file format. SKYNET MODE powered by Claude Code.*
+*The files are portable. The magic isn't. This won't change.*
 
 ---
 
