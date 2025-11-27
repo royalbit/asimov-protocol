@@ -120,6 +120,13 @@ forge-protocol lint-docs             # Check all markdown files
 forge-protocol lint-docs --fix       # Auto-fix code block issues
 ```
 
+Refresh protocol context (for git hooks):
+
+```bash
+forge-protocol refresh               # Output protocol reminder (compact-resistant)
+forge-protocol refresh --verbose     # Include quality gates from warmup.yaml
+```
+
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
 
 ## Why YAML?
@@ -460,6 +467,28 @@ on_confusion: "cat warmup.yaml"
 | .claude_checkpoint.yaml | N/A (on disk) | Always available |
 
 The "re-read warmup.yaml" instruction is short enough to survive summarization. Even if all other rules are lost, the AI knows to reload them.
+
+### Recovery Strategy Layers (v2.1.0)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    RECOVERY STRATEGY LAYERS                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Layer 1: CLAUDE.md (auto-loaded)                                  │
+│           └── May survive compaction                                │
+│                                                                     │
+│  Layer 2: Git Hook Refresh (ADR-006)                               │
+│           └── forge-protocol refresh on every commit                │
+│           └── Fresh output - cannot be compacted                    │
+│                                                                     │
+│  Layer 3: Manual "run warmup" trigger                              │
+│           └── User can always invoke                                │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key insight:** Hook output is *external* to the AI's memory. It comes from filesystem execution, not compacted context. It cannot be compacted because it hasn't happened yet when compaction occurs. See [ADR-006](docs/adr/006-git-hook-protocol-refresh.md).
 
 ### The Analogy
 

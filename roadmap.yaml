@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "2.0.0"
+  current_version: "2.1.0"
   last_updated: "2025-11-27"
   philosophy: "Vendor-neutral AI session continuity. Green by default."
 
@@ -39,6 +39,16 @@ metadata:
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "2.1.0"
+    status: released
+    date: "2025-11-27"
+    summary: "Git Hook Protocol Refresh (ADR-006)"
+    highlights:
+      - "`forge-protocol refresh` - Compaction-resistant context injection"
+      - "Pre-commit hooks call refresh automatically"
+      - "Recovery Layer 2: Fresh output survives compaction"
+      - "ADR-006: Git Hook Protocol Refresh"
+
   - version: "2.0.0"
     status: released
     date: "2025-11-27"
@@ -74,10 +84,10 @@ previous:
     summary: "CLI Tooling"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v2.1.0 - SELF-HEALING COMPLETENESS
+# CURRENT: v2.2.0 - SELF-HEALING COMPLETENESS
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "2.1.0"
+  version: "2.2.0"
   status: planned
   summary: "Self-Healing Completeness"
   goal: SELF-HEALING
@@ -90,10 +100,10 @@ current:
     - "Generate example checkpoint in --skynet setup"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# NEXT: v2.2.0 - ANTI-HALLUCINATION HARDENING
+# NEXT: v2.3.0 - ANTI-HALLUCINATION HARDENING
 # ═══════════════════════════════════════════════════════════════════════════════
 next:
-  version: "2.2.0"
+  version: "2.3.0"
   status: planned
   summary: "Anti-Hallucination Hardening"
   goal: ANTI-HALLUCINATION
@@ -110,9 +120,9 @@ next:
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.3.0: SESSION CONTINUITY
+  # v2.4.0: SESSION CONTINUITY
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.3.0"
+  - version: "2.4.0"
     status: planned
     summary: "Multi-Session Continuity"
     goal: SESSION_CONTINUITY
@@ -123,9 +133,9 @@ future:
       - "Staleness detection: Warn when warmup.yaml older than code changes"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.4.0: HONEST COMMUNICATION
+  # v2.5.0: HONEST COMMUNICATION
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.4.0"
+  - version: "2.5.0"
     status: planned
     summary: "Vendor Clarity"
     goal: HONEST_COMMUNICATION
@@ -136,9 +146,9 @@ future:
       - "Vendor status: Track which vendors support which features"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.5.0: SCHEMA STANDARDIZATION (after Goal-aligned features)
+  # v2.6.0: SCHEMA STANDARDIZATION (after Goal-aligned features)
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.5.0"
+  - version: "2.6.0"
     status: planned
     summary: "Schema Standardization"
     goal: ANTI-HALLUCINATION
@@ -155,9 +165,9 @@ future:
       - "Migration guide: How to update existing files to v2 schema"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.6.0: MULTI-REPO & BUSINESS DATA
+  # v2.7.0: MULTI-REPO & BUSINESS DATA
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.6.0"
+  - version: "2.7.0"
     status: planned
     summary: "Multi-Repo Orchestration & Business Data"
     goal: AUTONOMOUS_DEVELOPMENT
@@ -175,9 +185,9 @@ future:
       - "Reuse patterns: Document 'reuse_from' for cross-repo code sharing"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.7.0: PRODUCTION STACK TEMPLATES
+  # v2.8.0: PRODUCTION STACK TEMPLATES
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.7.0"
+  - version: "2.8.0"
     status: planned
     summary: "Production Stack Templates"
     goal: AUTONOMOUS_DEVELOPMENT

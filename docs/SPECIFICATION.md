@@ -457,6 +457,26 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 
 ## Self-Healing Protocol
 
+### Recovery Strategy Layers
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    RECOVERY STRATEGY LAYERS                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Layer 1: CLAUDE.md (auto-loaded)                                  │
+│           └── May survive compaction                                │
+│                                                                     │
+│  Layer 2: Git Hook Refresh (ADR-006)                               │
+│           └── forge-protocol refresh on every commit                │
+│           └── Fresh output - cannot be compacted                    │
+│                                                                     │
+│  Layer 3: Manual "run warmup" trigger                              │
+│           └── User can always invoke                                │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
 ### Why Recovery > Survival
 
 | Approach | Strategy | Result |
@@ -566,6 +586,10 @@ forge-protocol validate warmup.yaml    # Specific file
 # Lint documentation
 forge-protocol lint-docs               # Check markdown
 forge-protocol lint-docs --fix         # Auto-fix issues
+
+# Protocol refresh (for git hooks - compaction-resistant)
+forge-protocol refresh                 # Output protocol reminder
+forge-protocol refresh --verbose       # Include quality gates
 ```
 
 ### --skynet Flag
