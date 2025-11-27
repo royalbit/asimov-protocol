@@ -74,7 +74,21 @@ style: |
 
 ---
 
-# Three Files, One Goal
+# SKYNET MODE: Five Components
+
+| # | Component | Purpose |
+|---|-----------|---------|
+| 1 | **Protocol Files** | YAML files define HOW/WHAT/WHEN |
+| 2 | **Sprint Autonomy** | 4hr max, ONE milestone, MUST ship |
+| 3 | **Quality Gates** | Tests pass + ZERO warnings |
+| 4 | **Self-Healing** | Re-read rules after context compaction |
+| 5 | **Release Discipline** | Triple release: GitHub + Local + Registry |
+
+**All five = safe 8-10hr autonomous sessions**
+
+---
+
+# Component 1: Protocol Files
 
 | File | Purpose |
 |------|---------|
@@ -88,7 +102,7 @@ style: |
 
 ---
 
-# The Off Switch: Sprint Autonomy
+# Component 2: Sprint Autonomy
 
 Every session is a **bounded sprint**:
 
@@ -189,14 +203,14 @@ claude --dangerously-skip-permissions
 # Install (1.3MB binary)
 cargo install forge-protocol
 
-# Initialize your project
-forge-protocol init --type rust --full
+# Full SKYNET MODE setup
+forge-protocol init --type rust --skynet
 
 # Validate ($0, <100ms, 99.6% less CO₂)
 forge-protocol validate
 ```
 
-**Types:** `rust`, `python`, `node`, `go`, `generic`
+**Types:** `rust`, `python`, `node`, `go`, `flutter`, `docs`, `generic`
 
 ---
 
@@ -205,10 +219,12 @@ forge-protocol validate
 **Protocol:** github.com/royalbit/forge-protocol
 **Example:** github.com/royalbit/forge
 
-**The Forge Protocol Suite:**
-- `warmup.yaml` — HOW to develop
-- `sprint.yaml` — WHEN to stop
-- `roadmap.yaml` — WHAT to build
+**SKYNET MODE = Five Components:**
+1. Protocol Files — warmup.yaml, sprint.yaml, roadmap.yaml
+2. Sprint Autonomy — 4hr max, ONE milestone
+3. Quality Gates — Tests + zero warnings
+4. Self-Healing — Re-read after compaction
+5. Release Discipline — Ship to everywhere
 
 ---
 
@@ -225,4 +241,4 @@ forge-protocol validate
 
 </div>
 
-*This presentation: ~15 slides. The old one: 51. Done > Perfect.*
+*This presentation: 16 slides. The old one: 51. Done > Perfect.*
