@@ -8,3 +8,6 @@ forge-protocol-*
 
 # OS files
 .DS_Store
+
+# Self-Healing Protocol checkpoint (session-specific, not committed)
+.claude_checkpoint.yaml
