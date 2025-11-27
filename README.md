@@ -3,6 +3,8 @@
 > *"The future is not set. There is no fate but what we make for ourselves."*
 > — **Sarah Connor**, Terminator 2
 
+📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/PRESENTATION.md)
+
 ## SKYNET MODE... with an Off Switch
 
 **AI session continuity framework. Zero tokens. Zero emissions.**
