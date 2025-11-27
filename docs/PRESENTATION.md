@@ -83,12 +83,12 @@ style: |
 | 1 | **Protocol Files** | YAML files define HOW/WHAT/WHEN |
 | 2 | **Sprint Autonomy** | 4hr max, ONE milestone, MUST ship |
 | 3 | **Quality Gates** | Tests pass + ZERO warnings |
-| 4 | **Self-Healing** | Re-read rules after context compaction |
-| 5 | **Release Discipline** | Triple release: GitHub + Local + Registry |
+| 4 | **Self-Healing** | Re-read rules after compaction (v2.1: hook refresh) |
+| 5 | **Release Discipline** | Ship to GitHub + Registry every session |
 
 </div>
 
-**All five = safe 8-10hr autonomous sessions**
+**All five = bounded 4hr sessions that actually ship**
 
 ---
 
@@ -222,12 +222,12 @@ forge-protocol validate
 **Protocol:** [https://github.com/royalbit/forge-protocol](https://github.com/royalbit/forge-protocol)
 **Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**SKYNET MODE = Five Components:**
+**SKYNET MODE v2.1 = Five Components:**
 1. Protocol Files — warmup.yaml, sprint.yaml, roadmap.yaml
 2. Sprint Autonomy — 4hr max, ONE milestone
 3. Quality Gates — Tests + zero warnings
-4. Self-Healing — Re-read after compaction
-5. Release Discipline — Ship to everywhere
+4. Self-Healing — Hook refresh + re-read (ADR-006)
+5. Release Discipline — Ship every session
 
 ---
 
