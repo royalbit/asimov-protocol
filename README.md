@@ -1,5 +1,9 @@
 # Forge Protocol
 
+[![Crates.io](https://img.shields.io/crates/v/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
+[![Downloads](https://img.shields.io/crates/d/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
+[![License](https://img.shields.io/crates/l/forge-protocol.svg)](https://github.com/royalbit/forge-protocol/blob/main/LICENSE)
+
 > *"The future is not set. There is no fate but what we make for ourselves."*
 > — **Sarah Connor**, Terminator 2
 
