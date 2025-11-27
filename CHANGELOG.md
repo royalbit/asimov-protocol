@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.3] - 2025-11-27
+
+### Fixed
+
+- Added crates.io badges to README (version, downloads, license)
+
 ## [2.0.0] - 2025-11-27
 
 ### BREAKING: Specification Rewrite Based on Real Data

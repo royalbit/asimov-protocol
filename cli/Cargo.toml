@@ -1,6 +1,6 @@
 [package]
 name = "forge-protocol"
-version = "2.0.2"
+version = "2.0.3"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "SKYNET MODE (requires Claude Code) - AI autonomy protocol with self-healing. 50-100x velocity. Files portable, magic isn't."
