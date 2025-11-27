@@ -20,6 +20,22 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# PROTOCOL FILE SUITE - Current and Planned
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# CURRENT (validated):
+#   - warmup.yaml        → Session context
+#   - sprint.yaml        → Current work tracking
+#   - roadmap.yaml       → Single-repo planning
+#
+# PLANNED (v2.5.0+):
+#   - .claude_checkpoint.yaml  → Session state for self-healing
+#   - master-roadmap.yaml      → Cross-repo orchestration
+#   - data-sources.yaml        → Verified business data (anti-hallucination)
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
@@ -60,8 +76,6 @@ previous:
 # ═══════════════════════════════════════════════════════════════════════════════
 # CURRENT: v2.1.0 - SELF-HEALING COMPLETENESS
 # ═══════════════════════════════════════════════════════════════════════════════
-# Goal: SELF-HEALING - Make self-healing actually work end-to-end
-# ═══════════════════════════════════════════════════════════════════════════════
 current:
   version: "2.1.0"
   status: planned
@@ -78,8 +92,6 @@ current:
 # ═══════════════════════════════════════════════════════════════════════════════
 # NEXT: v2.2.0 - ANTI-HALLUCINATION HARDENING
 # ═══════════════════════════════════════════════════════════════════════════════
-# Goal: ANTI-HALLUCINATION - Prevent "lost in the middle" and context overflow
-# ═══════════════════════════════════════════════════════════════════════════════
 next:
   version: "2.2.0"
   status: planned
@@ -94,10 +106,12 @@ next:
     - "Modular structure: Design .forge/ directory for splitting large configs"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# FUTURE MILESTONES - Goal-Aligned
+# FUTURE MILESTONES - Goal-Aligned (HIGH PRIORITY)
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
-  # Goal: SESSION CONTINUITY
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v2.3.0: SESSION CONTINUITY
+  # ─────────────────────────────────────────────────────────────────────────────
   - version: "2.3.0"
     status: planned
     summary: "Multi-Session Continuity"
@@ -108,7 +122,9 @@ future:
       - "Session-end command: Add CLI command to finalize session state"
       - "Staleness detection: Warn when warmup.yaml older than code changes"
 
-  # Goal: HONEST COMMUNICATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v2.4.0: HONEST COMMUNICATION
+  # ─────────────────────────────────────────────────────────────────────────────
   - version: "2.4.0"
     status: planned
     summary: "Vendor Clarity"
@@ -119,21 +135,65 @@ future:
       - "Vendor checklist: What other AI tools need to implement"
       - "Vendor status: Track which vendors support which features"
 
-  # Goal: AUTONOMOUS DEVELOPMENT - Real-world stack support
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v2.5.0: SCHEMA STANDARDIZATION (after Goal-aligned features)
+  # ─────────────────────────────────────────────────────────────────────────────
   - version: "2.5.0"
+    status: planned
+    summary: "Schema Standardization"
+    goal: ANTI-HALLUCINATION
+    priority: HIGH
+    description: |
+      Formalize schemas for all protocol files based on battle-tested configs
+      from production ecosystems. Enable strict validation.
+    features:
+      - "warmup.yaml v2 schema: Add compact_survival, self_healing, quality sections"
+      - "sprint.yaml schema: Add priority, blockers, dependencies"
+      - "roadmap.yaml schema: Add goal field validation, phase dependencies"
+      - ".claude_checkpoint.yaml schema: Full schema with timestamp, milestone, tool_calls"
+      - "CLI validation: Validate all 4 file types with strict schemas"
+      - "Migration guide: How to update existing files to v2 schema"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v2.6.0: MULTI-REPO & BUSINESS DATA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "2.6.0"
+    status: planned
+    summary: "Multi-Repo Orchestration & Business Data"
+    goal: AUTONOMOUS_DEVELOPMENT
+    priority: HIGH
+    description: |
+      New protocol files for complex multi-repo ecosystems and business projects.
+      Based on battle-tested patterns from production proprietary ecosystems.
+    features:
+      - "master-roadmap.yaml: Cross-repo orchestration with phase dependencies"
+      - "master-roadmap schema: phases, steps, acceptance criteria, depends_on"
+      - "master-roadmap validation: CLI validates phase structure and dependencies"
+      - "data-sources.yaml: Verified business data with staleness tracking"
+      - "data-sources schema: values, sources, last_verified, stale_threshold, status"
+      - "data-sources validation: CLI warns on stale data (30/90/180 day thresholds)"
+      - "Reuse patterns: Document 'reuse_from' for cross-repo code sharing"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v2.7.0: PRODUCTION STACK TEMPLATES
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "2.7.0"
     status: planned
     summary: "Production Stack Templates"
     goal: AUTONOMOUS_DEVELOPMENT
     priority: HIGH
     description: |
-      Templates and validation for real-world production stacks.
-      Based on battle-tested configurations from proprietary ecosystems.
+      Templates for real-world production stacks based on battle-tested configs.
+      Each template includes stack-specific quality gates and commands.
     features:
-      - "Rust + Axum: Backend API template with quality gates"
-      - "Flutter/Dart: Mobile app template with test requirements"
-      - "Rust + gRPC: Data services template"
-      - "Full-stack: Coordinated templates for multi-repo ecosystems"
-      - "Master roadmap: Cross-repo orchestration patterns"
+      - "--type rust-axum: Backend API template (Axum + MongoDB/Postgres)"
+      - "--type rust-grpc: gRPC services template (tonic + protobuf)"
+      - "--type flutter: Mobile app template (Flutter + Dart analyzer)"
+      - "--type shell: Demo/orchestration scripts (shellcheck)"
+      - "--type business: YAML + Forge formulas (forge validate)"
+      - "--type architecture: C4 diagrams + ADRs (markdown lint + diagram validation)"
+      - "Update existing templates: Add compact_survival to all templates"
+      - "Template tests: Ensure generated files pass validation"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG - Nice to Have (lower priority than Goal-aligned features)
