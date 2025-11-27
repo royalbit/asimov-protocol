@@ -3,7 +3,7 @@
 > *"The future is not set. There is no fate but what we make for ourselves."*
 > — **Sarah Connor**, Terminator 2
 
-📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/PRESENTATION.md)
+📊 **Presentations:** [Executive Deck](https://github.com/royalbit/forge-protocol/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/forge-protocol/blob/main/docs/PRESENTATION.md)
 
 ## SKYNET MODE... with an Off Switch
 
@@ -82,7 +82,7 @@ File truth (stable, deterministic) → Reliability
 - Don't let AI *imagine* your project context → **read it from warmup.yaml**
 - Don't let AI *imagine* your financial calculations → **execute them locally with [Forge](https://github.com/royalbit/forge)**
 
-📖 **[Read the full analysis: AI_REALITY.md](docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
+📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/forge-protocol/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
 
 ## CLI Validator
 
@@ -177,7 +177,7 @@ These aren't missing features. They're **different products for different use ca
 
 **Is this vendor lock-in?** Yes, for SKYNET MODE. The files are portable. The magic isn't.
 
-See [VENDOR_IMPLEMENTATION.md](docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
+See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
 ## Green Coding & ESG Impact
 
@@ -250,7 +250,7 @@ forge-protocol validate
 
 *Ship fast. Ship small. Ship green.*
 
-See [Green Coding Economics](docs/GREEN_CODING.md) for the full analysis.
+See [Green Coding Economics](https://github.com/royalbit/forge-protocol/blob/main/docs/GREEN_CODING.md) for the full analysis.
 
 ## Protocol Suite
 
@@ -279,7 +279,7 @@ The Forge Protocol powers an entire product ecosystem:
 - 1,000+ line master roadmap
 - Comprehensive test suites across ecosystem
 
-See [ECOSYSTEM.md](docs/ECOSYSTEM.md) for the full story.
+See [ECOSYSTEM.md](https://github.com/royalbit/forge-protocol/blob/main/docs/ECOSYSTEM.md) for the full story.
 
 ## Use Case: The Forge Tool
 
@@ -504,7 +504,7 @@ The "re-read warmup.yaml" instruction is short enough to survive summarization. 
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-**Key insight:** Hook output is *external* to the AI's memory. It comes from filesystem execution, not compacted context. It cannot be compacted because it hasn't happened yet when compaction occurs. See [ADR-006](docs/adr/006-git-hook-protocol-refresh.md).
+**Key insight:** Hook output is *external* to the AI's memory. It comes from filesystem execution, not compacted context. It cannot be compacted because it hasn't happened yet when compaction occurs. See [ADR-006](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/006-git-hook-protocol-refresh.md).
 
 ### The Analogy
 
@@ -517,33 +517,33 @@ The "re-read warmup.yaml" instruction is short enough to survive summarization. 
 
 - **Autonomous sessions** that follow rules
 - **Portable** - travels with git, works on any machine
-- **Based on real data** - not assumptions (see [ADR-003](docs/adr/003-self-healing-real-compaction-data.md))
+- **Based on real data** - not assumptions (see [ADR-003](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md))
 
-See [Component 4: Self-Healing](docs/components/4-SELF_HEALING.md) for details.
+See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/main/docs/components/4-SELF_HEALING.md) for details.
 
 ## Documentation
 
 ### SKYNET MODE (Start Here)
-- **[SKYNET MODE Overview](docs/SKYNET_MODE.md)** - The complete autonomous AI development system
-- [Setup Guide](docs/SETUP.md) - Get started with one command
+- **[SKYNET MODE Overview](https://github.com/royalbit/forge-protocol/blob/main/docs/SKYNET_MODE.md)** - The complete autonomous AI development system
+- [Setup Guide](https://github.com/royalbit/forge-protocol/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
-1. [Protocol Files](docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
-2. [Sprint Autonomy](docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
-3. [Quality Gates](docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
-4. [Self-Healing](docs/components/4-SELF_HEALING.md) - Recover from context compaction
-5. [Release Discipline](docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
+1. [Protocol Files](https://github.com/royalbit/forge-protocol/blob/main/docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
+2. [Sprint Autonomy](https://github.com/royalbit/forge-protocol/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
+3. [Quality Gates](https://github.com/royalbit/forge-protocol/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
+4. [Self-Healing](https://github.com/royalbit/forge-protocol/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
+5. [Release Discipline](https://github.com/royalbit/forge-protocol/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
 
 ### Reference
-- [Full Specification](docs/SPECIFICATION.md) - Protocol schema and details
-- [AI Reality](docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
-- [Vendor Implementation](docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
-- [Presentation](docs/PRESENTATION.md) - Marp slide deck
+- [Full Specification](https://github.com/royalbit/forge-protocol/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
+- [AI Reality](https://github.com/royalbit/forge-protocol/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
+- [Vendor Implementation](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
+- [Presentation](https://github.com/royalbit/forge-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
 
 ### Architecture Decisions
-- [ADR-001: Green Coding By Default](docs/adr/001-green-coding-by-default.md)
-- [ADR-002: Self-Healing Protocol](docs/adr/002-self-healing-protocol.md)
-- [ADR-003: Self-Healing Based on Real Compaction Data](docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
+- [ADR-001: Green Coding By Default](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/001-green-coding-by-default.md)
+- [ADR-002: Self-Healing Protocol](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/002-self-healing-protocol.md)
+- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
 
 ## Case Study: Protocol v2.0 (This Session)
 
@@ -577,7 +577,7 @@ Claude: [rewrites spec, updates 9 projects, ships v2.0.0]
 
 **One session. One human. One milestone. Shipped.**
 
-See [ADR-003](docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
+See [ADR-003](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
 
 ## Origin
 
