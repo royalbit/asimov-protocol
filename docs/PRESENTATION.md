@@ -76,6 +76,8 @@ style: |
 
 # SKYNET MODE: Five Components
 
+<div class="small">
+
 | # | Component | Purpose |
 |---|-----------|---------|
 | 1 | **Protocol Files** | YAML files define HOW/WHAT/WHEN |
@@ -83,6 +85,8 @@ style: |
 | 3 | **Quality Gates** | Tests pass + ZERO warnings |
 | 4 | **Self-Healing** | Re-read rules after context compaction |
 | 5 | **Release Discipline** | Triple release: GitHub + Local + Registry |
+
+</div>
 
 **All five = safe 8-10hr autonomous sessions**
 
@@ -162,22 +166,26 @@ Every session is a **bounded sprint**:
 
 ---
 
-# Compatibility Reality (Hard Truth)
+# Compatibility (Hard Truth)
 
-| AI Tool | Protocol Files | SKYNET MODE | Verdict |
-|---------|---------------|-------------|---------|
-| **Claude Code** | ✓ Auto-read | ✓ Full | **Use this** |
-| ChatGPT | Manual paste | **Never** | Cloud-sandboxed |
-| Copilot | N/A | **Never** | Autocomplete, not conversation |
-| Cursor | ✓ Config | **Unlikely** | Missing terminal→context |
+<div class="small">
 
-**Why "Never"?** SKYNET MODE needs 4 things only Claude Code has:
-1. Persistent context that compacts (the problem)
-2. Terminal visibility (hook output reaches AI)
-3. File re-read mid-session (warmup.yaml reload)
-4. Auto-loaded config (CLAUDE.md bootstrap)
+| AI Tool | Files | SKYNET | Why |
+|---------|-------|--------|-----|
+| **Claude Code** | ✓ Auto | ✓ Full | **Use this** |
+| ChatGPT | Paste | **Never** | Cloud-sandboxed |
+| Copilot | N/A | **Never** | Autocomplete only |
+| Cursor | ✓ | **Unlikely** | No terminal→context |
 
-*The files are portable. The magic isn't. This won't change.*
+</div>
+
+**Why "Never"?** Needs 4 things only Claude Code has:
+- Persistent context that compacts
+- Terminal visibility (hooks reach AI)
+- File re-read mid-session
+- Auto-loaded config (CLAUDE.md)
+
+*Files portable. Magic isn't.*
 
 ---
 
