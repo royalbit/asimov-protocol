@@ -177,7 +177,7 @@ Every session is a **bounded sprint**:
 
 *Files portable. Magic isn't.*
 
-**Details:** github.com/royalbit/forge-protocol/docs/VENDOR_IMPLEMENTATION.md
+**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -219,8 +219,8 @@ forge-protocol validate
 
 # Questions?
 
-**Protocol:** github.com/royalbit/forge-protocol
-**Example:** github.com/royalbit/forge
+**Protocol:** [https://github.com/royalbit/forge-protocol](https://github.com/royalbit/forge-protocol)
+**Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
 **SKYNET MODE = Five Components:**
 1. Protocol Files — warmup.yaml, sprint.yaml, roadmap.yaml
