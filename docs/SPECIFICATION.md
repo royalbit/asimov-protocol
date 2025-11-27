@@ -19,6 +19,32 @@ The Forge Protocol is a YAML-based standard for AI session continuity and autono
 5. **Green by default** - Local-first tools over cloud AI for routine tasks
 6. **Recoverable over survivable** - Re-read from disk, don't try to survive compaction
 
+## Core Goals
+
+The Forge Protocol exists to solve five specific problems. **Features that don't serve these goals don't belong in the protocol.**
+
+| Goal | Problem | Solution |
+|------|---------|----------|
+| **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
+| **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
+| **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
+| **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (SKYNET MODE) |
+| **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
+
+### Scope Filter
+
+When evaluating features or changes to the protocol, ask:
+
+1. Does this feature directly serve one of the five core goals?
+2. If yes, which goal(s)?
+3. If no, it doesn't belong in the protocol.
+
+Examples:
+- ✅ "Add checkpoint validation" → Serves SELF-HEALING
+- ✅ "Add file size warnings" → Serves ANTI-HALLUCINATION (prevents lost-in-middle)
+- ❌ "Add project scaffolding" → Nice-to-have but doesn't serve core goals
+- ❌ "Add AI chat interface" → Out of scope
+
 ## SKYNET MODE
 
 SKYNET MODE is the complete autonomous AI development system. It consists of five components:
