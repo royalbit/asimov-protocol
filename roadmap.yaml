@@ -92,10 +92,13 @@ current:
   summary: "Self-Healing Completeness"
   goal: SELF-HEALING
   priority: HIGH
+  adr: "ADR-007: Checkpoint Size Limits and Pruning"
   features:
     - "Checkpoint schema: Define .claude_checkpoint.yaml schema in SPECIFICATION.md"
+    - "Checkpoint size limits: 20-line soft cap, 30-line hard cap (ADR-007)"
+    - "Checkpoint trimming mechanism: Rolling window, trim before write (ADR-007)"
     - "Checkpoint validation: Add checkpoint validation to CLI"
-    - "CLAUDE.md validation: Warn if CLAUDE.md missing or >20 lines"
+    - "CLAUDE.md validation: Warn if CLAUDE.md missing or >10 lines"
     - "Self-healing test: Create test scenario simulating post-compaction confusion"
     - "Generate example checkpoint in --skynet setup"
 
