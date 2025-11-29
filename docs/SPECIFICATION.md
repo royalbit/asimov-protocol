@@ -279,6 +279,50 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 - Green structure errors are WARNING - proceeds with hardcoded defaults
 - Warmup structure issues are warnings - project still valid
 
+### Self-Healing Behavior (v4.1.5+)
+
+Protocol files auto-regenerate when missing during validation. Recovery over surveillance.
+
+**Auto-Regeneration Rules:**
+
+| File Missing | Action | Rationale |
+|--------------|--------|-----------|
+| ethics.yaml | AUTO-CREATE + WARN | Ethics must exist |
+| green.yaml | AUTO-CREATE + INFO | Required but less critical |
+| warmup.yaml | AUTO-CREATE + WARN | Core protocol |
+| sprint.yaml | SKIP | Optional file |
+| roadmap.yaml | SKIP | Optional file |
+| CLAUDE.md | **NEVER** | Bootstrap must be intentional |
+
+**Why CLAUDE.md is Never Auto-Created:**
+- CLAUDE.md is the "on switch" - human must add it intentionally
+- Deleting CLAUDE.md is the "off switch" - disables protocol
+- Auto-creating would enable protocol without consent
+
+**Checksum Validation (Phase 2):**
+
+```yaml
+# .forge/checksums.yaml
+files:
+  ethics.yaml:
+    sha256: "abc123..."
+    last_verified: "2025-11-29T10:00:00Z"
+```
+
+- WARN if files modified from known-good state
+- Don't block - modifications may be intentional
+- `--update-checksums` after intentional changes
+
+**CLI Flags:**
+
+| Flag | Behavior |
+|------|----------|
+| (default) | Auto-regenerate missing files |
+| `--no-regenerate` | Skip auto-creation |
+| `--update-checksums` | Update hashes after changes |
+
+See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
+
 ## Protocol Files
 
 ### ethics.yaml Schema (Required for SKYNET)
