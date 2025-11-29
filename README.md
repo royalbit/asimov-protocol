@@ -20,14 +20,16 @@ Green by design. **SKYNET MODE requires Claude Code.**
 
 ### v4.0.0: Claude Code Native Integration
 
-Forge Protocol now **integrates with Claude Code 2.0's native features**:
-- Use `/rewind` for checkpoints (deprecated `.claude_checkpoint.yaml`)
-- Use `--continue`/`--resume` for session management
+Forge Protocol now **integrates with Claude Code 2.0's native features** for cross-session management:
+- Use `--continue`/`--resume` for **cross-session** resume (manual CLI start)
+- Use `/rewind` for **manual** checkpoint restore
 - Use `CLAUDE.md` with `@warmup.yaml` import for memory hierarchy
 
-**Focus on unique value:** Ethics, Sprint Autonomy, Green Coding, Schema Validation.
+**IMPORTANT (ADR-013)**: Mid-session self-healing (before compaction) is **NOT replaced** by native features. The `warmup.yaml` re-read pattern is still required for unattended autonomous operation.
 
-See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the strategic pivot.
+**Focus on unique value:** Ethics, Sprint Autonomy, Green Coding, Schema Validation, **Mid-Session Self-Healing**.
+
+See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md).
 
 ## The Problem
 
@@ -49,7 +51,7 @@ The Forge Protocol exists to solve six specific problems. **Features that don't 
 |----------|-----------|-------------------|
 | **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → Humanist Mode safeguards |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
-| **2** | **SELF-HEALING** | Rules lost after compaction → Native `/rewind` + CLAUDE.md |
+| **2** | **SELF-HEALING** | Rules lost after compaction → Re-read `warmup.yaml` mid-session |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions → Native `--continue`/`--resume` |
 | **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
 | **5** | **GREEN CODING** | Cloud AI for routine tasks → Local validation |
@@ -446,49 +448,54 @@ flowchart LR
 
 **The key enabler for autonomous sessions.**
 
-### v4.0.0: Native Integration
+### Critical Distinction: Mid-Session vs Cross-Session
 
-Claude Code 2.0 (November 2025) provides native self-healing features:
+| Scope | Solution | How It Works | Requires |
+|-------|----------|--------------|----------|
+| **Mid-session** (before compaction) | `warmup.yaml` re-read | AI detects confusion → reads from disk | **Forge Protocol** |
+| **Cross-session** (between sessions) | `--continue`, `--resume` | Human starts new CLI session | Claude Code native |
+| **Manual restore** (any time) | `/rewind`, `Esc+Esc` | Human issues command | Claude Code native |
 
-| Feature | Claude Code Native | Forge Protocol |
-|---------|-------------------|----------------|
-| Checkpoints | `/rewind`, Esc+Esc | Use native (deprecated .claude_checkpoint.yaml) |
-| Session resume | `--continue`, `--resume` | Use native |
-| Memory hierarchy | `CLAUDE.md` with `@imports` | Integrate via `@warmup.yaml` |
-| Auto-compact | 95% capacity trigger | Confirmed ADR-003 findings |
+**IMPORTANT (ADR-013):** Claude Code native features (`--continue`, `--resume`, `/rewind`) require **manual human intervention**. They do NOT work automatically during a live unattended session before compaction.
 
-### The Insight
+The `warmup.yaml` re-read pattern is the **only mechanism** for mid-session automatic recovery.
 
-Everyone else: *Make rules survive compaction* (fragile)
-Claude Code 2.0: **Native checkpoints + memory hierarchy** (reliable)
-Forge Protocol v4.0.0: **Integrate with native features** (optimal)
+### Mid-Session Self-Healing (Forge Protocol)
 
-See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the full analysis.
+When compaction happens during an autonomous session:
 
-### The Solution (v4.0.0)
-
-Use Claude Code's native features:
-
-```mermaid
-flowchart LR
-    subgraph memory["CLAUDE.md (Memory)"]
-        A["@warmup.yaml"]
-        B["@ethics.yaml"]
-        C["Rules: 4hr max..."]
-    end
-    subgraph native["Claude Code Native"]
-        D["/rewind"]
-        E["--continue"]
-        F["--resume"]
-    end
-    memory --> |"Context"| native
-    D --> |"Restore"| G["Code + Conversation"]
-    E --> |"Resume"| H["Last Session"]
+```yaml
+# warmup.yaml
+self_healing:
+  on_confusion: "STOP → re-read warmup.yaml → re-read sprint.yaml"
+  confusion_signals:
+    - "Unsure about project rules"
+    - "Forgot what milestone we're working on"
+    - "Making decisions that contradict protocol"
 ```
 
-### Implementation (v4.0.0)
+The AI must:
+1. Recognize confusion signals
+2. STOP what it's doing
+3. Re-read `warmup.yaml` from disk
+4. Re-read `sprint.yaml` from disk
+5. Resume with restored context
 
-**CLAUDE.md** (uses native @import syntax)
+**This is NOT replaced by Claude Code native features.**
+
+### Cross-Session Resume (Claude Code Native)
+
+For resuming **between separate sessions** (manual):
+
+```bash
+# Human starts new session
+claude --continue        # Resume most recent session
+claude --resume <id>     # Resume specific session
+```
+
+### Memory Hierarchy (Claude Code Native)
+
+**CLAUDE.md** (uses native @import syntax):
 ```markdown
 # Project Name
 
@@ -498,21 +505,17 @@ flowchart LR
 Rules: 4hr max, 1 milestone, tests pass, ship.
 ```
 
-**Recovery Commands:**
-- `/rewind` or `Esc+Esc` - Restore previous checkpoint (code + conversation)
-- `--continue` - Resume most recent session
-- `--resume <id>` - Resume specific session
+### What's Replaced vs What's NOT
 
-### Why Native Integration?
+| Feature | Status | Replacement |
+|---------|--------|-------------|
+| `.claude_checkpoint.yaml` | **Deprecated** | TodoWrite for tasks, native `/rewind` for code |
+| Session handoff files | **Deprecated** | `--continue`, `--resume` |
+| Mid-session `warmup.yaml` re-read | **ACTIVE** | Nothing (no replacement exists) |
+| Sprint autonomy rules | **ACTIVE** | Nothing (unique value) |
+| Ethics protocol | **ACTIVE** | Nothing (unique value) |
 
-| Feature | Old Approach | v4.0.0 Native |
-|---------|--------------|---------------|
-| Checkpoints | Manual `.claude_checkpoint.yaml` | Native `/rewind` (automatic) |
-| Session resume | Custom handoff files | `--continue`, `--resume` |
-| Memory | Survive compaction | `@import` memory hierarchy |
-| Effort | Build and maintain | Already built into Claude Code |
-
-Claude Code 2.0's native features are superior. See [ADR-009](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/009-claude-code-native-integration.md).
+See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md) for the full analysis.
 
 ### What Forge Protocol Adds
 

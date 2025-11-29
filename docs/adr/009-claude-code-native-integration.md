@@ -2,23 +2,38 @@
 
 ## Status
 
-Accepted
+Accepted (Partially Corrected by ADR-013)
 
 ## Date
 
 2025-11-28
 
+## Correction (2025-11-29)
+
+> **IMPORTANT**: This ADR contains an error regarding self-healing.
+>
+> The original analysis incorrectly stated that Claude Code native features
+> replace mid-session self-healing. They do NOT:
+>
+> - `--continue`/`--resume`: Require **manual CLI start** (cross-session)
+> - `/rewind`: Requires **manual command** (not automatic)
+> - None of these work **unattended during a live session before compaction**
+>
+> The `warmup.yaml` re-read pattern for self-healing is **NOT replaced**.
+>
+> See [ADR-013](013-self-healing-not-replaced.md) for the correction.
+
 ## Context
 
 ### The Discovery
 
-Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate significant portions of the Forge Protocol:
+Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate **some** portions of the Forge Protocol:
 
 | Forge Protocol Feature | Claude Code Native | Status |
 |------------------------|-------------------|--------|
-| `.claude_checkpoint.yaml` | `/rewind` + checkpoints | **REDUNDANT** |
-| Session handoff | `--continue`, `--resume` | **REDUNDANT** |
-| Self-healing recovery | `CLAUDE.md` hierarchy | **PARTIALLY REDUNDANT** |
+| `.claude_checkpoint.yaml` | `/rewind` + checkpoints | **REDUNDANT** (manual only) |
+| Session handoff | `--continue`, `--resume` | **REDUNDANT** (cross-session only) |
+| Self-healing (mid-session) | **NOTHING** | **NOT REPLACED** (see ADR-013) |
 | Context persistence | Memory tool API | **CAN INTEGRATE** |
 
 ### Claude Code 2.0 Native Features

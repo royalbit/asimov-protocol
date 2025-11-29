@@ -220,33 +220,62 @@ future:
       - "roadmap.yaml schema"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# DEPRECATED (Replaced by Claude Code Native Features)
+# DEPRECATED vs ACTIVE (Clarified by ADR-013)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# IMPORTANT: These features are deprecated, NOT removed from SKYNET MODE.
-# Claude Code's native features ARE compatible with autonomous development.
-# We stopped building duplicates - the native implementations are better.
+# CRITICAL DISTINCTION:
 #
-# SKYNET MODE still works. It just uses Claude Code native features now.
+#   CROSS-SESSION features → Claude Code native (--continue, --resume)
+#   MID-SESSION self-healing → STILL FORGE PROTOCOL (warmup.yaml re-read)
 #
-deprecated:
-  session_continuity:
-    was: "v3.3.0 - Multi-Session Continuity"
-    replaced_by: "Claude Code --continue/--resume"
-    reason: "Native feature is better integrated"
-    skynet_compatible: true
+# Claude Code native features require MANUAL intervention:
+#   - --continue/--resume = manual CLI start
+#   - /rewind = manual command
+#   - None work UNATTENDED during a live session before compaction
+#
+# SKYNET MODE mid-session self-healing is NOT replaced.
+# See ADR-013 for the full analysis.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
-  checkpoint_validation:
-    was: ".claude_checkpoint.yaml schema and validation"
-    replaced_by: "Claude Code /rewind checkpoints"
-    reason: "Native checkpoints track code + conversation state"
-    skynet_compatible: true
+# What IS deprecated (cross-session, manual features)
+deprecated:
+  checkpoint_file:
+    was: ".claude_checkpoint.yaml file"
+    replaced_by: "TodoWrite for task tracking"
+    reason: "Native checkpoints handle code state, TodoWrite handles task state"
+    scope: "Task tracking only"
 
   session_handoff:
-    was: "Session-end command and handoff workflows"
-    replaced_by: "Claude Code session persistence"
-    reason: "Native session management"
-    skynet_compatible: true
+    was: "Custom session-end command and handoff files"
+    replaced_by: "Claude Code --continue/--resume (manual CLI start)"
+    reason: "Native session management for cross-session resume"
+    scope: "Cross-session only (manual)"
+
+# What is NOT deprecated (mid-session, automatic)
+active:
+  self_healing:
+    feature: "warmup.yaml re-read on confusion"
+    status: "ACTIVE - NOT REPLACED"
+    reason: "Claude Code has NO automatic mid-session recovery before compaction"
+    scope: "Mid-session, automatic, unattended"
+    implementation: "self_healing.on_confusion in warmup.yaml"
+    adr: "ADR-013"
+
+  sprint_autonomy:
+    feature: "4hr max, 1 milestone, quality gates"
+    status: "ACTIVE - UNIQUE VALUE"
+    reason: "Claude Code has no bounded session enforcement"
+
+  ethics_protocol:
+    feature: "ethics.yaml, human_veto, red flags"
+    status: "ACTIVE - UNIQUE VALUE"
+    reason: "Claude Code has no ethics framework"
+
+  green_coding:
+    feature: "Local-first validation, ESG metrics"
+    status: "ACTIVE - UNIQUE VALUE"
+    reason: "Claude Code has no green coding philosophy"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG - Nice to Have
