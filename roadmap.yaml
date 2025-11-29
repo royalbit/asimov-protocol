@@ -59,6 +59,7 @@ current:
   deliverables:
     documentation:
       - "[x] ADR-009: Claude Code Native Integration"
+      - "[x] ADR-011: AI-Only Development Model - No External PRs"
       - "[ ] Update SPECIFICATION.md with integration strategy"
       - "[ ] Update README.md with new direction"
       - "[ ] Update warmup.yaml self_healing section"

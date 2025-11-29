@@ -14,6 +14,11 @@ Focus on unique value: Ethics, Sprint Autonomy, Green Coding, Schema Validation.
 
 ### Added
 
+- **ADR-011**: AI-Only Development Model - No External PRs
+  - PRs are an attack vector for ethics bypass
+  - Trust model: Human Owner → AI → Direct Commit to Main
+  - Forks welcome (carry ethics.yaml forward)
+  - Issues/Discussions welcome for contributions
 - **ADR-009**: Claude Code Native Integration - Strategic pivot documentation
 - **CLAUDE.md @import syntax**: New template uses `@warmup.yaml` and `@ethics.yaml` imports
 - **Native integration docs**: Updated SPECIFICATION.md with Claude Code integration section
