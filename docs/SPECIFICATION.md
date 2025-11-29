@@ -1,6 +1,6 @@
 # Forge Protocol Specification
 
-Version 3.0.0
+Version 3.2.0
 
 ## Overview
 
@@ -153,19 +153,44 @@ project/
 
 ### Modular Structure (Large Projects)
 
+When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: ethics.yaml must NEVER be modularized - it stays in project root.**
+
 ```
 project/
-├── ethics.yaml           # Required for SKYNET - Humanist Mode
+├── ethics.yaml           # NEVER modularize - Priority 0
 ├── warmup.yaml           # Core only (~100 lines)
 ├── .forge/               # Protocol modules
-│   ├── autonomy.yaml     # Session autonomy rules
+│   ├── identity.yaml     # Project identity/mission
+│   ├── files.yaml        # File structure docs
+│   ├── session.yaml      # Session workflow
 │   ├── quality.yaml      # Quality gates
-│   └── release.yaml      # Release workflow
+│   └── style.yaml        # Code style rules
 ├── sprint.yaml
 ├── roadmap.yaml
 ├── CLAUDE.md
 └── .claude_checkpoint.yaml
 ```
+
+**Module Loading Order:**
+1. `warmup.yaml` - Always read first (contains `self_healing.on_confusion`)
+2. `.forge/*.yaml` - Loaded alphabetically when referenced
+3. `ethics.yaml` - Checked at validation time (never in .forge/)
+
+**Module Schemas:**
+
+| Module | Required Fields | Purpose |
+|--------|-----------------|---------|
+| identity.yaml | `project`, `version` | Project identity |
+| files.yaml | `source`, `docs` | File structure documentation |
+| session.yaml | `start`, `during`, `end` | Session workflow |
+| quality.yaml | `tests`, `lint` | Quality gates |
+| style.yaml | `code` | Code style guidelines |
+
+**Why ethics.yaml Cannot Be Modularized:**
+- It contains `human_veto` - the emergency stop capability
+- Validation MUST error if `human_veto` is missing
+- Putting ethics in a module directory risks oversight during security review
+- Ethics is Priority 0 - visibility is mandatory
 
 ### File Size Limits (ADR-007)
 
@@ -182,6 +207,29 @@ Self-healing requires small files that can be re-read efficiently after compacti
 - CLAUDE.md: Ultra-short is critical - it's the bootstrap trigger
 - Checkpoint: Trim completed/next_steps arrays when oversized
 - Warmup: Consider modular structure (`.forge/` directory) if too large
+
+### Structure Validation (v3.2.0)
+
+Anti-hallucination hardening requires critical sections to exist in the right files.
+
+**ethics.yaml (Priority 0 - REQUIRED):**
+
+| Section | Status | Rationale |
+|---------|--------|-----------|
+| `human_veto` | ERROR if missing | Human override capability is non-negotiable |
+| `core_principles` | ERROR if missing | Ethical guardrails must be explicit |
+
+**warmup.yaml (Self-Healing):**
+
+| Section | Status | Rationale |
+|---------|--------|-----------|
+| `self_healing.on_confusion` | WARNING if missing | Guides AI recovery after compaction |
+| Position of `on_confusion` | WARNING if >100 lines | Should be early for quick context recovery |
+
+**Enforcement:**
+- `forge-protocol validate` checks structure, not just schema
+- Ethics structure errors are CRITICAL - validation fails
+- Warmup structure issues are warnings - project still valid
 
 ## Protocol Files
 

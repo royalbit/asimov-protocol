@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "3.1.0"
+  current_version: "3.2.0"
   last_updated: "2025-11-29"
   philosophy: "Vendor-neutral AI session continuity. Green by default."
 
@@ -156,40 +156,32 @@ current:
       - "README.md: Add ethics to Quick Start"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# RELEASED: v3.1.0 - SELF-HEALING COMPLETENESS
+# RELEASED: v3.2.0 - ANTI-HALLUCINATION HARDENING
 # ═══════════════════════════════════════════════════════════════════════════════
 next:
-  version: "3.1.0"
+  version: "3.2.0"
   status: released
   date: "2025-11-29"
-  summary: "Self-Healing Completeness"
-  goal: SELF-HEALING
+  summary: "Anti-Hallucination Hardening"
+  goal: ANTI-HALLUCINATION
   priority: HIGH
-  adr: "ADR-007: Checkpoint Size Limits and Pruning (Accepted)"
   highlights:
-    - "Checkpoint JSON schema for .claude_checkpoint.yaml validation"
-    - "File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
-    - "CLI validates checkpoint files and warns on oversized files"
-    - "Example checkpoint generated in --skynet setup"
+    - "Ethics structure validation: human_veto and core_principles REQUIRED"
+    - "Warmup structure validation: self_healing.on_confusion position check"
+    - "Modular .forge/ design: Schema for splitting large configs"
+    - "SPECIFICATION.md v3.2.0: Structure validation documentation"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PREVIOUS: v3.1.0 - SELF-HEALING COMPLETENESS
+# ═══════════════════════════════════════════════════════════════════════════════
+#   - Checkpoint JSON schema for .claude_checkpoint.yaml validation
+#   - File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)
+#   - ADR-007: Checkpoint Size Limits and Pruning (Accepted)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FUTURE MILESTONES - Goal-Aligned (HIGH PRIORITY)
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v3.2.0: ANTI-HALLUCINATION HARDENING
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.2.0"
-    status: planned
-    summary: "Anti-Hallucination Hardening"
-    goal: ANTI-HALLUCINATION
-    priority: HIGH
-    features:
-      - "Size guidelines: Document max sizes (CLAUDE.md: 20 lines, warmup: 200 lines)"
-      - "Size warnings: Add file size warnings to CLI validation"
-      - "Structure guidance: Document critical rules at TOP, reference in MIDDLE, recovery at BOTTOM"
-      - "Structure linting: Add warmup.yaml structure validation to CLI"
-      - "Modular structure: Design .forge/ directory for splitting large configs"
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v3.3.0: SESSION CONTINUITY

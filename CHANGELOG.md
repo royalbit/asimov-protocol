@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2025-11-29
+
+### Anti-Hallucination Hardening
+
+Enforces critical structure in ethics.yaml and warmup.yaml to prevent loss-in-middle and ensure human veto capability is always present.
+
+### Added
+
+- **Ethics Structure Validation**: Validates critical sections exist
+  - `human_veto` section is REQUIRED (validation fails if missing)
+  - `core_principles` section is REQUIRED
+- **Warmup Structure Validation**: Checks self-healing configuration
+  - Warns if `self_healing` section is missing
+  - Warns if `on_confusion` is missing from self_healing
+  - Warns if `on_confusion` appears after line 100 (too late for quick recovery)
+- **Public API**: Exported `check_ethics_structure()` and `check_warmup_structure()` functions
+- **8 New Tests**: Comprehensive tests for structure validation
+
+### Documentation
+
+- **SPECIFICATION.md v3.2.0**: Structure Validation section
+  - Ethics validation requirements (Priority 0)
+  - Warmup validation warnings
+- **Modular .forge/ Schema**: Detailed documentation for large project structure
+  - Module loading order
+  - Module schemas (identity, files, session, quality, style)
+  - Why ethics.yaml can NEVER be modularized
+
+### Changed
+
+- Ethics structure errors are now CRITICAL - validation fails if human_veto is missing
+- Warmup structure issues remain warnings - project still valid
+
 ## [3.1.0] - 2025-11-29
 
 ### Self-Healing Completeness (ADR-007)

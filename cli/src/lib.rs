@@ -41,6 +41,6 @@ pub use templates::{
     ProjectType,
 };
 pub use validator::{
-    is_protocol_file, validate_claude_md, validate_directory, validate_file, FileSizeLimits,
-    ValidationResult,
+    check_ethics_structure, check_warmup_structure, is_protocol_file, validate_claude_md,
+    validate_directory, validate_file, FileSizeLimits, ValidationResult,
 };

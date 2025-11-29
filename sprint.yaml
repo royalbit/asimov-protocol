@@ -11,19 +11,20 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# COMPLETED: v3.1.0 - SELF-HEALING COMPLETENESS
+# COMPLETED: v3.2.0 - ANTI-HALLUCINATION HARDENING
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v3.1.0 - Self-Healing Completeness (ADR-007)"
+  current: "v3.2.0 - Anti-Hallucination Hardening"
   started: "2025-11-29"
   status: done
 
   completed:
-    - "[x] Checkpoint JSON schema for validation"
-    - "[x] File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
-    - "[x] CLI validates checkpoint files and warns on oversized files"
-    - "[x] Example checkpoint generated in --skynet setup"
-    - "[x] ADR-007 marked as Accepted"
+    - "[x] Ethics structure validation (human_veto + core_principles REQUIRED)"
+    - "[x] Warmup structure validation (self_healing.on_confusion position check)"
+    - "[x] Exported check_ethics_structure() and check_warmup_structure() APIs"
+    - "[x] Unit tests for structure validation (8 new tests)"
+    - "[x] SPECIFICATION.md: Structure Validation section"
+    - "[x] SPECIFICATION.md: Modular .forge/ schema design"
 
   # ─────────────────────────────────────────────────────────────────────────────
   # CRITICAL PROBLEM STATEMENT
@@ -87,14 +88,13 @@ sprint:
 # PREVIOUS SPRINT (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v1.4.0 - SKYNET MODE Setup"
+  sprint: "v3.1.0 - Self-Healing Completeness"
   status: done
-  date: "2025-11-26"
+  date: "2025-11-29"
   highlights:
-    - "forge-protocol init --skynet"
-    - "CLAUDE.md generation"
-    - "Pre-commit hooks"
-    - "5-component documentation"
+    - "Checkpoint JSON schema for validation"
+    - "File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
+    - "ADR-007 marked as Accepted"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES
