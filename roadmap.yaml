@@ -69,8 +69,10 @@ current:
       - "[x] Update warmup.yaml self_healing section (commit_cadence added)"
 
     deprecations:
-      - ".claude_checkpoint.yaml → Use native /rewind checkpoints"
-      - "Session handoff features → Use --continue/--resume"
+      # NOTE: These are CROSS-SESSION features only (ADR-013)
+      # Mid-session self-healing (warmup.yaml re-read) is NOT deprecated
+      - ".claude_checkpoint.yaml → TodoWrite for tasks (native /rewind is MANUAL)"
+      - "Session handoff features → --continue/--resume (MANUAL cross-session)"
       - "Checkpoint schema validation → Removed"
 
     cli_changes:
