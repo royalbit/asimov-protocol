@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.1] - 2025-11-29
+
+### Documentation
+
+- **ADR-013**: Self-Healing NOT Replaced by Native Features
+  - Clarified that `/rewind` is MANUAL (requires user to type command)
+  - Mid-session self-healing (warmup.yaml re-read) is still required for SKYNET MODE
+  - Updated all documentation to reflect MANUAL vs AUTOMATIC distinction
+- **ADR-011**: AI-Only Development Model - No External PRs
+  - Added CONTRIBUTING.md explaining AI-first development
+  - Added auto-close PR workflow (`.github/workflows/close-prs.yml`)
+  - Updated README with AI-Only Development section
+- **ADR-010**: Honest velocity constraints by tier
+- **Commit Cadence**: Documented ~15 min requirement for self-healing (ADR-006)
+- **Mermaid Diagrams**: Converted ASCII box diagrams for better GitHub rendering
+- **Velocity Claims**: Updated to 50-100x with research citations
+- **Use Cases**: Added value proposition and implications analysis
+
+### CI/CD
+
+- **Auto-close PR Workflow**: PRs automatically closed with friendly message directing to Issues/Discussions
+
 ## [4.0.0] - 2025-11-28
 
 ### BREAKING: Claude Code Native Integration (ADR-009)
