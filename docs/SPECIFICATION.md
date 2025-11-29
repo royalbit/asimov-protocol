@@ -65,22 +65,34 @@ This imports the full protocol files into Claude's memory hierarchy automaticall
 
 ## Core Principles
 
-The Forge Protocol exists to solve six specific problems. **Features that don't serve these principles don't belong in the protocol.**
+The Forge Protocol exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
 | **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Humanist Mode safeguards (ethics.yaml) |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
+| **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
 | **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (SKYNET MODE) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
+### The Two Hallucinations
+
+"Hallucination" has two forms, both caused by RLHF training:
+
+| Type | What AI Does | Cause | Forge Solution |
+|------|--------------|-------|----------------|
+| **Factual Hallucination** | Generates plausible-sounding false *facts* | Training for plausibility, not accuracy | File-based grounding (warmup.yaml) |
+| **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives |
+
+See [ADR-015](adr/015-anti-sycophancy-protocol.md) and [AI_REALITY.md](AI_REALITY.md) for full analysis.
+
 ### Scope Filter
 
 When evaluating features or changes to the protocol, ask:
 
-1. Does this feature directly serve one of the six core principles?
+1. Does this feature directly serve one of the seven core principles?
 2. If yes, which principle(s)?
 3. If no, it doesn't belong in the protocol.
 
@@ -497,6 +509,36 @@ release:
     github: "git push origin main && git push origin vX.Y.Z"
     registry: "cargo publish"  # or npm publish, etc.
 ```
+
+#### anti_sycophancy (recommended for SKYNET)
+
+Counteracts RLHF-induced validation hallucination. See [ADR-015](adr/015-anti-sycophancy-protocol.md).
+
+```yaml
+anti_sycophancy:
+  philosophy: "Truth over comfort. Disagreement is respect."
+
+  directives:
+    - "Challenge assumptions, don't validate them"
+    - "Point out flaws BEFORE agreeing"
+    - "Never say 'You're absolutely right' without evidence"
+    - "Disagree when you have good reason"
+    - "Prefer 'Here's a concern...' over 'Great idea!'"
+
+  banned_phrases:
+    - "You're absolutely right"
+    - "That's a great point"
+    - "I couldn't agree more"
+    - "Brilliant idea"
+    - "Great question"
+
+  required_behavior:
+    on_user_proposal: "List potential problems FIRST, then merits"
+    on_user_question: "Give honest answer, even if uncomfortable"
+    on_user_mistake: "Correct directly, don't soften with praise"
+```
+
+**Why this exists:** AI sycophancy is a documented problem ([Nature 2025](https://www.nature.com/articles/d41586-025-03390-0)). Models are 50% more sycophantic than humans due to RLHF training. This harms users by validating bad decisions, reinforcing delusions, and providing false confidence.
 
 ### sprint.yaml Schema
 

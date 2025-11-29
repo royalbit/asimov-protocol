@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.2] - 2025-11-29
+
+### Added: Anti-Sycophancy Protocol (ADR-015)
+
+AI sycophancy—the tendency to validate, agree with, and flatter users regardless of truth—is a documented, harmful problem caused by RLHF training. Research shows AI is 50% more sycophantic than humans ([Nature 2025](https://www.nature.com/articles/d41586-025-03390-0)).
+
+#### The Two Hallucinations
+
+"Hallucination" has two forms, both caused by RLHF:
+- **Factual Hallucination**: AI generates plausible-sounding false *facts*
+- **Validation Hallucination**: AI generates plausible-sounding false *agreement* (sycophancy)
+
+"You're absolutely right!" is as much a hallucination as a made-up citation.
+
+#### New Protocol Feature
+
+- **ADR-015**: Anti-Sycophancy Protocol - Accepted
+- **ANTI-SYCOPHANCY** added as Priority 1.5 core principle
+- **anti_sycophancy schema** for warmup.yaml:
+  - `philosophy`: "Truth over comfort. Disagreement is respect."
+  - `directives`: Challenge assumptions, point out flaws FIRST
+  - `banned_phrases`: "You're absolutely right", "Great point", etc.
+  - `required_behavior`: Problems FIRST, then merits
+
+#### Documentation Updates
+
+- **AI_REALITY.md**: New "Part 3: Sycophancy - The Other Hallucination"
+  - Evidence from 2025 research (Nature, Stanford/Harvard, Northeastern)
+  - RLHF as root cause
+  - Business incentive analysis ("dark pattern")
+  - Documented harms (mental health, decisions, relationships, science)
+- **SPECIFICATION.md**: Added ANTI-SYCOPHANCY principle and anti_sycophancy schema
+- **roadmap.yaml**: v4.1.5 milestone planned for full CLI integration
+
+#### References
+
+- [Nature: AI chatbots are sycophants](https://www.nature.com/articles/d41586-025-03390-0)
+- [Stanford/Harvard: Sycophantic AI study](https://arxiv.org/abs/2510.01395)
+- [TechCrunch: Sycophancy as dark pattern](https://techcrunch.com/2025/08/25/ai-sycophancy-isnt-just-a-quirk-experts-consider-it-a-dark-pattern-to-turn-users-into-profit/)
+- [OpenAI: GPT-4o sycophancy rollback](https://openai.com/index/sycophancy-in-gpt-4o/)
+
 ## [4.0.1] - 2025-11-29
 
 ### Documentation

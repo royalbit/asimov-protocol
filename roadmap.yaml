@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.0.1"
+  current_version: "4.0.2"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -10,11 +10,17 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # 0. ETHICAL_AUTONOMY - Prevent harm from autonomous AI (TOP PRIORITY)
-# 1. ANTI-HALLUCINATION - Ground AI in file-based truth
+# 1. ANTI-HALLUCINATION - Ground AI in file-based truth (factual hallucination)
+# 1.5 ANTI-SYCOPHANCY - Counteract RLHF-induced validation hallucination (ADR-015)
 # 2. SELF-HEALING - Mid-session recovery via warmup.yaml re-read (ADR-013: NOT REPLACED)
 # 3. SESSION CONTINUITY - Cross-session resume (NOW: use --continue/--resume)
 # 4. AUTONOMOUS_DEVELOPMENT - SKYNET MODE that actually works
 # 5. GREEN_CODING - Local validation over cloud AI
+#
+# NOTE: "Hallucination" has TWO forms (see ADR-015, AI_REALITY.md):
+#   - Factual hallucination: AI generates false FACTS
+#   - Validation hallucination: AI generates false AGREEMENT (sycophancy)
+# Both are caused by RLHF training. Both harm users.
 #
 # Features that don't serve these goals don't belong here.
 #
@@ -142,10 +148,11 @@ future:
   # ═══════════════════════════════════════════════════════════════════════════
   # PRIORITY ORDER: Matches core values (0-5)
   # ═══════════════════════════════════════════════════════════════════════════
-  # 0. ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (CRITICAL)
-  # 1. ANTI-HALLUCINATION → v4.4.0 Schema Standardization
-  # 5. GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
-  # +  VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
+  # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (CRITICAL)
+  # 1.5 ANTI-SYCOPHANCY → v4.1.5 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
+  # 1.  ANTI-HALLUCINATION → v4.4.0 Schema Standardization
+  # 5.  GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
+  # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
   # ═══════════════════════════════════════════════════════════════════════════
 
   # ─────────────────────────────────────────────────────────────────────────────
@@ -169,6 +176,37 @@ future:
       - "--ethics-scan for project-wide pattern detection"
       - "Session hooks with ethics reminder"
       - "ethics.yaml remains for extensions only"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v4.1.5: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "4.1.5"
+    status: planned
+    summary: "Anti-Sycophancy Protocol - Truth Over Comfort"
+    goal: ANTI-SYCOPHANCY
+    priority: CRITICAL
+    core_value: 1.5
+    adr: "docs/adr/015-anti-sycophancy-protocol.md"
+    description: |
+      Counteract RLHF-induced sycophancy (validation hallucination).
+      AI models are 50% more sycophantic than humans (Nature 2025).
+      This harms users: bad decisions, reinforced delusions, false confidence.
+      Solution: Anti-sycophancy directives in warmup.yaml + CLI detection.
+    rationale: |
+      Sycophancy is the OTHER hallucination:
+      - Factual hallucination: AI generates false FACTS
+      - Validation hallucination: AI generates false AGREEMENT
+      Both caused by RLHF. Both harm users. Both need protocol solutions.
+    features:
+      - "anti_sycophancy schema in warmup.yaml"
+      - "Banned phrases list (You're absolutely right, etc.)"
+      - "Required behaviors (problems FIRST, then merits)"
+      - "--anti-sycophancy-check CLI command"
+      - "Sycophancy detection in protocol refresh"
+    references:
+      - "https://www.nature.com/articles/d41586-025-03390-0"
+      - "https://arxiv.org/abs/2510.01395"
+      - "https://techcrunch.com/2025/08/25/ai-sycophancy-isnt-just-a-quirk-experts-consider-it-a-dark-pattern-to-turn-users-into-profit/"
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.2.0: HARDCODED GREEN CODING (ADR-012) - PRIORITY 5
@@ -285,6 +323,16 @@ active:
     feature: "Local-first validation, ESG metrics"
     status: "ACTIVE - UNIQUE VALUE"
     reason: "Claude Code has no green coding philosophy"
+
+  anti_sycophancy:
+    feature: "anti_sycophancy directives in warmup.yaml"
+    status: "ACTIVE - UNIQUE VALUE"
+    reason: "Claude Code has no anti-sycophancy enforcement"
+    adr: "ADR-015"
+    documentation:
+      - "docs/AI_REALITY.md - Part 3: Sycophancy"
+      - "docs/SPECIFICATION.md - anti_sycophancy schema"
+      - "docs/adr/015-anti-sycophancy-protocol.md"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG - Nice to Have
