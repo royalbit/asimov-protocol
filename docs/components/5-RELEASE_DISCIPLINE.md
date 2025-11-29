@@ -14,25 +14,15 @@ No partial releases. No "I'll publish later."
 
 ## The Triple Release
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    TRIPLE RELEASE                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌───────────┐    ┌───────────┐    ┌───────────┐           │
-│  │  GitHub   │    │   Local   │    │ Registry  │           │
-│  │           │    │           │    │           │           │
-│  │ git add   │    │ make      │    │ cargo     │           │
-│  │ git commit│───▶│ install-  │───▶│ publish   │           │
-│  │ git tag   │    │ user      │    │           │           │
-│  │ git push  │    │           │    │           │           │
-│  └───────────┘    └───────────┘    └───────────┘           │
-│                                                             │
-│       ✓                ✓                 ✓                  │
-│   Version          Verified          Available             │
-│   controlled       locally           publicly              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph triple["TRIPLE RELEASE"]
+        GH["**GitHub**<br/>git add<br/>git commit<br/>git tag<br/>git push<br/><br/>✓ Version controlled"]
+        LO["**Local**<br/>make install-user<br/><br/>✓ Verified locally"]
+        REG["**Registry**<br/>cargo publish<br/><br/>✓ Available publicly"]
+
+        GH --> LO --> REG
+    end
 ```
 
 ## Release Checklist

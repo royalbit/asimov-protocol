@@ -12,26 +12,16 @@ This document explains why, without the marketing-friendly spin.
 
 ### What SKYNET MODE Requires
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    SKYNET MODE REQUIREMENTS                             │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  1. Persistent conversation context that compacts                       │
-│     └── The PROBLEM we're solving                                       │
-│                                                                         │
-│  2. Terminal/shell visibility                                           │
-│     └── How hook output reaches the AI                                  │
-│                                                                         │
-│  3. File system read access mid-session                                 │
-│     └── How the AI re-reads warmup.yaml                                 │
-│                                                                         │
-│  4. Auto-loaded config file (CLAUDE.md)                                 │
-│     └── Bootstrap instruction that survives compaction                  │
-│                                                                         │
-│  ALL FOUR are required. Missing any one breaks the chain.               │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph reqs["SKYNET MODE REQUIREMENTS"]
+        R1["**1. Persistent conversation context that compacts**<br/>The PROBLEM we're solving"]
+        R2["**2. Terminal/shell visibility**<br/>How hook output reaches the AI"]
+        R3["**3. File system read access mid-session**<br/>How the AI re-reads warmup.yaml"]
+        R4["**4. Auto-loaded config file (CLAUDE.md)**<br/>Bootstrap instruction that survives compaction"]
+        ALL["**ALL FOUR required. Missing any one breaks the chain.**"]
+    end
+    R1 --> R2 --> R3 --> R4 --> ALL
 ```
 
 ### Why Other AI Tools Can't Do This
@@ -72,20 +62,14 @@ This document explains why, without the marketing-friendly spin.
 
 This is the v2.1.0 innovation that makes SKYNET MODE resilient:
 
-```
-Git commit triggers → Pre-commit hook runs → forge-protocol refresh outputs banner
-                                                         │
-                                                         ▼
-                                            Terminal shows SKYNET MODE reminder
-                                                         │
-                                                         ▼
-                                            Claude Code SEES terminal output
-                                                         │
-                                                         ▼
-                                            Fresh context injection (not compacted!)
-                                                         │
-                                                         ▼
-                                            AI knows to re-read warmup.yaml
+```mermaid
+flowchart TB
+    A["Git commit triggers"] --> B["Pre-commit hook runs"]
+    B --> C["forge-protocol refresh outputs banner"]
+    C --> D["Terminal shows SKYNET MODE reminder"]
+    D --> E["Claude Code SEES terminal output"]
+    E --> F["Fresh context injection<br/>(not compacted!)"]
+    F --> G["AI knows to re-read warmup.yaml"]
 ```
 
 **Why this CAN'T work for other AIs:**

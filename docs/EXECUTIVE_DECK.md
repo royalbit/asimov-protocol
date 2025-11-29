@@ -130,22 +130,21 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 ### The autonomous development workflow
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│   DEFINE SCOPE          AI WORKS              REVIEW        │
-│   (15 min)              (2-4 hrs)             (15 min)      │
-│                                                             │
-│   ┌─────────┐          ┌─────────┐          ┌─────────┐    │
-│   │ Human   │ ──────▶  │   AI    │ ──────▶  │ Human   │    │
-│   │ defines │          │ builds  │          │ reviews │    │
-│   │ milestone│         │ ships   │          │ release │    │
-│   └─────────┘          └─────────┘          └─────────┘    │
-│                                                             │
-│   "punch it"           Autonomous            Deployed       │
-│                        execution             to production  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph define["DEFINE SCOPE<br/>(15 min)"]
+        H1["Human<br/>defines<br/>milestone"]
+    end
+    subgraph ai["AI WORKS<br/>(2-4 hrs)"]
+        A["AI<br/>builds<br/>ships"]
+    end
+    subgraph review["REVIEW<br/>(15 min)"]
+        H2["Human<br/>reviews<br/>release"]
+    end
+
+    H1 -->|"punch it"| A
+    A -->|"Autonomous<br/>execution"| H2
+    H2 -->|"Deployed to<br/>production"| done((" "))
 ```
 
 ---

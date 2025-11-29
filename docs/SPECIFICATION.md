@@ -94,31 +94,22 @@ Examples:
 
 SKYNET MODE is the complete autonomous AI development system. It consists of five components:
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                           SKYNET MODE                                   │
-│                  Autonomous AI Development System                       │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│   ┌───────────────┐   ┌───────────────┐   ┌───────────────┐            │
-│   │   PROTOCOL    │   │    SPRINT     │   │    QUALITY    │            │
-│   │    FILES      │   │   AUTONOMY    │   │    GATES      │            │
-│   │               │   │               │   │               │            │
-│   │  warmup.yaml  │   │  4hr max      │   │  Tests pass   │            │
-│   │  sprint.yaml  │   │  1 milestone  │   │  Zero warns   │            │
-│   │  roadmap.yaml │   │  Then STOP    │   │  Then commit  │            │
-│   └───────────────┘   └───────────────┘   └───────────────┘            │
-│                                                                         │
-│   ┌───────────────┐   ┌───────────────┐                                │
-│   │     SELF      │   │    RELEASE    │                                │
-│   │    HEALING    │   │   DISCIPLINE  │                                │
-│   │               │   │               │                                │
-│   │  Re-read on   │   │  GitHub       │                                │
-│   │  confusion    │   │  + Registry   │                                │
-│   │  CLAUDE.md    │   │  Every time   │                                │
-│   └───────────────┘   └───────────────┘                                │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph skynet["SKYNET MODE - Autonomous AI Development System"]
+        subgraph row1[" "]
+            direction LR
+            P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
+            S["**SPRINT AUTONOMY**<br/>4hr max<br/>1 milestone<br/>Then STOP"]
+            Q["**QUALITY GATES**<br/>Tests pass<br/>Zero warns<br/>Then commit"]
+        end
+        subgraph row2[" "]
+            direction LR
+            H["**SELF HEALING**<br/>Re-read on<br/>confusion<br/>CLAUDE.md"]
+            R["**RELEASE DISCIPLINE**<br/>GitHub<br/>+ Registry<br/>Every time"]
+        end
+    end
+    row1 ~~~ row2
 ```
 
 ### Why All Five Components?
@@ -156,25 +147,15 @@ Other AI tools have **different architectures for different use cases**. They're
 
 ## The Bootstrap Chain
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        BOOTSTRAP CHAIN                                   │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│   CLAUDE.md              warmup.yaml           .claude_checkpoint.yaml   │
-│   (auto-loaded)          (full protocol)       (session state)           │
-│   ~5 lines               ~100-200 lines        ~20 lines                 │
-│                                                                          │
-│   ┌────────────┐         ┌────────────┐        ┌────────────┐           │
-│   │ BOOTSTRAP  │────────▶│ FULL RULES │───────▶│ CHECKPOINT │           │
-│   │ "re-read   │         │ Everything │        │ Progress   │           │
-│   │ warmup"    │         │ defined    │        │ Next steps │           │
-│   └────────────┘         └────────────┘        └────────────┘           │
-│        │                       │                     │                   │
-│   Survives              Re-read from            Written during           │
-│   compaction            disk on trigger         session                  │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph bootstrap["BOOTSTRAP CHAIN"]
+        CM["**CLAUDE.md**<br/>(auto-loaded)<br/>~5 lines<br/><br/>BOOTSTRAP<br/>'re-read warmup'<br/><br/>*Survives compaction*"]
+        WU["**warmup.yaml**<br/>(full protocol)<br/>~100-200 lines<br/><br/>FULL RULES<br/>Everything defined<br/><br/>*Re-read from disk*"]
+        CP["**.claude_checkpoint.yaml**<br/>(session state)<br/>~20 lines<br/><br/>CHECKPOINT<br/>Progress + Next steps<br/><br/>*Written during session*"]
+
+        CM --> WU --> CP
+    end
 ```
 
 ## File Structure
@@ -633,22 +614,15 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 
 ### Recovery Strategy Layers
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    RECOVERY STRATEGY LAYERS                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  Layer 1: CLAUDE.md (auto-loaded)                                  │
-│           └── May survive compaction                                │
-│                                                                     │
-│  Layer 2: Git Hook Refresh (ADR-006)                               │
-│           └── forge-protocol refresh on every commit                │
-│           └── Fresh output - cannot be compacted                    │
-│                                                                     │
-│  Layer 3: Manual "run warmup" trigger                              │
-│           └── User can always invoke                                │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph layers["RECOVERY STRATEGY LAYERS"]
+        L1["**Layer 1: CLAUDE.md (auto-loaded)**<br/>May survive compaction"]
+        L2["**Layer 2: Git Hook Refresh (ADR-006)**<br/>forge-protocol refresh on every commit<br/>Fresh output - cannot be compacted"]
+        L3["**Layer 3: Manual 'run warmup' trigger**<br/>User can always invoke"]
+
+        L1 --> L2 --> L3
+    end
 ```
 
 ### Why Recovery > Survival
@@ -668,22 +642,15 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 
 ### Recovery Flow
 
-```
-Context compacted
-  ↓
-AI confused / rules lost
-  ↓
-CLAUDE.md instruction survives: "re-read warmup.yaml"
-  ↓
-AI reads warmup.yaml from disk
-  ↓
-Rules restored
-  ↓
-AI reads .claude_checkpoint.yaml
-  ↓
-Progress restored
-  ↓
-Continue working
+```mermaid
+flowchart TB
+    A["Context compacted"] --> B["AI confused / rules lost"]
+    B --> C["CLAUDE.md instruction survives:<br/>'re-read warmup.yaml'"]
+    C --> D["AI reads warmup.yaml from disk"]
+    D --> E["Rules restored"]
+    E --> F["AI reads .claude_checkpoint.yaml"]
+    F --> G["Progress restored"]
+    G --> H["Continue working"]
 ```
 
 ## Quality Gates

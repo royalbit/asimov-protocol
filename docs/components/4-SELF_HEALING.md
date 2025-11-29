@@ -41,23 +41,15 @@ As documented by DoltHub:
 
 ## The Solution
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SELF-HEALING PROTOCOL                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   CLAUDE.md              warmup.yaml         checkpoint.yaml│
-│  (auto-loaded)           (full rules)        (session state)│
-│  ┌───────────┐          ┌───────────┐       ┌───────────┐  │
-│  │ Ultra-    │          │ Complete  │       │ Progress  │  │
-│  │ short +   │─────────▶│ protocol  │──────▶│ + hints   │  │
-│  │ "re-read" │          │ + gates   │       │           │  │
-│  └───────────┘          └───────────┘       └───────────┘  │
-│       │                       │                   │        │
-│       └───────────────────────┴───────────────────┘        │
-│                    ALL ON DISK                              │
-│                (survives compaction)                        │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph healing["SELF-HEALING PROTOCOL - ALL ON DISK (survives compaction)"]
+        CM["**CLAUDE.md**<br/>(auto-loaded)<br/><br/>Ultra-short +<br/>'re-read'"]
+        WU["**warmup.yaml**<br/>(full rules)<br/><br/>Complete<br/>protocol + gates"]
+        CP["**checkpoint.yaml**<br/>(session state)<br/><br/>Progress<br/>+ hints"]
+
+        CM --> WU --> CP
+    end
 ```
 
 ## The Three Files

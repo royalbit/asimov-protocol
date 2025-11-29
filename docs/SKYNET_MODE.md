@@ -9,31 +9,22 @@ SKYNET MODE is a **complete autonomous AI development system** that enables boun
 
 It's not just one thing—it's five components working together:
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                           SKYNET MODE                                   │
-│                  Autonomous AI Development System                       │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│   ┌───────────────┐   ┌───────────────┐   ┌───────────────┐            │
-│   │   PROTOCOL    │   │    SPRINT     │   │    QUALITY    │            │
-│   │    FILES      │   │   AUTONOMY    │   │    GATES      │            │
-│   │               │   │               │   │               │            │
-│   │  warmup.yaml  │   │  4hr max      │   │  Tests pass   │            │
-│   │  sprint.yaml  │   │  1 milestone  │   │  Zero warns   │            │
-│   │  roadmap.yaml │   │  Then STOP    │   │  Then commit  │            │
-│   └───────────────┘   └───────────────┘   └───────────────┘            │
-│                                                                         │
-│   ┌───────────────┐   ┌───────────────┐                                │
-│   │     SELF      │   │    RELEASE    │                                │
-│   │    HEALING    │   │   DISCIPLINE  │                                │
-│   │               │   │               │                                │
-│   │  Re-read on   │   │  GitHub       │                                │
-│   │  compaction   │   │  + Local      │                                │
-│   │  CLAUDE.md    │   │  + Registry   │                                │
-│   └───────────────┘   └───────────────┘                                │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph skynet["SKYNET MODE - Autonomous AI Development System"]
+        subgraph row1[" "]
+            direction LR
+            P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
+            S["**SPRINT AUTONOMY**<br/>4hr max<br/>1 milestone<br/>Then STOP"]
+            Q["**QUALITY GATES**<br/>Tests pass<br/>Zero warns<br/>Then commit"]
+        end
+        subgraph row2[" "]
+            direction LR
+            H["**SELF HEALING**<br/>Re-read on<br/>compaction<br/>CLAUDE.md"]
+            R["**RELEASE DISCIPLINE**<br/>GitHub<br/>+ Local<br/>+ Registry"]
+        end
+    end
+    row1 ~~~ row2
 ```
 
 ## The Five Components
@@ -62,112 +53,59 @@ Each component solves a specific failure mode:
 
 ## Architecture
 
-```
-                            ┌─────────────────┐
-                            │     Human       │
-                            │  "run warmup"   │
-                            │  "punch it"     │
-                            └────────┬────────┘
-                                     │
-                                     ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                          CLAUDE CODE                                    │
-│                    (with SKYNET MODE enabled)                           │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                 │
-│  │  CLAUDE.md  │───▶│ warmup.yaml │───▶│ sprint.yaml │                 │
-│  │ (auto-load) │    │ (full rules)│    │  (bounds)   │                 │
-│  └─────────────┘    └─────────────┘    └─────────────┘                 │
-│         │                  │                  │                         │
-│         │                  ▼                  ▼                         │
-│         │           ┌─────────────────────────────┐                    │
-│         │           │      AUTONOMOUS LOOP        │                    │
-│         │           │  ┌─────────────────────┐   │                    │
-│         │           │  │ 1. Read milestone   │   │                    │
-│         │           │  │ 2. Implement        │   │                    │
-│         │           │  │ 3. Test             │◀──┼── Quality Gates    │
-│         │           │  │ 4. Checkpoint (2hr) │◀──┼── Self-Healing     │
-│         │           │  │ 5. Repeat or Ship   │   │                    │
-│         │           │  └─────────────────────┘   │                    │
-│         │           └─────────────────────────────┘                    │
-│         │                        │                                      │
-│         │    ┌───────────────────┼───────────────────┐                 │
-│         │    │                   │                   │                 │
-│         ▼    ▼                   ▼                   ▼                 │
-│  ┌─────────────┐         ┌─────────────┐     ┌─────────────┐          │
-│  │ checkpoint  │         │   GitHub    │     │  Registry   │          │
-│  │   .yaml     │         │  (push+tag) │     │ (publish)   │          │
-│  └─────────────┘         └─────────────┘     └─────────────┘          │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    Human["**Human**<br/>'run warmup'<br/>'punch it'"]
+
+    subgraph claude["CLAUDE CODE (with SKYNET MODE enabled)"]
+        direction TB
+        CM["CLAUDE.md<br/>(auto-load)"] --> WU["warmup.yaml<br/>(full rules)"]
+        WU --> SP["sprint.yaml<br/>(bounds)"]
+
+        subgraph loop["AUTONOMOUS LOOP"]
+            L1["1. Read milestone"]
+            L2["2. Implement"]
+            L3["3. Test"] ---|Quality Gates| QG((" "))
+            L4["4. Checkpoint"] ---|Self-Healing| SH((" "))
+            L5["5. Repeat or Ship"]
+            L1 --> L2 --> L3 --> L4 --> L5
+        end
+
+        WU --> loop
+        SP --> loop
+
+        loop --> CP["checkpoint.yaml"]
+        loop --> GH["GitHub<br/>(push+tag)"]
+        loop --> REG["Registry<br/>(publish)"]
+    end
+
+    Human --> claude
 ```
 
 ## The Session Flow
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                    SKYNET MODE SESSION                           │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  START                                                           │
-│    │                                                             │
-│    ▼                                                             │
-│  ┌────────────────┐                                              │
-│  │ "run warmup"   │  Human triggers session                      │
-│  └───────┬────────┘                                              │
-│          │                                                       │
-│          ▼                                                       │
-│  ┌────────────────┐                                              │
-│  │ Load Protocol  │  Read warmup.yaml, sprint.yaml, roadmap.yaml │
-│  │ Present Next   │  Show milestone + deliverables               │
-│  │ Milestone      │                                              │
-│  └───────┬────────┘                                              │
-│          │                                                       │
-│          ▼                                                       │
-│  ┌────────────────┐                                              │
-│  │ "punch it"     │  Human confirms                              │
-│  └───────┬────────┘                                              │
-│          │                                                       │
-│          ▼                                                       │
-│  ┌────────────────────────────────────────────────────┐         │
-│  │              AUTONOMOUS EXECUTION                   │         │
-│  │  ┌──────────────────────────────────────────────┐  │         │
-│  │  │                                              │  │         │
-│  │  │   Implement ──▶ Test ──▶ Document ──┐       │  │         │
-│  │  │        ▲                            │       │  │         │
-│  │  │        └────────────────────────────┘       │  │         │
-│  │  │                                              │  │         │
-│  │  │   Every 2hr: Checkpoint + Re-read warmup    │  │         │
-│  │  │                                              │  │         │
-│  │  └──────────────────────────────────────────────┘  │         │
-│  │                                                     │         │
-│  │   Rules:                                            │         │
-│  │   - NO questions (use best judgment)                │         │
-│  │   - NO scope creep ("while I'm here...")            │         │
-│  │   - If blocked: note it, continue with what's done  │         │
-│  │   - 4hr max, then STOP                              │         │
-│  │                                                     │         │
-│  └───────────────────────────┬─────────────────────────┘         │
-│                              │                                   │
-│                              ▼                                   │
-│  ┌────────────────┐                                              │
-│  │ Quality Gates  │  cargo test, clippy, fmt (must pass)         │
-│  └───────┬────────┘                                              │
-│          │                                                       │
-│          ▼                                                       │
-│  ┌────────────────┐                                              │
-│  │ Triple Release │  GitHub (push+tag) + Local + Registry        │
-│  └───────┬────────┘                                              │
-│          │                                                       │
-│          ▼                                                       │
-│  ┌────────────────┐                                              │
-│  │ Report Done    │  Summary + next milestone suggestion         │
-│  └────────────────┘                                              │
-│                                                                  │
-│  END                                                             │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph session["SKYNET MODE SESSION"]
+        START((START))
+        RW["'run warmup'<br/>Human triggers session"]
+        LP["Load Protocol<br/>Read warmup.yaml, sprint.yaml, roadmap.yaml<br/>Present milestone + deliverables"]
+        PI["'punch it'<br/>Human confirms"]
+
+        subgraph auto["AUTONOMOUS EXECUTION"]
+            direction TB
+            LOOP["Implement → Test → Document<br/>(repeat)<br/><br/>Every 2hr: Checkpoint + Re-read warmup"]
+            RULES["**Rules:**<br/>• NO questions (use best judgment)<br/>• NO scope creep<br/>• If blocked: note it, continue<br/>• 4hr max, then STOP"]
+        end
+
+        QG["Quality Gates<br/>cargo test, clippy, fmt (must pass)"]
+        TR["Triple Release<br/>GitHub (push+tag) + Local + Registry"]
+        RD["Report Done<br/>Summary + next milestone suggestion"]
+        STOP((END))
+
+        START --> RW --> LP --> PI --> auto
+        auto --> QG --> TR --> RD --> STOP
+    end
 ```
 
 ## Requirements

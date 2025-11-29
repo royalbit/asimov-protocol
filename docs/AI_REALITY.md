@@ -245,31 +245,16 @@ I don't need training data about your project. **The file IS the truth.**
 
 **The limitation:** Auto-compact summarizes conversation. Details get compressed away. I "forget" your requirements.
 
-**Forge Protocol solution:** Self-Healing Bootstrap Chain
+**Forge Protocol solution:** Self-Healing with Native Features (v4.0.0)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  CLAUDE.md (ultra-short, ~5 lines)                          │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │ ON CONFUSION → re-read warmup.yaml                    │  │
-│  │ This ONE instruction survives any compaction          │  │
-│  └───────────────────────────────────────────────────────┘  │
-│                           ↓                                  │
-│  warmup.yaml (full rules, on disk)                          │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │ Complete project context                              │  │
-│  │ Quality standards                                     │  │
-│  │ File locations                                        │  │
-│  │ Session workflow                                      │  │
-│  └───────────────────────────────────────────────────────┘  │
-│                           ↓                                  │
-│  .claude_checkpoint.yaml (session state)                    │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │ Current milestone                                     │  │
-│  │ Completed tasks                                       │  │
-│  │ In-progress work                                      │  │
-│  └───────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["CLAUDE.md<br/>@warmup.yaml<br/>@ethics.yaml"] --> B["warmup.yaml<br/>Full rules on disk"]
+    B --> C["Claude Code Native<br/>/rewind, --continue"]
+    C --> D["Session Restored"]
+
+    style A fill:#e1f5fe
+    style C fill:#c8e6c9
 ```
 
 **Key insight:** Don't try to make rules survive compaction. **Plan for recovery.**
@@ -331,22 +316,19 @@ Every session starts from **verifiable file state**, not from what I "remember."
 
 **Forge Protocol solution:** The Files ARE the Grounding Mechanism
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│ TRADITIONAL AI WORKFLOW                                      │
-│                                                              │
-│ Human: "What are our coding standards?"                     │
-│ AI: [generates probable answer from training data]          │
-│ Result: Maybe right, maybe wrong, no way to verify          │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph trad["Traditional AI"]
+        A1["Human asks"] --> A2["AI guesses"]
+        A2 --> A3["❓ Maybe right"]
+    end
+    subgraph forge["Forge Protocol"]
+        B1["Human asks"] --> B2["AI reads warmup.yaml"]
+        B2 --> B3["✅ Verifiable"]
+    end
 
-┌─────────────────────────────────────────────────────────────┐
-│ FORGE PROTOCOL WORKFLOW                                      │
-│                                                              │
-│ Human: "What are our coding standards?"                     │
-│ AI: [reads warmup.yaml → quality section]                   │
-│ Result: Verifiable, matches file, auditable                 │
-└─────────────────────────────────────────────────────────────┘
+    style A3 fill:#ffcdd2
+    style B3 fill:#c8e6c9
 ```
 
 The grounding mechanism is **the file system itself**.
