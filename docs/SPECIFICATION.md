@@ -801,8 +801,24 @@ Paste warmup.yaml content at session start. Note: Self-healing won't work withou
 4. **Use checkpoints** - Write state frequently, not on schedule
 5. **Review after compaction** - Check if rules are still understood
 
+## Velocity Constraints (ADR-010)
+
+Velocity depends on subscription tier, not local hardware:
+
+| Tier | Context | Velocity | Notes |
+|------|---------|----------|-------|
+| Pro | 200K | 5-15x | Frequent compaction |
+| Max 20x | 200K | 10-30x | Best consumer tier |
+| Enterprise | 500K | 20-50x | Less compaction |
+| API Tier 4 | 1M | 30-75x | Minimal compaction |
+
+**Hardware is NOT the bottleneck.** API latency dominates. Upgrading local hardware yields ~10-15% improvement.
+
+See [ADR-010: Velocity Constraints](adr/010-velocity-constraints-tier-analysis.md) for full analysis.
+
 ## Architecture Decisions
 
+- [ADR-010: Velocity Constraints and Tier Analysis](adr/010-velocity-constraints-tier-analysis.md) - **v4.0.0** Honest velocity
 - [ADR-009: Claude Code Native Integration](adr/009-claude-code-native-integration.md) - **v4.0.0** Strategic pivot
 - [ADR-008: Ethics Protocol and Humanist Mode](adr/008-ethics-protocol-humanist-mode.md) - v3.0.0
 - [ADR-007: Checkpoint Size Limits and Pruning](adr/007-checkpoint-size-limits.md) - Deprecated by ADR-009

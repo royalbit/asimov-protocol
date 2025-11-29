@@ -212,7 +212,7 @@ The entire Forge project was built with the Forge Protocol:
 | Rework | 30-50% | 0% | **∞** |
 | Releases/project | 3-5 | 34 | **10x** |
 
-**Bottom line:** 1 human + AI with Forge Protocol = **50-100x velocity**.
+**Bottom line:** 1 human + AI with Forge Protocol = **10-75x velocity**.
 
 ## Green Coding
 

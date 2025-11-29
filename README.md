@@ -264,8 +264,8 @@ When organizations adopt the Forge Protocol:
 | 100,000 teams | 6,200 tonnes CO₂ | 1,400 cars off road |
 
 **Plus velocity gains:**
-- Each team gets **50-100x velocity** (proven by Forge)
-- 100 teams = 100 × 50x = **5,000x cumulative productivity gain**
+- Each team gets **10-30x velocity** (typical with Max tier)
+- Enterprise teams with 1M context: **30-75x velocity**
 - Faster shipping = less compute time = even more carbon saved
 
 **For Governments:**
@@ -393,13 +393,23 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 
 ### The Velocity Result
 
-| Metric | Traditional | With Protocol | Multiplier |
-| ------ | ----------- | ------------- | ---------- |
-| Dev time | 2-3 weeks | **<8 hours** | **50-100x** |
-| Rework | 30-50% | **0%** | **∞** |
-| Releases | 3-5 total | **34** | **10x** |
+| Metric | Traditional | With Protocol | Notes |
+| ------ | ----------- | ------------- | ----- |
+| Dev time | 2-3 weeks | **<8 hours** | Greenfield project |
+| Rework | 30-50% | **~5%** | Protocol prevents drift |
 
-**Bottom line:** 1 human + AI with Forge Protocol = **50-100x velocity**.
+**Velocity by Subscription Tier** (see [ADR-010](docs/adr/010-velocity-constraints-tier-analysis.md)):
+
+| Tier | Context | Realistic Velocity | Monthly |
+|------|---------|-------------------|---------|
+| Pro | 200K | 5-15x | $20 |
+| Max 20x | 200K | **10-30x** | $200 |
+| Enterprise | 500K | 20-50x | $5K+ |
+| API Tier 4 | **1M** | **30-75x** | Usage |
+
+*The 50-100x claim applies to peak conditions: greenfield + enterprise tier + single-session completion.*
+
+**Bottom line:** 1 human + AI with Forge Protocol = **10-30x typical, up to 75x with enterprise context.**
 
 ## How It Works
 
