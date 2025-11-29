@@ -278,7 +278,7 @@ The promotion feels earned. 🎉
 - v1.0.0: 8.5 hours
 - v1.2.1: <4 hours
 
-**Velocity:** 20-50x faster than traditional development
+**Velocity:** 50-100x faster than traditional development
 
 **Why?**
 

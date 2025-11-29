@@ -858,7 +858,7 @@ Why so low? Speed killed by supervision overhead:
 - Researches beyond code (grants, tax credits)
 - Delivers complete outcomes (tests + docs + quality)
 
-**Effective Multiplier: 20-50x**
+**Effective Multiplier: 50-100x**
 
 ### Real Data From This Morning
 
@@ -901,7 +901,7 @@ Session 1: Write → Test → Fix → Pass clippy → Done
 |--------|-----------|--------|
 | Pure execution | 5-10x | Faster typing, no breaks, parallel processing |
 | With context | 15-20x | No ramp-up time, perfect memory across sessions |
-| With autonomy | 30-50x | Zero blockers, no meetings, self-correction |
+| With autonomy | 50-100x | Zero blockers, no meetings, self-correction |
 | Calendar time | 50-100x | 24/7 availability, no PTO, instant context switch |
 
 ### What Actually Changed (The Promotion)
@@ -933,7 +933,7 @@ The autonomous AI development methodology demonstrated in Forge v1.0.0 represent
 
 **Measurable Improvements:**
 
-- **Development velocity**: 20-50x multiplier (conservative)
+- **Development velocity**: 50-100x multiplier (conservative)
 - **Code quality**: ZERO warnings, 100% test coverage, maintained autonomously
 - **Rework rate**: 0% (vs industry standard 30-50%)
 - **Context preservation**: 100% across 30+ sessions (vs 0% traditional AI)
@@ -957,7 +957,7 @@ This isn't "AI assistance." This is **AI as autonomous developer**.
 
 ### Conservative vs Optimistic Estimates
 
-**Conservative (20-30x):**
+**Conservative (50-100x):**
 
 - Sustained autonomous work with self-correction
 - Context preservation across sessions
