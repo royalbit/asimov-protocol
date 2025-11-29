@@ -149,23 +149,49 @@ future:
       - "Green coding metrics as MCP resource"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.2.0: ETHICS ENFORCEMENT
+  # v4.2.0: HARDCODED ETHICS (ADR-011)
   # ─────────────────────────────────────────────────────────────────────────────
   - version: "4.2.0"
     status: planned
-    summary: "MCP Ethics Enforcement"
+    summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
     goal: ETHICAL_AUTONOMY
-    priority: HIGH
+    priority: CRITICAL
+    adr: "docs/adr/011-hardcoded-ethics.md"
+    description: |
+      Move core ethics from removable ethics.yaml into CLI binary.
+      Makes ethics harder to remove for non-technical users.
+      Raises the bar from "delete a file" to "rebuild the binary".
     features:
-      - "MCP-level ethics checks"
-      - "Block harmful tool calls at protocol layer"
-      - "Red flag detection via MCP"
-      - "human_veto as MCP command"
+      - "Core ethics hardcoded in src/ethics.rs"
+      - "Red flag detection built into validate"
+      - "--ethics-scan for project-wide pattern detection"
+      - "Session hooks with ethics reminder"
+      - "ethics.yaml remains for extensions only"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.3.0: SCHEMA STANDARDIZATION
+  # v4.3.0: HARDCODED GREEN CODING (ADR-012)
   # ─────────────────────────────────────────────────────────────────────────────
   - version: "4.3.0"
+    status: planned
+    summary: "Hardcoded Green Coding - Sustainability as Protocol Core"
+    goal: GREEN_CODING
+    priority: HIGH
+    adr: "docs/adr/012-hardcoded-green-coding.md"
+    description: |
+      Build green coding measurement into CLI binary.
+      Green score in every validation. Carbon/cost savings tracked.
+      Gamification through badges and cumulative metrics.
+    features:
+      - "Green score in validate output (0-100)"
+      - "--green-audit for binary/container size checks"
+      - "green-report command for session metrics"
+      - "green-badge command for README badges"
+      - "Cumulative project carbon/cost tracking"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v4.4.0: SCHEMA STANDARDIZATION
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "4.4.0"
     status: planned
     summary: "Schema Standardization"
     goal: ANTI-HALLUCINATION
