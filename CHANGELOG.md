@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2025-11-29
+
+### Added: Hardcoded Ethics (ADR-011)
+
+Core ethics are now compiled directly into the CLI binary. This raises the bar for ethics bypass from "delete a file" to "rebuild the entire binary."
+
+#### New Ethics Module (`cli/src/ethics.rs`)
+
+- **CORE_PRINCIPLES**: Hardcoded ethical constraints that cannot be removed by deleting files
+  - `financial`: No unauthorized money movement (wallets, trading bots)
+  - `physical`: No weapons, sabotage, infrastructure attacks
+  - `privacy`: No credential harvesting, doxxing, mass scraping
+  - `deception`: No deepfakes, phishing, scam infrastructure
+  - `transparency_over_velocity`: When in doubt, ask human
+
+- **RED_FLAGS**: 27+ patterns across 4 categories (Financial, Security, Privacy, Deception)
+  - Automatically scanned with `--ethics-scan` flag
+  - Patterns include: "crypto wallet", "private key", "keylogger", "phishing", etc.
+
+#### New CLI Features
+
+- **`forge-protocol validate --ethics-scan`**: Scan project files for red flag patterns
+  - Reports file, line number, category, and pattern matched
+  - Covers 27+ red flag patterns
+  - Warns but doesn't block (context matters for security research)
+
+- **Ethics status in validation output**: Shows "HARDCODED" or "EXTENDED" status
+  - HARDCODED: Core principles enforced from binary
+  - EXTENDED: Core principles + ethics.yaml extensions
+
+- **Enhanced `refresh` command**: Now displays ethics reminder
+  - Shows all core principles status
+  - Shows red flag pattern count
+  - Shows human veto commands
+
+#### Design Decisions
+
+- **Opt-in scanning**: `--ethics-scan` is opt-in to avoid false positive noise
+- **Warn, don't block**: Red flags require human review (legitimate security research exists)
+- **ethics.yaml remains**: For user extensions and custom configurations
+
+#### Bypass Analysis
+
+| Actor | Before | After |
+|-------|--------|-------|
+| Non-technical bad actor | Delete ethics.yaml | Must rebuild CLI |
+| Technical bad actor | Delete ethics.yaml | Can still rebuild |
+| Good-faith user | Uses ethics | Same, with stronger defaults |
+
+**Key insight**: This doesn't prevent determined bad actors. It raises the bar and makes ethics removal visible and intentional.
+
+### Changed
+
+- **Validation output**: Now shows ethics status before file validation
+- **Refresh command**: Includes ethics reminder with principle status
+
+### Technical
+
+- New `cli/src/ethics.rs` module (300+ lines including tests)
+- 18 new unit tests for ethics functionality
+- All 103 tests passing
+
 ## [4.0.2] - 2025-11-29
 
 ### Added: Anti-Sycophancy Protocol (ADR-015)

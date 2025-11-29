@@ -3,10 +3,12 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
-    check_markdown_file, checkpoint_template, claude_md_template, ethics_template,
-    find_markdown_files, fix_markdown_file, hook_installer_template, is_protocol_file,
-    precommit_hook_template, roadmap_template, sprint_template, uses_cargo_husky,
-    validate_directory, validate_file, warmup_template, ProjectType,
+    check_ethics_status, check_markdown_file, checkpoint_template, claude_md_template,
+    ethics_template, find_markdown_files, fix_markdown_file, hook_installer_template,
+    is_protocol_file, precommit_hook_template, red_flags, roadmap_template,
+    scan_directory_for_red_flags, sprint_template, uses_cargo_husky, validate_directory,
+    validate_file, warmup_template, EthicsStatus, ProjectType, CORE_PRINCIPLES,
+    HUMAN_VETO_COMMANDS,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -68,6 +70,10 @@ enum Commands {
         /// File or directory to validate (defaults to current directory)
         #[arg(default_value = ".")]
         path: PathBuf,
+
+        /// Scan project files for red flag patterns (security, financial, privacy, deception)
+        #[arg(long)]
+        ethics_scan: bool,
     },
 
     /// Initialize new protocol files
@@ -127,7 +133,7 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Validate { path } => cmd_validate(&path),
+        Commands::Validate { path, ethics_scan } => cmd_validate(&path, ethics_scan),
         Commands::Init {
             name,
             project_type,
@@ -136,7 +142,7 @@ fn main() -> ExitCode {
             output,
             force,
         } => cmd_init(name, &project_type, full, skynet, &output, force),
-        Commands::Check { file } => cmd_validate(&file),
+        Commands::Check { file } => cmd_validate(&file, false),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
     }
@@ -157,6 +163,45 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
         "═══════════════════════════════════════════════════════════════════════".bright_cyan()
     );
     println!();
+
+    // Ethics reminder (hardcoded - cannot be removed)
+    println!("{}", "[FORGE ETHICS] Core principles ACTIVE".bold().green());
+    println!(
+        "  {} Financial: {} | Physical: {} | Privacy: {} | Deception: {}",
+        "✓".green(),
+        if CORE_PRINCIPLES.financial {
+            "blocked".green()
+        } else {
+            "off".red()
+        },
+        if CORE_PRINCIPLES.physical {
+            "blocked".green()
+        } else {
+            "off".red()
+        },
+        if CORE_PRINCIPLES.privacy {
+            "blocked".green()
+        } else {
+            "off".red()
+        },
+        if CORE_PRINCIPLES.deception {
+            "blocked".green()
+        } else {
+            "off".red()
+        },
+    );
+    println!(
+        "  {} Red flags monitored: {} patterns",
+        "✓".green(),
+        red_flags::count()
+    );
+    println!(
+        "  {} Human veto: {}",
+        "✓".green(),
+        HUMAN_VETO_COMMANDS.join(" | ").dimmed()
+    );
+    println!();
+
     println!(
         "{} → {}",
         "ON CONFUSION".bold().yellow(),
@@ -201,8 +246,22 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     ExitCode::SUCCESS
 }
 
-fn cmd_validate(path: &Path) -> ExitCode {
+fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
     println!("{}", "Forge Protocol Validator".bold().green());
+    println!();
+
+    // Show hardcoded ethics status
+    let dir = if path.is_file() {
+        path.parent().unwrap_or(Path::new("."))
+    } else {
+        path
+    };
+    let ethics_status = check_ethics_status(dir);
+    let ethics_display = match ethics_status {
+        EthicsStatus::Hardcoded => "HARDCODED (core principles enforced)".bright_cyan(),
+        EthicsStatus::Extended => "EXTENDED (core + ethics.yaml)".bright_green(),
+    };
+    println!("  {} Ethics: {}", "✓".green(), ethics_display);
     println!();
 
     let results = if path.is_file() {
@@ -262,6 +321,49 @@ fn cmd_validate(path: &Path) -> ExitCode {
     }
 
     println!();
+
+    // Run ethics scan if requested
+    if ethics_scan {
+        println!("{}", "Ethics Scan (Red Flag Detection)".bold().yellow());
+        println!();
+
+        match scan_directory_for_red_flags(dir) {
+            Ok(matches) => {
+                if matches.is_empty() {
+                    println!(
+                        "  {} No red flags detected ({} patterns checked)",
+                        "✓".green(),
+                        red_flags::count()
+                    );
+                } else {
+                    println!("  {} {} red flag(s) detected:", "⚠".yellow(), matches.len());
+                    println!();
+                    for m in &matches {
+                        println!(
+                            "    {}:{} [{}] \"{}\"",
+                            m.file.bright_blue(),
+                            m.line.to_string().yellow(),
+                            m.category.to_string().red(),
+                            m.pattern
+                        );
+                        if !m.context.is_empty() {
+                            println!("      {}", m.context.dimmed());
+                        }
+                    }
+                    println!();
+                    println!(
+                        "  {} Red flags require human review. They may be legitimate.",
+                        "Note:".dimmed()
+                    );
+                }
+            }
+            Err(e) => {
+                eprintln!("  {} Failed to scan: {}", "Error:".bold().red(), e);
+            }
+        }
+
+        println!();
+    }
 
     if has_errors {
         let fail_count = results.iter().filter(|r| !r.is_valid).count();

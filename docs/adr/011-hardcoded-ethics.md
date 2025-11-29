@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed (Target: v4.1.0)
+**Accepted** - Implemented in v4.1.0 (2025-11-29)
 
 ## Date
 

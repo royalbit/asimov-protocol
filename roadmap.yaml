@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.0.2"
+  current_version: "4.1.0"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,56 +48,61 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.0.0 - CLAUDE CODE NATIVE INTEGRATION (BREAKING)
+# CURRENT: v4.1.0 - HARDCODED ETHICS (ADR-011)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.0.0"
+  version: "4.1.0"
   status: released
-  date: "2025-11-28"
-  summary: "Claude Code Native Integration"
-  goal: INTEGRATION
+  date: "2025-11-29"
+  summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
+  goal: ETHICAL_AUTONOMY
   priority: CRITICAL
-  breaking: true
 
   rationale: |
-    Claude Code 2.0 includes native checkpoints, session resume, and CLAUDE.md
-    memory hierarchy. Building duplicate features wastes effort. Instead:
-    - Integrate WITH Claude Code's native features
-    - Focus on what Claude Code DOESN'T have
-    - Prepare for MCP-based vendor neutrality
+    Core ethics moved from removable ethics.yaml into CLI binary.
+    Raises bypass bar from "delete a file" to "rebuild the binary".
+    Makes ethics removal visible and intentional.
 
   deliverables:
-    documentation:
-      - "[x] ADR-009: Claude Code Native Integration"
-      - "[x] ADR-011: AI-Only Development Model - No External PRs"
-      - "[x] ADR-013: Self-Healing NOT Replaced by Native Features"
-      - "[x] ADR-006: Commit cadence requirement (~15 min)"
-      - "[ ] Update SPECIFICATION.md with integration strategy"
-      - "[ ] Update README.md with new direction"
-      - "[x] Update warmup.yaml self_healing section (commit_cadence added)"
-
-    deprecations:
-      # NOTE: These are CROSS-SESSION features only (ADR-013)
-      # Mid-session self-healing (warmup.yaml re-read) is NOT deprecated
-      - ".claude_checkpoint.yaml → TodoWrite for tasks (native /rewind is MANUAL)"
-      - "Session handoff features → --continue/--resume (MANUAL cross-session)"
-      - "Checkpoint schema validation → Removed"
-
     cli_changes:
-      - "--skynet generates CLAUDE.md with @warmup.yaml import"
-      - "CLAUDE.md template uses native memory features"
-      - "Remove checkpoint validation code"
+      - "[x] cli/src/ethics.rs - Core ethics module"
+      - "[x] CORE_PRINCIPLES hardcoded (financial, physical, privacy, deception)"
+      - "[x] RED_FLAGS - 27+ patterns across 4 categories"
+      - "[x] --ethics-scan flag for red flag detection"
+      - "[x] Ethics status in validation output (HARDCODED/EXTENDED)"
+      - "[x] Enhanced refresh command with ethics reminder"
 
-    unique_value_focus:
-      - "Ethics validation remains Priority 0"
-      - "Green coding metrics and philosophy"
-      - "Sprint autonomy (4hr max, 1 milestone)"
-      - "Schema validation for protocol files"
+    documentation:
+      - "[x] ADR-011: Hardcoded Ethics - Accepted"
+      - "[x] CHANGELOG.md updated"
+
+    testing:
+      - "[x] 18 new unit tests for ethics module"
+      - "[x] All 103 tests passing"
+      - "[x] Zero clippy warnings"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.0.2"
+    status: released
+    date: "2025-11-29"
+    summary: "Anti-Sycophancy Protocol (ADR-015)"
+    highlights:
+      - "Anti-sycophancy directives in warmup.yaml"
+      - "Banned phrases list"
+      - "AI_REALITY.md Part 3: Sycophancy"
+
+  - version: "4.0.0"
+    status: released
+    date: "2025-11-28"
+    summary: "Claude Code Native Integration (BREAKING)"
+    highlights:
+      - "Strategic pivot to integrate with Claude Code 2.0"
+      - "CLAUDE.md @import syntax"
+      - "Deprecated cross-session features for native alternatives"
+
   - version: "3.2.0"
     status: released
     date: "2025-11-29"
@@ -148,34 +153,12 @@ future:
   # ═══════════════════════════════════════════════════════════════════════════
   # PRIORITY ORDER: Matches core values (0-5)
   # ═══════════════════════════════════════════════════════════════════════════
-  # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (CRITICAL)
+  # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (RELEASED)
   # 1.5 ANTI-SYCOPHANCY → v4.1.5 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
   # 1.  ANTI-HALLUCINATION → v4.4.0 Schema Standardization
   # 5.  GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
   # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
   # ═══════════════════════════════════════════════════════════════════════════
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.0: HARDCODED ETHICS (ADR-011) - PRIORITY 0
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.0"
-    status: planned
-    summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
-    goal: ETHICAL_AUTONOMY
-    priority: CRITICAL
-    core_value: 0
-    adr: "docs/adr/011-hardcoded-ethics.md"
-    description: |
-      Move core ethics from removable ethics.yaml into CLI binary.
-      Makes ethics harder to remove for non-technical users.
-      Raises the bar from "delete a file" to "rebuild the binary".
-      MUST come first - ethics is Priority 0.
-    features:
-      - "Core ethics hardcoded in src/ethics.rs"
-      - "Red flag detection built into validate"
-      - "--ethics-scan for project-wide pattern detection"
-      - "Session hooks with ethics reminder"
-      - "ethics.yaml remains for extensions only"
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.1.5: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5

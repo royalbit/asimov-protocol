@@ -11,63 +11,54 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.0.0 - CLAUDE CODE NATIVE INTEGRATION (BREAKING)
+# CURRENT: v4.1.0 - HARDCODED ETHICS (ADR-011)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v4.0.0 - Claude Code Native Integration"
-  started: "2025-11-28"
+  current: "v4.1.0 - Hardcoded Ethics"
+  started: "2025-11-29"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # STRATEGIC PIVOT (ADR-009, corrected by ADR-013)
+  # HARDCODED ETHICS (ADR-011)
   # ─────────────────────────────────────────────────────────────────────────────
-  # Claude Code 2.0 (Nov 2025) has native features for CROSS-SESSION:
-  #   - /rewind checkpoints (MANUAL command, not automatic)
-  #   - --continue/--resume (MANUAL CLI start, cross-session)
-  #   - CLAUDE.md memory hierarchy (can import warmup.yaml)
-  #
-  # IMPORTANT (ADR-013): These are MANUAL, not automatic.
-  # Mid-session self-healing (warmup.yaml re-read) is NOT replaced.
-  #
-  # PIVOT: Integrate with Claude Code for cross-session.
-  #        Keep mid-session self-healing (warmup.yaml + commit cadence).
+  # Core ethics moved from removable ethics.yaml into CLI binary.
+  # Raises bypass bar from "delete a file" to "rebuild the binary".
+  # Makes ethics removal visible and intentional.
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Research Claude Code 2.0 native features"
-    - "[x] ADR-009: Claude Code Native Integration"
-    - "[x] Update roadmap.yaml with strategic pivot"
-    - "[x] Update sprint.yaml"
-    - "[x] Update SPECIFICATION.md"
-    - "[x] Update README.md"
-    - "[x] Update CLI --skynet CLAUDE.md template"
+    - "[x] Create cli/src/ethics.rs with hardcoded CORE_PRINCIPLES"
+    - "[x] Implement RED_FLAGS (27+ patterns, 4 categories)"
+    - "[x] Add --ethics-scan flag for red flag detection"
+    - "[x] Update validation output (HARDCODED/EXTENDED status)"
+    - "[x] Update refresh command with ethics reminder"
+    - "[x] Wire up ethics module in lib.rs"
+    - "[x] Add 18 new unit tests"
     - "[x] Update CHANGELOG.md"
-    - "[x] Bump version to 4.0.0"
-    - "[x] Run tests and clippy"
-    - "[x] Tag, push, publish"
+    - "[x] Bump version to 4.1.0"
+    - "[x] Update roadmap.yaml"
+    - "[x] Update ADR-011 status to Accepted"
+    - "[x] Run tests and clippy (103 tests, 0 warnings)"
 
-  breaking_changes:
-    - ".claude_checkpoint.yaml validation removed (use TodoWrite for tasks)"
-    - "CLAUDE.md template now uses @warmup.yaml import"
-    - "Session handoff features deprecated (cross-session only)"
-
-  unique_value_preserved:
-    - "Ethics validation (Priority 0)"
-    - "Green coding metrics"
-    - "Sprint autonomy (4hr max, 1 milestone)"
-    - "Schema validation for warmup/sprint/roadmap"
+  deliverables:
+    - "cli/src/ethics.rs - Core ethics module (300+ lines)"
+    - "CORE_PRINCIPLES hardcoded (financial, physical, privacy, deception)"
+    - "RED_FLAGS - 27 patterns across 4 categories"
+    - "--ethics-scan CLI flag"
+    - "Ethics status in validation output"
+    - "Enhanced refresh command"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINT (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v3.2.0 - Anti-Hallucination Hardening"
+  sprint: "v4.0.0 - Claude Code Native Integration"
   status: done
-  date: "2025-11-29"
+  date: "2025-11-28"
   highlights:
-    - "Ethics structure validation (human_veto REQUIRED)"
-    - "Warmup structure validation"
-    - "Modular .forge/ schema design"
+    - "Strategic pivot to integrate with Claude Code 2.0"
+    - "CLAUDE.md @import syntax"
+    - "Deprecated cross-session features for native alternatives"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES
