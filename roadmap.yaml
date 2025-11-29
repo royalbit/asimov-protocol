@@ -11,12 +11,14 @@ metadata:
 #
 # 0. ETHICAL_AUTONOMY - Prevent harm from autonomous AI (TOP PRIORITY)
 # 1. ANTI-HALLUCINATION - Ground AI in file-based truth
-# 2. SELF-HEALING - Recovery from context compaction (NOW: use Claude Code native)
-# 3. SESSION CONTINUITY - Maintain context across sessions (NOW: use --continue/--resume)
+# 2. SELF-HEALING - Mid-session recovery via warmup.yaml re-read (ADR-013: NOT REPLACED)
+# 3. SESSION CONTINUITY - Cross-session resume (NOW: use --continue/--resume)
 # 4. AUTONOMOUS_DEVELOPMENT - SKYNET MODE that actually works
 # 5. GREEN_CODING - Local validation over cloud AI
 #
 # Features that don't serve these goals don't belong here.
+#
+# CRITICAL: Self-healing requires COMMIT CADENCE (~15 min) - see ADR-006
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -60,9 +62,11 @@ current:
     documentation:
       - "[x] ADR-009: Claude Code Native Integration"
       - "[x] ADR-011: AI-Only Development Model - No External PRs"
+      - "[x] ADR-013: Self-Healing NOT Replaced by Native Features"
+      - "[x] ADR-006: Commit cadence requirement (~15 min)"
       - "[ ] Update SPECIFICATION.md with integration strategy"
       - "[ ] Update README.md with new direction"
-      - "[ ] Update warmup.yaml self_healing section"
+      - "[x] Update warmup.yaml self_healing section (commit_cadence added)"
 
     deprecations:
       - ".claude_checkpoint.yaml → Use native /rewind checkpoints"

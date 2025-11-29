@@ -85,7 +85,21 @@ cargo test || exit 1
 
 1. **Requires CLI Installation:** `forge-protocol` must be in PATH
 2. **Hook Setup:** Users must install hooks (mitigated by `--skynet` setup)
-3. **Commit Frequency Dependent:** Works best with frequent commits
+
+### Requirements
+
+**Commit Cadence Rule:** For self-healing to work, commits must happen at least as often as compaction (~15 minutes).
+
+| Compaction | Commit Cadence | Self-Healing |
+|------------|----------------|--------------|
+| Every ~15 min | Every ~15 min | ✓ Works |
+| Every ~15 min | Every ~30 min | ⚠ Gaps |
+| Every ~15 min | Every ~2 hours | ✗ Broken |
+
+**Enforcement:** Add to sprint autonomy rules:
+- "Commit at least every 15 minutes during active development"
+- "Commit after every task completion, even if small"
+- "Small commits > large commits (for self-healing)"
 
 ### Neutral
 

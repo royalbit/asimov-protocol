@@ -37,13 +37,24 @@
 self_healing:
   checkpoint_file: ".claude_checkpoint.yaml"
 
-  # REALISTIC triggers based on actual compaction frequency
+  # REALISTIC triggers based on actual compaction frequency (~15 min)
   checkpoint_triggers:
     - "Every major task completion"
     - "Every 10-15 tool calls (~15 minutes of work)"
     - "Before any file write >100 lines"
     - "Before any commit"
     - "On ANY confusion or uncertainty"
+
+  # COMMIT CADENCE - Required for self-healing to work (ADR-006)
+  # Compaction happens every ~15 min. Commits trigger forge-protocol refresh.
+  # If commits are less frequent than compaction, self-healing breaks.
+  commit_cadence:
+    rule: "Commit at least every 15 minutes during active development"
+    why: "Each commit triggers forge-protocol refresh, injecting fresh context"
+    patterns:
+      - "Commit after every task completion, even if small"
+      - "Small commits > large commits (for self-healing)"
+      - "WIP commits are OK - squash later if needed"
 
   # Recovery instruction (must be SHORT to survive summarization)
   on_confusion: "STOP → re-read warmup.yaml → re-read .claude_checkpoint.yaml"
