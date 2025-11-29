@@ -169,7 +169,7 @@ future:
   # ═══════════════════════════════════════════════════════════════════════════
   # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (RELEASED)
   # 0.5 GREEN_CODING → v4.1.2 Green Protocol Separation (RELEASED)
-  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Directory Restructure (HIGH - ADR-017)
+  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Self-Healing (HIGH - ADR-017)
   # 1.5 ANTI-SYCOPHANCY → v4.1.6 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
   # 5.  GREEN_METRICS → v4.2.0 Hardcoded Green Coding Metrics (HIGH - ADR-012)
   # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
@@ -247,45 +247,49 @@ future:
       - "Green coding metrics as MCP resource"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.5: PROTOCOL DIRECTORY RESTRUCTURE (ADR-017) - PRIORITY 1
+  # v4.1.5: PROTOCOL SELF-HEALING (ADR-017) - PRIORITY 1
   # ─────────────────────────────────────────────────────────────────────────────
   - version: "4.1.5"
     status: planned
-    summary: "Protocol Directory Restructure - Clean Root, Protected Core"
+    summary: "Protocol Self-Healing - Auto-Regeneration & Tamper Detection"
     goal: ANTI-HALLUCINATION
     priority: HIGH
     core_value: 1
-    adr: "docs/adr/017-protocol-directory-restructure.md"
+    adr: "docs/adr/017-protocol-self-healing.md"
     description: |
-      Move all protocol files into a hidden `.forge/` directory.
-      Cleaner root directory. Auto-creation of missing files.
-      Anti-tampering protection for all protocol files including warmup.
-    features:
-      - ".forge/ directory for all protocol files"
-      - "Auto-creation of missing files on validation"
-      - "Checksum-based tampering detection"
-      - "Warmup anti-tampering (signed/verified)"
-      - "Migration command for existing projects"
-    structure:
-      current:
-        - "ethics.yaml (root)"
-        - "green.yaml (root)"
-        - "warmup.yaml (root)"
-        - "sprint.yaml (root)"
-        - "roadmap.yaml (root)"
-      proposed:
-        - ".forge/ethics.yaml"
-        - ".forge/green.yaml"
-        - ".forge/warmup.yaml"
-        - ".forge/sprint.yaml"
-        - ".forge/roadmap.yaml"
+      Auto-regenerate missing protocol files during validation.
+      Recovery over surveillance. Self-healing without reporting.
+      Checksum-based tamper detection (warn, don't block).
+
+    phase_1_auto_regeneration:
+      features:
+        - "Auto-create missing ethics.yaml, green.yaml, warmup.yaml"
+        - "WARN on regeneration (not silent)"
+        - "CLAUDE.md never auto-created (bootstrap must be intentional)"
+        - "--no-regenerate flag to skip auto-creation"
+      behavior:
+        ethics_missing: "AUTO-CREATE + WARN"
+        green_missing: "AUTO-CREATE + INFO"
+        warmup_missing: "AUTO-CREATE + WARN"
+        claude_md_missing: "NEVER AUTO-CREATE (off switch)"
+
+    phase_2_checksum_validation:
+      features:
+        - ".forge/checksums.yaml for tamper detection"
+        - "WARN if files modified from known-good state"
+        - "--update-checksums flag after intentional changes"
+        - "Migration command for existing projects"
+      structure:
         - ".forge/checksums.yaml (tamper detection)"
-    rationale: |
-      1. Cleaner root directory - protocol files are implementation details
-      2. Hidden directory signals "managed by tool, don't edit manually"
-      3. Single directory for backup/restore/version control
-      4. Enables checksums for ALL protocol files, not just ethics/green
-      5. CLAUDE.md stays in root (bootstrap must be visible)
+        - "SHA256 hashes of all protocol files"
+        - "Last verified timestamp"
+
+    philosophy: |
+      Recovery over surveillance:
+      - Make it easy to restore correct state
+      - Make deletion/modification visible (warnings)
+      - Don't prevent changes (it's their project)
+      - Don't report/punish (that's overreach)
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.4.0: SCHEMA STANDARDIZATION - PRIORITY 1
