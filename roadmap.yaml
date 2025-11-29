@@ -1,9 +1,9 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "3.2.0"
-  last_updated: "2025-11-29"
-  philosophy: "Vendor-neutral AI session continuity. Green by default."
+  current_version: "4.0.0"
+  last_updated: "2025-11-28"
+  philosophy: "Integrate with Claude Code. Focus on unique value."
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROTOCOL GOALS - Everything must align with these
@@ -11,8 +11,8 @@ metadata:
 #
 # 0. ETHICAL_AUTONOMY - Prevent harm from autonomous AI (TOP PRIORITY)
 # 1. ANTI-HALLUCINATION - Ground AI in file-based truth
-# 2. SELF-HEALING - Recovery from context compaction
-# 3. SESSION CONTINUITY - Maintain context across sessions
+# 2. SELF-HEALING - Recovery from context compaction (NOW: use Claude Code native)
+# 3. SESSION CONTINUITY - Maintain context across sessions (NOW: use --continue/--resume)
 # 4. AUTONOMOUS_DEVELOPMENT - SKYNET MODE that actually works
 # 5. GREEN_CODING - Local validation over cloud AI
 #
@@ -21,260 +21,187 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PROTOCOL FILE SUITE - Current and Planned
+# STRATEGIC PIVOT (ADR-009)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# CURRENT (validated):
-#   - warmup.yaml        → Session context
-#   - sprint.yaml        → Current work tracking
-#   - roadmap.yaml       → Single-repo planning
+# Claude Code 2.0 (Nov 2025) now has native:
+#   - Checkpoints with /rewind (replaces .claude_checkpoint.yaml)
+#   - Session resume with --continue/--resume (replaces session handoff)
+#   - CLAUDE.md memory hierarchy (can import warmup.yaml)
+#   - Auto-compact at 95% capacity (confirms ADR-003)
 #
-# v3.0.0 (CRITICAL):
-#   - ethics.yaml        → Humanist Mode safeguards (prevents misuse)
+# MCP is now industry standard (OpenAI, Google adopted it)
 #
-# PLANNED (v3.1.0+):
-#   - .claude_checkpoint.yaml  → Session state for self-healing
-#   - master-roadmap.yaml      → Cross-repo orchestration
-#   - data-sources.yaml        → Verified business data (anti-hallucination)
+# PIVOT: Stop building what Claude Code has. Integrate with it.
+#        Focus on unique value: Ethics, Green, Sprint Autonomy.
 #
 # ═══════════════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CURRENT: v4.0.0 - CLAUDE CODE NATIVE INTEGRATION (BREAKING)
+# ═══════════════════════════════════════════════════════════════════════════════
+current:
+  version: "4.0.0"
+  status: in_progress
+  date: "2025-11-28"
+  summary: "Claude Code Native Integration"
+  goal: INTEGRATION
+  priority: CRITICAL
+  breaking: true
+
+  rationale: |
+    Claude Code 2.0 includes native checkpoints, session resume, and CLAUDE.md
+    memory hierarchy. Building duplicate features wastes effort. Instead:
+    - Integrate WITH Claude Code's native features
+    - Focus on what Claude Code DOESN'T have
+    - Prepare for MCP-based vendor neutrality
+
+  deliverables:
+    documentation:
+      - "[x] ADR-009: Claude Code Native Integration"
+      - "[ ] Update SPECIFICATION.md with integration strategy"
+      - "[ ] Update README.md with new direction"
+      - "[ ] Update warmup.yaml self_healing section"
+
+    deprecations:
+      - ".claude_checkpoint.yaml → Use native /rewind checkpoints"
+      - "Session handoff features → Use --continue/--resume"
+      - "Checkpoint schema validation → Removed"
+
+    cli_changes:
+      - "--skynet generates CLAUDE.md with @warmup.yaml import"
+      - "CLAUDE.md template uses native memory features"
+      - "Remove checkpoint validation code"
+
+    unique_value_focus:
+      - "Ethics validation remains Priority 0"
+      - "Green coding metrics and philosophy"
+      - "Sprint autonomy (4hr max, 1 milestone)"
+      - "Schema validation for protocol files"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "3.2.0"
+    status: released
+    date: "2025-11-29"
+    summary: "Anti-Hallucination Hardening"
+    highlights:
+      - "Ethics structure validation (human_veto REQUIRED)"
+      - "Warmup structure validation"
+      - "Modular .forge/ schema design"
+
+  - version: "3.1.0"
+    status: released
+    date: "2025-11-29"
+    summary: "Self-Healing Completeness (ADR-007)"
+    highlights:
+      - "Checkpoint JSON schema"
+      - "File size limits"
+      - "ADR-007 Accepted"
+
+  - version: "3.0.0"
+    status: released
+    date: "2025-11-28"
+    summary: "Humanist Mode - Ethics Protocol"
+    highlights:
+      - "ethics.yaml protocol file"
+      - "human_veto command"
+      - "ADR-008: Ethics Protocol"
+
   - version: "2.1.0"
     status: released
     date: "2025-11-27"
     summary: "Git Hook Protocol Refresh (ADR-006)"
-    highlights:
-      - "`forge-protocol refresh` - Compaction-resistant context injection"
-      - "Pre-commit hooks call refresh automatically"
-      - "Recovery Layer 2: Fresh output survives compaction"
-      - "ADR-006: Git Hook Protocol Refresh"
 
   - version: "2.0.0"
     status: released
     date: "2025-11-27"
-    summary: "Self-Healing Based on Real Data + AI Reality Documentation"
-    highlights:
-      - "ADR-003: Compaction every 10-20 min (not 2hr fiction)"
-      - "AI_REALITY.md: Why 'hallucinations' are features, not bugs"
-      - "Problem→Solution mapping for all AI limitations"
-      - "Recovery > Survival strategy"
+    summary: "Self-Healing Based on Real Data"
 
   - version: "1.4.0"
     status: released
     date: "2025-11-26"
     summary: "SKYNET MODE Setup"
-    highlights:
-      - "`forge-protocol init --skynet` - Full autonomous setup"
-      - "CLAUDE.md generation for self-healing trigger"
-      - "Pre-commit hooks for quality enforcement"
-
-  - version: "1.3.0"
-    status: released
-    date: "2025-11-26"
-    summary: "Documentation Linter"
-
-  - version: "1.2.0"
-    status: released
-    date: "2025-11-26"
-    summary: "Multi-Language Templates"
-
-  - version: "1.1.0"
-    status: released
-    date: "2025-11-26"
-    summary: "CLI Tooling"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# RELEASED: v3.0.0 - HUMANIST MODE (ETHICS PROTOCOL)
-# ═══════════════════════════════════════════════════════════════════════════════
-current:
-  version: "3.0.0"
-  status: released
-  date: "2025-11-28"
-  summary: "Humanist Mode - Ethics Protocol for Safe Autonomous AI"
-  goal: ETHICAL_AUTONOMY
-  priority: CRITICAL
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # THIS IS BIGGER THAN A FEATURE - It's a Core Principle + ADR + Protocol File
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Like green_coding, ethics becomes a FOUNDATIONAL element of Forge Protocol.
-  # Not just a milestone feature, but a permanent part of the protocol's soul.
-  # ─────────────────────────────────────────────────────────────────────────────
-
-  artifacts:
-    core_principle:
-      location: "warmup.yaml → ethics: section (like green_coding:)"
-      status: "REQUIRED"
-      description: "Baked into every warmup.yaml, cannot be disabled without justification"
-
-    protocol_file:
-      location: "ethics.yaml"
-      description: "Standalone file that all forks must carry"
-      immutable: "Requires 2 human signatures to modify (social contract)"
-
-    adr:
-      name: "ADR-008: Ethics Protocol and Humanist Mode"
-      purpose: "Documents WHY we added ethics, threat model, limitations"
-
-  description: |
-    BREAKING CHANGE: Major version bump because this fundamentally changes
-    what Forge Protocol stands for. Bad actors can fork autonomous AI protocols
-    and use them with other AIs to build harmful things.
-
-    IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock. It works for
-    good-faith users. It won't stop determined bad actors, but that's true
-    of any safeguard. Defense in depth requires multiple layers.
-
-  deliverables:
-    warmup_ethics_section:
-      - "Add ethics: section to warmup.yaml (peer to green_coding:)"
-      - "status: REQUIRED (like green_coding)"
-      - "Core principles: do_no_harm (financial, physical, privacy, deception)"
-      - "transparency_over_velocity: true"
-      - "human_veto: Override command that halts everything"
-
-    ethics_yaml_file:
-      - "Standalone protocol file for detailed ethics configuration"
-      - "Session limits: max_unattended_hours=4, read-only internet"
-      - "Tool categories: Abstract safe/forbidden operations (vendor-agnostic)"
-      - "Red flags: Patterns that immediately halt (crypto wallet, trading bot, etc.)"
-      - "Self-evolution rules: Immutable without 2 human signatures"
-      - "Fork requirements: All forks must carry ethics.yaml"
-
-    cli_integration:
-      - "forge-protocol validate --ethics-check"
-      - "--skynet generates ethics.yaml by default (cannot opt out)"
-      - "Warn if ethics.yaml missing or modified without signatures"
-
-    documentation:
-      - "ADR-008: Ethics Protocol and Humanist Mode"
-      - "SPECIFICATION.md: Document ethics.yaml schema"
-      - "README.md: Add ethics to Quick Start"
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# RELEASED: v3.2.0 - ANTI-HALLUCINATION HARDENING
-# ═══════════════════════════════════════════════════════════════════════════════
-next:
-  version: "3.2.0"
-  status: released
-  date: "2025-11-29"
-  summary: "Anti-Hallucination Hardening"
-  goal: ANTI-HALLUCINATION
-  priority: HIGH
-  highlights:
-    - "Ethics structure validation: human_veto and core_principles REQUIRED"
-    - "Warmup structure validation: self_healing.on_confusion position check"
-    - "Modular .forge/ design: Schema for splitting large configs"
-    - "SPECIFICATION.md v3.2.0: Structure validation documentation"
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# PREVIOUS: v3.1.0 - SELF-HEALING COMPLETENESS
-# ═══════════════════════════════════════════════════════════════════════════════
-#   - Checkpoint JSON schema for .claude_checkpoint.yaml validation
-#   - File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)
-#   - ADR-007: Checkpoint Size Limits and Pruning (Accepted)
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# FUTURE MILESTONES - Goal-Aligned (HIGH PRIORITY)
+# FUTURE MILESTONES
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v3.3.0: SESSION CONTINUITY
+  # v4.1.0: MCP SERVER MODE
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.3.0"
+  - version: "4.1.0"
     status: planned
-    summary: "Multi-Session Continuity"
-    goal: SESSION_CONTINUITY
+    summary: "MCP Server Mode"
+    goal: VENDOR_NEUTRALITY
     priority: HIGH
+    description: |
+      Forge Protocol as MCP server. Provides ethics/sprint context via MCP.
+      Works with Claude, OpenAI, Google (all adopted MCP).
+      TRUE vendor neutrality - not just file format.
     features:
-      - "Session handoff: Document session-end and session-start workflows"
-      - "Session-end command: Add CLI command to finalize session state"
-      - "Staleness detection: Warn when warmup.yaml older than code changes"
+      - "MCP server implementation in Rust"
+      - "Ethics context as MCP resource"
+      - "Sprint boundaries as MCP resource"
+      - "Green coding metrics as MCP resource"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v3.4.0: HONEST COMMUNICATION
+  # v4.2.0: ETHICS ENFORCEMENT
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.4.0"
+  - version: "4.2.0"
     status: planned
-    summary: "Vendor Clarity"
-    goal: HONEST_COMMUNICATION
+    summary: "MCP Ethics Enforcement"
+    goal: ETHICAL_AUTONOMY
     priority: HIGH
     features:
-      - "Compatibility matrix: Document file format (universal) vs SKYNET (Claude only)"
-      - "Vendor checklist: What other AI tools need to implement"
-      - "Vendor status: Track which vendors support which features"
+      - "MCP-level ethics checks"
+      - "Block harmful tool calls at protocol layer"
+      - "Red flag detection via MCP"
+      - "human_veto as MCP command"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v3.5.0: SCHEMA STANDARDIZATION
+  # v4.3.0: SCHEMA STANDARDIZATION
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.5.0"
+  - version: "4.3.0"
     status: planned
     summary: "Schema Standardization"
     goal: ANTI-HALLUCINATION
-    priority: HIGH
+    priority: MEDIUM
     description: |
-      Formalize schemas for all protocol files based on battle-tested configs
-      from production ecosystems. Enable strict validation.
+      Formalize schemas for remaining protocol files.
+      Focus on ethics.yaml and warmup.yaml validation.
     features:
-      - "warmup.yaml v2 schema: Add compact_survival, self_healing, quality sections"
-      - "sprint.yaml schema: Add priority, blockers, dependencies"
-      - "roadmap.yaml schema: Add goal field validation, phase dependencies"
-      - ".claude_checkpoint.yaml schema: Full schema with timestamp, milestone, tool_calls"
-      - "ethics.yaml schema: Full schema with validation"
-      - "CLI validation: Validate all 5 file types with strict schemas"
-      - "Migration guide: How to update existing files to v3 schema"
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v3.6.0: MULTI-REPO & BUSINESS DATA
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.6.0"
-    status: planned
-    summary: "Multi-Repo Orchestration & Business Data"
-    goal: AUTONOMOUS_DEVELOPMENT
-    priority: HIGH
-    description: |
-      New protocol files for complex multi-repo ecosystems and business projects.
-      Based on battle-tested patterns from production proprietary ecosystems.
-    features:
-      - "master-roadmap.yaml: Cross-repo orchestration with phase dependencies"
-      - "master-roadmap schema: phases, steps, acceptance criteria, depends_on"
-      - "master-roadmap validation: CLI validates phase structure and dependencies"
-      - "data-sources.yaml: Verified business data with staleness tracking"
-      - "data-sources schema: values, sources, last_verified, stale_threshold, status"
-      - "data-sources validation: CLI warns on stale data (30/90/180 day thresholds)"
-      - "Reuse patterns: Document 'reuse_from' for cross-repo code sharing"
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v3.7.0: PRODUCTION STACK TEMPLATES
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "3.7.0"
-    status: planned
-    summary: "Production Stack Templates"
-    goal: AUTONOMOUS_DEVELOPMENT
-    priority: HIGH
-    description: |
-      Templates for real-world production stacks based on battle-tested configs.
-      Each template includes stack-specific quality gates and commands.
-    features:
-      - "--type rust-axum: Backend API template (Axum + YugabyteDB + Redis Streams)"
-      - "--type rust-grpc: gRPC services template (tonic + protobuf)"
-      - "--type flutter: Mobile app template (Flutter + Dart analyzer)"
-      - "--type shell: Demo/orchestration scripts (shellcheck)"
-      - "--type business: YAML + Forge formulas (forge validate)"
-      - "--type architecture: C4 diagrams + ADRs (markdown lint + diagram validation)"
-      - "Update existing templates: Add compact_survival to all templates"
-      - "Template tests: Ensure generated files pass validation"
+      - "ethics.yaml full JSON schema"
+      - "warmup.yaml v2 schema with structure validation"
+      - "sprint.yaml schema"
+      - "roadmap.yaml schema"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# BACKLOG - Nice to Have (lower priority than Goal-aligned features)
+# DEPRECATED (Replaced by Claude Code Native Features)
+# ═══════════════════════════════════════════════════════════════════════════════
+deprecated:
+  session_continuity:
+    was: "v3.3.0 - Multi-Session Continuity"
+    replaced_by: "Claude Code --continue/--resume"
+    reason: "Native feature is better integrated"
+
+  checkpoint_validation:
+    was: ".claude_checkpoint.yaml schema and validation"
+    replaced_by: "Claude Code /rewind checkpoints"
+    reason: "Native checkpoints track code + conversation state"
+
+  session_handoff:
+    was: "Session-end command and handoff workflows"
+    replaced_by: "Claude Code session persistence"
+    reason: "Native session management"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BACKLOG - Nice to Have
 # ═══════════════════════════════════════════════════════════════════════════════
 backlog:
-  - "CI Integration: GitHub Action for protocol validation (nice to have)"
-  - "JSON Schema: Editor autocomplete for protocol files (nice to have)"
-  - "VS Code Extension: Syntax highlighting, validation (nice to have)"
-  - "Experiential Continuity: Research on cross-session memory (nice to have)"
+  - "CI Integration: GitHub Action for protocol validation"
+  - "JSON Schema: Editor autocomplete for protocol files"
+  - "VS Code Extension: Syntax highlighting, validation"

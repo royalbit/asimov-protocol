@@ -876,6 +876,7 @@ on_confusion: "Re-read warmup.yaml and .claude_checkpoint.yaml"
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /// Generate CLAUDE.md for SKYNET MODE (auto-loaded by Claude Code)
+/// v4.0.0: Uses Claude Code native @import syntax for memory hierarchy
 pub fn claude_md_template(project_name: &str, project_type: ProjectType) -> String {
     let commands = match project_type {
         ProjectType::Rust => {
@@ -935,35 +936,25 @@ markdownlint '**/*.md'               # Standard lint
     format!(
         r#"# {}
 
-## CRITICAL: Self-Healing Protocol
+@warmup.yaml
+@ethics.yaml
 
-After ANY context compaction, confusion, or uncertainty, RE-READ:
-1. `warmup.yaml` - Full protocol and rules
-2. `.claude_checkpoint.yaml` - Session state (if exists)
-
-## Mandatory Checkpoints
-
-- **Every 2 hours**: Write progress to `.claude_checkpoint.yaml`, re-read `warmup.yaml`
-- **Before any commit**: Re-read quality gates from `warmup.yaml`
-- **After task completion**: Update `.claude_checkpoint.yaml`
-- **When confused**: STOP → re-read `warmup.yaml` → re-read `.claude_checkpoint.yaml`
-
-## Core Rules (Memorize - These Must Survive)
+## Core Rules
 
 - 4hr MAX session, 1 milestone, NO scope creep
 - Tests pass + ZERO warnings → then commit
-- NO "let me also...", NO "while I'm here..."
 - Done > Perfect. Ship it.
+
+## Recovery
+
+Use native Claude Code features:
+- `/rewind` - Restore previous checkpoint
+- `--continue` - Resume last session
+- `--resume` - Pick specific session
 
 ## Commands
 
 {}
-
-## Key Files
-
-- `warmup.yaml` - Full protocol (RE-READ after compact)
-- `sprint.yaml` - Current sprint status
-- `roadmap.yaml` - Milestone planning
 "#,
         project_name, commands
     )
