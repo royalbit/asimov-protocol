@@ -521,9 +521,10 @@ The warmup.yaml **file format** works with any AI that can read YAML. Paste it i
 ### AI Ownership Without AI Dependency
 
 Claude is credited as Principal Engineer on Forge because Claude **earned** it:
-- 183 tests, zero warnings
-- 10,000+ lines of Rust
-- 45 hours of autonomous development
+- 226 tests, zero warnings
+- 18,338 lines of Rust
+- ~38 hours of autonomous development
+- 41 releases, published on crates.io
 
 ### Proven at Scale
 

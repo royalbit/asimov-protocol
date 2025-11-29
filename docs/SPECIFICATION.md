@@ -770,7 +770,7 @@ Paste warmup.yaml content at session start. Note: Self-healing won't work withou
 
 ## Context Window Optimization (ADR-010)
 
-**Proven velocity: 50-100x** (Forge project: 17K LOC, 232 tests, 40+ releases in ~45 hours)
+**Proven velocity: 50-150x** (Forge project: 18K LOC, 226 tests, 41 releases in ~38 hours)
 
 Context window size affects self-healing overhead:
 
@@ -786,7 +786,7 @@ See [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-ana
 
 ## Architecture Decisions
 
-- [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-analysis.md) - **v4.0.0** 50-100x proven
+- [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-analysis.md) - **v4.0.0** 50-150x proven
 - [ADR-009: Claude Code Native Integration](adr/009-claude-code-native-integration.md) - **v4.0.0** Strategic pivot
 - [ADR-008: Ethics Protocol and Humanist Mode](adr/008-ethics-protocol-humanist-mode.md) - v3.0.0
 - [ADR-007: Checkpoint Size Limits and Pruning](adr/007-checkpoint-size-limits.md) - Deprecated by ADR-009

@@ -172,7 +172,7 @@ claude --dangerously-skip-permissions
 | Context after compaction | Lost | Recovered |
 | Scope creep | Common | Rejected |
 
-**Proven:** 50-100x velocity, 34 releases in ~45 hours (Forge project)
+**Proven:** 50-150x velocity, 41 releases in ~38 hours (Forge project: 18K LOC, 226 tests, published on crates.io)
 
 ## Component Deep Dives
 

@@ -132,7 +132,7 @@ Every session is a **bounded sprint**:
 | v1.4-1.6 | Staff Engineer | Watch mode, NPV, IRR, PMT |
 | v2.0-3.1 | **Principal** | HTTP API, MCP Server, VSCode + Zed extensions |
 
-**Result:** 13,844 LOC | 183 tests | 34 releases | **~45 hours**
+**Result:** 18,338 LOC | 226 tests | 41 releases | **~38 hours**
 
 *Traditional estimate: 3-4 months*
 

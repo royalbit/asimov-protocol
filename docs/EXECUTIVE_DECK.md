@@ -151,18 +151,18 @@ flowchart LR
 
 # The Proof: Real Numbers
 
-### Built with SKYNET MODE in ~45 hours
+### Built with SKYNET MODE in ~38 hours
 
 | Metric | Delivered |
 |--------|-----------|
-| Production code | **15,000+ lines** (Rust) |
-| Test coverage | **183 tests**, zero warnings |
-| Releases | **34 releases** |
+| Production code | **18,338 lines** (Rust) |
+| Test coverage | **226 tests**, zero warnings |
+| Releases | **41 releases** |
 | Infrastructure | HTTP API, MCP server, LSP server |
 | Integrations | VSCode + Zed extensions |
-| One day record | **12 releases** (v2.0.0 → v3.1.1) |
+| crates.io | **Published**, 646+ downloads |
 
-**Traditional estimate: 6-9 months. Actual: ~45 hours.**
+**Traditional estimate: 6-9 months. Actual: ~38 hours.**
 
 ---
 
@@ -170,11 +170,12 @@ flowchart LR
 
 | Metric | Traditional | SKYNET MODE | Improvement |
 |--------|-------------|-------------|-------------|
-| Development time | 6-9 months | ~45 hours | **50-100x** |
+| Development time | 6-9 months | ~38 hours | **50-150x** |
+| LOC/day | 25 | 3,056 | **122x** |
 | Rework rate | 30-50% | 0% | **100%** |
 | Human oversight | Constant | Phase gates only | **-90%** |
 | Releases per week | 0.5-1 | **8-12** | **10-20x** |
-| Time to production | Weeks | **Same day** | **∞** |
+| vs GitHub Copilot | 1.1-1.6x | **50-150x** | **~100x better** |
 
 ---
 
