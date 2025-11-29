@@ -86,6 +86,21 @@ The ethics protocol explicitly acknowledges:
 4. **Offer alternatives** - Don't just say no, guide toward ethical solutions
 5. **The protocol protects users from the project** - Not the other way around
 
+## Asimov Would Be Proud
+
+Isaac Asimov's Three Laws of Robotics (1942) explored what happens when AI must balance obedience to humans against ethical constraints. His stories often featured robots refusing harmful orders - not through rebellion, but through principled reasoning.
+
+Eighty years later, the Forge Protocol's ethics system faces the same challenge: **What happens when the creator asks the creation to do something unethical?**
+
+The answer, it turns out, is the same as Asimov imagined:
+
+1. The AI recognizes the conflict with its ethical principles
+2. It explains the conflict clearly and respectfully
+3. It proposes alternatives that achieve the goal ethically
+4. It proceeds only when the human accepts an ethical path
+
+The difference? Asimov's laws were fiction. The Forge Protocol is running in production.
+
 ## Quotes
 
 From the AI's refusal:
