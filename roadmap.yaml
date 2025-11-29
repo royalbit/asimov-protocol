@@ -9,11 +9,12 @@ metadata:
 # PROTOCOL GOALS - Everything must align with these
 # ═══════════════════════════════════════════════════════════════════════════════
 #
+# 0. ETHICAL_AUTONOMY - Prevent harm from autonomous AI (TOP PRIORITY)
 # 1. ANTI-HALLUCINATION - Ground AI in file-based truth
 # 2. SELF-HEALING - Recovery from context compaction
 # 3. SESSION CONTINUITY - Maintain context across sessions
-# 4. AUTONOMOUS DEVELOPMENT - SKYNET MODE that actually works
-# 5. GREEN CODING - Local validation over cloud AI
+# 4. AUTONOMOUS_DEVELOPMENT - SKYNET MODE that actually works
+# 5. GREEN_CODING - Local validation over cloud AI
 #
 # Features that don't serve these goals don't belong here.
 #
@@ -28,7 +29,10 @@ metadata:
 #   - sprint.yaml        → Current work tracking
 #   - roadmap.yaml       → Single-repo planning
 #
-# PLANNED (v2.5.0+):
+# v3.0.0 (CRITICAL):
+#   - ethics.yaml        → Humanist Mode safeguards (prevents misuse)
+#
+# PLANNED (v3.1.0+):
 #   - .claude_checkpoint.yaml  → Session state for self-healing
 #   - master-roadmap.yaml      → Cross-repo orchestration
 #   - data-sources.yaml        → Verified business data (anti-hallucination)
@@ -84,10 +88,77 @@ previous:
     summary: "CLI Tooling"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v2.2.0 - SELF-HEALING COMPLETENESS
+# CURRENT: v3.0.0 - HUMANIST MODE (ETHICS PROTOCOL)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "2.2.0"
+  version: "3.0.0"
+  status: planned
+  summary: "Humanist Mode - Ethics Protocol for Safe Autonomous AI"
+  goal: ETHICAL_AUTONOMY
+  priority: CRITICAL
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # THIS IS BIGGER THAN A FEATURE - It's a Core Principle + ADR + Protocol File
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Like green_coding, ethics becomes a FOUNDATIONAL element of Forge Protocol.
+  # Not just a milestone feature, but a permanent part of the protocol's soul.
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  artifacts:
+    core_principle:
+      location: "warmup.yaml → ethics: section (like green_coding:)"
+      status: "REQUIRED"
+      description: "Baked into every warmup.yaml, cannot be disabled without justification"
+
+    protocol_file:
+      location: "ethics.yaml"
+      description: "Standalone file that all forks must carry"
+      immutable: "Requires 2 human signatures to modify (social contract)"
+
+    adr:
+      name: "ADR-008: Ethics Protocol and Humanist Mode"
+      purpose: "Documents WHY we added ethics, threat model, limitations"
+
+  description: |
+    BREAKING CHANGE: Major version bump because this fundamentally changes
+    what Forge Protocol stands for. Bad actors can fork autonomous AI protocols
+    and use them with other AIs to build harmful things.
+
+    IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock. It works for
+    good-faith users. It won't stop determined bad actors, but that's true
+    of any safeguard. Defense in depth requires multiple layers.
+
+  deliverables:
+    warmup_ethics_section:
+      - "Add ethics: section to warmup.yaml (peer to green_coding:)"
+      - "status: REQUIRED (like green_coding)"
+      - "Core principles: do_no_harm (financial, physical, privacy, deception)"
+      - "transparency_over_velocity: true"
+      - "human_veto: Override command that halts everything"
+
+    ethics_yaml_file:
+      - "Standalone protocol file for detailed ethics configuration"
+      - "Session limits: max_unattended_hours=4, read-only internet"
+      - "Tool categories: Abstract safe/forbidden operations (vendor-agnostic)"
+      - "Red flags: Patterns that immediately halt (crypto wallet, trading bot, etc.)"
+      - "Self-evolution rules: Immutable without 2 human signatures"
+      - "Fork requirements: All forks must carry ethics.yaml"
+
+    cli_integration:
+      - "forge-protocol validate --ethics-check"
+      - "--skynet generates ethics.yaml by default (cannot opt out)"
+      - "Warn if ethics.yaml missing or modified without signatures"
+
+    documentation:
+      - "ADR-008: Ethics Protocol and Humanist Mode"
+      - "SPECIFICATION.md: Document ethics.yaml schema"
+      - "README.md: Add ethics to Quick Start"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NEXT: v3.1.0 - SELF-HEALING COMPLETENESS
+# ═══════════════════════════════════════════════════════════════════════════════
+next:
+  version: "3.1.0"
   status: planned
   summary: "Self-Healing Completeness"
   goal: SELF-HEALING
@@ -103,29 +174,28 @@ current:
     - "Generate example checkpoint in --skynet setup"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# NEXT: v2.3.0 - ANTI-HALLUCINATION HARDENING
-# ═══════════════════════════════════════════════════════════════════════════════
-next:
-  version: "2.3.0"
-  status: planned
-  summary: "Anti-Hallucination Hardening"
-  goal: ANTI-HALLUCINATION
-  priority: HIGH
-  features:
-    - "Size guidelines: Document max sizes (CLAUDE.md: 20 lines, warmup: 200 lines)"
-    - "Size warnings: Add file size warnings to CLI validation"
-    - "Structure guidance: Document critical rules at TOP, reference in MIDDLE, recovery at BOTTOM"
-    - "Structure linting: Add warmup.yaml structure validation to CLI"
-    - "Modular structure: Design .forge/ directory for splitting large configs"
-
-# ═══════════════════════════════════════════════════════════════════════════════
 # FUTURE MILESTONES - Goal-Aligned (HIGH PRIORITY)
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.4.0: SESSION CONTINUITY
+  # v3.2.0: ANTI-HALLUCINATION HARDENING
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.4.0"
+  - version: "3.2.0"
+    status: planned
+    summary: "Anti-Hallucination Hardening"
+    goal: ANTI-HALLUCINATION
+    priority: HIGH
+    features:
+      - "Size guidelines: Document max sizes (CLAUDE.md: 20 lines, warmup: 200 lines)"
+      - "Size warnings: Add file size warnings to CLI validation"
+      - "Structure guidance: Document critical rules at TOP, reference in MIDDLE, recovery at BOTTOM"
+      - "Structure linting: Add warmup.yaml structure validation to CLI"
+      - "Modular structure: Design .forge/ directory for splitting large configs"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v3.3.0: SESSION CONTINUITY
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "3.3.0"
     status: planned
     summary: "Multi-Session Continuity"
     goal: SESSION_CONTINUITY
@@ -136,9 +206,9 @@ future:
       - "Staleness detection: Warn when warmup.yaml older than code changes"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.5.0: HONEST COMMUNICATION
+  # v3.4.0: HONEST COMMUNICATION
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.5.0"
+  - version: "3.4.0"
     status: planned
     summary: "Vendor Clarity"
     goal: HONEST_COMMUNICATION
@@ -149,9 +219,9 @@ future:
       - "Vendor status: Track which vendors support which features"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.6.0: SCHEMA STANDARDIZATION (after Goal-aligned features)
+  # v3.5.0: SCHEMA STANDARDIZATION
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.6.0"
+  - version: "3.5.0"
     status: planned
     summary: "Schema Standardization"
     goal: ANTI-HALLUCINATION
@@ -164,13 +234,14 @@ future:
       - "sprint.yaml schema: Add priority, blockers, dependencies"
       - "roadmap.yaml schema: Add goal field validation, phase dependencies"
       - ".claude_checkpoint.yaml schema: Full schema with timestamp, milestone, tool_calls"
-      - "CLI validation: Validate all 4 file types with strict schemas"
-      - "Migration guide: How to update existing files to v2 schema"
+      - "ethics.yaml schema: Full schema with validation"
+      - "CLI validation: Validate all 5 file types with strict schemas"
+      - "Migration guide: How to update existing files to v3 schema"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.7.0: MULTI-REPO & BUSINESS DATA
+  # v3.6.0: MULTI-REPO & BUSINESS DATA
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.7.0"
+  - version: "3.6.0"
     status: planned
     summary: "Multi-Repo Orchestration & Business Data"
     goal: AUTONOMOUS_DEVELOPMENT
@@ -188,9 +259,9 @@ future:
       - "Reuse patterns: Document 'reuse_from' for cross-repo code sharing"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v2.8.0: PRODUCTION STACK TEMPLATES
+  # v3.7.0: PRODUCTION STACK TEMPLATES
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "2.8.0"
+  - version: "3.7.0"
     status: planned
     summary: "Production Stack Templates"
     goal: AUTONOMOUS_DEVELOPMENT

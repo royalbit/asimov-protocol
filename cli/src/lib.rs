@@ -35,7 +35,7 @@ pub use markdown::{
     LintError, LintResult,
 };
 pub use templates::{
-    claude_md_template, hook_installer_template, precommit_hook_template, roadmap_template,
-    sprint_template, uses_cargo_husky, warmup_template, ProjectType,
+    claude_md_template, ethics_template, hook_installer_template, precommit_hook_template,
+    roadmap_template, sprint_template, uses_cargo_husky, warmup_template, ProjectType,
 };
 pub use validator::{is_protocol_file, validate_directory, validate_file, ValidationResult};

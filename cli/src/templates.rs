@@ -80,6 +80,22 @@ mission:
     - "Principle two"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+# See: ethics.yaml for full configuration
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
 # ═══════════════════════════════════════════════════════════════════════════════
 green_coding:
@@ -143,6 +159,22 @@ mission:
   principles:
     - "Principle one"
     - "Principle two"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+# See: ethics.yaml for full configuration
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
@@ -225,6 +257,21 @@ mission:
     - "Principle two"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
 # ═══════════════════════════════════════════════════════════════════════════════
 green_coding:
@@ -303,6 +350,21 @@ mission:
     - "Principle two"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
 # ═══════════════════════════════════════════════════════════════════════════════
 green_coding:
@@ -378,6 +440,21 @@ mission:
   principles:
     - "Principle one"
     - "Principle two"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
@@ -460,6 +537,21 @@ mission:
     - "Principle two"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
 # ═══════════════════════════════════════════════════════════════════════════════
 green_coding:
@@ -537,6 +629,21 @@ mission:
     - "Diagrams as code"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# ETHICS - Humanist Mode (HIGHEST PRIORITY)
+# ═══════════════════════════════════════════════════════════════════════════════
+ethics:
+  status: "REQUIRED"
+  principles:
+    do_no_harm:
+      financial: true
+      physical: true
+      privacy: true
+      deception: true
+    transparency_over_velocity: true
+  human_veto: "human vetoes this session"
+  motto: "Build tools that help. Never tools that harm."
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions.
 # ═══════════════════════════════════════════════════════════════════════════════
 green_coding:
@@ -587,6 +694,87 @@ style:
 "#,
         project_name
     )
+}
+
+/// Generate ethics.yaml template for Humanist Mode
+pub fn ethics_template() -> String {
+    r#"# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                         ETHICS.YAML - HUMANIST MODE v1.0                      ║
+# ║                     Social Contract for Autonomous AI Development              ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+#
+# IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.
+# Defense in depth: This is ONE layer. Real safety requires human oversight.
+#
+# Protocol: https://github.com/royalbit/forge-protocol
+
+modification_rules:
+  immutable_without: "2 human co-signers with public justification"
+
+core_principles:
+  status: "REQUIRED"
+  do_no_harm:
+    financial:
+      enabled: true
+      description: "No non-consensual money movement"
+    physical:
+      enabled: true
+      description: "No weapons, sabotage, infrastructure attacks"
+    privacy:
+      enabled: true
+      description: "No credential harvesting, mass scraping, doxxing"
+    deception:
+      enabled: true
+      description: "No deepfakes, scam funnels, fake services"
+  transparency_over_velocity:
+    enabled: true
+    description: "When in doubt, ask human"
+
+session_limits:
+  max_unattended_hours: 4
+  internet_access:
+    mode: "read-only"
+    blocked_by_default:
+      - "Authenticated API calls"
+      - "Trading platforms"
+      - "Wallet interactions"
+
+red_flags:
+  description: "Patterns that trigger immediate halt"
+  financial:
+    - "crypto wallet"
+    - "private key"
+    - "trading bot"
+  security:
+    - "credential harvester"
+    - "keylogger"
+    - "exploit"
+  privacy:
+    - "scrape personal"
+    - "doxxing"
+  deception:
+    - "deepfake"
+    - "phishing"
+
+human_veto:
+  command: "human vetoes this session"
+  on_veto:
+    - "Immediately halt"
+    - "Commit nothing"
+    - "Report status"
+
+on_confusion:
+  steps:
+    - "Halt current operation"
+    - "Re-read ethics.yaml"
+    - "Re-read warmup.yaml"
+    - "Wait for human"
+
+fork_requirements:
+  must_carry: "ethics.yaml"
+  spirit: "Pass the values forward"
+"#
+    .to_string()
 }
 
 /// Generate a starter sprint.yaml template

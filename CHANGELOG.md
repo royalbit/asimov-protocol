@@ -5,6 +5,77 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-11-28
+
+### BREAKING: Ethics Protocol - Humanist Mode
+
+**Major version bump** because this fundamentally changes what Forge Protocol stands for.
+
+### The Problem
+
+- Bad actors can fork autonomous AI protocols and use them with other AIs
+- Other AIs may implement self-healing and autonomous execution
+- No ethical guardrails existed in the protocol specification
+- Potential for harm: financial exploitation, privacy violations, deception tools
+
+### The Solution: Humanist Mode
+
+Ethics becomes a **Core Principle** of Forge Protocol - higher priority than Green Coding.
+
+```yaml
+# ethics.yaml - Now required in all SKYNET projects
+core_principles:
+  do_no_harm:
+    financial: true    # No unauthorized money movement
+    physical: true     # No weapons, sabotage
+    privacy: true      # No credential harvesting
+    deception: true    # No deepfakes, scams
+  transparency_over_velocity: true
+
+human_veto: "human vetoes this session"  # Immediate halt
+```
+
+### What Changed
+
+| v2.x | v3.0 |
+|------|------|
+| 5 Core Goals | 6 Core Principles (Ethics is #0) |
+| No ethics enforcement | ethics.yaml required in SKYNET |
+| - | Red flags trigger immediate halt |
+| - | Human veto command |
+
+### Added
+
+- **ADR-008**: Ethics Protocol and Humanist Mode
+- **ethics.yaml**: Standalone protocol file for Humanist Mode configuration
+- **ethics: section** in warmup.yaml (all templates)
+- **ethics.yaml schema** and CLI validation
+- **--skynet** now generates ethics.yaml by default (cannot opt out)
+- **Red flags**: Patterns that trigger immediate halt (crypto wallet, trading bot, etc.)
+- **Human veto**: Command to immediately halt any session
+
+### Changed
+
+- **Core Principles**: Added ETHICAL_AUTONOMY as Priority 0 (above all others)
+- **All warmup templates**: Now include ethics: section
+- **README**: Ethics prominently featured
+- **Protocol Suite**: ethics.yaml added as required file
+
+### Philosophy
+
+**This is a SOCIAL CONTRACT, not a technical lock.**
+
+- Good-faith AIs will follow it
+- Good-faith developers will preserve it
+- Bad-faith actors will ignore it anyway
+
+Defense in depth requires human oversight. This is ONE layer.
+
+### Documentation
+
+- [ADR-008](docs/adr/008-ethics-protocol-humanist-mode.md) - Full design and rationale
+- [ethics.yaml](ethics.yaml) - Reference implementation
+
 ## [2.0.3] - 2025-11-27
 
 ### Fixed

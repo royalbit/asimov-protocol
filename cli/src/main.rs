@@ -3,10 +3,10 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
-    check_markdown_file, claude_md_template, find_markdown_files, fix_markdown_file,
-    hook_installer_template, is_protocol_file, precommit_hook_template, roadmap_template,
-    sprint_template, uses_cargo_husky, validate_directory, validate_file, warmup_template,
-    ProjectType,
+    check_markdown_file, claude_md_template, ethics_template, find_markdown_files,
+    fix_markdown_file, hook_installer_template, is_protocol_file, precommit_hook_template,
+    roadmap_template, sprint_template, uses_cargo_husky, validate_directory, validate_file,
+    warmup_template, ProjectType,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -14,9 +14,10 @@ use std::process::ExitCode;
 #[derive(Parser)]
 #[command(name = "forge-protocol")]
 #[command(about = "Green coding CLI for AI development - zero tokens, zero emissions")]
-#[command(long_about = "Forge Protocol CLI - Green Coding for AI Development
+#[command(long_about = "Forge Protocol CLI - Ethical AI Development
 
 Validates protocol files against the Forge Protocol specification:
+  - ethics.yaml  - Humanist Mode safeguards (required in SKYNET)
   - warmup.yaml  - Session bootstrap (required)
   - sprint.yaml  - Active work tracking (optional)
   - roadmap.yaml - Milestone planning (optional)
@@ -37,6 +38,7 @@ EXAMPLES:
 TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
 
 SKYNET MODE (--skynet): Full autonomous session setup
+  - ethics.yaml (Humanist Mode - required, cannot opt out)
   - All protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
   - CLAUDE.md (auto-loaded by Claude Code)
   - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
@@ -328,6 +330,7 @@ fn cmd_init(
 
     if skynet {
         files.push(("CLAUDE.md", claude_md_template(&project_name, project_type)));
+        files.push(("ethics.yaml", ethics_template()));
     }
 
     // Write protocol files

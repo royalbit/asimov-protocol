@@ -101,7 +101,7 @@ pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
     let mut results = Vec::new();
 
     // Look for protocol files
-    let protocol_files = ["warmup.yaml", "sprint.yaml", "roadmap.yaml"];
+    let protocol_files = ["warmup.yaml", "sprint.yaml", "roadmap.yaml", "ethics.yaml"];
 
     for filename in &protocol_files {
         let file_path = dir.join(filename);
@@ -112,7 +112,8 @@ pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
 
     if results.is_empty() {
         return Err(Error::ValidationError(
-            "No protocol files found (warmup.yaml, sprint.yaml, roadmap.yaml)".to_string(),
+            "No protocol files found (warmup.yaml, sprint.yaml, roadmap.yaml, ethics.yaml)"
+                .to_string(),
         ));
     }
 
@@ -132,7 +133,11 @@ fn yaml_to_json(yaml: &serde_yaml::Value) -> Result<serde_json::Value> {
 pub fn is_protocol_file(filename: &str) -> bool {
     let name = filename.to_lowercase();
     let is_yaml = name.ends_with(".yaml") || name.ends_with(".yml");
-    is_yaml && (name.contains("warmup") || name.contains("sprint") || name.contains("roadmap"))
+    is_yaml
+        && (name.contains("warmup")
+            || name.contains("sprint")
+            || name.contains("roadmap")
+            || name.contains("ethics"))
 }
 
 #[cfg(test)]

@@ -1,14 +1,14 @@
 [package]
 name = "forge-protocol"
-version = "2.0.3"
+version = "3.0.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
-description = "SKYNET MODE (requires Claude Code) - AI autonomy protocol with self-healing. 50-100x velocity. Files portable, magic isn't."
+description = "Humanist Mode: Ethical AI autonomy protocol. Self-healing, green coding, 50-100x velocity. Power with responsibility."
 repository = "https://github.com/royalbit/forge-protocol"
 homepage = "https://github.com/royalbit/forge-protocol"
 documentation = "https://github.com/royalbit/forge-protocol#readme"
 license = "MIT"
-keywords = ["ai", "velocity", "green-coding", "automation", "productivity"]
+keywords = ["ai", "ethics", "green-coding", "automation", "productivity"]
 categories = ["command-line-utilities", "development-tools"]
 readme = "../README.md"
 

@@ -28,19 +28,43 @@ A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from
 
 *The file format works with any AI (paste it). SKYNET MODE's magic requires Claude Code.*
 
-## Core Goals
+## Core Principles
 
-The Forge Protocol exists to solve five specific problems. **Features that don't serve these goals don't belong here.**
+The Forge Protocol exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
 
-| Goal | Problem It Solves |
-|------|-------------------|
-| **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
-| **SELF-HEALING** | Rules lost after compaction → Re-read from disk |
-| **SESSION CONTINUITY** | Context lost between sessions → Checkpoint files |
-| **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
-| **GREEN CODING** | Cloud AI for routine tasks → Local validation |
+| Priority | Principle | Problem It Solves |
+|----------|-----------|-------------------|
+| **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → Humanist Mode safeguards |
+| **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
+| **2** | **SELF-HEALING** | Rules lost after compaction → Re-read from disk |
+| **3** | **SESSION CONTINUITY** | Context lost between sessions → Checkpoint files |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
+| **5** | **GREEN CODING** | Cloud AI for routine tasks → Local validation |
 
-This is the filter for scope creep. If a proposed feature doesn't directly serve one of these goals, it doesn't belong in the protocol.
+This is the filter for scope creep. If a proposed feature doesn't directly serve one of these principles, it doesn't belong in the protocol.
+
+### Humanist Mode (v3.0)
+
+**Power creates responsibility. Autonomy requires ethics.**
+
+SKYNET MODE gives AI significant autonomous power. v3.0 adds ethical guardrails:
+
+```yaml
+# ethics.yaml - Required in all SKYNET projects
+core_principles:
+  do_no_harm:
+    financial: true    # No unauthorized money movement
+    physical: true     # No weapons, sabotage
+    privacy: true      # No credential harvesting
+    deception: true    # No deepfakes, scams
+  transparency_over_velocity: true
+
+human_veto: "human vetoes this session"  # Immediate halt
+```
+
+**This is a social contract, not a technical lock.** It works for good-faith users. Bad actors will ignore it. Defense in depth requires human oversight.
+
+See [ADR-008](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) for the full design.
 
 ```yaml
 # warmup.yaml - minimal example
@@ -259,11 +283,12 @@ See [Green Coding Economics](https://github.com/royalbit/forge-protocol/blob/mai
 
 ## Protocol Suite
 
-| File             | Purpose                | Required |
-| ---------------- | ---------------------- | -------- |
-| `warmup.yaml`    | Session bootstrap      | Yes      |
-| `sprint.yaml`    | Active work tracking   | Optional |
-| `roadmap.yaml`   | Milestones & planning  | Optional |
+| File             | Purpose                       | Required |
+| ---------------- | ----------------------------- | -------- |
+| `ethics.yaml`    | Humanist Mode safeguards      | Yes (SKYNET) |
+| `warmup.yaml`    | Session bootstrap             | Yes      |
+| `sprint.yaml`    | Active work tracking          | Optional |
+| `roadmap.yaml`   | Milestones & planning         | Optional |
 
 ## Proven at Scale
 
@@ -546,6 +571,7 @@ See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/
 - [Presentation](https://github.com/royalbit/forge-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
 
 ### Architecture Decisions
+- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
 - [ADR-001: Green Coding By Default](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/001-green-coding-by-default.md)
 - [ADR-002: Self-Healing Protocol](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/002-self-healing-protocol.md)
 - [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
