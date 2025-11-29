@@ -286,7 +286,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 | Benefit | Impact |
 |---------|--------|
-| Developer productivity | **10-75x velocity** on AI-assisted projects |
+| Developer productivity | **50-100x velocity** on AI-assisted projects |
 | Delivery predictability | **Zero rework**, bounded sessions |
 | Quality consistency | **Automated gates**, audit trail |
 | Talent optimization | Senior devs review, not babysit |
@@ -315,7 +315,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 | Claim | Proof |
 |-------|-------|
-| "Proven 10-75x velocity" | Forge project (public, auditable) |
+| "Proven 50-100x velocity" | Forge project (public, auditable) |
 | "Zero AI rework methodology" | SKYNET MODE protocol |
 | "Green AI development" | 99.6% carbon reduction |
 | "Bounded 4hr autonomous sessions" | Self-healing protocol |

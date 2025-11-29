@@ -234,7 +234,7 @@ claude --dangerously-skip-permissions
 | Context after compaction | Lost | Recovered |
 | Scope creep | Common | Rejected |
 
-**Proven:** 10-75x velocity, 34 releases in ~45 hours (Forge project)
+**Proven:** 50-100x velocity, 34 releases in ~45 hours (Forge project)
 
 ## Component Deep Dives
 

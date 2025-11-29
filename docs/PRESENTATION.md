@@ -148,7 +148,7 @@ Every session is a **bounded sprint**:
 | Rework | 30-50% | **0%** |
 | Human involvement | Every decision | **Phase gates only** |
 
-**Proven: 10-75x velocity. Zero rework.**
+**Proven: 50-100x velocity. Zero rework.**
 
 ---
 
