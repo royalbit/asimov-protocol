@@ -436,130 +436,65 @@ Forge Protocol v4.0.0: **Integrate with native features** (optimal)
 
 See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the full analysis.
 
-### The Solution
+### The Solution (v4.0.0)
+
+Use Claude Code's native features:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    SELF-HEALING PROTOCOL                        │
+│                    SELF-HEALING v4.0.0                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  CLAUDE.md (auto-loaded)     warmup.yaml (full rules)          │
+│  CLAUDE.md (with @imports)   Claude Code Native Features        │
 │  ┌─────────────────────┐     ┌─────────────────────┐           │
-│  │ Ultra-short (~5 ln) │     │ Complete protocol   │           │
-│  │ "ON CONFUSION →     │────▶│ self_healing:       │           │
-│  │  re-read warmup"    │     │   checkpoint_triggers│          │
-│  └─────────────────────┘     │   on_confusion      │           │
-│                              │   core_rules        │           │
-│                              └──────────┬──────────┘           │
-│                                         │                       │
-│                                         ▼                       │
-│                              .claude_checkpoint.yaml            │
-│                              ┌─────────────────────┐           │
-│                              │ Session state       │           │
-│                              │ tool_calls count    │           │
-│                              │ on_confusion hint   │           │
+│  │ @warmup.yaml        │     │ /rewind             │           │
+│  │ @ethics.yaml        │     │   ↳ Restore code    │           │
+│  │                     │     │   ↳ Restore convo   │           │
+│  │ Rules: 4hr max...   │     │ --continue          │           │
+│  └─────────────────────┘     │   ↳ Resume session  │           │
 │                              └─────────────────────┘           │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### The Flow
+### Implementation (v4.0.0)
 
-```mermaid
-flowchart TD
-    A[Session Start] --> B[Load CLAUDE.md + warmup.yaml]
-    B --> C[Autonomous Work]
-    C --> D{Confusion or ~15 tool calls}
-    D --> E[Write checkpoint]
-    E --> F[Re-read warmup.yaml from disk]
-    F --> G[Rules restored]
-    G --> C
-```
-
-### Implementation
-
-**1. CLAUDE.md** (ultra-short, ~5 lines)
+**CLAUDE.md** (uses native @import syntax)
 ```markdown
 # Project Name
 
-ON CONFUSION → re-read warmup.yaml + .claude_checkpoint.yaml
+@warmup.yaml
+@ethics.yaml
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
 ```
 
-**2. warmup.yaml** (self_healing section)
-```yaml
-self_healing:
-  checkpoint_file: ".claude_checkpoint.yaml"
+**Recovery Commands:**
+- `/rewind` or `Esc+Esc` - Restore previous checkpoint (code + conversation)
+- `--continue` - Resume most recent session
+- `--resume <id>` - Resume specific session
 
-  # REALISTIC triggers (not 2hr fiction)
-  checkpoint_triggers:
-    - "Every major task completion"
-    - "Every 10-15 tool calls (~15 min)"
-    - "Before any commit"
-    - "On ANY confusion"
+### Why Native Integration?
 
-  on_confusion: "STOP → re-read warmup.yaml"
-  core_rules: "4hr max, 1 milestone, tests pass, ship it"
-```
+| Feature | Old Approach | v4.0.0 Native |
+|---------|--------------|---------------|
+| Checkpoints | Manual `.claude_checkpoint.yaml` | Native `/rewind` (automatic) |
+| Session resume | Custom handoff files | `--continue`, `--resume` |
+| Memory | Survive compaction | `@import` memory hierarchy |
+| Effort | Build and maintain | Already built into Claude Code |
 
-**3. .claude_checkpoint.yaml** (written during session)
-```yaml
-timestamp: "2025-11-27T10:30:00Z"
-session_started: "2025-11-27T09:00:00Z"
-tool_calls: 45
+Claude Code 2.0's native features are superior. See [ADR-009](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/009-claude-code-native-integration.md).
 
-milestone: "Add feature X"
-completed: ["Task 1", "Task 2"]
-in_progress: "Task 3"
+### What Forge Protocol Adds
 
-on_confusion: "cat warmup.yaml"
-```
+Unique value that Claude Code doesn't have:
 
-### Why It Works
-
-| Component | Survives Compact? | Recovery Method |
-|-----------|-------------------|-----------------|
-| CLAUDE.md | Yes (ultra-short) | Auto-loaded, single instruction |
-| warmup.yaml | No | Re-read from disk on confusion |
-| .claude_checkpoint.yaml | N/A (on disk) | Always available |
-
-The "re-read warmup.yaml" instruction is short enough to survive summarization. Even if all other rules are lost, the AI knows to reload them.
-
-### Recovery Strategy Layers (v2.1.0)
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    RECOVERY STRATEGY LAYERS                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  Layer 1: CLAUDE.md (auto-loaded)                                  │
-│           └── May survive compaction                                │
-│                                                                     │
-│  Layer 2: Git Hook Refresh (ADR-006)                               │
-│           └── forge-protocol refresh on every commit                │
-│           └── Fresh output - cannot be compacted                    │
-│                                                                     │
-│  Layer 3: Manual "run warmup" trigger                              │
-│           └── User can always invoke                                │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-**Key insight:** Hook output is *external* to the AI's memory. It comes from filesystem execution, not compacted context. It cannot be compacted because it hasn't happened yet when compaction occurs. See [ADR-006](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/006-git-hook-protocol-refresh.md).
-
-### The Analogy
-
-| Problem | Traditional | Self-Healing |
-|---------|-------------|--------------|
-| Database crash | Hope data survives | Write-ahead log + replay |
-| Context compact | Hope rules survive | **Re-read from disk** |
-
-### Results
-
-- **Autonomous sessions** that follow rules
-- **Portable** - travels with git, works on any machine
-- **Based on real data** - not assumptions (see [ADR-003](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md))
+| Feature | Description |
+|---------|-------------|
+| **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags |
+| **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns |
+| **Green Coding** | Zero tokens, ESG metrics |
+| **Schema Validation** | `forge-protocol validate` |
 
 See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/main/docs/components/4-SELF_HEALING.md) for details.
 
