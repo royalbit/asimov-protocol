@@ -1,26 +1,66 @@
 # Forge Protocol Specification
 
-Version 3.2.0
+Version 4.0.0
 
 ## Overview
 
 The Forge Protocol is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
 
+**v4.0.0: Claude Code Native Integration** - Forge Protocol now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
+
 **Ethics is the highest priority.** Autonomous AI requires ethical guardrails. See [ADR-008](adr/008-ethics-protocol-humanist-mode.md).
 
 **All Forge Protocol projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
 
-**Self-healing is based on real compaction data, not assumptions.** See [ADR-003](adr/003-self-healing-real-compaction-data.md).
+**Self-healing uses Claude Code native features.** Use `/rewind` for checkpoints, `--continue`/`--resume` for sessions. See [ADR-009](adr/009-claude-code-native-integration.md).
 
 ## Design Principles
 
 1. **Ethics first** - Power creates responsibility; autonomy requires ethics
-2. **Vendor-neutral** - Plain YAML readable by any AI
-3. **Human-readable** - No encoded or proprietary formats
-4. **Minimal** - Include only what's needed
-5. **Self-documenting** - The protocol describes itself
-6. **Green by default** - Local-first tools over cloud AI for routine tasks
-7. **Recoverable over survivable** - Re-read from disk, don't try to survive compaction
+2. **Integrate, don't duplicate** - Use Claude Code native features where available
+3. **Vendor-neutral files** - Plain YAML readable by any AI (SKYNET MODE is Claude Code only)
+4. **Human-readable** - No encoded or proprietary formats
+5. **Minimal** - Include only what's needed
+6. **Self-documenting** - The protocol describes itself
+7. **Green by default** - Local-first tools over cloud AI for routine tasks
+8. **Focus on unique value** - Ethics, Sprint Autonomy, Green Coding, Schema Validation
+
+## Claude Code Native Integration (v4.0.0)
+
+Forge Protocol v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
+
+### What Claude Code Provides Natively
+
+| Feature | Claude Code Native | Forge Protocol Role |
+|---------|-------------------|---------------------|
+| Checkpoints | `/rewind`, Esc+Esc | **Use native** (deprecated .claude_checkpoint.yaml) |
+| Session resume | `--continue`, `--resume` | **Use native** |
+| Memory hierarchy | `CLAUDE.md` with `@imports` | **Integrate** (warmup.yaml via @import) |
+| Auto-compact | 95% capacity trigger | **Documented** in ADR-003 |
+
+### What Forge Protocol Uniquely Provides
+
+| Feature | Description | Claude Code Has? |
+|---------|-------------|------------------|
+| **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags | NO |
+| **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
+| **Green Coding** | Local-first, zero tokens, ESG metrics | NO |
+| **Schema Validation** | `forge-protocol validate` | NO |
+
+### CLAUDE.md Integration
+
+The new CLAUDE.md template uses Claude Code's native `@import` syntax:
+
+```markdown
+# {project-name}
+
+@warmup.yaml
+@ethics.yaml
+
+Rules: 4hr max, 1 milestone, tests pass, ship.
+```
+
+This imports the full protocol files into Claude's memory hierarchy automatically.
 
 ## Core Principles
 
@@ -527,67 +567,19 @@ backlog:
   - "Future idea one"
 ```
 
-### .claude_checkpoint.yaml Schema
+### .claude_checkpoint.yaml Schema (DEPRECATED)
 
-Session state file. Written during autonomous sessions, not committed to git.
+> **DEPRECATED in v4.0.0**: Use Claude Code's native `/rewind` checkpoints instead.
+> Native checkpoints track both code state AND conversation context.
+> See [ADR-009](adr/009-claude-code-native-integration.md).
 
-**Size Limits (ADR-007):**
+Claude Code 2.0 provides superior checkpoint functionality:
+- `/rewind` or Esc+Esc to restore previous state
+- Can restore code only, conversation only, or both
+- Automatic checkpoint before every file edit
+- No manual checkpoint file management needed
 
-| Limit | Lines | Enforcement |
-|-------|-------|-------------|
-| Soft limit | 20 | Warning |
-| Hard limit | 30 | Error - must trim |
-
-**Trimming Rules:**
-
-When checkpoint exceeds 20 lines:
-1. Keep: `timestamp`, `milestone`, `status`, `in_progress`, `on_confusion`
-2. Trim `completed[]` to last 3 items
-3. Trim `next_steps[]` to first 3 items
-4. Remove `notes` field if still over limit
-
-```yaml
-timestamp: "2025-01-15T10:30:00Z"
-session_started: "2025-01-15T09:00:00Z"
-tool_calls: 45
-
-milestone: "Add feature X"
-status: in_progress  # planned | in_progress | blocked | done
-
-# Rolling window: max 5 items (last completed tasks)
-completed:
-  - "Task 1: Implemented core logic"
-  - "Task 2: Wrote unit tests"
-
-in_progress: "Task 3: Update documentation"
-
-# Bounded: max 5 items (next tasks only)
-next_steps:
-  - "Task 4: Integration tests"
-  - "Task 5: Update CHANGELOG"
-
-# Recovery hint - always included
-on_confusion: "Re-read warmup.yaml and .claude_checkpoint.yaml"
-```
-
-**Required Fields:**
-- `milestone` - Current milestone being worked on (required)
-
-**Optional Fields:**
-- `timestamp` - ISO 8601 timestamp
-- `session_started` - When session began
-- `tool_calls` - Number of tool calls made
-- `status` - One of: `planned`, `in_progress`, `blocked`, `done`
-- `completed` - Array of completed tasks (max 5)
-- `in_progress` - Current task
-- `next_steps` - Array of upcoming tasks (max 5)
-- `blockers` - Array of current blockers
-- `on_confusion` - Recovery command
-
-**Must be in .gitignore:**
-```
-.claude_checkpoint.yaml
-```
+**Migration**: Remove `.claude_checkpoint.yaml` from your workflow. Use `/rewind` instead.
 
 ## Session Autonomy
 
@@ -811,10 +803,10 @@ Paste warmup.yaml content at session start. Note: Self-healing won't work withou
 
 ## Architecture Decisions
 
-- [ADR-001: Green Coding By Default](adr/001-green-coding-by-default.md)
-- [ADR-002: Self-Healing Protocol](adr/002-self-healing-protocol.md) (superseded by ADR-003)
-- [ADR-003: Self-Healing Based on Real Compaction Data](adr/003-self-healing-real-compaction-data.md)
-- [ADR-004: Distributed SQL with YugabyteDB](adr/004-distributed-sql-yugabytedb.md)
-- [ADR-005: Event-Driven with Redis Streams](adr/005-event-driven-redis-streams.md)
+- [ADR-009: Claude Code Native Integration](adr/009-claude-code-native-integration.md) - **v4.0.0** Strategic pivot
+- [ADR-008: Ethics Protocol and Humanist Mode](adr/008-ethics-protocol-humanist-mode.md) - v3.0.0
+- [ADR-007: Checkpoint Size Limits and Pruning](adr/007-checkpoint-size-limits.md) - Deprecated by ADR-009
 - [ADR-006: Git Hook Protocol Refresh](adr/006-git-hook-protocol-refresh.md)
-- [ADR-007: Checkpoint Size Limits and Pruning](adr/007-checkpoint-size-limits.md) (WIP)
+- [ADR-003: Self-Healing Based on Real Compaction Data](adr/003-self-healing-real-compaction-data.md) - Confirmed by Claude Code 2.0
+- [ADR-002: Self-Healing Protocol](adr/002-self-healing-protocol.md) - Superseded by ADR-003
+- [ADR-001: Green Coding By Default](adr/001-green-coding-by-default.md)

@@ -11,90 +11,62 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# COMPLETED: v3.2.0 - ANTI-HALLUCINATION HARDENING
+# CURRENT: v4.0.0 - CLAUDE CODE NATIVE INTEGRATION (BREAKING)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v3.2.0 - Anti-Hallucination Hardening"
-  started: "2025-11-29"
-  status: done
-
-  completed:
-    - "[x] Ethics structure validation (human_veto + core_principles REQUIRED)"
-    - "[x] Warmup structure validation (self_healing.on_confusion position check)"
-    - "[x] Exported check_ethics_structure() and check_warmup_structure() APIs"
-    - "[x] Unit tests for structure validation (8 new tests)"
-    - "[x] SPECIFICATION.md: Structure Validation section"
-    - "[x] SPECIFICATION.md: Modular .forge/ schema design"
+  current: "v4.0.0 - Claude Code Native Integration"
+  started: "2025-11-28"
+  status: in_progress
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # CRITICAL PROBLEM STATEMENT
+  # STRATEGIC PIVOT (ADR-009)
   # ─────────────────────────────────────────────────────────────────────────────
-  # The current SPECIFICATION.md (v1.1.0) documents a MINIMAL protocol.
-  # But forge-protocol's OWN warmup.yaml (676 lines) uses features that
-  # aren't in the spec. We're not eating our own dog food.
+  # Claude Code 2.0 (Nov 2025) now has native:
+  #   - Checkpoints with /rewind (replaces .claude_checkpoint.yaml)
+  #   - Session resume with --continue/--resume
+  #   - CLAUDE.md memory hierarchy (can import warmup.yaml)
+  #   - Auto-compact at 95% capacity (confirms ADR-003)
+  #   - MCP is now industry standard
   #
-  # Worse: Self-healing is BROKEN. The "2hr checkpoint" is FICTION.
-  # We documented what we HOPED would work, not what ACTUALLY works.
-  #
-  # Fix: Research Forge's real patterns first, then rewrite the spec.
+  # PIVOT: Stop building what Claude Code has. Integrate with it.
+  #        Focus on unique value: Ethics, Green, Sprint Autonomy.
   # ─────────────────────────────────────────────────────────────────────────────
 
-  phase_1_research:
-    status: pending
-    description: "Study REAL compaction patterns before writing spec"
-    tasks:
-      - "[ ] Analyze Forge (royalbit/forge) for real compaction frequency"
-      - "[ ] Document when /compact ACTUALLY triggers"
-      - "[ ] Test what ACTUALLY survives compaction in CLAUDE.md"
-      - "[ ] Identify why self-healing is broken"
-      - "[ ] Study successful vs failed recovery patterns"
+  tasks:
+    - "[x] Research Claude Code 2.0 native features"
+    - "[x] ADR-009: Claude Code Native Integration"
+    - "[x] Update roadmap.yaml with strategic pivot"
+    - "[x] Update sprint.yaml"
+    - "[x] Update SPECIFICATION.md"
+    - "[x] Update README.md"
+    - "[x] Update CLI --skynet CLAUDE.md template"
+    - "[x] Update CHANGELOG.md"
+    - "[x] Bump version to 4.0.0"
+    - "[ ] Run tests and clippy"
+    - "[ ] Tag, push, publish"
 
-  phase_2_specification:
-    status: blocked_by_research
-    description: "Rewrite spec based on research findings"
-    tasks:
-      - "[ ] Document SKYNET MODE 5-component system"
-      - "[ ] Document Bootstrap Chain (CLAUDE.md → warmup → checkpoint)"
-      - "[ ] Fix Self-Healing based on REAL patterns"
-      - "[ ] Add extended warmup.yaml schema sections"
-      - "[ ] Design modular structure (bin/) to deflate warmup"
-      - "[ ] Define checkpoint file format and ACTUAL triggers"
+  breaking_changes:
+    - ".claude_checkpoint.yaml validation removed (use /rewind)"
+    - "CLAUDE.md template now uses @warmup.yaml import"
+    - "Session handoff features deprecated"
 
-  phase_3_implementation:
-    status: blocked_by_spec
-    description: "Update CLI and templates to match new spec"
-    tasks:
-      - "[ ] Update --skynet to generate modular structure"
-      - "[ ] Implement checkpoint file writing/reading"
-      - "[ ] Update CLAUDE.md template for real self-healing"
-      - "[ ] Add tests for new features"
-
-  deliverables:
-    - "SPECIFICATION.md v2.0"
-    - "Working self-healing (actually recovers)"
-    - "Modular warmup structure (bin/)"
-    - "ADR-003: Self-Healing Based on Real Patterns"
-
-  notes: |
-    v2.0.0 - SPECIFICATION REWRITE
-
-    Key insight from human: "the 2h checkpoint is NOT real, it's YOUR
-    imagination, not based in reality... /compact happens more often
-    than you think, and self-healing is broken even in forge"
-
-    Action: Research first, spec second. No more fiction.
+  unique_value_preserved:
+    - "Ethics validation (Priority 0)"
+    - "Green coding metrics"
+    - "Sprint autonomy (4hr max, 1 milestone)"
+    - "Schema validation for warmup/sprint/roadmap"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINT (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v3.1.0 - Self-Healing Completeness"
+  sprint: "v3.2.0 - Anti-Hallucination Hardening"
   status: done
   date: "2025-11-29"
   highlights:
-    - "Checkpoint JSON schema for validation"
-    - "File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
-    - "ADR-007 marked as Accepted"
+    - "Ethics structure validation (human_veto REQUIRED)"
+    - "Warmup structure validation"
+    - "Modular .forge/ schema design"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES

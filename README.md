@@ -16,6 +16,17 @@
 
 Green by design. **SKYNET MODE requires Claude Code.**
 
+### v4.0.0: Claude Code Native Integration
+
+Forge Protocol now **integrates with Claude Code 2.0's native features**:
+- Use `/rewind` for checkpoints (deprecated `.claude_checkpoint.yaml`)
+- Use `--continue`/`--resume` for session management
+- Use `CLAUDE.md` with `@warmup.yaml` import for memory hierarchy
+
+**Focus on unique value:** Ethics, Sprint Autonomy, Green Coding, Schema Validation.
+
+See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the strategic pivot.
+
 ## The Problem
 
 AI hallucinates. It invents project conventions. It forgets rules mid-session. It "remembers" things that never happened. Context compaction makes it worse—your carefully explained requirements get compressed into oblivion.
@@ -36,8 +47,8 @@ The Forge Protocol exists to solve six specific problems. **Features that don't 
 |----------|-----------|-------------------|
 | **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → Humanist Mode safeguards |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
-| **2** | **SELF-HEALING** | Rules lost after compaction → Re-read from disk |
-| **3** | **SESSION CONTINUITY** | Context lost between sessions → Checkpoint files |
+| **2** | **SELF-HEALING** | Rules lost after compaction → Native `/rewind` + CLAUDE.md |
+| **3** | **SESSION CONTINUITY** | Context lost between sessions → Native `--continue`/`--resume` |
 | **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
 | **5** | **GREEN CODING** | Cloud AI for routine tasks → Local validation |
 
@@ -406,23 +417,24 @@ flowchart LR
 
 **The key enabler for autonomous sessions.**
 
-### The Problem
+### v4.0.0: Native Integration
 
-During autonomous sessions, Claude Code's auto-compact summarizes conversation history. Rules defined in warmup.yaml get compressed. The AI "forgets" guidelines and starts making mistakes.
+Claude Code 2.0 (November 2025) provides native self-healing features:
 
-### The Reality (ADR-003)
-
-**v1.x assumed:** Checkpoint every 2 hours
-**v2.0 research found:** Compaction happens every **10-20 minutes** with heavy reasoning
-
-With `MAX_THINKING_TOKENS=200000`, context fills in 1-3 turns. The "2hr checkpoint" never triggered because compaction happened 5-10x faster.
+| Feature | Claude Code Native | Forge Protocol |
+|---------|-------------------|----------------|
+| Checkpoints | `/rewind`, Esc+Esc | Use native (deprecated .claude_checkpoint.yaml) |
+| Session resume | `--continue`, `--resume` | Use native |
+| Memory hierarchy | `CLAUDE.md` with `@imports` | Integrate via `@warmup.yaml` |
+| Auto-compact | 95% capacity trigger | Confirmed ADR-003 findings |
 
 ### The Insight
 
 Everyone else: *Make rules survive compaction* (fragile)
-Forge Protocol: **Recover from compaction** (reliable)
+Claude Code 2.0: **Native checkpoints + memory hierarchy** (reliable)
+Forge Protocol v4.0.0: **Integrate with native features** (optimal)
 
-It's like databases: don't try to make transactions survive crashes - use write-ahead logs to recover.
+See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the full analysis.
 
 ### The Solution
 

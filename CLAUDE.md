@@ -1,18 +1,10 @@
 # Forge Protocol
 
-ON CONFUSION → re-read warmup.yaml + .claude_checkpoint.yaml
+@warmup.yaml
+@ethics.yaml
 
 Rules: 4hr max, 1 milestone, tests pass, ship it.
 
-## Recovery Commands
-
 ```bash
-cargo test                    # Must pass
-cargo clippy -- -D warnings   # Zero warnings
+cargo test && cargo clippy -- -D warnings
 ```
-
-## Key Files
-
-- `warmup.yaml` - Full protocol (RE-READ when confused)
-- `sprint.yaml` - Current sprint
-- `.claude_checkpoint.yaml` - Session state (if exists)

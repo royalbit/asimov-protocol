@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2025-11-28
+
+### BREAKING: Claude Code Native Integration (ADR-009)
+
+Strategic pivot: Integrate with Claude Code 2.0's native features instead of duplicating them.
+Focus on unique value: Ethics, Sprint Autonomy, Green Coding, Schema Validation.
+
+### Added
+
+- **ADR-009**: Claude Code Native Integration - Strategic pivot documentation
+- **CLAUDE.md @import syntax**: New template uses `@warmup.yaml` and `@ethics.yaml` imports
+- **Native integration docs**: Updated SPECIFICATION.md with Claude Code integration section
+
+### Changed
+
+- **CLAUDE.md template**: Now uses Claude Code's native `@import` syntax for memory hierarchy
+- **Design principles**: Added "Integrate, don't duplicate" and "Focus on unique value"
+- **Self-healing section**: Updated to reference native `/rewind` checkpoints
+- **Session continuity**: Updated to reference native `--continue`/`--resume`
+
+### Deprecated
+
+- **.claude_checkpoint.yaml**: Use Claude Code's native `/rewind` checkpoints instead
+- **Session handoff features**: Use Claude Code's native `--continue`/`--resume` instead
+- **Checkpoint validation**: Removed (native checkpoints are superior)
+
+### Documentation
+
+- **README.md**: v4.0.0 section with native integration overview
+- **SPECIFICATION.md**: Claude Code Native Integration section
+- **roadmap.yaml**: Strategic pivot with deprecated features section
+- **sprint.yaml**: v4.0.0 sprint tracking
+
+### Rationale
+
+Claude Code 2.0 (November 2025) provides native:
+- Checkpoints with `/rewind` (replaces .claude_checkpoint.yaml)
+- Session resume with `--continue`/`--resume`
+- CLAUDE.md memory hierarchy with `@import` syntax
+- Auto-compact at 95% capacity (confirms ADR-003 findings)
+- MCP is now industry standard (OpenAI, Google adopted it)
+
+Building duplicate features wastes effort. Instead, integrate with native features and focus on what Claude Code doesn't have: Ethics, Sprint Autonomy, Green Coding, Schema Validation.
+
 ## [3.2.0] - 2025-11-29
 
 ### Anti-Hallucination Hardening
