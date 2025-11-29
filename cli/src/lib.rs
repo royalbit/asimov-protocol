@@ -4,6 +4,7 @@
 //! - `warmup.yaml` - Session bootstrap
 //! - `sprint.yaml` - Active work tracking
 //! - `roadmap.yaml` - Milestone planning
+//! - `.claude_checkpoint.yaml` - Session state for self-healing
 //!
 //! # Example
 //!
@@ -35,7 +36,11 @@ pub use markdown::{
     LintError, LintResult,
 };
 pub use templates::{
-    claude_md_template, ethics_template, hook_installer_template, precommit_hook_template,
-    roadmap_template, sprint_template, uses_cargo_husky, warmup_template, ProjectType,
+    checkpoint_template, claude_md_template, ethics_template, hook_installer_template,
+    precommit_hook_template, roadmap_template, sprint_template, uses_cargo_husky, warmup_template,
+    ProjectType,
 };
-pub use validator::{is_protocol_file, validate_directory, validate_file, ValidationResult};
+pub use validator::{
+    is_protocol_file, validate_claude_md, validate_directory, validate_file, FileSizeLimits,
+    ValidationResult,
+};

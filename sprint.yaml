@@ -11,12 +11,19 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT SPRINT: v2.0.0 - SPECIFICATION REWRITE (TOP PRIORITY)
+# COMPLETED: v3.1.0 - SELF-HEALING COMPLETENESS
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v2.0.0 - SPECIFICATION v2.0 Based on Reality"
-  started: "2025-11-27"
-  status: in_progress
+  current: "v3.1.0 - Self-Healing Completeness (ADR-007)"
+  started: "2025-11-29"
+  status: done
+
+  completed:
+    - "[x] Checkpoint JSON schema for validation"
+    - "[x] File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
+    - "[x] CLI validates checkpoint files and warns on oversized files"
+    - "[x] Example checkpoint generated in --skynet setup"
+    - "[x] ADR-007 marked as Accepted"
 
   # ─────────────────────────────────────────────────────────────────────────────
   # CRITICAL PROBLEM STATEMENT

@@ -832,6 +832,45 @@ backlog:
     .to_string()
 }
 
+/// Generate a .claude_checkpoint.yaml example template for SKYNET MODE
+/// This file is written during sessions and excluded from git
+pub fn checkpoint_template(milestone: &str) -> String {
+    format!(
+        r#"# Forge Protocol - Session Checkpoint
+# This file is auto-generated during SKYNET MODE sessions
+# DO NOT commit to git - add to .gitignore
+#
+# SIZE LIMITS (ADR-007):
+#   Soft limit: 20 lines (triggers warning)
+#   Hard limit: 30 lines (requires trimming)
+#
+# TRIMMING RULES:
+#   - Keep: timestamp, milestone, status, in_progress, on_confusion
+#   - Trim completed[] to last 3 items
+#   - Trim next_steps[] to first 3 items
+#   - Remove notes if over limit
+
+timestamp: "2025-01-01T00:00:00Z"
+tool_calls: 0
+
+milestone: "{}"
+status: in_progress
+
+completed: []
+
+in_progress: "Starting milestone"
+
+next_steps:
+  - "Review requirements"
+  - "Implement core functionality"
+  - "Write tests"
+
+on_confusion: "Re-read warmup.yaml and .claude_checkpoint.yaml"
+"#,
+        milestone
+    )
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // SKYNET MODE Templates - CLAUDE.md and Pre-commit Hooks
 // ═══════════════════════════════════════════════════════════════════════════════

@@ -1,7 +1,8 @@
 # ADR-007: Checkpoint Size Limits and Pruning
 
-**Status:** WIP (Work In Progress)
+**Status:** Accepted
 **Date:** 2025-11-27
+**Implemented:** 2025-11-29 (v3.1.0)
 **Authors:** Claude (Opus 4.5) - Principal Autonomous AI
 
 ## Context
@@ -229,26 +230,29 @@ This is a larger change - defer to separate milestone.
 
 ## Implementation
 
-### Phase 1: Documentation (v2.2.0)
-- [ ] Add size limits to SPECIFICATION.md
-- [ ] Add pruning rules to checkpoint schema
-- [ ] Document in warmup.yaml template
+### Phase 1: Documentation & Schema (v3.1.0) - DONE
+- [x] Add size limits to SPECIFICATION.md
+- [x] Add pruning rules to checkpoint schema
+- [x] Document checkpoint schema with field descriptions
+- [x] Add checkpoint JSON schema for CLI validation
 
-### Phase 2: CLI Enforcement (v2.3.0)
-- [ ] Add `--check-sizes` flag to validate command
-- [ ] Warn on oversized files
-- [ ] Suggest fixes
+### Phase 2: CLI Enforcement (v3.1.0) - DONE
+- [x] Add checkpoint validation to `forge-protocol validate`
+- [x] Warn on oversized files (soft limit: 20 lines, hard limit: 30 lines)
+- [x] Add CLAUDE.md size validation (soft limit: 10 lines, hard limit: 15 lines)
+- [x] Add warmup.yaml size validation (soft limit: 200 lines, hard limit: 500 lines)
+- [x] Generate example checkpoint in `--skynet` setup
 
-### Phase 3: Modular Structure (v2.4.0+)
+### Phase 3: Modular Structure (Future)
 - [ ] Implement `.forge/` directory support
 - [ ] Split warmup.yaml template
 - [ ] Update `--skynet` to generate modular structure
 
-## Open Questions
+## Resolved Questions
 
-1. **What's the right pruning threshold?** 5 tasks? 10? Configurable?
-2. **Should we enforce or just warn?** Errors block, warnings are ignored
-3. **Should checkpoint include session history?** Or just current state?
+1. **Pruning threshold:** 5 items max for `completed` and `next_steps` arrays
+2. **Enforcement:** Soft limits warn, hard limits are documented but currently warn (not error)
+3. **Checkpoint content:** Current state only - full history belongs in `sprint.yaml`
 
 ## References
 

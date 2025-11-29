@@ -3,10 +3,10 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
-    check_markdown_file, claude_md_template, ethics_template, find_markdown_files,
-    fix_markdown_file, hook_installer_template, is_protocol_file, precommit_hook_template,
-    roadmap_template, sprint_template, uses_cargo_husky, validate_directory, validate_file,
-    warmup_template, ProjectType,
+    check_markdown_file, checkpoint_template, claude_md_template, ethics_template,
+    find_markdown_files, fix_markdown_file, hook_installer_template, is_protocol_file,
+    precommit_hook_template, roadmap_template, sprint_template, uses_cargo_husky,
+    validate_directory, validate_file, warmup_template, ProjectType,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -331,6 +331,11 @@ fn cmd_init(
     if skynet {
         files.push(("CLAUDE.md", claude_md_template(&project_name, project_type)));
         files.push(("ethics.yaml", ethics_template()));
+        // Generate example checkpoint file (will be gitignored)
+        files.push((
+            ".claude_checkpoint.yaml.example",
+            checkpoint_template("Initial milestone"),
+        ));
     }
 
     // Write protocol files

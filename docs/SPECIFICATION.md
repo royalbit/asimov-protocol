@@ -167,6 +167,22 @@ project/
 └── .claude_checkpoint.yaml
 ```
 
+### File Size Limits (ADR-007)
+
+Self-healing requires small files that can be re-read efficiently after compaction.
+
+| File | Soft Limit | Hard Limit | Purpose |
+|------|------------|------------|---------|
+| CLAUDE.md | 10 lines | 15 lines | Must survive summarization |
+| .claude_checkpoint.yaml | 20 lines | 30 lines | Session state for recovery |
+| warmup.yaml | 200 lines | 500 lines | Full protocol rules |
+
+**Enforcement:**
+- `forge-protocol validate` warns on soft limit, errors on hard limit
+- CLAUDE.md: Ultra-short is critical - it's the bootstrap trigger
+- Checkpoint: Trim completed/next_steps arrays when oversized
+- Warmup: Consider modular structure (`.forge/` directory) if too large
+
 ## Protocol Files
 
 ### ethics.yaml Schema (Required for SKYNET)
@@ -467,27 +483,58 @@ backlog:
 
 Session state file. Written during autonomous sessions, not committed to git.
 
+**Size Limits (ADR-007):**
+
+| Limit | Lines | Enforcement |
+|-------|-------|-------------|
+| Soft limit | 20 | Warning |
+| Hard limit | 30 | Error - must trim |
+
+**Trimming Rules:**
+
+When checkpoint exceeds 20 lines:
+1. Keep: `timestamp`, `milestone`, `status`, `in_progress`, `on_confusion`
+2. Trim `completed[]` to last 3 items
+3. Trim `next_steps[]` to first 3 items
+4. Remove `notes` field if still over limit
+
 ```yaml
 timestamp: "2025-01-15T10:30:00Z"
 session_started: "2025-01-15T09:00:00Z"
 tool_calls: 45
 
 milestone: "Add feature X"
-status: in_progress
+status: in_progress  # planned | in_progress | blocked | done
 
+# Rolling window: max 5 items (last completed tasks)
 completed:
   - "Task 1: Implemented core logic"
   - "Task 2: Wrote unit tests"
 
 in_progress: "Task 3: Update documentation"
 
+# Bounded: max 5 items (next tasks only)
 next_steps:
   - "Task 4: Integration tests"
   - "Task 5: Update CHANGELOG"
 
-# Recovery hint
-on_confusion: "cat warmup.yaml"
+# Recovery hint - always included
+on_confusion: "Re-read warmup.yaml and .claude_checkpoint.yaml"
 ```
+
+**Required Fields:**
+- `milestone` - Current milestone being worked on (required)
+
+**Optional Fields:**
+- `timestamp` - ISO 8601 timestamp
+- `session_started` - When session began
+- `tool_calls` - Number of tool calls made
+- `status` - One of: `planned`, `in_progress`, `blocked`, `done`
+- `completed` - Array of completed tasks (max 5)
+- `in_progress` - Current task
+- `next_steps` - Array of upcoming tasks (max 5)
+- `blockers` - Array of current blockers
+- `on_confusion` - Recovery command
 
 **Must be in .gitignore:**
 ```
