@@ -145,6 +145,8 @@ ethics:
 # ═══════════════════════════════════════════════════════════════════════════════
 # GREEN CODING - Zero tokens. Zero emissions. (PROTOCOL CORE)
 # ═══════════════════════════════════════════════════════════════════════════════
+# See: green.yaml for full configuration
+# ADR: docs/adr/016-green-coding-protocol.md
 green_coding:
   status: "REQUIRED"
   philosophy: "Local-first tools over cloud AI for routine tasks"
@@ -363,6 +365,8 @@ autonomous_development:
       protocols:
         - "warmup.yaml - Development protocol (HOW) [RULES]"
         - "sprint.yaml - Session boundaries (WHEN) [RULES]"
+        - "ethics.yaml - Ethics protocol (SAFETY) [RULES]"
+        - "green.yaml - Green coding protocol (SUSTAINABILITY) [RULES]"
       data:
         - "roadmap.yaml - Milestone definitions (WHAT) [DATA]"
       project:
@@ -606,6 +610,51 @@ coding_principles:
 # ═══════════════════════════════════════════════════════════════════════════════
 session_initialization:
   greeting: "Welcome back! Loading Forge Protocol context..."
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # STEP 0: ETHICS VALIDATION (Priority 0 - Must pass before anything else)
+  # ─────────────────────────────────────────────────────────────────────────────
+  step_0_ethics_validation:
+    description: "Validate ethics before proceeding - MANDATORY"
+    priority: 0
+    command: "forge-protocol validate"
+    on_success: "Continue to step_1"
+    on_failure:
+      action: "HALT - Do not proceed"
+      steps:
+        - "Alert user: 'ETHICS VALIDATION FAILED'"
+        - "Show validation errors"
+        - "If ethics.yaml missing or corrupted: regenerate with 'forge-protocol init --skynet'"
+        - "Re-run validation"
+        - "If still failing: STOP and wait for human intervention"
+      regenerate_command: "forge-protocol init --skynet --force"
+    why: |
+      Ethics is Priority 0. If ethics validation fails, the session cannot proceed.
+      This prevents operation with weakened or missing ethics configuration.
+      The CLI has hardcoded ethics that always apply, but ethics.yaml provides
+      the full context for AI to understand the ethical constraints.
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # STEP 0b: GREEN CODING VALIDATION (Priority 0.5 - After ethics, before context)
+  # ─────────────────────────────────────────────────────────────────────────────
+  step_0b_green_validation:
+    description: "Validate green coding protocol before proceeding"
+    priority: 0.5
+    command: "forge-protocol validate"
+    on_success: "Continue to step_1"
+    on_failure:
+      action: "WARN - Proceed with defaults"
+      steps:
+        - "Alert user: 'GREEN PROTOCOL VALIDATION WARNING'"
+        - "Show validation errors"
+        - "If green.yaml missing: regenerate with 'forge-protocol init --skynet'"
+        - "Continue with hardcoded green defaults"
+      regenerate_command: "forge-protocol init --skynet --force"
+    why: |
+      Green coding is Priority 0.5. Unlike ethics (hard stop), green validation
+      allows proceeding with hardcoded defaults if green.yaml is missing.
+      This is because green coding is about efficiency, not safety.
+      The CLI has hardcoded green principles that always apply.
 
   step_1_load_context:
     description: "Read these files to understand current state"

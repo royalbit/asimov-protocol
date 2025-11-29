@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.0.2"
+  current_version: "4.1.2"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,56 +48,75 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.0.0 - CLAUDE CODE NATIVE INTEGRATION (BREAKING)
+# CURRENT: v4.1.2 - GREEN CODING PROTOCOL SEPARATION (ADR-016)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.0.0"
+  version: "4.1.2"
   status: released
-  date: "2025-11-28"
-  summary: "Claude Code Native Integration"
-  goal: INTEGRATION
-  priority: CRITICAL
-  breaking: true
+  date: "2025-11-29"
+  summary: "Green Coding Protocol Separation - Parity with Ethics"
+  goal: GREEN_CODING
+  priority: HIGH
 
   rationale: |
-    Claude Code 2.0 includes native checkpoints, session resume, and CLAUDE.md
-    memory hierarchy. Building duplicate features wastes effort. Instead:
-    - Integrate WITH Claude Code's native features
-    - Focus on what Claude Code DOESN'T have
-    - Prepare for MCP-based vendor neutrality
+    Green coding deserves the same treatment as ethics:
+    - Dedicated protocol file (green.yaml)
+    - Validation at session start
+    - Modification rules requiring co-signers
+    - Clear ownership and documentation
 
   deliverables:
+    protocol_files:
+      - "[x] green.yaml - Dedicated green coding protocol file"
+      - "[x] ADR-016: Green Coding Protocol Separation"
+      - "[x] warmup.yaml updated with step_0b_green_validation"
+      - "[x] CLAUDE.md updated with @green.yaml import"
+
     documentation:
-      - "[x] ADR-009: Claude Code Native Integration"
-      - "[x] ADR-011: AI-Only Development Model - No External PRs"
-      - "[x] ADR-013: Self-Healing NOT Replaced by Native Features"
-      - "[x] ADR-006: Commit cadence requirement (~15 min)"
-      - "[ ] Update SPECIFICATION.md with integration strategy"
-      - "[ ] Update README.md with new direction"
-      - "[x] Update warmup.yaml self_healing section (commit_cadence added)"
-
-    deprecations:
-      # NOTE: These are CROSS-SESSION features only (ADR-013)
-      # Mid-session self-healing (warmup.yaml re-read) is NOT deprecated
-      - ".claude_checkpoint.yaml → TodoWrite for tasks (native /rewind is MANUAL)"
-      - "Session handoff features → --continue/--resume (MANUAL cross-session)"
-      - "Checkpoint schema validation → Removed"
-
-    cli_changes:
-      - "--skynet generates CLAUDE.md with @warmup.yaml import"
-      - "CLAUDE.md template uses native memory features"
-      - "Remove checkpoint validation code"
-
-    unique_value_focus:
-      - "Ethics validation remains Priority 0"
-      - "Green coding metrics and philosophy"
-      - "Sprint autonomy (4hr max, 1 milestone)"
-      - "Schema validation for protocol files"
+      - "[x] ADR-016: Green Coding Protocol - Accepted"
+      - "[x] CHANGELOG.md updated"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.1.1"
+    status: released
+    date: "2025-11-29"
+    summary: "Ethics Validation at Session Start"
+    highlights:
+      - "step_0_ethics_validation in session initialization"
+      - "Halt session if ethics validation fails"
+      - "Regenerate ethics.yaml if missing"
+
+  - version: "4.1.0"
+    status: released
+    date: "2025-11-29"
+    summary: "Hardcoded Ethics (ADR-011)"
+    highlights:
+      - "cli/src/ethics.rs with hardcoded CORE_PRINCIPLES"
+      - "RED_FLAGS - 27+ patterns across 4 categories"
+      - "--ethics-scan flag for red flag detection"
+      - "18 new unit tests"
+
+  - version: "4.0.2"
+    status: released
+    date: "2025-11-29"
+    summary: "Anti-Sycophancy Protocol (ADR-015)"
+    highlights:
+      - "Anti-sycophancy directives in warmup.yaml"
+      - "Banned phrases list"
+      - "AI_REALITY.md Part 3: Sycophancy"
+
+  - version: "4.0.0"
+    status: released
+    date: "2025-11-28"
+    summary: "Claude Code Native Integration (BREAKING)"
+    highlights:
+      - "Strategic pivot to integrate with Claude Code 2.0"
+      - "CLAUDE.md @import syntax"
+      - "Deprecated cross-session features for native alternatives"
+
   - version: "3.2.0"
     status: released
     date: "2025-11-29"
@@ -148,39 +167,18 @@ future:
   # ═══════════════════════════════════════════════════════════════════════════
   # PRIORITY ORDER: Matches core values (0-5)
   # ═══════════════════════════════════════════════════════════════════════════
-  # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (CRITICAL)
-  # 1.5 ANTI-SYCOPHANCY → v4.1.5 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
-  # 1.  ANTI-HALLUCINATION → v4.4.0 Schema Standardization
-  # 5.  GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
+  # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (RELEASED)
+  # 0.5 GREEN_CODING → v4.1.2 Green Protocol Separation (RELEASED)
+  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Self-Healing (HIGH - ADR-017)
+  # 1.5 ANTI-SYCOPHANCY → v4.1.6 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
+  # 5.  GREEN_METRICS → v4.2.0 Hardcoded Green Coding Metrics (HIGH - ADR-012)
   # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
   # ═══════════════════════════════════════════════════════════════════════════
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.0: HARDCODED ETHICS (ADR-011) - PRIORITY 0
+  # v4.1.6: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.0"
-    status: planned
-    summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
-    goal: ETHICAL_AUTONOMY
-    priority: CRITICAL
-    core_value: 0
-    adr: "docs/adr/011-hardcoded-ethics.md"
-    description: |
-      Move core ethics from removable ethics.yaml into CLI binary.
-      Makes ethics harder to remove for non-technical users.
-      Raises the bar from "delete a file" to "rebuild the binary".
-      MUST come first - ethics is Priority 0.
-    features:
-      - "Core ethics hardcoded in src/ethics.rs"
-      - "Red flag detection built into validate"
-      - "--ethics-scan for project-wide pattern detection"
-      - "Session hooks with ethics reminder"
-      - "ethics.yaml remains for extensions only"
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.5: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.5"
+  - version: "4.1.6"
     status: planned
     summary: "Anti-Sycophancy Protocol - Truth Over Comfort"
     goal: ANTI-SYCOPHANCY
@@ -247,6 +245,51 @@ future:
       - "Ethics context as MCP resource"
       - "Sprint boundaries as MCP resource"
       - "Green coding metrics as MCP resource"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v4.1.5: PROTOCOL SELF-HEALING (ADR-017) - PRIORITY 1
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "4.1.5"
+    status: planned
+    summary: "Protocol Self-Healing - Auto-Regeneration & Tamper Detection"
+    goal: ANTI-HALLUCINATION
+    priority: HIGH
+    core_value: 1
+    adr: "docs/adr/017-protocol-self-healing.md"
+    description: |
+      Auto-regenerate missing protocol files during validation.
+      Recovery over surveillance. Self-healing without reporting.
+      Checksum-based tamper detection (warn, don't block).
+
+    phase_1_auto_regeneration:
+      features:
+        - "Auto-create missing ethics.yaml, green.yaml, warmup.yaml"
+        - "WARN on regeneration (not silent)"
+        - "CLAUDE.md never auto-created (bootstrap must be intentional)"
+        - "--no-regenerate flag to skip auto-creation"
+      behavior:
+        ethics_missing: "AUTO-CREATE + WARN"
+        green_missing: "AUTO-CREATE + INFO"
+        warmup_missing: "AUTO-CREATE + WARN"
+        claude_md_missing: "NEVER AUTO-CREATE (off switch)"
+
+    phase_2_checksum_validation:
+      features:
+        - ".forge/checksums.yaml for tamper detection"
+        - "WARN if files modified from known-good state"
+        - "--update-checksums flag after intentional changes"
+        - "Migration command for existing projects"
+      structure:
+        - ".forge/checksums.yaml (tamper detection)"
+        - "SHA256 hashes of all protocol files"
+        - "Last verified timestamp"
+
+    philosophy: |
+      Recovery over surveillance:
+      - Make it easy to restore correct state
+      - Make deletion/modification visible (warnings)
+      - Don't prevent changes (it's their project)
+      - Don't report/punish (that's overreach)
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.4.0: SCHEMA STANDARDIZATION - PRIORITY 1

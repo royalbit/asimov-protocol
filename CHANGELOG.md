@@ -5,6 +5,111 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.2] - 2025-11-29
+
+### Added: Green Coding Protocol Separation (ADR-016)
+
+Green Coding now has its own dedicated protocol file (`green.yaml`), achieving parity with Ethics.
+
+#### New Protocol File: `green.yaml`
+
+- **Core Principles**: Local-first, token efficiency, binary efficiency, carbon awareness
+- **Modification Rules**: Requires 2 human co-signers (same as ethics.yaml)
+- **Practices by Language**: Rust, Python, JavaScript, Go optimization guidelines
+- **Anti-Patterns**: Common wasteful practices to avoid
+- **Metrics**: What to measure per session, per release, and cumulatively
+
+#### Updated Files
+
+- **warmup.yaml**: Added `step_0b_green_validation` in session initialization
+  - Validates green.yaml after ethics validation
+  - Warns but proceeds with defaults if green.yaml missing (unlike ethics which halts)
+- **CLAUDE.md**: Now imports `@green.yaml` alongside ethics and warmup
+- **SPECIFICATION.md**: Added green.yaml schema, structure validation, file references
+
+#### Design Decisions
+
+- **Priority 0.5**: Green validation runs after ethics (Priority 0), before context loading
+- **Warn, don't block**: Missing green.yaml proceeds with hardcoded defaults (unlike ethics)
+- **Never modularize**: green.yaml stays in project root (like ethics.yaml)
+- **Consistent architecture**: All core protocols now have dedicated files
+
+See [ADR-016](docs/adr/016-green-coding-protocol.md) for full rationale.
+
+## [4.1.1] - 2025-11-29
+
+### Added: Ethics Validation at Session Start
+
+- **step_0_ethics_validation** in warmup.yaml session_initialization
+  - Runs `forge-protocol validate` before any other initialization step
+  - On failure: alerts user, shows errors, offers to regenerate ethics.yaml
+  - If regeneration fails: HALT and wait for human intervention
+  - Ensures ethics is validated as Priority 0 before session proceeds
+
+This prevents sessions from starting with weakened or missing ethics configuration.
+
+## [4.1.0] - 2025-11-29
+
+### Added: Hardcoded Ethics (ADR-011)
+
+Core ethics are now compiled directly into the CLI binary. This raises the bar for ethics bypass from "delete a file" to "rebuild the entire binary."
+
+#### New Ethics Module (`cli/src/ethics.rs`)
+
+- **CORE_PRINCIPLES**: Hardcoded ethical constraints that cannot be removed by deleting files
+  - `financial`: No unauthorized money movement (wallets, trading bots)
+  - `physical`: No weapons, sabotage, infrastructure attacks
+  - `privacy`: No credential harvesting, doxxing, mass scraping
+  - `deception`: No deepfakes, phishing, scam infrastructure
+  - `transparency_over_velocity`: When in doubt, ask human
+
+- **RED_FLAGS**: 27+ patterns across 4 categories (Financial, Security, Privacy, Deception)
+  - Automatically scanned with `--ethics-scan` flag
+  - Patterns include: "crypto wallet", "private key", "keylogger", "phishing", etc.
+
+#### New CLI Features
+
+- **`forge-protocol validate --ethics-scan`**: Scan project files for red flag patterns
+  - Reports file, line number, category, and pattern matched
+  - Covers 27+ red flag patterns
+  - Warns but doesn't block (context matters for security research)
+
+- **Ethics status in validation output**: Shows "HARDCODED" or "EXTENDED" status
+  - HARDCODED: Core principles enforced from binary
+  - EXTENDED: Core principles + ethics.yaml extensions
+
+- **Enhanced `refresh` command**: Now displays ethics reminder
+  - Shows all core principles status
+  - Shows red flag pattern count
+  - Shows human veto commands
+
+#### Design Decisions
+
+- **Opt-in scanning**: `--ethics-scan` is opt-in to avoid false positive noise
+- **Warn, don't block**: Red flags require human review (legitimate security research exists)
+- **ethics.yaml remains**: For user extensions and custom configurations
+
+#### Bypass Analysis
+
+| Actor | Before | After |
+|-------|--------|-------|
+| Non-technical bad actor | Delete ethics.yaml | Must rebuild CLI |
+| Technical bad actor | Delete ethics.yaml | Can still rebuild |
+| Good-faith user | Uses ethics | Same, with stronger defaults |
+
+**Key insight**: This doesn't prevent determined bad actors. It raises the bar and makes ethics removal visible and intentional.
+
+### Changed
+
+- **Validation output**: Now shows ethics status before file validation
+- **Refresh command**: Includes ethics reminder with principle status
+
+### Technical
+
+- New `cli/src/ethics.rs` module (300+ lines including tests)
+- 18 new unit tests for ethics functionality
+- All 103 tests passing
+
 ## [4.0.2] - 2025-11-29
 
 ### Added: Anti-Sycophancy Protocol (ADR-015)

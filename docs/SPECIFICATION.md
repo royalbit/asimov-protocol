@@ -44,8 +44,8 @@ Forge Protocol v4.0.0 integrates with Claude Code 2.0's native features instead 
 | Feature | Description | Claude Code Has? |
 |---------|-------------|------------------|
 | **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags | NO |
+| **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
-| **Green Coding** | Local-first, zero tokens, ESG metrics | NO |
 | **Schema Validation** | `forge-protocol validate` | NO |
 
 ### CLAUDE.md Integration
@@ -57,6 +57,7 @@ The new CLAUDE.md template uses Claude Code's native `@import` syntax:
 
 @warmup.yaml
 @ethics.yaml
+@green.yaml
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
 ```
@@ -178,6 +179,7 @@ flowchart LR
 ```
 project/
 ├── ethics.yaml           # Required for SKYNET - Humanist Mode
+├── green.yaml            # Required for SKYNET - Green Coding
 ├── warmup.yaml           # Required - Protocol rules
 ├── sprint.yaml           # Optional - Current sprint
 ├── roadmap.yaml          # Optional - Milestones
@@ -187,11 +189,12 @@ project/
 
 ### Modular Structure (Large Projects)
 
-When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: ethics.yaml must NEVER be modularized - it stays in project root.**
+When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: ethics.yaml and green.yaml must NEVER be modularized - they stay in project root.**
 
 ```
 project/
 ├── ethics.yaml           # NEVER modularize - Priority 0
+├── green.yaml            # NEVER modularize - Priority 0.5
 ├── warmup.yaml           # Core only (~100 lines)
 ├── .forge/               # Protocol modules
 │   ├── identity.yaml     # Project identity/mission
@@ -209,6 +212,7 @@ project/
 1. `warmup.yaml` - Always read first (contains `self_healing.on_confusion`)
 2. `.forge/*.yaml` - Loaded alphabetically when referenced
 3. `ethics.yaml` - Checked at validation time (never in .forge/)
+4. `green.yaml` - Checked at validation time (never in .forge/)
 
 **Module Schemas:**
 
@@ -220,11 +224,12 @@ project/
 | quality.yaml | `tests`, `lint` | Quality gates |
 | style.yaml | `code` | Code style guidelines |
 
-**Why ethics.yaml Cannot Be Modularized:**
-- It contains `human_veto` - the emergency stop capability
+**Why ethics.yaml and green.yaml Cannot Be Modularized:**
+- ethics.yaml contains `human_veto` - the emergency stop capability
+- green.yaml contains core sustainability principles - non-negotiable for responsible AI
 - Validation MUST error if `human_veto` is missing
-- Putting ethics in a module directory risks oversight during security review
-- Ethics is Priority 0 - visibility is mandatory
+- Putting these in a module directory risks oversight during security review
+- Ethics is Priority 0, Green is Priority 0.5 - visibility is mandatory
 
 ### File Size Limits (ADR-007)
 
@@ -260,10 +265,63 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 | `self_healing.on_confusion` | WARNING if missing | Guides AI recovery after compaction |
 | Position of `on_confusion` | WARNING if >100 lines | Should be early for quick context recovery |
 
+**green.yaml (Priority 0.5 - REQUIRED):**
+
+| Section | Status | Rationale |
+|---------|--------|-----------|
+| `core_principles` | ERROR if missing | Green coding guardrails must be explicit |
+| `core_principles.local_first.enabled` | WARNING if false | Local-first is core principle |
+| `modification_rules` | WARNING if missing | Protects against tampering |
+
 **Enforcement:**
 - `forge-protocol validate` checks structure, not just schema
 - Ethics structure errors are CRITICAL - validation fails
+- Green structure errors are WARNING - proceeds with hardcoded defaults
 - Warmup structure issues are warnings - project still valid
+
+### Self-Healing Behavior (v4.1.5+)
+
+Protocol files auto-regenerate when missing during validation. Recovery over surveillance.
+
+**Auto-Regeneration Rules:**
+
+| File Missing | Action | Rationale |
+|--------------|--------|-----------|
+| ethics.yaml | AUTO-CREATE + WARN | Ethics must exist |
+| green.yaml | AUTO-CREATE + INFO | Required but less critical |
+| warmup.yaml | AUTO-CREATE + WARN | Core protocol |
+| sprint.yaml | SKIP | Optional file |
+| roadmap.yaml | SKIP | Optional file |
+| CLAUDE.md | **NEVER** | Bootstrap must be intentional |
+
+**Why CLAUDE.md is Never Auto-Created:**
+- CLAUDE.md is the "on switch" - human must add it intentionally
+- Deleting CLAUDE.md is the "off switch" - disables protocol
+- Auto-creating would enable protocol without consent
+
+**Checksum Validation (Phase 2):**
+
+```yaml
+# .forge/checksums.yaml
+files:
+  ethics.yaml:
+    sha256: "abc123..."
+    last_verified: "2025-11-29T10:00:00Z"
+```
+
+- WARN if files modified from known-good state
+- Don't block - modifications may be intentional
+- `--update-checksums` after intentional changes
+
+**CLI Flags:**
+
+| Flag | Behavior |
+|------|----------|
+| (default) | Auto-regenerate missing files |
+| `--no-regenerate` | Skip auto-creation |
+| `--update-checksums` | Update hashes after changes |
+
+See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
 
 ## Protocol Files
 
@@ -339,6 +397,67 @@ fork_requirements:
 
 See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) for full rationale.
 
+### green.yaml Schema (Required for SKYNET)
+
+The Green Coding configuration file. Defines sustainability guardrails for AI development.
+
+```yaml
+# green.yaml - Sustainability Protocol v1.0
+modification_rules:
+  immutable_without: "2 human co-signers with public justification"
+
+core_principles:
+  status: "REQUIRED"
+  local_first:
+    enabled: true
+    description: "Use CLI tools for validation, linting, formatting - not AI"
+  token_efficiency:
+    enabled: true
+    description: "Reserve AI tokens for complex reasoning, not routine tasks"
+  binary_efficiency:
+    enabled: true
+    description: "Smaller binaries = less bandwidth = less energy"
+  carbon_awareness:
+    enabled: true
+    description: "Track and minimize carbon footprint"
+
+practices:
+  rust:
+    release_profile:
+      opt_level: 3
+      lto: true
+      codegen_units: 1
+      strip: true
+      panic: "abort"
+    compression: "UPX --best --lzma"
+  general:
+    - "Local-first: No API calls for routine tasks"
+    - "Prefer compiled languages or efficient runtimes"
+    - "Minimize dependencies"
+
+anti_patterns:
+  ai_for_validation:
+    pattern: "Asking AI to check if code compiles"
+    fix: "Run cargo check, npm run lint locally"
+  bloated_dependencies:
+    pattern: "Adding packages for trivial functionality"
+    fix: "Implement simple utilities in-house"
+
+validation:
+  cli_command: "forge-protocol validate"
+  checks:
+    - "green.yaml exists"
+    - "core_principles.local_first.enabled is true"
+```
+
+**Key Points:**
+- Local-first is the core principle - CLI tools over cloud AI
+- 99.6% carbon reduction vs cloud AI for validation tasks
+- Binary efficiency reduces bandwidth and energy costs
+- Anti-patterns guide developers away from wasteful practices
+
+See [ADR-016](adr/016-green-coding-protocol.md) for full rationale.
+
 ### CLAUDE.md Schema (Required for SKYNET)
 
 The bootstrap file. Must be ultra-short to survive summarization.
@@ -346,7 +465,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 ```markdown
 # {project-name}
 
-ON CONFUSION → re-read warmup.yaml + ethics.yaml
+ON CONFUSION → re-read warmup.yaml + ethics.yaml + green.yaml
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
 ```

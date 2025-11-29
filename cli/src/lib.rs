@@ -6,6 +6,11 @@
 //! - `roadmap.yaml` - Milestone planning
 //! - `.claude_checkpoint.yaml` - Session state for self-healing
 //!
+//! # Ethics (Hardcoded)
+//!
+//! Core ethics are hardcoded into the binary and cannot be removed by deleting files.
+//! See `ethics` module for details.
+//!
 //! # Example
 //!
 //! ```no_run
@@ -24,6 +29,7 @@
 //! ```
 
 pub mod error;
+pub mod ethics;
 pub mod markdown;
 pub mod schemas;
 pub mod templates;
@@ -31,6 +37,11 @@ pub mod validator;
 
 // Re-export main types
 pub use error::{Error, Result};
+pub use ethics::{
+    check_ethics_status, red_flags, scan_directory_for_red_flags, scan_file_for_red_flags,
+    CorePrinciples, EthicsStatus, RedFlagCategory, RedFlagMatch, CORE_PRINCIPLES,
+    HUMAN_VETO_COMMANDS,
+};
 pub use markdown::{
     check_file as check_markdown_file, find_markdown_files, fix_file as fix_markdown_file,
     LintError, LintResult,
