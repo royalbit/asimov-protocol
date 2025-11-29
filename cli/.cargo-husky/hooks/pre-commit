@@ -20,4 +20,29 @@ if [ -d "$CLI_DIR" ]; then
     cargo clippy -- -D warnings
 fi
 
+cd "$REPO_ROOT"
+
+# Use local build if available, otherwise installed version
+if [ -f "$CLI_DIR/target/release/forge-protocol" ]; then
+    FP="$CLI_DIR/target/release/forge-protocol"
+elif [ -f "$CLI_DIR/target/debug/forge-protocol" ]; then
+    FP="$CLI_DIR/target/debug/forge-protocol"
+elif command -v forge-protocol &> /dev/null; then
+    FP="forge-protocol"
+else
+    echo "Warning: forge-protocol not found, skipping protocol checks"
+    echo "Pre-commit checks passed!"
+    exit 0
+fi
+
+echo "Validating protocol files..."
+$FP validate .
+
+echo "Linting documentation..."
+$FP lint-docs docs/
+
+# Self-healing: inject protocol refresh into context (ADR-006)
+# Compaction happens every ~15 min, commits are frequent - this is the refresh trigger
+$FP refresh
+
 echo "Pre-commit checks passed!"

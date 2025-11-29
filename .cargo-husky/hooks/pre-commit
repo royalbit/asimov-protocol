@@ -41,4 +41,8 @@ $FP validate .
 echo "Linting documentation..."
 $FP lint-docs docs/
 
+# Self-healing: inject protocol refresh into context (ADR-006)
+# Compaction happens every ~15 min, commits are frequent - this is the refresh trigger
+$FP refresh
+
 echo "Pre-commit checks passed!"
