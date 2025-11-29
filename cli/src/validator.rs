@@ -35,6 +35,43 @@ impl ValidationResult {
             warnings: Vec::new(),
         }
     }
+
+    /// Add a warning to the validation result
+    pub fn with_warning(mut self, warning: String) -> Self {
+        self.warnings.push(warning);
+        self
+    }
+
+    /// Add multiple warnings to the validation result
+    pub fn with_warnings(mut self, warnings: Vec<String>) -> Self {
+        self.warnings.extend(warnings);
+        self
+    }
+}
+
+/// File size limits for self-healing protocol (ADR-007)
+pub struct FileSizeLimits {
+    /// Soft limit (triggers warning)
+    pub soft_lines: usize,
+    /// Hard limit (triggers error)
+    pub hard_lines: usize,
+}
+
+impl FileSizeLimits {
+    pub const CHECKPOINT: FileSizeLimits = FileSizeLimits {
+        soft_lines: 20,
+        hard_lines: 30,
+    };
+
+    pub const CLAUDE_MD: FileSizeLimits = FileSizeLimits {
+        soft_lines: 10,
+        hard_lines: 15,
+    };
+
+    pub const WARMUP: FileSizeLimits = FileSizeLimits {
+        soft_lines: 200,
+        hard_lines: 500,
+    };
 }
 
 /// Validate a single protocol file
@@ -82,18 +119,49 @@ pub fn validate_file(path: &Path) -> Result<ValidationResult> {
         })
         .collect();
 
-    if error_messages.is_empty() {
-        Ok(ValidationResult::success(
-            path.display().to_string(),
-            schema_type.to_string(),
-        ))
+    let mut result = if error_messages.is_empty() {
+        ValidationResult::success(path.display().to_string(), schema_type.to_string())
     } else {
-        Ok(ValidationResult::failure(
+        ValidationResult::failure(
             path.display().to_string(),
             schema_type.to_string(),
             error_messages,
-        ))
+        )
+    };
+
+    // Add size warnings based on file type (ADR-007)
+    let line_count = content.lines().count();
+    let size_warnings = check_file_size(schema_type, line_count);
+    result = result.with_warnings(size_warnings);
+
+    Ok(result)
+}
+
+/// Check file size against limits and return warnings (ADR-007)
+fn check_file_size(schema_type: &str, line_count: usize) -> Vec<String> {
+    let mut warnings = Vec::new();
+
+    let limits = match schema_type {
+        "checkpoint" => Some(FileSizeLimits::CHECKPOINT),
+        "warmup" => Some(FileSizeLimits::WARMUP),
+        _ => None,
+    };
+
+    if let Some(limits) = limits {
+        if line_count > limits.hard_lines {
+            warnings.push(format!(
+                "File has {} lines, exceeds hard limit of {} lines. Consider trimming.",
+                line_count, limits.hard_lines
+            ));
+        } else if line_count > limits.soft_lines {
+            warnings.push(format!(
+                "File has {} lines, exceeds recommended {} lines. Consider trimming.",
+                line_count, limits.soft_lines
+            ));
+        }
     }
+
+    warnings
 }
 
 /// Validate all protocol files in a directory
@@ -101,13 +169,24 @@ pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
     let mut results = Vec::new();
 
     // Look for protocol files
-    let protocol_files = ["warmup.yaml", "sprint.yaml", "roadmap.yaml", "ethics.yaml"];
+    let protocol_files = [
+        "warmup.yaml",
+        "sprint.yaml",
+        "roadmap.yaml",
+        "ethics.yaml",
+        ".claude_checkpoint.yaml",
+    ];
 
     for filename in &protocol_files {
         let file_path = dir.join(filename);
         if file_path.exists() {
             results.push(validate_file(&file_path)?);
         }
+    }
+
+    // Also validate CLAUDE.md if present (size check only, not schema)
+    if let Some(claude_md_result) = validate_claude_md(dir) {
+        results.push(claude_md_result);
     }
 
     if results.is_empty() {
@@ -137,7 +216,46 @@ pub fn is_protocol_file(filename: &str) -> bool {
         && (name.contains("warmup")
             || name.contains("sprint")
             || name.contains("roadmap")
-            || name.contains("ethics"))
+            || name.contains("ethics")
+            || name.contains("checkpoint"))
+}
+
+/// Validate CLAUDE.md file for self-healing protocol (ADR-007)
+/// Returns warnings if the file is too large or missing
+pub fn validate_claude_md(dir: &Path) -> Option<ValidationResult> {
+    let claude_md_path = dir.join("CLAUDE.md");
+
+    if !claude_md_path.exists() {
+        // CLAUDE.md is optional but recommended for SKYNET MODE
+        return None;
+    }
+
+    let content = match std::fs::read_to_string(&claude_md_path) {
+        Ok(c) => c,
+        Err(_) => return None,
+    };
+
+    let line_count = content.lines().count();
+    let limits = FileSizeLimits::CLAUDE_MD;
+
+    let mut result = ValidationResult::success(
+        claude_md_path.display().to_string(),
+        "claude-md".to_string(),
+    );
+
+    if line_count > limits.hard_lines {
+        result = result.with_warning(format!(
+            "CLAUDE.md has {} lines, exceeds hard limit of {} lines. Must be ultra-short to survive compaction.",
+            line_count, limits.hard_lines
+        ));
+    } else if line_count > limits.soft_lines {
+        result = result.with_warning(format!(
+            "CLAUDE.md has {} lines, exceeds recommended {} lines. Keep it ultra-short for self-healing.",
+            line_count, limits.soft_lines
+        ));
+    }
+
+    Some(result)
 }
 
 #[cfg(test)]

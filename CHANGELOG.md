@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2025-11-29
+
+### Self-Healing Completeness (ADR-007)
+
+Implements checkpoint validation and file size limits for reliable self-healing after context compaction.
+
+### Added
+
+- **Checkpoint Schema**: JSON schema for `.claude_checkpoint.yaml` validation
+- **Checkpoint Validation**: `forge-protocol validate` now validates checkpoint files
+- **File Size Limits**: Warnings for oversized files that can harm self-healing
+  - CLAUDE.md: 10-line soft limit, 15-line hard limit
+  - .claude_checkpoint.yaml: 20-line soft limit, 30-line hard limit
+  - warmup.yaml: 200-line soft limit, 500-line hard limit
+- **CLAUDE.md Validation**: Size check for CLAUDE.md files
+- **Example Checkpoint**: `--skynet` now generates `.claude_checkpoint.yaml.example`
+- **Checkpoint Template**: New `checkpoint_template()` function
+
+### Changed
+
+- **ADR-007**: Marked as Accepted (was WIP)
+- **SPECIFICATION.md**: Added detailed checkpoint schema with size limits and trimming rules
+- **Validator**: Now includes checkpoint files in directory validation
+
+### Documentation
+
+- [ADR-007](docs/adr/007-checkpoint-size-limits.md) - Checkpoint Size Limits and Pruning (Accepted)
+- [SPECIFICATION.md](docs/SPECIFICATION.md) - Updated with checkpoint schema and file size limits
+
 ## [3.0.0] - 2025-11-28
 
 ### BREAKING: Ethics Protocol - Humanist Mode

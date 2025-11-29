@@ -1,8 +1,8 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "2.1.0"
-  last_updated: "2025-11-27"
+  current_version: "3.1.0"
+  last_updated: "2025-11-29"
   philosophy: "Vendor-neutral AI session continuity. Green by default."
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -88,11 +88,12 @@ previous:
     summary: "CLI Tooling"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v3.0.0 - HUMANIST MODE (ETHICS PROTOCOL)
+# RELEASED: v3.0.0 - HUMANIST MODE (ETHICS PROTOCOL)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
   version: "3.0.0"
-  status: planned
+  status: released
+  date: "2025-11-28"
   summary: "Humanist Mode - Ethics Protocol for Safe Autonomous AI"
   goal: ETHICAL_AUTONOMY
   priority: CRITICAL
@@ -155,23 +156,21 @@ current:
       - "README.md: Add ethics to Quick Start"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# NEXT: v3.1.0 - SELF-HEALING COMPLETENESS
+# RELEASED: v3.1.0 - SELF-HEALING COMPLETENESS
 # ═══════════════════════════════════════════════════════════════════════════════
 next:
   version: "3.1.0"
-  status: planned
+  status: released
+  date: "2025-11-29"
   summary: "Self-Healing Completeness"
   goal: SELF-HEALING
   priority: HIGH
-  adr: "ADR-007: Checkpoint Size Limits and Pruning"
-  features:
-    - "Checkpoint schema: Define .claude_checkpoint.yaml schema in SPECIFICATION.md"
-    - "Checkpoint size limits: 20-line soft cap, 30-line hard cap (ADR-007)"
-    - "Checkpoint trimming mechanism: Rolling window, trim before write (ADR-007)"
-    - "Checkpoint validation: Add checkpoint validation to CLI"
-    - "CLAUDE.md validation: Warn if CLAUDE.md missing or >10 lines"
-    - "Self-healing test: Create test scenario simulating post-compaction confusion"
-    - "Generate example checkpoint in --skynet setup"
+  adr: "ADR-007: Checkpoint Size Limits and Pruning (Accepted)"
+  highlights:
+    - "Checkpoint JSON schema for .claude_checkpoint.yaml validation"
+    - "File size limits: CLAUDE.md (10/15), checkpoint (20/30), warmup (200/500)"
+    - "CLI validates checkpoint files and warns on oversized files"
+    - "Example checkpoint generated in --skynet setup"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FUTURE MILESTONES - Goal-Aligned (HIGH PRIORITY)
