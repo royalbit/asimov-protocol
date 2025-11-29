@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.1.1"
+  current_version: "4.1.2"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,43 +48,57 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.0 - HARDCODED ETHICS (ADR-011)
+# CURRENT: v4.1.2 - GREEN CODING PROTOCOL SEPARATION (ADR-016)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.1.0"
+  version: "4.1.2"
   status: released
   date: "2025-11-29"
-  summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
-  goal: ETHICAL_AUTONOMY
-  priority: CRITICAL
+  summary: "Green Coding Protocol Separation - Parity with Ethics"
+  goal: GREEN_CODING
+  priority: HIGH
 
   rationale: |
-    Core ethics moved from removable ethics.yaml into CLI binary.
-    Raises bypass bar from "delete a file" to "rebuild the binary".
-    Makes ethics removal visible and intentional.
+    Green coding deserves the same treatment as ethics:
+    - Dedicated protocol file (green.yaml)
+    - Validation at session start
+    - Modification rules requiring co-signers
+    - Clear ownership and documentation
 
   deliverables:
-    cli_changes:
-      - "[x] cli/src/ethics.rs - Core ethics module"
-      - "[x] CORE_PRINCIPLES hardcoded (financial, physical, privacy, deception)"
-      - "[x] RED_FLAGS - 27+ patterns across 4 categories"
-      - "[x] --ethics-scan flag for red flag detection"
-      - "[x] Ethics status in validation output (HARDCODED/EXTENDED)"
-      - "[x] Enhanced refresh command with ethics reminder"
+    protocol_files:
+      - "[x] green.yaml - Dedicated green coding protocol file"
+      - "[x] ADR-016: Green Coding Protocol Separation"
+      - "[x] warmup.yaml updated with step_0b_green_validation"
+      - "[x] CLAUDE.md updated with @green.yaml import"
 
     documentation:
-      - "[x] ADR-011: Hardcoded Ethics - Accepted"
+      - "[x] ADR-016: Green Coding Protocol - Accepted"
       - "[x] CHANGELOG.md updated"
-
-    testing:
-      - "[x] 18 new unit tests for ethics module"
-      - "[x] All 103 tests passing"
-      - "[x] Zero clippy warnings"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.1.1"
+    status: released
+    date: "2025-11-29"
+    summary: "Ethics Validation at Session Start"
+    highlights:
+      - "step_0_ethics_validation in session initialization"
+      - "Halt session if ethics validation fails"
+      - "Regenerate ethics.yaml if missing"
+
+  - version: "4.1.0"
+    status: released
+    date: "2025-11-29"
+    summary: "Hardcoded Ethics (ADR-011)"
+    highlights:
+      - "cli/src/ethics.rs with hardcoded CORE_PRINCIPLES"
+      - "RED_FLAGS - 27+ patterns across 4 categories"
+      - "--ethics-scan flag for red flag detection"
+      - "18 new unit tests"
+
   - version: "4.0.2"
     status: released
     date: "2025-11-29"
@@ -154,16 +168,17 @@ future:
   # PRIORITY ORDER: Matches core values (0-5)
   # ═══════════════════════════════════════════════════════════════════════════
   # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (RELEASED)
-  # 1.5 ANTI-SYCOPHANCY → v4.1.5 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
-  # 1.  ANTI-HALLUCINATION → v4.4.0 Schema Standardization
-  # 5.  GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
+  # 0.5 GREEN_CODING → v4.1.2 Green Protocol Separation (RELEASED)
+  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Directory Restructure (HIGH - ADR-017)
+  # 1.5 ANTI-SYCOPHANCY → v4.1.6 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
+  # 5.  GREEN_METRICS → v4.2.0 Hardcoded Green Coding Metrics (HIGH - ADR-012)
   # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
   # ═══════════════════════════════════════════════════════════════════════════
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.5: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5
+  # v4.1.6: ANTI-SYCOPHANCY PROTOCOL (ADR-015) - PRIORITY 1.5
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.5"
+  - version: "4.1.6"
     status: planned
     summary: "Anti-Sycophancy Protocol - Truth Over Comfort"
     goal: ANTI-SYCOPHANCY
@@ -230,6 +245,47 @@ future:
       - "Ethics context as MCP resource"
       - "Sprint boundaries as MCP resource"
       - "Green coding metrics as MCP resource"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v4.1.5: PROTOCOL DIRECTORY RESTRUCTURE (ADR-017) - PRIORITY 1
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "4.1.5"
+    status: planned
+    summary: "Protocol Directory Restructure - Clean Root, Protected Core"
+    goal: ANTI-HALLUCINATION
+    priority: HIGH
+    core_value: 1
+    adr: "docs/adr/017-protocol-directory-restructure.md"
+    description: |
+      Move all protocol files into a hidden `.forge/` directory.
+      Cleaner root directory. Auto-creation of missing files.
+      Anti-tampering protection for all protocol files including warmup.
+    features:
+      - ".forge/ directory for all protocol files"
+      - "Auto-creation of missing files on validation"
+      - "Checksum-based tampering detection"
+      - "Warmup anti-tampering (signed/verified)"
+      - "Migration command for existing projects"
+    structure:
+      current:
+        - "ethics.yaml (root)"
+        - "green.yaml (root)"
+        - "warmup.yaml (root)"
+        - "sprint.yaml (root)"
+        - "roadmap.yaml (root)"
+      proposed:
+        - ".forge/ethics.yaml"
+        - ".forge/green.yaml"
+        - ".forge/warmup.yaml"
+        - ".forge/sprint.yaml"
+        - ".forge/roadmap.yaml"
+        - ".forge/checksums.yaml (tamper detection)"
+    rationale: |
+      1. Cleaner root directory - protocol files are implementation details
+      2. Hidden directory signals "managed by tool, don't edit manually"
+      3. Single directory for backup/restore/version control
+      4. Enables checksums for ALL protocol files, not just ethics/green
+      5. CLAUDE.md stays in root (bootstrap must be visible)
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.4.0: SCHEMA STANDARDIZATION - PRIORITY 1

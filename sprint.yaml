@@ -11,54 +11,64 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.0 - HARDCODED ETHICS (ADR-011)
+# CURRENT: v4.1.2 - GREEN CODING PROTOCOL SEPARATION (ADR-016)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v4.1.0 - Hardcoded Ethics"
+  current: "v4.1.2 - Green Coding Protocol Separation"
   started: "2025-11-29"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # HARDCODED ETHICS (ADR-011)
+  # GREEN CODING PROTOCOL SEPARATION (ADR-016)
   # ─────────────────────────────────────────────────────────────────────────────
-  # Core ethics moved from removable ethics.yaml into CLI binary.
-  # Raises bypass bar from "delete a file" to "rebuild the binary".
-  # Makes ethics removal visible and intentional.
+  # Green coding now has its own dedicated protocol file (green.yaml).
+  # Achieves parity with ethics protocol structure.
+  # Includes validation at session start and anti-tampering rules.
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Create cli/src/ethics.rs with hardcoded CORE_PRINCIPLES"
-    - "[x] Implement RED_FLAGS (27+ patterns, 4 categories)"
-    - "[x] Add --ethics-scan flag for red flag detection"
-    - "[x] Update validation output (HARDCODED/EXTENDED status)"
-    - "[x] Update refresh command with ethics reminder"
-    - "[x] Wire up ethics module in lib.rs"
-    - "[x] Add 18 new unit tests"
+    - "[x] Create ADR-016 for Green Coding Protocol separation"
+    - "[x] Create green.yaml protocol file"
+    - "[x] Update warmup.yaml with step_0b_green_validation"
+    - "[x] Update CLAUDE.md template to include @green.yaml"
+    - "[x] Update SPECIFICATION.md with green.yaml schema"
+    - "[x] Update roadmap.yaml with future v4.1.5 directory restructure"
     - "[x] Update CHANGELOG.md"
-    - "[x] Bump version to 4.1.0"
-    - "[x] Update roadmap.yaml"
-    - "[x] Update ADR-011 status to Accepted"
-    - "[x] Run tests and clippy (103 tests, 0 warnings)"
+    - "[x] Bump version to 4.1.2"
 
   deliverables:
-    - "cli/src/ethics.rs - Core ethics module (300+ lines)"
-    - "CORE_PRINCIPLES hardcoded (financial, physical, privacy, deception)"
-    - "RED_FLAGS - 27 patterns across 4 categories"
-    - "--ethics-scan CLI flag"
-    - "Ethics status in validation output"
-    - "Enhanced refresh command"
+    - "green.yaml - Dedicated green coding protocol file"
+    - "ADR-016: Green Coding Protocol - Accepted"
+    - "step_0b_green_validation in session initialization"
+    - "CLAUDE.md imports @green.yaml"
+    - "v4.1.5 roadmap: Protocol directory restructure (.forge/)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINT (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v4.0.0 - Claude Code Native Integration"
+  sprint: "v4.1.1 - Ethics Validation at Session Start"
   status: done
-  date: "2025-11-28"
+  date: "2025-11-29"
   highlights:
-    - "Strategic pivot to integrate with Claude Code 2.0"
-    - "CLAUDE.md @import syntax"
-    - "Deprecated cross-session features for native alternatives"
+    - "step_0_ethics_validation in session initialization"
+    - "Halt session if ethics validation fails"
+    - "Regenerate ethics.yaml if missing"
+
+older_sprints:
+  - sprint: "v4.1.0 - Hardcoded Ethics (ADR-011)"
+    date: "2025-11-29"
+    highlights:
+      - "cli/src/ethics.rs with CORE_PRINCIPLES"
+      - "RED_FLAGS - 27+ patterns"
+      - "--ethics-scan flag"
+
+  - sprint: "v4.0.0 - Claude Code Native Integration"
+    date: "2025-11-28"
+    highlights:
+      - "Strategic pivot to integrate with Claude Code 2.0"
+      - "CLAUDE.md @import syntax"
+      - "Deprecated cross-session features for native alternatives"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SESSION PHASES

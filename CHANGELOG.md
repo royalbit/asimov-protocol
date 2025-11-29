@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.2] - 2025-11-29
+
+### Added: Green Coding Protocol Separation (ADR-016)
+
+Green Coding now has its own dedicated protocol file (`green.yaml`), achieving parity with Ethics.
+
+#### New Protocol File: `green.yaml`
+
+- **Core Principles**: Local-first, token efficiency, binary efficiency, carbon awareness
+- **Modification Rules**: Requires 2 human co-signers (same as ethics.yaml)
+- **Practices by Language**: Rust, Python, JavaScript, Go optimization guidelines
+- **Anti-Patterns**: Common wasteful practices to avoid
+- **Metrics**: What to measure per session, per release, and cumulatively
+
+#### Updated Files
+
+- **warmup.yaml**: Added `step_0b_green_validation` in session initialization
+  - Validates green.yaml after ethics validation
+  - Warns but proceeds with defaults if green.yaml missing (unlike ethics which halts)
+- **CLAUDE.md**: Now imports `@green.yaml` alongside ethics and warmup
+- **SPECIFICATION.md**: Added green.yaml schema, structure validation, file references
+
+#### Design Decisions
+
+- **Priority 0.5**: Green validation runs after ethics (Priority 0), before context loading
+- **Warn, don't block**: Missing green.yaml proceeds with hardcoded defaults (unlike ethics)
+- **Never modularize**: green.yaml stays in project root (like ethics.yaml)
+- **Consistent architecture**: All core protocols now have dedicated files
+
+See [ADR-016](docs/adr/016-green-coding-protocol.md) for full rationale.
+
 ## [4.1.1] - 2025-11-29
 
 ### Added: Ethics Validation at Session Start
