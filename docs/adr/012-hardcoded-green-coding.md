@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Proposed (Target: v4.2.0)
 
 ## Date
 

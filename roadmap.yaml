@@ -130,37 +130,30 @@ previous:
 # ═══════════════════════════════════════════════════════════════════════════════
 future:
 
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.0: MCP SERVER MODE
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.0"
-    status: planned
-    summary: "MCP Server Mode"
-    goal: VENDOR_NEUTRALITY
-    priority: HIGH
-    description: |
-      Forge Protocol as MCP server. Provides ethics/sprint context via MCP.
-      Works with Claude, OpenAI, Google (all adopted MCP).
-      TRUE vendor neutrality - not just file format.
-    features:
-      - "MCP server implementation in Rust"
-      - "Ethics context as MCP resource"
-      - "Sprint boundaries as MCP resource"
-      - "Green coding metrics as MCP resource"
+  # ═══════════════════════════════════════════════════════════════════════════
+  # PRIORITY ORDER: Matches core values (0-5)
+  # ═══════════════════════════════════════════════════════════════════════════
+  # 0. ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (CRITICAL)
+  # 1. ANTI-HALLUCINATION → v4.4.0 Schema Standardization
+  # 5. GREEN_CODING → v4.2.0 Hardcoded Green Coding (HIGH)
+  # +  VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
+  # ═══════════════════════════════════════════════════════════════════════════
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.2.0: HARDCODED ETHICS (ADR-011)
+  # v4.1.0: HARDCODED ETHICS (ADR-011) - PRIORITY 0
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.2.0"
+  - version: "4.1.0"
     status: planned
     summary: "Hardcoded Ethics - From Social Contract to Protocol Core"
     goal: ETHICAL_AUTONOMY
     priority: CRITICAL
+    core_value: 0
     adr: "docs/adr/011-hardcoded-ethics.md"
     description: |
       Move core ethics from removable ethics.yaml into CLI binary.
       Makes ethics harder to remove for non-technical users.
       Raises the bar from "delete a file" to "rebuild the binary".
+      MUST come first - ethics is Priority 0.
     features:
       - "Core ethics hardcoded in src/ethics.rs"
       - "Red flag detection built into validate"
@@ -169,13 +162,14 @@ future:
       - "ethics.yaml remains for extensions only"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.3.0: HARDCODED GREEN CODING (ADR-012)
+  # v4.2.0: HARDCODED GREEN CODING (ADR-012) - PRIORITY 5
   # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.3.0"
+  - version: "4.2.0"
     status: planned
     summary: "Hardcoded Green Coding - Sustainability as Protocol Core"
     goal: GREEN_CODING
     priority: HIGH
+    core_value: 5
     adr: "docs/adr/012-hardcoded-green-coding.md"
     description: |
       Build green coding measurement into CLI binary.
@@ -189,13 +183,33 @@ future:
       - "Cumulative project carbon/cost tracking"
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.4.0: SCHEMA STANDARDIZATION
+  # v4.3.0: MCP SERVER MODE - VENDOR NEUTRALITY
+  # ─────────────────────────────────────────────────────────────────────────────
+  - version: "4.3.0"
+    status: planned
+    summary: "MCP Server Mode"
+    goal: VENDOR_NEUTRALITY
+    priority: HIGH
+    description: |
+      Forge Protocol as MCP server. Provides ethics/sprint context via MCP.
+      Works with Claude, OpenAI, Google (all adopted MCP).
+      TRUE vendor neutrality - not just file format.
+      Enables wider adoption beyond Claude Code.
+    features:
+      - "MCP server implementation in Rust"
+      - "Ethics context as MCP resource"
+      - "Sprint boundaries as MCP resource"
+      - "Green coding metrics as MCP resource"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # v4.4.0: SCHEMA STANDARDIZATION - PRIORITY 1
   # ─────────────────────────────────────────────────────────────────────────────
   - version: "4.4.0"
     status: planned
     summary: "Schema Standardization"
     goal: ANTI-HALLUCINATION
     priority: MEDIUM
+    core_value: 1
     description: |
       Formalize schemas for remaining protocol files.
       Focus on ethics.yaml and warmup.yaml validation.
@@ -208,21 +222,31 @@ future:
 # ═══════════════════════════════════════════════════════════════════════════════
 # DEPRECATED (Replaced by Claude Code Native Features)
 # ═══════════════════════════════════════════════════════════════════════════════
+#
+# IMPORTANT: These features are deprecated, NOT removed from SKYNET MODE.
+# Claude Code's native features ARE compatible with autonomous development.
+# We stopped building duplicates - the native implementations are better.
+#
+# SKYNET MODE still works. It just uses Claude Code native features now.
+#
 deprecated:
   session_continuity:
     was: "v3.3.0 - Multi-Session Continuity"
     replaced_by: "Claude Code --continue/--resume"
     reason: "Native feature is better integrated"
+    skynet_compatible: true
 
   checkpoint_validation:
     was: ".claude_checkpoint.yaml schema and validation"
     replaced_by: "Claude Code /rewind checkpoints"
     reason: "Native checkpoints track code + conversation state"
+    skynet_compatible: true
 
   session_handoff:
     was: "Session-end command and handoff workflows"
     replaced_by: "Claude Code session persistence"
     reason: "Native session management"
+    skynet_compatible: true
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG - Nice to Have
