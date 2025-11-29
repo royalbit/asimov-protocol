@@ -163,6 +163,59 @@ MD024:
   siblings_only: true  # Allow duplicate headings in sections
 ```
 
+## Mermaid Diagrams
+
+**Use Mermaid, not ASCII art.** GitHub renders Mermaid natively.
+
+### Why Mermaid Over ASCII
+
+| ASCII Art | Mermaid |
+|-----------|---------|
+| Breaks on different fonts | Renders consistently |
+| Doesn't scale or reflow | Responsive |
+| No light/dark theme support | Auto-themes |
+| Hard to maintain | Easy to edit |
+
+### Critical Rule: Use Vanilla Mermaid
+
+**DO NOT customize themes or colors** - it breaks GitHub's auto-theming.
+
+```yaml
+# WRONG - breaks on light/dark themes
+%%{init: {'theme': 'dark'}}%%
+
+# WRONG - custom colors
+classDef myStyle fill:#90EE90
+
+# CORRECT - vanilla Mermaid
+graph LR
+  A[Box A] --> B[Box B]
+```
+
+GitHub auto-detects user's theme preference. Any customization overrides this.
+
+### Diagram Types
+
+| Type | Use For | Example |
+|------|---------|---------|
+| `graph LR/TB` | Architecture, data flow | System diagrams |
+| `sequenceDiagram` | Workflows, interactions | API flows |
+| `classDiagram` | Data models, types | Type hierarchies |
+| `erDiagram` | Data relationships | Database schemas |
+
+### Best Practices
+
+- Max 15-20 elements per diagram
+- Clear, descriptive labels
+- Use subgraphs for grouping
+- Comments with `%%`
+
+### Resources
+
+- [Mermaid Docs](https://mermaid.js.org/)
+- [Live Editor](https://mermaid.live/)
+- [GitHub Blog](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/)
+
 ## Summary
 
 ```bash
