@@ -450,21 +450,21 @@ See [ADR-009](docs/adr/009-claude-code-native-integration.md) for the full analy
 
 Use Claude Code's native features:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    SELF-HEALING v4.0.0                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  CLAUDE.md (with @imports)   Claude Code Native Features        │
-│  ┌─────────────────────┐     ┌─────────────────────┐           │
-│  │ @warmup.yaml        │     │ /rewind             │           │
-│  │ @ethics.yaml        │     │   ↳ Restore code    │           │
-│  │                     │     │   ↳ Restore convo   │           │
-│  │ Rules: 4hr max...   │     │ --continue          │           │
-│  └─────────────────────┘     │   ↳ Resume session  │           │
-│                              └─────────────────────┘           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph memory["CLAUDE.md (Memory)"]
+        A["@warmup.yaml"]
+        B["@ethics.yaml"]
+        C["Rules: 4hr max..."]
+    end
+    subgraph native["Claude Code Native"]
+        D["/rewind"]
+        E["--continue"]
+        F["--resume"]
+    end
+    memory --> |"Context"| native
+    D --> |"Restore"| G["Code + Conversation"]
+    E --> |"Resume"| H["Last Session"]
 ```
 
 ### Implementation (v4.0.0)

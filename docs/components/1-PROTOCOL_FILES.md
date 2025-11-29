@@ -173,31 +173,18 @@ forge-protocol validate warmup.yaml
 4. **After Compaction**: AI re-reads from disk (self-healing)
 5. **Session End**: AI follows release discipline
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    AI Session                           │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  "run warmup"                                           │
-│       │                                                 │
-│       ▼                                                 │
-│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐   │
-│  │ warmup.yaml │ + │ sprint.yaml │ + │roadmap.yaml │   │
-│  │   (HOW)     │   │   (WHEN)    │   │   (WHAT)    │   │
-│  └──────┬──────┘   └──────┬──────┘   └──────┬──────┘   │
-│         │                 │                 │          │
-│         └─────────────────┼─────────────────┘          │
-│                           │                            │
-│                           ▼                            │
-│                  ┌─────────────────┐                   │
-│                  │ AI understands: │                   │
-│                  │ - Project rules │                   │
-│                  │ - Quality gates │                   │
-│                  │ - Current task  │                   │
-│                  │ - Boundaries    │                   │
-│                  └─────────────────┘                   │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph session["AI Session"]
+        RW["'run warmup'"]
+        WU["warmup.yaml<br/>(HOW)"]
+        SP["sprint.yaml<br/>(WHEN)"]
+        RM["roadmap.yaml<br/>(WHAT)"]
+        AI["AI understands:<br/>• Project rules<br/>• Quality gates<br/>• Current task<br/>• Boundaries"]
+
+        RW --> WU & SP & RM
+        WU & SP & RM --> AI
+    end
 ```
 
 ## Best Practices
