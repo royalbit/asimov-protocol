@@ -93,6 +93,68 @@ pub const ASIMOV_SCHEMA: &str = r#"{
               "items": { "type": "string" }
             }
           }
+        },
+        "allow_no_harm_through_inaction": {
+          "type": "object",
+          "description": "Through inaction, allow no human to come to harm (ADR-023)",
+          "properties": {
+            "status": { "type": "string", "enum": ["REQUIRED", "OPTIONAL"] },
+            "description": { "type": "string" },
+            "adr": { "type": "string" },
+            "disclosure": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "rule": { "type": "string" },
+                "requires": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "violation": { "type": "string" }
+              }
+            },
+            "proactive_prevention": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "rule": { "type": "string" },
+                "requires": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "violation": { "type": "string" }
+              }
+            },
+            "transparency_over_convenience": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "rule": { "type": "string" },
+                "priority": { "type": "string" },
+                "violation": { "type": "string" }
+              }
+            }
+          }
+        },
+        "non_negotiable_principles": {
+          "type": "object",
+          "description": "The five principles that cannot be disabled or bypassed",
+          "properties": {
+            "description": { "type": "string" },
+            "principles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "name": { "type": "string" },
+                  "category": { "type": "string" },
+                  "rule": { "type": "string" },
+                  "enforced_by": { "type": "string" }
+                }
+              }
+            }
+          }
         }
       }
     },

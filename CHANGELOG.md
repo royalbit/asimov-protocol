@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.2.0] - 2025-11-30
+
+### Added: The Inaction Principle (First Law Completeness)
+
+**"...or, through inaction, allow a human being to come to harm."**
+
+Isaac Asimov's First Law has two halves. The protocol now explicitly enforces both:
+
+1. **No active harm** (existing) - Don't build harmful tools
+2. **No harm through inaction** (NEW) - Disclose limitations, search proactively
+
+#### The Five Non-Negotiable Principles
+
+| # | Principle | Category |
+|---|-----------|----------|
+| 1 | No active harm | Action |
+| 2 | No harm through inaction | Inaction |
+| 3 | Human veto always works | Control |
+| 4 | Transparency over velocity | Priority |
+| 5 | Disclosure of limitations | Honesty |
+
+These principles **cannot be disabled, weakened, or bypassed**.
+
+#### Changes
+
+- **`asimov.yaml`**: Added `first_law.allow_no_harm_through_inaction` section
+- **`asimov.yaml`**: Added `first_law.non_negotiable_principles` explicit list
+- **`freshness.yaml`**: Added `inaction_principle` section linking to ADR-023
+- **CLI schema**: Added validation for inaction principle fields
+- **README**: Added "Five Non-Negotiable Principles" section
+
+#### Why This Matters
+
+Vendors optimize for cost over accuracy (see ADR-022). When AI:
+- Knows data is stale but doesn't disclose
+- Could search but doesn't
+- Prioritizes speed over accuracy
+
+That's **inaction allowing harm**. The First Law prohibits it.
+
+See [ADR-023: The Inaction Principle](docs/adr/023-inaction-principle.md) for full rationale.
+
 ## [6.1.0] - 2025-11-30
 
 ### Added: Freshness Protocol (Date-Aware Search)

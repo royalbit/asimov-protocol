@@ -11,46 +11,48 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v6.1.0 - FRESHNESS PROTOCOL (ADR-022)
+# CURRENT: v6.2.0 - INACTION PRINCIPLE (ADR-023)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v6.1.0 - Freshness Protocol (Date-Aware Search)"
+  current: "v6.2.0 - Inaction Principle (First Law Completeness)"
   started: "2025-11-30"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # FRESHNESS PROTOCOL (ADR-022)
+  # INACTION PRINCIPLE (ADR-023)
   # ─────────────────────────────────────────────────────────────────────────────
-  # Stale data ≠ Hallucination. Different problem, different solution.
-  # Users misattribute outdated info as "hallucination" - the fix is search.
+  # "...or, through inaction, allow a human being to come to harm."
+  # The second half of the First Law - now explicitly enforced.
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Create ADR-022: Date-Aware Search Protocol"
-    - "[x] Create freshness.yaml with model cutoffs and search rules"
-    - "[x] Update SPECIFICATION.md with freshness protocol"
-    - "[x] Verify sources (Anthropic margins, Claude docs, Issue #600)"
-    - "[x] Bump cli/Cargo.toml version to 6.1.0"
+    - "[x] Create ADR-023: The Inaction Principle"
+    - "[x] Update asimov.yaml with allow_no_harm_through_inaction section"
+    - "[x] Update asimov.yaml with non_negotiable_principles list"
+    - "[x] Update freshness.yaml to reference inaction principle"
+    - "[x] Update CLI schema for inaction validation"
+    - "[x] Update README with Five Non-Negotiable Principles"
+    - "[x] Bump cli/Cargo.toml version to 6.2.0"
     - "[x] Update CHANGELOG.md"
     - "[x] Update roadmap.yaml"
     - "[x] Run tests and validate"
 
   deliverables:
-    - "ADR-022: Date-Aware Search Protocol (with verified sources)"
-    - "freshness.yaml: Model cutoffs, always-search keywords, volatile domains"
-    - "CHANGELOG.md: v6.1.0 entry"
+    - "ADR-023: The Inaction Principle (First Law Completeness)"
+    - "asimov.yaml: allow_no_harm_through_inaction + non_negotiable_principles"
+    - "Five Non-Negotiable Principles: action, inaction, control, priority, honesty"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINTS (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v6.0.0 - Protocol Directory Structure (.asimov/)"
+  sprint: "v6.1.0 - Freshness Protocol (Date-Aware Search)"
   status: done
   date: "2025-11-30"
   highlights:
-    - "All protocol files moved to .asimov/ directory"
-    - "CLI looks in .asimov/ first, falls back to root"
-    - "CLAUDE.md @imports updated to @.asimov/ prefix"
+    - "ADR-022: Date-Aware Search Protocol"
+    - "freshness.yaml with model cutoffs and search rules"
+    - "Stale data ≠ Hallucination (verified sources)"
 
 older_sprints:
   - sprint: "v4.1.5 - Protocol Self-Healing (ADR-017)"
