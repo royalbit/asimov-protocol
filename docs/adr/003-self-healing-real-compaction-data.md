@@ -68,7 +68,7 @@ Time     Commit   Description
 20:11    be6f91a  docs: Honest vendor compatibility
 20:17    733ba83  docs: Add Vendor Implementation Guide
 20:25    31be9a0  feat: Add --skynet flag (v1.4.0)
-20:36    b8e421a  docs: Refactor ASIMOV MODE documentation
+20:36    b8e421a  docs: Refactor ROYALBIT ASIMOV documentation
 20:39    b3e8978  docs: Update presentation
 ```
 
@@ -240,4 +240,4 @@ ls .forge/*.yaml
 ### Internal Documentation
 
 - [ADR-002: Self-Healing Protocol](002-self-healing-protocol.md) - Superseded assumptions
-- [ASIMOV MODE Overview](../ASIMOV_MODE.md) - System architecture
+- [ROYALBIT ASIMOV Overview](../ASIMOV_MODE.md) - System architecture

@@ -21,7 +21,7 @@ use std::process::ExitCode;
 #[command(long_about = "RoyalBit Asimov CLI - The Three Laws of Robotics
 
 Validates protocol files against the RoyalBit Asimov specification:
-  - asimov.yaml  - The Three Laws (required in ASIMOV MODE)
+  - asimov.yaml  - The Three Laws (required)
   - warmup.yaml  - Session bootstrap (required)
   - sprint.yaml  - Active work tracking (optional)
   - roadmap.yaml - Milestone planning (optional)
@@ -37,11 +37,11 @@ EXAMPLES:
   asimov init --type flutter         # Generate Flutter-specific warmup.yaml
   asimov init --type docs            # Generate docs/architecture warmup.yaml
   asimov init --full                 # Generate all protocol files
-  asimov init --asimov               # Full ASIMOV MODE setup
+  asimov init --asimov               # Full RoyalBit Asimov setup
 
 TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
 
-ASIMOV MODE (--asimov): Full autonomous session setup with The Three Laws
+RoyalBit Asimov (--asimov): Full autonomous session setup with The Three Laws
   - asimov.yaml (The Three Laws - required, cannot opt out)
   - All protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
   - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
@@ -99,7 +99,7 @@ enum Commands {
         #[arg(long)]
         full: bool,
 
-        /// Full ASIMOV MODE setup (protocol files + CLAUDE.md + hooks + .gitignore)
+        /// Full RoyalBit Asimov setup (protocol files + CLAUDE.md + hooks + .gitignore)
         #[arg(long)]
         asimov: bool,
 
@@ -167,7 +167,10 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
         "{}",
         "═══════════════════════════════════════════════════════════════════════".bright_cyan()
     );
-    println!("{}", "🤖 ASIMOV MODE - THE THREE LAWS".bold().bright_cyan());
+    println!(
+        "{}",
+        "🤖 ROYALBIT ASIMOV - THE THREE LAWS".bold().bright_cyan()
+    );
     println!(
         "{}",
         "═══════════════════════════════════════════════════════════════════════".bright_cyan()
@@ -545,7 +548,7 @@ fn cmd_init(
 
     println!("{}", "RoyalBit Asimov Init".bold().green());
     if asimov {
-        println!("{}", "  ASIMOV MODE - The Three Laws".bold().cyan());
+        println!("{}", "  RoyalBit Asimov - The Three Laws".bold().cyan());
     }
     println!();
 
@@ -647,7 +650,7 @@ fn cmd_init(
         }
     }
 
-    // ASIMOV MODE: Generate hooks and update .gitignore
+    // RoyalBit Asimov: Generate hooks and update .gitignore
     if asimov {
         println!();
 
@@ -760,7 +763,7 @@ fn cmd_init(
             if !content.is_empty() && !content.ends_with('\n') {
                 content.push('\n');
             }
-            content.push_str("\n# ASIMOV MODE checkpoint (session-specific)\n");
+            content.push_str("\n# RoyalBit Asimov checkpoint (session-specific)\n");
             content.push_str(checkpoint_entry);
             content.push('\n');
 

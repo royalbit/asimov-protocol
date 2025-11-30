@@ -1,5 +1,5 @@
 #!/bin/bash
-# Asimov Protocol pre-commit hook - mirrors CI checks
+# RoyalBit Asimov pre-commit hook - mirrors CI checks
 # Auto-installed by cargo-husky on `cargo test`
 
 set -e

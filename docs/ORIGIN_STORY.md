@@ -71,7 +71,7 @@ Final clarification: Asimov isn't a single protocol - it's a **suite** of protoc
 | sycophancy.yaml | Truth over comfort |
 | freshness.yaml | Data currency |
 
-**Asimov Protocol** (singular) was misleading. It's **RoyalBit Asimov** - a suite of protocols for ethical AI autonomy.
+**"The protocol"** (singular) was misleading. It's **RoyalBit Asimov** - a suite of protocols for ethical AI autonomy.
 
 ### Phase 8: The Inaction Principle (November 2025)
 

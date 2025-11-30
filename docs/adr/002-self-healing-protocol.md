@@ -194,6 +194,6 @@ grep -q "claude_checkpoint" .gitignore && echo "✓ checkpoint in .gitignore"
 
 ### Internal Documentation
 
-- [ASIMOV MODE Overview](../ASIMOV_MODE.md) - Complete autonomous AI development system
+- [ROYALBIT ASIMOV Overview](../ASIMOV_MODE.md) - Complete autonomous AI development system
 - [Self-Healing Component](../components/4-SELF_HEALING.md) - Self-healing specification
 - [Setup Guide](../SETUP.md) - Per-project-type setup

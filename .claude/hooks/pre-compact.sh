@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ASIMOV PROTOCOL - PreCompact Hook
+# ROYALBIT ASIMOV - PreCompact Hook
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: Before context compaction (auto or manual)
@@ -17,7 +17,7 @@
 set -e
 
 cat << 'EOF'
-🔄 ASIMOV PROTOCOL REFRESH (Pre-Compaction)
+🔄 ROYALBIT ASIMOV REFRESH (Pre-Compaction)
 
 ══════════════════════════════════════════════════════════════════════════════
 CONTEXT REFRESH - Injecting protocol rules before compaction

@@ -172,7 +172,7 @@ flowchart TD
 ### Cost Comparison
 
 ```
-ASIMOV PROTOCOL (local validation):
+ROYALBIT ASIMOV (local validation):
   cargo clippy: $0.00 (runs on your machine)
   cargo test:   $0.00 (runs on your machine)
 
@@ -303,7 +303,7 @@ Sycophancy leads to:
 ### Code-Only Comparison
 
 ```
-ASIMOV PROTOCOL:
+ROYALBIT ASIMOV:
   Code output: 41,653 LOC
   Hours: 248
   Velocity: 168 LOC/hour
@@ -320,7 +320,7 @@ MULTIPLIER (code only): 8.4x
 ### Full Product Comparison
 
 ```
-ASIMOV PROTOCOL:
+ROYALBIT ASIMOV:
   Total output: 213,518 lines
   Hours: 248
   Velocity: 861 lines/hour
@@ -505,7 +505,7 @@ HARDWARE PENALTY PAID: 35.2 hours extra on ancient hardware!
 ### Hardware-Adjusted Final Calculation
 
 ```
-ASIMOV PROTOCOL (on corporate i9 hardware):
+ROYALBIT ASIMOV (on corporate i9 hardware):
   Actual time on kveldulf:     248 hours
   Hardware penalty removed:    -35 hours
   ─────────────────────────────────────────

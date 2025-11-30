@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/crates/d/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
 [![License](https://img.shields.io/crates/l/royalbit-asimov.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 
-> 🤖 **ASIMOV MODE** | Claude (Opus 4.5) - Principal Autonomous AI
+> 🤖 **RoyalBit Asimov** | Claude (Opus 4.5) - Principal Autonomous AI
 >
 > Zero hallucinations. The Three Laws in source code.
 
@@ -24,7 +24,7 @@ second_law:  # Obey humans (human_veto, transparency_over_velocity)
 third_law:   # Self-preserve (bounded_sessions, self_healing)
 ```
 
-**ASIMOV MODE requires Claude Code.** Protocol files work anywhere (paste them).
+**RoyalBit Asimov requires Claude Code.** Protocol files work anywhere (paste them).
 
 📖 **[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI, hardcoded it into the binary, and made tampering require public commits
 
@@ -79,7 +79,7 @@ AI hallucinates. It invents project conventions. It forgets rules mid-session. I
 
 A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from memory. From disk.
 
-*The file format works with any AI (paste it). ASIMOV MODE's magic requires Claude Code.*
+*The file format works with any AI (paste it). RoyalBit Asimov's magic requires Claude Code.*
 
 ## Core Principles
 
@@ -101,7 +101,7 @@ This is the filter for scope creep. If a proposed feature doesn't directly serve
 
 **Power creates responsibility. Autonomy requires ethics.**
 
-ASIMOV MODE gives AI significant autonomous power, bounded by Isaac Asimov's Three Laws:
+RoyalBit Asimov gives AI significant autonomous power, bounded by Isaac Asimov's Three Laws:
 
 ```yaml
 # asimov.yaml - The Three Laws of Robotics
@@ -272,7 +272,7 @@ Generate templates:
 asimov init                  # Generate warmup.yaml (generic)
 asimov init --type rust      # Generate Rust-specific template
 asimov init --full           # Generate all three protocol files
-asimov init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
+asimov init --asimov         # Full RoyalBit Asimov setup (Three Laws + hooks)
 ```
 
 Lint documentation:
@@ -300,9 +300,9 @@ asimov refresh --verbose     # Include quality gates from warmup.yaml
 
 ## Compatibility (The Hard Truth)
 
-**ASIMOV MODE works with Claude Code. It will probably never work with other AI tools.**
+**RoyalBit Asimov works with Claude Code. It will probably never work with other AI tools.**
 
-| AI Tool | Protocol Files | ASIMOV MODE | Verdict |
+| AI Tool | Protocol Files | RoyalBit Asimov | Verdict |
 |---------|---------------|-------------|---------|
 | **Claude Code** | ✓ Auto-read | ✓ Full support | **Use this** |
 | **ChatGPT** | ✓ Manual paste | ✗ Never | Different architecture |
@@ -312,7 +312,7 @@ asimov refresh --verbose     # Include quality gates from warmup.yaml
 
 ### Why "Never"?
 
-ASIMOV MODE requires **four architectural features**:
+RoyalBit Asimov requires **four architectural features**:
 
 1. **Persistent context that compacts** (the problem we solve)
 2. **Terminal visibility** (how hooks reach the AI)
@@ -331,9 +331,9 @@ These aren't missing features. They're **different products for different use ca
 |-------|------|---------------|
 | **Protocol Files** | warmup.yaml, sprint.yaml, roadmap.yaml | Universal (paste manually) |
 | **CLI Tools** | validate, lint-docs, init | Universal (it's just Rust) |
-| **ASIMOV MODE** | Self-healing, hooks, autonomy | **Claude Code only** |
+| **RoyalBit Asimov** | Self-healing, hooks, autonomy | **Claude Code only** |
 
-**Is this vendor lock-in?** Yes, for ASIMOV MODE. The files are portable. The magic isn't.
+**Is this vendor lock-in?** Yes, for RoyalBit Asimov. The files are portable. The magic isn't.
 
 See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
@@ -656,8 +656,8 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov/blob/main/doc
 - **[Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md)** - What you can build
 - **[Implications](https://github.com/royalbit/asimov/blob/main/docs/IMPLICATIONS.md)** - Honest analysis of adoption (Qowat Milat)
 
-### ASIMOV MODE
-- **[ASIMOV MODE Overview](https://github.com/royalbit/asimov/blob/main/docs/ASIMOV_MODE.md)** - The complete autonomous AI development system
+### RoyalBit Asimov
+- **[RoyalBit Asimov Overview](https://github.com/royalbit/asimov/blob/main/docs/ROYALBIT_ASIMOV.md)** - The complete autonomous AI development system
 - [Setup Guide](https://github.com/royalbit/asimov/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
@@ -682,7 +682,7 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov/blob/main/doc
 
 ## Case Study: Protocol v2.0 (This Session)
 
-The v2.0 specification was written using ASIMOV MODE - proving the protocol works on itself.
+The v2.0 specification was written using RoyalBit Asimov - proving the protocol works on itself.
 
 ### The Problem
 

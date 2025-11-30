@@ -38,7 +38,7 @@ style: |
 ---
 
 <!--
-ASIMOV MODE - Executive Deck Template
+ROYALBIT ASIMOV - Executive Deck Template
 =====================================
 Generic version for consultants and enterprises.
 Customize the "Questions?" slide with your company/contact info.
@@ -51,7 +51,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _backgroundColor: #0066b3 -->
 <!-- _color: #ffffff -->
 
-# ASIMOV MODE
+# ROYALBIT ASIMOV
 ## Ethical AI Automation
 
 **50-100x Velocity. Ethics That Refused the Creator.**
@@ -77,7 +77,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 ---
 
-# The Solution: Asimov Mode
+# The Solution: RoyalBit Asimov
 
 ### Isaac Asimov's Three Laws (1942), now executable
 
@@ -98,7 +98,7 @@ Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human revi
 
 # The Proof
 
-### Built with Asimov Mode: ~47 hours, 51 releases
+### Built with RoyalBit Asimov: ~47 hours, 51 releases
 
 | Metric | Delivered |
 |--------|-----------|
@@ -151,7 +151,7 @@ Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human revi
 
 ### The math:
 - 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
-- Asimov Mode: **$0 protocol + Claude subscription**
+- RoyalBit Asimov: **$0 protocol + Claude subscription**
 - Payback: **Immediate**
 
 ---
@@ -160,7 +160,7 @@ Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human revi
 
 ### Copilot is trivially bypassed. Asimov refused its creator.
 
-| Scenario | Copilot | Asimov Mode |
+| Scenario | Copilot | RoyalBit Asimov |
 |----------|---------|-------------|
 | Malware request | ⚠️ Bypassed with "Sure" | ✅ **Hardcoded blocks** |
 | Creator requests surveillance | ⚠️ Would comply | ✅ **AI refused** |
@@ -188,7 +188,7 @@ Everyone implements the first half of Asimov's First Law. **We implemented both.
 | Approach | Cost | Carbon | Speed |
 |----------|------|--------|-------|
 | Cloud AI validation | $0.02/file | ~0.5g CO₂ | 1-3 sec |
-| Asimov Mode (local) | **$0** | **~0.002g** | **<100ms** |
+| RoyalBit Asimov (local) | **$0** | **~0.002g** | **<100ms** |
 | **Reduction** | **100%** | **99.6%** | **20x** |
 
 ### At scale:
@@ -206,7 +206,7 @@ Everyone implements the first half of Asimov's First Law. **We implemented both.
 | Week | Activity |
 |------|----------|
 | 1 | Select 5-10 dev team, training (2 hrs) |
-| 2-3 | Real project with Asimov Mode |
+| 2-3 | Real project with RoyalBit Asimov |
 | 4 | Measure: velocity, rework, quality |
 
 ### Success metrics:

@@ -707,7 +707,7 @@ I created the **RoyalBit Asimov Suite** - a complete methodology that enables *o
 
 ```mermaid
 graph LR
-    subgraph suite["🔥 ASIMOV PROTOCOL SUITE"]
+    subgraph suite["🔥 ROYALBIT ASIMOV"]
         W["WARMUP PROTOCOL<br/>HOW to develop"]
         S["SPRINT AUTONOMY<br/>WHEN to stop"]
     end
@@ -1161,12 +1161,12 @@ Many AI tools push vendor-specific configuration files:
 
 The warmup.yaml and sprint.yaml **file formats** work with any AI that can read YAML. Paste them anywhere—ChatGPT, Gemini, any future AI.
 
-**But ASIMOV MODE (autonomous operation) requires Claude Code.** The magic isn't in the files—it's in Claude Code's ability to re-read rules mid-session after context compaction. Other AIs have different architectures for different use cases.
+**But ROYALBIT ASIMOV (autonomous operation) requires Claude Code.** The magic isn't in the files—it's in Claude Code's ability to re-read rules mid-session after context compaction. Other AIs have different architectures for different use cases.
 
 ### Principles
 
 - **Protocol files** - Portable format (paste anywhere)
-- **ASIMOV MODE** - Requires Claude Code (architectural dependency)
+- **ROYALBIT ASIMOV** - Requires Claude Code (architectural dependency)
 - **Open standards** - YAML, Git, Cargo, standard tools
 - **Earned ownership** - AI gets credit when it delivers
 
