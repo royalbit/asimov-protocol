@@ -2,7 +2,7 @@
 
 pub const ETHICS_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Forge Protocol Ethics (Humanist Mode)",
+  "title": "Asimov Protocol Ethics (Humanist Mode)",
   "description": "Schema for ethics.yaml - Social contract for autonomous AI development",
   "type": "object",
   "properties": {

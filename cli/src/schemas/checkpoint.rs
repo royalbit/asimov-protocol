@@ -2,7 +2,7 @@
 
 pub const CHECKPOINT_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Forge Protocol Checkpoint",
+  "title": "Asimov Protocol Checkpoint",
   "description": "Schema for .claude_checkpoint.yaml - Session state for self-healing",
   "type": "object",
   "required": ["milestone"],

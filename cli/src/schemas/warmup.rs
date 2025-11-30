@@ -3,9 +3,9 @@
 pub const WARMUP_SCHEMA: &str = r#"
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/royalbit/forge-protocol/schemas/warmup.json",
-  "title": "Forge Protocol - warmup.yaml",
-  "description": "Session bootstrap file for the Forge Protocol",
+  "$id": "https://github.com/royalbit/asimov-protocol/schemas/warmup.json",
+  "title": "Asimov Protocol - warmup.yaml",
+  "description": "Session bootstrap file for the Asimov Protocol",
   "type": "object",
   "required": ["identity"],
   "properties": {

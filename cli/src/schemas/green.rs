@@ -3,7 +3,7 @@
 /// Schema for validating green.yaml protocol files
 pub const GREEN_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Forge Protocol Green Coding Schema",
+  "title": "Asimov Protocol Green Coding Schema",
   "description": "Sustainability protocol for AI development",
   "type": "object",
   "properties": {
