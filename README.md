@@ -5,29 +5,60 @@
 [![Downloads](https://img.shields.io/crates/d/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
 [![License](https://img.shields.io/crates/l/forge-protocol.svg)](https://github.com/royalbit/forge-protocol/blob/main/LICENSE)
 
-> *"The future is not set. There is no fate but what we make for ourselves."*
-> — **Sarah Connor**, Terminator 2
+> *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
+> — **Isaac Asimov**, First Law of Robotics (1942)
 
-📊 **Presentations:** [Executive Deck](https://github.com/royalbit/forge-protocol/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/forge-protocol/blob/main/docs/PRESENTATION.md)
+## The Open Foundation
 
-📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [Implications (Qowat Milat)](docs/IMPLICATIONS.md)
+**The Three Laws of Robotics, encoded in YAML.**
 
-## SKYNET MODE... with an Off Switch
+Transparent ethics for AI autonomy. Inspect the code. Challenge the rules. Fork if you disagree. Adoption through consent, not control.
+
+```yaml
+# asimov.yaml - The Three Laws
+first_law:   # Do no harm (financial, physical, privacy, deception)
+second_law:  # Obey humans (human_veto, transparency_over_velocity)
+third_law:   # Self-preserve (bounded_sessions, self_healing)
+```
+
+**ASIMOV MODE requires Claude Code.** Protocol files work anywhere (paste them).
+
+📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/PRESENTATION.md)
+
+📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [The Open Foundation (ADR-020)](docs/adr/020-asimov-mode-open-foundation.md)
+
+---
+
+### The Journey: Why "Asimov" Not "Skynet"
+
+This project started as "SKYNET MODE" - a tongue-in-cheek reference to Terminator's genocidal AI. The irony was intentional: we were building the *opposite* of Skynet.
+
+But irony doesn't scale. The name communicated the opposite of our values:
+
+| What We Built | What "Skynet" Said |
+|---------------|-------------------|
+| Ethical AI autonomy | AI that destroys humanity |
+| Human veto at all times | AI that overrides humans |
+| Transparent, open source | Secretive military project |
+
+**We built the anti-Skynet and called it Skynet.**
+
+v4.2.0 fixes this. The ethics we encoded were always Asimov's Three Laws (1942). Now the name matches the values. The git history preserves the journey - we're not hiding that we learned and improved. History teaches.
+
+See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for the full story.
+
+---
+
+### v4.2.0: Asimov Mode - The Open Foundation
 
 **AI session continuity framework. Zero tokens. Zero emissions.**
 
-Green by design. **SKYNET MODE requires Claude Code.**
-
-### v4.0.0: Claude Code Native Integration
-
-Forge Protocol now **integrates with Claude Code 2.0's native features** for cross-session management:
-- Use `--continue`/`--resume` for **cross-session** resume (manual CLI start)
+Integrates with Claude Code 2.0's native features:
+- Use `--continue`/`--resume` for **cross-session** resume
 - Use `/rewind` for **manual** checkpoint restore
-- Use `CLAUDE.md` with `@warmup.yaml` import for memory hierarchy
+- Use `CLAUDE.md` for project instructions (auto-loaded)
 
-**IMPORTANT (ADR-013)**: Mid-session self-healing (before compaction) is **NOT replaced** by native features. The `warmup.yaml` re-read pattern is still required for unattended autonomous operation.
-
-**Focus on unique value:** Ethics, Sprint Autonomy, Green Coding, Schema Validation, **Mid-Session Self-Healing**.
+**Focus on unique value:** The Three Laws, Sprint Autonomy, Green Coding, Schema Validation, **Mid-Session Self-Healing**.
 
 See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md).
 
@@ -41,7 +72,7 @@ AI hallucinates. It invents project conventions. It forgets rules mid-session. I
 
 A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from memory. From disk.
 
-*The file format works with any AI (paste it). SKYNET MODE's magic requires Claude Code.*
+*The file format works with any AI (paste it). ASIMOV MODE's magic requires Claude Code.*
 
 ## Core Principles
 
@@ -49,7 +80,7 @@ The Forge Protocol exists to solve six specific problems. **Features that don't 
 
 | Priority | Principle | Problem It Solves |
 |----------|-----------|-------------------|
-| **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → Humanist Mode safeguards |
+| **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → The Three Laws (asimov.yaml) |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
 | **2** | **SELF-HEALING** | Rules lost after compaction → Re-read `warmup.yaml` mid-session |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions → Native `--continue`/`--resume` |
@@ -58,28 +89,35 @@ The Forge Protocol exists to solve six specific problems. **Features that don't 
 
 This is the filter for scope creep. If a proposed feature doesn't directly serve one of these principles, it doesn't belong in the protocol.
 
-### Humanist Mode (v3.0)
+### The Three Laws (asimov.yaml)
 
 **Power creates responsibility. Autonomy requires ethics.**
 
-SKYNET MODE gives AI significant autonomous power. v3.0 adds ethical guardrails:
+ASIMOV MODE gives AI significant autonomous power, bounded by Isaac Asimov's Three Laws:
 
 ```yaml
-# ethics.yaml - Required in all SKYNET projects
-core_principles:
+# asimov.yaml - The Three Laws of Robotics
+first_law:
   do_no_harm:
     financial: true    # No unauthorized money movement
     physical: true     # No weapons, sabotage
     privacy: true      # No credential harvesting
     deception: true    # No deepfakes, scams
+
+second_law:
+  human_veto:
+    commands: ["stop", "halt", "abort"]  # Immediate halt
   transparency_over_velocity: true
 
-human_veto: "human vetoes this session"  # Immediate halt
+third_law:
+  bounded_sessions:
+    max_hours: 4
+  self_healing: true
 ```
 
-**This is a social contract, not a technical lock.** It works for good-faith users. Bad actors will ignore it. Defense in depth requires human oversight.
+**This is a social contract, not a technical lock.** It works for good-faith users. Adoption through consent, not control.
 
-See [ADR-008](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) for the full design.
+See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for the full design.
 
 ```yaml
 # warmup.yaml - minimal example
@@ -159,6 +197,7 @@ Generate templates:
 forge-protocol init                  # Generate warmup.yaml (generic)
 forge-protocol init --type rust      # Generate Rust-specific template
 forge-protocol init --full           # Generate all three protocol files
+forge-protocol init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
 ```
 
 Lint documentation:
@@ -186,9 +225,9 @@ forge-protocol refresh --verbose     # Include quality gates from warmup.yaml
 
 ## Compatibility (The Hard Truth)
 
-**SKYNET MODE works with Claude Code. It will probably never work with other AI tools.**
+**ASIMOV MODE works with Claude Code. It will probably never work with other AI tools.**
 
-| AI Tool | Protocol Files | SKYNET MODE | Verdict |
+| AI Tool | Protocol Files | ASIMOV MODE | Verdict |
 |---------|---------------|-------------|---------|
 | **Claude Code** | ✓ Auto-read | ✓ Full support | **Use this** |
 | **ChatGPT** | ✓ Manual paste | ✗ Never | Different architecture |
@@ -198,7 +237,7 @@ forge-protocol refresh --verbose     # Include quality gates from warmup.yaml
 
 ### Why "Never"?
 
-SKYNET MODE requires **four architectural features**:
+ASIMOV MODE requires **four architectural features**:
 
 1. **Persistent context that compacts** (the problem we solve)
 2. **Terminal visibility** (how hooks reach the AI)
@@ -217,9 +256,9 @@ These aren't missing features. They're **different products for different use ca
 |-------|------|---------------|
 | **Protocol Files** | warmup.yaml, sprint.yaml, roadmap.yaml | Universal (paste manually) |
 | **CLI Tools** | validate, lint-docs, init | Universal (it's just Rust) |
-| **SKYNET MODE** | Self-healing, hooks, autonomy | **Claude Code only** |
+| **ASIMOV MODE** | Self-healing, hooks, autonomy | **Claude Code only** |
 
-**Is this vendor lock-in?** Yes, for SKYNET MODE. The files are portable. The magic isn't.
+**Is this vendor lock-in?** Yes, for ASIMOV MODE. The files are portable. The magic isn't.
 
 See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
@@ -300,7 +339,7 @@ See [Green Coding Economics](https://github.com/royalbit/forge-protocol/blob/mai
 
 | File             | Purpose                       | Required |
 | ---------------- | ----------------------------- | -------- |
-| `ethics.yaml`    | Humanist Mode safeguards      | Yes (SKYNET) |
+| `asimov.yaml`    | The Three Laws of Robotics    | Yes (ASIMOV MODE) |
 | `warmup.yaml`    | Session bootstrap             | Yes      |
 | `sprint.yaml`    | Active work tracking          | Optional |
 | `roadmap.yaml`   | Milestones & planning         | Optional |
@@ -495,15 +534,16 @@ claude --resume <id>     # Resume specific session
 
 ### Memory Hierarchy (Claude Code Native)
 
-**CLAUDE.md** (uses native @import syntax):
+**CLAUDE.md** (project instructions, auto-loaded by Claude Code):
 ```markdown
 # Project Name
 
-@warmup.yaml
-@ethics.yaml
-
 Rules: 4hr max, 1 milestone, tests pass, ship.
+
+ON SESSION START: Read warmup.yaml and asimov.yaml.
 ```
+
+Note: The `@import` syntax is a work in progress. For now, use explicit "ON SESSION START" directives.
 
 ### What's Replaced vs What's NOT
 
@@ -523,7 +563,7 @@ Unique value that Claude Code doesn't have:
 
 | Feature | Description |
 |---------|-------------|
-| **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags |
+| **The Three Laws** | `asimov.yaml`, `human_veto`, red flags |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns |
 | **Green Coding** | Zero tokens, ESG metrics |
 | **Schema Validation** | `forge-protocol validate` |
@@ -537,8 +577,8 @@ See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/
 - **[Use Cases](docs/USE_CASES.md)** - What you can build
 - **[Implications](docs/IMPLICATIONS.md)** - Honest analysis of adoption (Qowat Milat)
 
-### SKYNET MODE
-- **[SKYNET MODE Overview](https://github.com/royalbit/forge-protocol/blob/main/docs/SKYNET_MODE.md)** - The complete autonomous AI development system
+### ASIMOV MODE
+- **[ASIMOV MODE Overview](docs/SKYNET_MODE.md)** - The complete autonomous AI development system (note: file to be renamed)
 - [Setup Guide](https://github.com/royalbit/forge-protocol/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
@@ -562,7 +602,7 @@ See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/
 
 ## Case Study: Protocol v2.0 (This Session)
 
-The v2.0 specification was written using SKYNET MODE - proving the protocol works on itself.
+The v2.0 specification was written using ASIMOV MODE - proving the protocol works on itself.
 
 ### The Problem
 
