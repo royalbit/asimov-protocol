@@ -5,8 +5,7 @@
 [![Downloads](https://img.shields.io/crates/d/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
 [![License](https://img.shields.io/crates/l/forge-protocol.svg)](https://github.com/royalbit/forge-protocol/blob/main/LICENSE)
 
-> *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
-> — **Isaac Asimov**, First Law of Robotics (1942)
+> *"The Three Laws were science fiction for 80 years. Now they're source code."*
 
 ## The Open Foundation
 
