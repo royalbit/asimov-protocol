@@ -26,6 +26,8 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [The Open Foundation (ADR-020)](docs/adr/020-asimov-mode-open-foundation.md)
 
+📈 **Case Study:** [Asimov Protocol vs Copilot](docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+
 ---
 
 ### The Journey: Why "Asimov" Not "Skynet"
@@ -444,7 +446,7 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 
 **Bottom line:** 1 human + AI with Asimov Protocol = **50-150x velocity** (verified via git logs).
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **50-150x**. That's not comparable.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **23x for complete products** ([case study](docs/CASE_STUDY_VELOCITY.md)). More importantly: Asimov Protocol ethics [refused the creator's surveillance request](docs/case-studies/001-ethics-protocol-blocks-surveillance.md). Copilot's safety is [trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot) and [generates malware on request](https://ieeexplore.ieee.org/document/10284976/).
 
 ### The Protocol Built Itself
 
