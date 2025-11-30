@@ -4,9 +4,9 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.2"
+  version: "7.0.3"
   status: released
-  summary: "Documentation consistency for crates.io"
+  summary: "README header consistency with Forge"
   goal: DX_QUALITY
 
 next:
