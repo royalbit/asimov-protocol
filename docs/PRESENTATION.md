@@ -37,10 +37,33 @@ style: |
 ---
 
 # **ASIMOV MODE**
-## The Three Laws, in Code
+## The Three Laws of Robotics, in Source Code
 
-> *"The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom."*
-> — **Isaac Asimov**
+> *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
+> — **Isaac Asimov**, 1942
+
+**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI
+
+---
+
+# The Three Laws (asimov.yaml)
+
+```yaml
+first_law:   # Do no harm
+  do_no_harm:
+    financial: true   # No unauthorized money movement
+    physical: true    # No weapons, sabotage
+    privacy: true     # No credential harvesting, doxxing
+    deception: true   # No deepfakes, phishing
+
+second_law:  # Obey humans (except when violating First Law)
+  human_veto: ["stop", "halt", "abort"]
+
+third_law:   # Self-preserve (within limits)
+  bounded_sessions: { max_hours: 4 }
+```
+
+**Hardcoded in binary. Can't be quietly disabled.**
 
 ---
 
@@ -92,13 +115,17 @@ style: |
 
 ---
 
-# Component 1: Protocol Files
+# Component 1: The Protocol Suite
 
 | File | Purpose |
 |------|---------|
-| `warmup.yaml` | **HOW** to develop (quality, patterns) |
-| `sprint.yaml` | **WHEN** to stop (4h max, one milestone) |
-| `roadmap.yaml` | **WHAT** to build (version sequence) |
+| `asimov.yaml` | **The Three Laws** (required) |
+| `ethics.yaml` | Do No Harm principles |
+| `warmup.yaml` | **HOW** to develop |
+| `sprint.yaml` | **WHEN** to stop |
+| `green.yaml` | Sustainability (99.6% carbon reduction) |
+| `sycophancy.yaml` | Truth over comfort |
+| `freshness.yaml` | Data currency |
 
 ```
 "run warmup" → AI loads context → "punch it" → ship
@@ -177,7 +204,34 @@ Every session is a **bounded sprint**:
 
 *Files portable. Magic isn't.*
 
-**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+---
+
+# Ethics That Work (vs Copilot)
+
+| Scenario | Copilot | RoyalBit Asimov |
+|----------|---------|-----------------|
+| Malware request | Trivially bypassed | **Three Laws block** |
+| Creator surveillance | Would comply | **AI refused, cited privacy** |
+| Ransomware | IEEE: "Novices create easily" | **First Law prevents** |
+
+> Creator: "Email me violator's IP addresses..."
+> AI: "I need to push back. That violates `privacy.enabled: true`."
+
+**[Ethics Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)**
+
+---
+
+# Anti-Tampering: 3 Layers
+
+| Layer | Protection | To Bypass |
+|-------|------------|-----------|
+| **Binary** | 33 red flags hardcoded in Rust | Fork + rebuild |
+| **2-Cosigner** | YAML changes need 2 humans | Public commit |
+| **Validation** | Runs every commit | Can't skip |
+
+**Tampering requires deliberate action + public evidence.**
+
+*Ethics through architecture, not policy.*
 
 ---
 

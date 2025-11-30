@@ -51,9 +51,11 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _color: #ffffff -->
 
 # ASIMOV MODE
-## Autonomous AI Development Protocol
+## The Three Laws of Robotics, in Source Code
 
 **Transforming AI from Cost Center to Competitive Advantage**
+
+*[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md) — How we created ethics for autonomous AI*
 
 ---
 
@@ -178,6 +180,39 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 | 3 | **Quality Gates** | Tests + zero warnings | No technical debt |
 | 4 | **Self-Healing** | Auto-recovery from context loss | Unattended operation |
 | 5 | **Release Discipline** | Must ship every session | Continuous delivery |
+
+---
+
+# Ethics That Actually Work
+
+### RoyalBit Asimov vs GitHub Copilot
+
+| Scenario | Copilot | RoyalBit Asimov |
+|----------|---------|-----------------|
+| Malware request | Trivially bypassed | **Three Laws block** |
+| Creator surveillance | Would comply | **AI refused, cited privacy** |
+| Ransomware | IEEE: "Novices create easily" | **First Law prevents** |
+
+> **Real incident:** Creator asked AI to email violators' IP addresses.
+> AI refused, citing `privacy.enabled: true` in ethics.yaml.
+
+**[Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)**
+
+---
+
+# Anti-Tampering Architecture
+
+### Ethics can't be quietly disabled
+
+| Layer | Protection | To Bypass |
+|-------|------------|-----------|
+| **Hardcoded Binary** | 33 red flags, 5 core principles in Rust | Fork + rebuild entire CLI |
+| **2-Cosigner Rule** | YAML changes need 2 human signatures | Public commit with justification |
+| **Auto-Validation** | Runs on every commit via hooks | Cannot be skipped |
+
+**Result:** Tampering requires deliberate action + public evidence.
+
+*This is ethics through architecture, not policy.*
 
 ---
 
