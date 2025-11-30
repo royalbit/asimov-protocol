@@ -76,3 +76,30 @@ jobs:
 
       - name: Check binary exists
         run: test -f cli/target/release/asimov-mode && echo "✅ Binary built successfully"
+
+  validate:
+    name: Protocol Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            cli/target
+          key: ${{ runner.os }}-cargo-validate-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build asimov-mode
+        run: cd cli && cargo build --release
+
+      - name: Validate protocol files
+        run: ./cli/target/release/asimov-mode validate
+
+      - name: Lint documentation
+        run: ./cli/target/release/asimov-mode lint-docs

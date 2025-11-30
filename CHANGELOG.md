@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0] - 2025-11-30
+
+### Added: CI Protocol Validation (Quality Gate)
+
+**Quality over features.**
+
+GitHub Actions now validates protocol files on every push and PR.
+
+#### CI Changes
+
+- **New job**: `Protocol Validation` in `.github/workflows/ci.yml`
+- **Runs**: `asimov-mode validate` - checks all protocol files
+- **Runs**: `asimov-mode lint-docs` - lints markdown documentation
+- **Quality gate**: PRs blocked if protocol files are invalid
+
+#### Why This Matters
+
+Protocol validation was only running locally (pre-commit hook). Now it's enforced at the CI level - no invalid protocol files can merge.
+
 ## [5.1.1] - 2025-11-30
 
 ### Fixed: Complete Rebrand Cleanup

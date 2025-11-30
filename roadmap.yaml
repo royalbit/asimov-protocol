@@ -5,7 +5,7 @@
 
 current:
   version: "5.2.0"
-  status: planned
+  status: released
   summary: "CI Integration"
   goal: QUALITY_GATE
 
