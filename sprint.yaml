@@ -11,47 +11,47 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.7 - CLAUDE CODE HOOKS SCHEMA FIX (ADR-018 Revision)
+# CURRENT: v4.1.8 - SESSION START AUTO-RESPONSE (ADR-019)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v4.1.7 - Claude Code Hooks Schema Fix"
+  current: "v4.1.8 - Session Start Auto-Response"
   started: "2025-11-29"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # HOOKS SCHEMA FIX (ADR-018 Revision)
+  # SESSION START AUTO-RESPONSE (ADR-019)
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.6 used incorrect hooks schema (wrong file, wrong events).
-  # v4.1.7 fixes the configuration to use correct Claude Code hooks API.
+  # v4.1.7 hooks inject context but do NOT trigger automatic response.
+  # CLAUDE.md "ON SESSION START" directive forces Claude to act immediately.
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Move hooks config from .claude/hooks.json to .claude/settings.json"
-    - "[x] Rename post-compact.sh to pre-compact.sh (PreCompact event)"
-    - "[x] Fix SessionStart hook format (remove incorrect matchers)"
-    - "[x] Update ADR-018 with correct schema"
-    - "[x] Update SPECIFICATION.md with correct hooks documentation"
-    - "[x] Update CHANGELOG.md with migration steps"
-    - "[x] Bump version to 4.1.7"
+    - "[x] Update CLAUDE.md with 'ON SESSION START' directive"
+    - "[x] Create ADR-019: Session Start Auto-Response"
+    - "[x] Update SPECIFICATION.md with new CLAUDE.md schema"
+    - "[x] Update warmup.yaml session_trigger_flow with step_0_auto_init"
+    - "[x] Update roadmap.yaml with v4.1.8"
+    - "[x] Update CHANGELOG.md"
+    - "[x] Bump cli/Cargo.toml version to 4.1.8"
+    - "[x] Run tests and validate"
 
   deliverables:
-    - ".claude/settings.json - Correct hook configuration"
-    - ".claude/hooks/session-start.sh - SessionStart hook"
-    - ".claude/hooks/pre-compact.sh - PreCompact hook"
-    - "ADR-018: Revised with correct schema"
+    - "CLAUDE.md - 'ON SESSION START' directive"
+    - "ADR-019: Session Start Auto-Response Directive"
+    - "SPECIFICATION.md: Updated CLAUDE.md schema (15 line limit)"
+    - "warmup.yaml: step_0_auto_init in session_trigger_flow"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINTS (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v4.1.6 - Claude Code Hooks Integration (SCHEMA ERROR)"
+  sprint: "v4.1.7 - Claude Code Hooks Schema Fix"
   status: done
   date: "2025-11-29"
   highlights:
-    - "Initial hooks implementation with INCORRECT schema"
-    - "Used .claude/hooks.json (wrong - should be settings.json)"
-    - "Used PostCompact event (wrong - should be PreCompact)"
-    - "Superseded by v4.1.7"
+    - "Correct hooks config in .claude/settings.json"
+    - "SessionStart + PreCompact events working"
+    - "Discovered: hooks inject context but don't trigger response"
 
 older_sprints:
   - sprint: "v4.1.5 - Protocol Self-Healing (ADR-017)"

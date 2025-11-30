@@ -180,10 +180,24 @@ autonomous_development:
     that ensure work actually ships instead of running forever.
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # SESSION TRIGGER FLOW - How autonomous sessions start
+  # SESSION TRIGGER FLOW - How autonomous sessions start (ADR-019)
   # ═══════════════════════════════════════════════════════════════════════════
+  # IMPORTANT: SessionStart hooks inject context but do NOT trigger response.
+  # CLAUDE.md must contain "ON SESSION START" directive to force auto-response.
+  # See ADR-019 for full rationale.
   session_trigger_flow:
+    step_0_auto_init:
+      description: "v4.1.8+ Auto-initialization via CLAUDE.md directive"
+      how_it_works:
+        - "SessionStart hook injects protocol instructions into context"
+        - "CLAUDE.md 'ON SESSION START' directive instructs Claude to act immediately"
+        - "Claude reads roadmap, validates, presents milestone WITHOUT user prompt"
+      claude_md_directive: "ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt."
+      fallback: "If hooks fail, user can still say 'run warmup'"
+      adr: "docs/adr/019-session-start-auto-response.md"
+
     step_1_trigger:
+      description: "Manual fallback if auto-init fails"
       user_says:
         - "run warmup"
         - "run warmup protocol"

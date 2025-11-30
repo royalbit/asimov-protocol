@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.1.7"
+  current_version: "4.1.8"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,46 +48,55 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.7 - CLAUDE CODE HOOKS SCHEMA FIX (ADR-018 Revision)
+# CURRENT: v4.1.8 - SESSION START AUTO-RESPONSE (ADR-019)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.1.7"
+  version: "4.1.8"
   status: released
   date: "2025-11-29"
-  summary: "Claude Code Hooks Schema Fix - Correct Configuration"
+  summary: "Session Start Auto-Response - CLAUDE.md Directive"
   goal: AUTONOMOUS_DEVELOPMENT
   priority: CRITICAL
 
   rationale: |
-    v4.1.6 used incorrect hooks schema (wrong file, wrong events).
-    Hooks must be in .claude/settings.json, not .claude/hooks.json.
-    PreCompact event (not PostCompact) for context injection.
-    This fix enables TRUE autonomous operation.
+    v4.1.7 hooks work but do NOT trigger automatic Claude response.
+    SessionStart injects context but Claude waits for user input.
+    CLAUDE.md "ON SESSION START" directive forces immediate action.
+    This enables TRUE auto-initialization without user prompt.
 
   deliverables:
     implementation:
-      - "[x] .claude/settings.json - Correct hook configuration location"
-      - "[x] .claude/hooks/session-start.sh - Auto-initialize on session start"
-      - "[x] .claude/hooks/pre-compact.sh - Inject rules before compaction"
+      - "[x] CLAUDE.md - Added 'ON SESSION START' directive"
+      - "[x] Bump cli/Cargo.toml version to 4.1.8"
 
     documentation:
-      - "[x] ADR-018: Revised with correct schema"
-      - "[x] CHANGELOG.md updated with migration steps"
+      - "[x] ADR-019: Session Start Auto-Response Directive"
+      - "[x] SPECIFICATION.md: Updated CLAUDE.md schema"
+      - "[x] warmup.yaml: Updated session_trigger_flow with step_0_auto_init"
+      - "[x] CHANGELOG.md updated"
 
-  breaking_changes:
-    - "File: .claude/settings.json (was .claude/hooks.json)"
-    - "Event: PreCompact (was PostCompact)"
-    - "Script: pre-compact.sh (was post-compact.sh)"
+  the_fix: |
+    SessionStart hooks inject context but do NOT trigger response.
+    CLAUDE.md directive: "ON SESSION START: Immediately read roadmap.yaml,
+    run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt."
 
   vendor_exclusivity: |
-    Claude Code is the ONLY AI with lifecycle hooks.
-    Cursor, Copilot, Windsurf, Gemini have no equivalent.
-    SKYNET MODE requires Claude Code.
+    This workaround is specific to Claude Code's hook architecture.
+    Other AI tools can use the CLAUDE.md directive pattern standalone.
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.1.7"
+    status: released
+    date: "2025-11-29"
+    summary: "Claude Code Hooks Schema Fix (ADR-018 Revision)"
+    highlights:
+      - "Correct hooks config in .claude/settings.json"
+      - "SessionStart + PreCompact events"
+      - "Hooks inject context but don't trigger response (discovered)"
+
   - version: "4.1.6"
     status: released
     date: "2025-11-29"

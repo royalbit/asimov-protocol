@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.8] - 2025-11-29
+
+### Fixed: Session Start Auto-Response (ADR-019)
+
+SessionStart hooks inject context but do NOT trigger automatic Claude response. Added `ON SESSION START` directive to CLAUDE.md to force immediate action.
+
+#### The Problem
+
+v4.1.7 hooks work correctly:
+- SessionStart fires on session start
+- Hook output is injected into Claude's context
+- **But** Claude waits for user input instead of acting immediately
+
+This defeated the purpose of auto-initialization.
+
+#### The Solution
+
+Added explicit directive to CLAUDE.md:
+
+```markdown
+ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt.
+```
+
+#### Changes
+
+- **CLAUDE.md**: Added `ON SESSION START` directive
+- **CLAUDE.md line limit**: Increased from 10 to 15 lines
+- **ADR-019**: Documents the limitation and workaround
+- **warmup.yaml**: Added `step_0_auto_init` to session_trigger_flow
+
+See [ADR-019](docs/adr/019-session-start-auto-response.md) for full rationale.
+
 ## [4.1.7] - 2025-11-29
 
 ### Fixed: Claude Code Hooks Schema (ADR-018 Revision)

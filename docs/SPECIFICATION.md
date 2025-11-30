@@ -1,6 +1,6 @@
 # Forge Protocol Specification
 
-Version 4.1.7
+Version 4.1.8
 
 ## Overview
 
@@ -467,15 +467,30 @@ The bootstrap file. Must be ultra-short to survive summarization.
 ```markdown
 # {project-name}
 
-ON CONFUSION → re-read warmup.yaml + ethics.yaml + green.yaml
+@warmup.yaml
+@ethics.yaml
+@green.yaml
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
+
+ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt.
 ```
 
 **Constraints:**
-- Maximum 10 lines
-- Single critical instruction: "re-read warmup.yaml"
+- Maximum 15 lines (increased from 10 in v4.1.8)
+- `@import` syntax for protocol files
 - Core rules in one line
+- **ON SESSION START directive** (v4.1.8+): Forces Claude to act immediately
+
+**Why ON SESSION START is Required (v4.1.8):**
+
+SessionStart hooks inject context but do NOT trigger automatic Claude response. Claude still waits for user input. The `ON SESSION START` directive in CLAUDE.md explicitly instructs Claude to act immediately when it sees the hook output, without waiting for user prompt.
+
+| Component | What It Does | Limitation |
+|-----------|--------------|------------|
+| SessionStart hook | Injects context into Claude | Doesn't force response |
+| CLAUDE.md directive | Instructs Claude to act | Requires hook context |
+| Combined | True auto-initialization | Works together |
 
 ### warmup.yaml Schema
 
