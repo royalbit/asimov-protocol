@@ -17,12 +17,30 @@ AI models have training data cutoffs. Claude Opus 4.5 and Sonnet 4.5 have a know
 
 **The AI didn't hallucinate. It gave you January 2025's truth.**
 
-### The Business Problem
+### The Business Problem (Confirmed)
 
-Vendors could fix this by enabling web search by default, but:
+Vendors could fix this by enabling web search by default, but **it's a deliberate cost optimization decision**:
 
-- Search API calls cost money
-- Inference alone is cheaper than search + inference
+| Cost Factor | Evidence |
+|-------------|----------|
+| **Web search cost** | $0.01 per search + thousands of input tokens ([Anthropic Pricing](https://websearchapi.ai/blog/anthropic-claude-web-search-api)) |
+| **AI search vs regular** | 10x more expensive ([Google](https://www.getmonetizely.com/blogs/ai-pricing-how-much-does-ai-cost-in-2025)) |
+| **Anthropic gross margin 2024** | NEGATIVE 109% ([The Information](https://www.wheresyoured.at/howmuchmoney/)) |
+| **Anthropic projected loss 2025** | ~$3 billion ([Where's Your Ed At](https://www.wheresyoured.at/howmuchmoney/)) |
+| **OpenAI projected loss 2025** | ~$8 billion ([Where's Your Ed At](https://www.wheresyoured.at/howmuchmoney/)) |
+
+**The Smoking Gun** - From [Claude's official help docs](https://support.claude.com/en/articles/10684626-enabling-and-using-web-search):
+
+> "Toggle web search off when not needed: If you're having a conversation that doesn't require current information, **disable web search to conserve your usage**."
+
+They literally tell users to disable search to save money.
+
+**Claude Code specifically** - Web search was a [feature request (Issue #600)](https://github.com/anthropics/claude-code/issues/600) from March 2025. It wasn't included by default because inference-only is cheaper.
+
+**The business incentive:**
+- Every search = $0.01 + thousands of extra tokens
+- Companies are losing billions annually
+- Inference-only preserves margins
 - Users blame "AI hallucination" not "vendor cost optimization"
 - No accountability for stale data
 
@@ -166,8 +184,19 @@ FRESHNESS: My cutoff is Jan 2025. Today is in <env>. For time-sensitive topics, 
 
 ## References
 
+### Cost & Business Evidence
+- [Anthropic Claude Web Search API Pricing](https://websearchapi.ai/blog/anthropic-claude-web-search-api) - $0.01/search + tokens
+- [How Much Money Do OpenAI And Anthropic Actually Make?](https://www.wheresyoured.at/howmuchmoney/) - Loss figures, margin data
+- [AI Pricing in 2025](https://www.getmonetizely.com/blogs/ai-pricing-how-much-does-ai-cost-in-2025) - Google's 10x cost estimate
+- [Claude Code Issue #600: Web Search Feature Request](https://github.com/anthropics/claude-code/issues/600) - Search wasn't default
+
+### Vendor Documentation
+- [Claude Web Search Help](https://support.claude.com/en/articles/10684626-enabling-and-using-web-search) - "Disable to conserve usage"
+- [Anthropic Pricing](https://www.anthropic.com/pricing) - Official pricing
 - [LLM Knowledge Cutoff Dates](https://www.ofzenandcomputing.com/knowledge-cutoff-dates-llms/)
-- AI_REALITY.md - Part 1.5: Training Data Cutoff
+
+### Internal References
+- AI_REALITY.md - Part 1.6: Stale Data ≠ Hallucination
 - ADR-016: Green Coding Protocol (related: search vs inference cost)
 
 ## Notes
