@@ -72,12 +72,12 @@ We're the outlier.
 
 ### CLI Changes
 
-The `asimov-mode` CLI will:
+The `asimov` CLI will:
 
 1. **Look in `.asimov/` first** (new default)
 2. **Fall back to root** (backwards compatibility during transition)
-3. **`asimov-mode init`** creates `.asimov/` directory
-4. **`asimov-mode migrate`** moves files from root to `.asimov/`
+3. **`asimov init`** creates `.asimov/` directory
+4. **`asimov migrate`** moves files from root to `.asimov/`
 5. **Validation** checks `.asimov/` directory
 6. **Regeneration** creates files in `.asimov/`
 
@@ -127,7 +127,7 @@ The `asimov-mode` CLI will:
 
 ```bash
 # Automatic migration
-asimov-mode migrate
+asimov migrate
 
 # Or manual
 mkdir -p .asimov
@@ -147,7 +147,7 @@ This is a **major breaking change**: v6.0.0
 
 - [ ] Create `.asimov/` directory structure
 - [ ] Update CLI to look in `.asimov/` first
-- [ ] Add `asimov-mode migrate` command
+- [ ] Add `asimov migrate` command
 - [ ] Update all documentation
 - [ ] Update CLAUDE.md template
 - [ ] Update CI workflow paths

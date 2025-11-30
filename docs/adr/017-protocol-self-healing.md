@@ -31,7 +31,7 @@ Implement **auto-regeneration** of missing protocol files during validation:
 ### 1. Auto-Regeneration Behavior
 
 ```
-asimov-mode validate
+asimov validate
 ```
 
 When validation runs and detects missing files:
@@ -52,7 +52,7 @@ When validation runs and detects missing files:
 ### 2. Regeneration Output
 
 ```
-asimov-mode validate
+asimov validate
 
 ⚠️  REGENERATED: ethics.yaml (was missing)
 ⚠️  REGENERATED: warmup.yaml (was missing)
@@ -133,16 +133,16 @@ On validation:
 
 ```bash
 # Normal validation (auto-regenerates missing files)
-asimov-mode validate
+asimov validate
 
 # Skip auto-regeneration
-asimov-mode validate --no-regenerate
+asimov validate --no-regenerate
 
 # Force regeneration even if files exist
-asimov-mode init --asimov --force
+asimov init --asimov --force
 
 # Update checksums after intentional modifications
-asimov-mode validate --update-checksums
+asimov validate --update-checksums
 ```
 
 ## Consequences

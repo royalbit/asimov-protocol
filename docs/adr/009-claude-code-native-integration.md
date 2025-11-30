@@ -85,7 +85,7 @@ Features Claude Code does NOT have natively:
    - "Done is better than perfect"
 
 4. **Schema Validation** - Protocol file validation
-   - `asimov-mode validate`
+   - `asimov validate`
    - Structure validation
    - File size limits
 
@@ -106,7 +106,7 @@ Building these would waste effort duplicating Claude Code's native features.
 ### v4.0.0 - CLAUDE.md Integration (BREAKING)
 
 1. **Generate CLAUDE.md from protocol files**
-   - `asimov-mode init --asimov` generates CLAUDE.md that imports warmup.yaml
+   - `asimov init --asimov` generates CLAUDE.md that imports warmup.yaml
    - Use Claude Code's native memory hierarchy
    - Include ethics reference in CLAUDE.md
 
@@ -170,7 +170,7 @@ v4.1.0+ consideration:
 - [ ] `--asimov` generates CLAUDE.md with `@warmup.yaml` import
 - [ ] Remove checkpoint schema and validation
 - [ ] Update CLAUDE.md template
-- [ ] Add `asimov-mode migrate` command for v3→v4
+- [ ] Add `asimov migrate` command for v3→v4
 
 ### Phase 3: MCP Integration (v4.1.0+)
 

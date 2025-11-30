@@ -13,7 +13,7 @@
 # Not disclosing staleness risk = silence that misleads.
 # This protocol implements the Inaction Principle for data freshness.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 # ADR: docs/adr/022-date-aware-search-protocol.md
 # See also: docs/adr/023-inaction-principle.md
 
@@ -173,7 +173,7 @@ session_integration:
 # VALIDATION
 # ═══════════════════════════════════════════════════════════════════════════════
 validation:
-  cli_command: "asimov-mode validate"
+  cli_command: "asimov validate"
   checks:
     - "freshness.yaml exists"
     - "model_cutoffs section exists"

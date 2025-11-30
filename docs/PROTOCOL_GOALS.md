@@ -56,7 +56,7 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - Anti-Sycophancy Protocol (sycophancy.yaml)
 - Sprint Autonomy (4hr max, 1 milestone)
 - Mid-session self-healing (warmup.yaml re-read)
-- Schema Validation (`asimov-mode validate`)
+- Schema Validation (`asimov validate`)
 
 **Key insight:** Native features require MANUAL intervention. Mid-session self-healing during ASIMOV MODE is NOT replaced.
 

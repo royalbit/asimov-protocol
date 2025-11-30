@@ -154,7 +154,7 @@ flowchart TD
 
 > **The Three Laws work even against the project creator. This is the difference between content filtering and principled ethics.**
 
-**Source:** [asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml)
+**Source:** [asimov.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml)
 
 ---
 
@@ -181,7 +181,7 @@ COPILOT (cloud AI):
   Carbon footprint: Cloud compute for every keystroke
 ```
 
-**Source:** [green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml)
+**Source:** [green.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml)
 
 ---
 
@@ -205,7 +205,7 @@ Sycophancy leads to:
 - Technical debt from unquestioned code
 - Security vulnerabilities from unchallenged assumptions
 
-**Source:** [sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml)
+**Source:** [sycophancy.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml)
 
 ---
 
@@ -372,9 +372,9 @@ MULTIPLIER (full product): 17.9x ≈ 18x
 # Asimov Protocol pre-commit hook
 cargo fmt --all -- --check      # Formatting
 cargo clippy -- -D warnings     # ZERO warnings policy
-asimov-mode validate .          # Protocol validation
-asimov-mode lint-docs docs/     # Documentation linting
-asimov-mode refresh             # Context injection
+asimov validate .          # Protocol validation
+asimov lint-docs docs/     # Documentation linting
+asimov refresh             # Context injection
 ```
 
 ### Release Profile (Optimized Builds)
@@ -671,12 +671,12 @@ For teams building **complete products** (not just code), the Asimov Protocol pr
 
 ### Asimov Protocol
 
-- **GitHub Repository**: [https://github.com/royalbit/asimov-protocol](https://github.com/royalbit/asimov-protocol)
-- **crates.io**: [https://crates.io/crates/asimov-mode](https://crates.io/crates/asimov-mode)
-- **Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml)
-- **Ethics Protocol**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/ethics.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/ethics.yaml)
-- **Green Coding**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml)
-- **Anti-Sycophancy**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml)
+- **GitHub Repository**: [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
+- **crates.io**: [https://crates.io/crates/royalbit-asimov](https://crates.io/crates/royalbit-asimov)
+- **Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml)
+- **Ethics Protocol**: [https://github.com/royalbit/asimov/blob/main/.asimov/ethics.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/ethics.yaml)
+- **Green Coding**: [https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml)
+- **Anti-Sycophancy**: [https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml)
 
 ### Benchmarks & Tools
 

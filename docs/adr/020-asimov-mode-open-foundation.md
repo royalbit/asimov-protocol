@@ -108,16 +108,16 @@ third_law:
     on_confusion: "Re-read asimov.yaml, wait for human"
 ```
 
-### 3. Archive asimov-mode, Create asimov-protocol
+### 3. Archive asimov, Create asimov
 
 Given the small adoption (2 GitHub stars, 206 crate downloads), now is the time for a clean break:
 
 | Old | New |
 |-----|-----|
-| `royalbit/asimov-mode` | ARCHIVED (read-only, points to new repo) |
-| `royalbit/asimov-protocol` | NEW (fresh start, v5.0.0) |
-| `asimov-mode` crate | YANKED (all versions) |
-| `asimov-protocol` crate | NEW (v5.0.0+) |
+| `royalbit/asimov` | ARCHIVED (read-only, points to new repo) |
+| `royalbit/asimov` | NEW (fresh start, v5.0.0) |
+| `asimov` crate | YANKED (all versions) |
+| `asimov` crate | NEW (v5.0.0+) |
 
 The archived repo preserves history transparently. The new repo starts clean.
 
@@ -127,7 +127,7 @@ The Forge calculator repo also uses "ASIMOV MODE" language. It will be updated:
 
 - Remove Sarah Connor quote
 - Replace ASIMOV with ASIMOV
-- Update cross-references to asimov-protocol
+- Update cross-references to asimov
 
 ### 5. The Narrative
 
@@ -192,10 +192,10 @@ The Foundation parallel works, but only if inverted:
 
 ### Migration Path
 
-1. Create `asimov-protocol` repo with v5.0.0
-2. Archive `asimov-mode` with redirect README
-3. Yank all `asimov-mode` crate versions
-4. Publish `asimov-protocol` crate
+1. Create `asimov` repo with v5.0.0
+2. Archive `asimov` with redirect README
+3. Yank all `asimov` crate versions
+4. Publish `asimov` crate
 5. Update Forge repo references
 6. Announce the transition
 

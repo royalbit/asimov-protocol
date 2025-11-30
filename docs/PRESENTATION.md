@@ -162,7 +162,7 @@ Every session is a **bounded sprint**:
 
 **At scale:** 100 teams = 6.2 tonnes CO₂ saved/year
 
-*Every `asimov-mode init` project is a green-coding project.*
+*Every `asimov init` project is a green-coding project.*
 
 ---
 
@@ -177,7 +177,7 @@ Every session is a **bounded sprint**:
 
 *Files portable. Magic isn't.*
 
-**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -204,13 +204,13 @@ claude --dangerously-skip-permissions
 
 ```bash
 # Install (1.3MB binary)
-cargo install asimov-mode
+cargo install royalbit-asimov
 
 # Full ASIMOV MODE setup
-asimov-mode init --type rust --asimov
+asimov init --type rust --asimov
 
 # Validate ($0, <100ms, 99.6% less CO₂)
-asimov-mode validate
+asimov validate
 ```
 
 **Types:** `rust`, `python`, `node`, `go`, `flutter`, `docs`, `generic`
@@ -219,7 +219,7 @@ asimov-mode validate
 
 # Questions?
 
-**Protocol:** [https://github.com/royalbit/asimov-protocol](https://github.com/royalbit/asimov-protocol)
+**Protocol:** [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 **Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
 **ASIMOV MODE v2.1 = Five Components:**

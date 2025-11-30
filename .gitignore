@@ -15,3 +15,5 @@ forge-protocol-*
 
 # Self-Healing Protocol checkpoint (session-specific, not committed)
 .claude_checkpoint.yaml
+asimov-protocol-upx
+asimov-upx

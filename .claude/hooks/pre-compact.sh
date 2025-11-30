@@ -11,7 +11,7 @@
 #
 # When exit code is 0, stdout is injected into Claude's context.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -e

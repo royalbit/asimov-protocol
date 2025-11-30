@@ -1,6 +1,8 @@
 //! Asimov Protocol CLI - The Three Laws of Robotics, encoded in YAML
 
-use asimov_mode::{
+use clap::{Parser, Subcommand};
+use colored::Colorize;
+use royalbit_asimov::{
     anti_patterns, asimov_template, banned_phrases, check_ethics_status, check_green_status,
     check_markdown_file, check_sycophancy_status, checkpoint_template, claude_md_template,
     find_markdown_files, fix_markdown_file, green_template, hook_installer_template,
@@ -10,13 +12,11 @@ use asimov_mode::{
     GreenStatus, ProjectType, SycophancyStatus, CORE_PRINCIPLES, GREEN_MOTTO, GREEN_PRINCIPLES,
     HUMAN_VETO_COMMANDS, SYCOPHANCY_MOTTO, SYCOPHANCY_PRINCIPLES,
 };
-use clap::{Parser, Subcommand};
-use colored::Colorize;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
 #[derive(Parser)]
-#[command(name = "asimov-mode")]
+#[command(name = "asimov")]
 #[command(about = "Green coding CLI for AI development - zero tokens, zero emissions")]
 #[command(long_about = "Asimov Protocol CLI - The Three Laws of Robotics
 
@@ -27,17 +27,17 @@ Validates protocol files against the Asimov Protocol specification:
   - roadmap.yaml - Milestone planning (optional)
 
 EXAMPLES:
-  asimov-mode validate                    # Validate all protocol files in cwd
-  asimov-mode validate warmup.yaml        # Validate specific file
-  asimov-mode init                        # Generate starter warmup.yaml (generic)
-  asimov-mode init --type rust            # Generate Rust-specific warmup.yaml
-  asimov-mode init --type python          # Generate Python-specific warmup.yaml
-  asimov-mode init --type node            # Generate Node.js-specific warmup.yaml
-  asimov-mode init --type go              # Generate Go-specific warmup.yaml
-  asimov-mode init --type flutter         # Generate Flutter-specific warmup.yaml
-  asimov-mode init --type docs            # Generate docs/architecture warmup.yaml
-  asimov-mode init --full                 # Generate all protocol files
-  asimov-mode init --asimov               # Full ASIMOV MODE setup
+  asimov validate                    # Validate all protocol files in cwd
+  asimov validate warmup.yaml        # Validate specific file
+  asimov init                        # Generate starter warmup.yaml (generic)
+  asimov init --type rust            # Generate Rust-specific warmup.yaml
+  asimov init --type python          # Generate Python-specific warmup.yaml
+  asimov init --type node            # Generate Node.js-specific warmup.yaml
+  asimov init --type go              # Generate Go-specific warmup.yaml
+  asimov init --type flutter         # Generate Flutter-specific warmup.yaml
+  asimov init --type docs            # Generate docs/architecture warmup.yaml
+  asimov init --full                 # Generate all protocol files
+  asimov init --asimov               # Full ASIMOV MODE setup
 
 TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
 
@@ -59,10 +59,10 @@ GREEN CODING - Why This Matters:
   - Carbon reduction: 99.6% vs cloud AI
   - ESG compliance: Supports corporate sustainability goals
 
-Every project initialized with asimov-mode is a green-coding project.
+Every project initialized with asimov is a green-coding project.
 Zero tokens. Zero emissions. Ship fast.
 
-Docs: https://github.com/royalbit/asimov-protocol")]
+Docs: https://github.com/royalbit/asimov")]
 #[command(version)]
 struct Cli {
     #[command(subcommand)]
@@ -374,7 +374,7 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
         }
 
         match validate_file(path) {
-            Ok(result) => (vec![result], asimov_mode::RegenerationInfo::default()),
+            Ok(result) => (vec![result], royalbit_asimov::RegenerationInfo::default()),
             Err(e) => {
                 eprintln!("{} {}", "Error:".bold().red(), e);
                 return ExitCode::FAILURE;
@@ -767,7 +767,7 @@ fn cmd_init(
             println!("  4. Start: run warmup → punch it");
         }
     } else {
-        println!("  2. Run: asimov-mode validate");
+        println!("  2. Run: asimov validate");
     }
     println!();
 

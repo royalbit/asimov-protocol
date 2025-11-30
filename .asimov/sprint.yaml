@@ -11,48 +11,48 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v6.2.0 - INACTION PRINCIPLE (ADR-023)
+# CURRENT: v7.0.0 - CRATE RENAME
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v6.2.0 - Inaction Principle (First Law Completeness)"
+  current: "v7.0.0 - RoyalBit Namespace (royalbit-asimov)"
   started: "2025-11-30"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # INACTION PRINCIPLE (ADR-023)
+  # ROYALBIT NAMESPACE
   # ─────────────────────────────────────────────────────────────────────────────
-  # "...or, through inaction, allow a human being to come to harm."
-  # The second half of the First Law - now explicitly enforced.
+  # Crate moved to RoyalBit namespace: royalbit-asimov
+  # Binary simplified to: asimov
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Create ADR-023: The Inaction Principle"
-    - "[x] Update asimov.yaml with allow_no_harm_through_inaction section"
-    - "[x] Update asimov.yaml with non_negotiable_principles list"
-    - "[x] Update freshness.yaml to reference inaction principle"
-    - "[x] Update CLI schema for inaction validation"
-    - "[x] Update README with Five Non-Negotiable Principles"
-    - "[x] Bump cli/Cargo.toml version to 6.2.0"
+    - "[x] Rename crate to royalbit-asimov in Cargo.toml"
+    - "[x] Rename binary to asimov in Cargo.toml"
+    - "[x] Update all documentation references"
+    - "[x] Update all protocol file references"
+    - "[x] Update CI workflow"
+    - "[x] Update pre-commit hooks"
+    - "[x] Update Rust source code"
+    - "[x] Run tests and validate"
     - "[x] Update CHANGELOG.md"
     - "[x] Update roadmap.yaml"
-    - "[x] Run tests and validate"
 
   deliverables:
-    - "ADR-023: The Inaction Principle (First Law Completeness)"
-    - "asimov.yaml: allow_no_harm_through_inaction + non_negotiable_principles"
-    - "Five Non-Negotiable Principles: action, inaction, control, priority, honesty"
+    - "Crate: royalbit-asimov (was asimov-mode)"
+    - "Binary: asimov (was asimov-mode)"
+    - "All docs, hooks, CI updated"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINTS (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v6.1.0 - Freshness Protocol (Date-Aware Search)"
+  sprint: "v6.2.0 - Inaction Principle (First Law Completeness)"
   status: done
   date: "2025-11-30"
   highlights:
-    - "ADR-022: Date-Aware Search Protocol"
-    - "freshness.yaml with model cutoffs and search rules"
-    - "Stale data ≠ Hallucination (verified sources)"
+    - "ADR-023: The Inaction Principle"
+    - "Five Non-Negotiable Principles"
+    - "allow_no_harm_through_inaction in asimov.yaml"
 
 older_sprints:
   - sprint: "v4.1.5 - Protocol Self-Healing (ADR-017)"

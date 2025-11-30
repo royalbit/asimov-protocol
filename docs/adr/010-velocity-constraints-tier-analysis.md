@@ -31,12 +31,12 @@ This is **proven data** from git logs, not a projection. Published on [crates.io
 
 ### Bootstrapping Proof
 
-The protocol built itself — asimov-mode was developed using asimov-mode:
+The protocol built itself — asimov was developed using asimov:
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | forge | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| asimov-mode | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
+| asimov | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -129,9 +129,9 @@ The real optimization is **subscription tier** and **context window size**.
 
 ### Velocity Proof
 - [Forge Project](https://github.com/royalbit/forge) - 18K LOC, 226 tests, 41 releases
-- [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - 17K LOC, 10 releases (self-hosted)
+- [Asimov Protocol](https://github.com/royalbit/asimov) - 17K LOC, 10 releases (self-hosted)
 - [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge) - Published, 646+ downloads
-- [crates.io/asimov-mode](https://crates.io/crates/asimov-mode) - Published
+- [crates.io/royalbit-asimov](https://crates.io/crates/royalbit-asimov) - Published
 
 ### AI Productivity Research
 - [GitHub Copilot Study](https://arxiv.org/abs/2302.06590) - 1.1-1.6x productivity (vs Forge 50-150x)

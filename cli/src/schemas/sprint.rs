@@ -3,7 +3,7 @@
 pub const SPRINT_SCHEMA: &str = r#"
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/royalbit/asimov-protocol/schemas/sprint.json",
+  "$id": "https://github.com/royalbit/asimov/schemas/sprint.json",
   "title": "Asimov Protocol - sprint.yaml",
   "description": "Active work tracking for the Asimov Protocol",
   "type": "object",

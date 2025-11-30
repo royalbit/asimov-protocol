@@ -12,22 +12,22 @@ Markdown rendering breaks silently. Common issues:
 | Unclosed blocks | Missing ` ``` ` | Rest of doc is code |
 | Invalid mermaid | Syntax errors | Blank diagram |
 
-## The Solution: asimov-mode lint-docs
+## The Solution: asimov lint-docs
 
-The `asimov-mode` CLI includes a documentation linter that catches common issues.
+The `asimov` CLI includes a documentation linter that catches common issues.
 
 ```bash
 # Install
-cargo install asimov-mode
+cargo install royalbit-asimov
 
 # Check documentation
-asimov-mode lint-docs                 # Check current directory
-asimov-mode lint-docs docs/           # Check specific directory
-asimov-mode lint-docs README.md       # Check specific file
+asimov lint-docs                 # Check current directory
+asimov lint-docs docs/           # Check specific directory
+asimov lint-docs README.md       # Check specific file
 
 # Auto-fix issues
-asimov-mode lint-docs --fix           # Fix all files
-asimov-mode lint-docs docs/ --fix     # Fix specific directory
+asimov lint-docs --fix           # Fix all files
+asimov lint-docs docs/ --fix     # Fix specific directory
 ```
 
 ## What It Checks
@@ -84,8 +84,8 @@ Add to `.git/hooks/pre-commit`:
 #!/bin/bash
 
 # Lint documentation
-if command -v asimov-mode &> /dev/null; then
-    asimov-mode lint-docs . || exit 1
+if command -v asimov &> /dev/null; then
+    asimov lint-docs . || exit 1
 fi
 ```
 
@@ -103,21 +103,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install asimov-mode
-        run: cargo install asimov-mode
+      - name: Install asimov
+        run: cargo install royalbit-asimov
 
       - name: Lint documentation
-        run: asimov-mode lint-docs .
+        run: asimov lint-docs .
 ```
 
 ### Makefile
 
 ```makefile
 lint-docs:
-	asimov-mode lint-docs .
+	asimov lint-docs .
 
 fix-docs:
-	asimov-mode lint-docs --fix .
+	asimov lint-docs --fix .
 ```
 
 ## Combined Workflow
@@ -125,21 +125,21 @@ fix-docs:
 For comprehensive documentation quality:
 
 ```bash
-# 1. Check code blocks (asimov-mode)
-asimov-mode lint-docs .
+# 1. Check code blocks (asimov)
+asimov lint-docs .
 
 # 2. Check standard markdown rules (markdownlint)
 markdownlint-cli2 "**/*.md"
 
 # 3. Validate protocol files
-asimov-mode validate
+asimov validate
 ```
 
 ## Related Tools
 
 | Tool | Purpose | Install |
 |------|---------|---------|
-| `asimov-mode lint-docs` | Code block closers | `cargo install asimov-mode` |
+| `asimov lint-docs` | Code block closers | `cargo install royalbit-asimov` |
 | `markdownlint-cli2` | Standard markdown rules | `npm i -g markdownlint-cli2` |
 | `mermaid-cli` | Mermaid diagram validation | `npm i -g @mermaid-js/mermaid-cli` |
 
@@ -220,7 +220,7 @@ GitHub auto-detects user's theme preference. Any customization overrides this.
 
 ```bash
 # One command to enforce documentation standards
-asimov-mode lint-docs --fix .
+asimov lint-docs --fix .
 ```
 
 **Result:** Documentation that renders correctly everywhere.

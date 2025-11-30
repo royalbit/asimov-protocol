@@ -65,7 +65,7 @@ This is the v2.1.0 innovation that makes ASIMOV MODE resilient:
 ```mermaid
 flowchart TB
     A["Git commit triggers"] --> B["Pre-commit hook runs"]
-    B --> C["asimov-mode refresh outputs banner"]
+    B --> C["asimov refresh outputs banner"]
     C --> D["Terminal shows ASIMOV MODE reminder"]
     D --> E["Claude Code SEES terminal output"]
     E --> F["Fresh context injection<br/>(not compacted!)"]
@@ -97,10 +97,10 @@ Anyone can use these files - just paste them:
 ### The Validation CLI (Universal)
 
 ```bash
-cargo install asimov-mode
-asimov-mode validate          # Works anywhere
-asimov-mode lint-docs         # Works anywhere
-asimov-mode init              # Works anywhere
+cargo install royalbit-asimov
+asimov validate          # Works anywhere
+asimov lint-docs         # Works anywhere
+asimov init              # Works anywhere
 ```
 
 The CLI is just a Rust binary. It doesn't need AI integration.

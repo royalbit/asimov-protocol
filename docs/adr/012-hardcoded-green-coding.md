@@ -82,7 +82,7 @@ pub const GREEN_PRINCIPLES: &[&str] = &[
 #### Level 1: Green Score in Validation
 
 ```bash
-asimov-mode validate
+asimov validate
 
 # Output includes green metrics
 ✓ All files valid
@@ -95,7 +95,7 @@ asimov-mode validate
 #### Level 2: Binary Size Tracking
 
 ```bash
-asimov-mode validate --green-audit
+asimov validate --green-audit
 
 # Checks for green coding compliance
 Green Audit:
@@ -109,7 +109,7 @@ Green Audit:
 
 ```bash
 # At end of Claude Code session
-asimov-mode green-report
+asimov green-report
 
 Session Green Metrics:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -127,7 +127,7 @@ Cost saved: $189.50
 #### Level 4: Green Badge
 
 ```bash
-asimov-mode green-badge
+asimov green-badge
 
 # Generates badge for README
 ![Green Coding](https://img.shields.io/badge/Green%20Score-98%2F100-brightgreen)

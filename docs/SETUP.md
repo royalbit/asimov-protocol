@@ -5,11 +5,11 @@
 ## Quick Start
 
 ```bash
-# Install asimov-mode
-cargo install asimov-mode
+# Install asimov
+cargo install royalbit-asimov
 
 # Full ASIMOV MODE setup
-asimov-mode init --type rust --asimov
+asimov init --type rust --asimov
 
 # Launch and go
 claude --dangerously-skip-permissions
@@ -41,7 +41,7 @@ project/
 ### Rust
 
 ```bash
-asimov-mode init --type rust --asimov
+asimov init --type rust --asimov
 ```
 
 **Hooks:** Uses cargo-husky (add to Cargo.toml dev-dependencies)
@@ -54,7 +54,7 @@ asimov-mode init --type rust --asimov
 ### Python
 
 ```bash
-asimov-mode init --type python --asimov
+asimov init --type python --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit` + `.hooks/install.sh`
@@ -68,7 +68,7 @@ asimov-mode init --type python --asimov
 ### Node.js
 
 ```bash
-asimov-mode init --type node --asimov
+asimov init --type node --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit` (or use husky)
@@ -81,7 +81,7 @@ asimov-mode init --type node --asimov
 ### Go
 
 ```bash
-asimov-mode init --type go --asimov
+asimov init --type go --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
@@ -94,7 +94,7 @@ asimov-mode init --type go --asimov
 ### Flutter
 
 ```bash
-asimov-mode init --type flutter --asimov
+asimov init --type flutter --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
@@ -107,13 +107,13 @@ asimov-mode init --type flutter --asimov
 ### Documentation
 
 ```bash
-asimov-mode init --type docs --asimov
+asimov init --type docs --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
 
 **Quality gates:**
-- `asimov-mode lint-docs .`
+- `asimov lint-docs .`
 - `markdownlint '**/*.md'`
 
 ## Post-Setup Steps
@@ -145,7 +145,7 @@ $EDITOR .asimov/roadmap.yaml
 ### 3. Validate
 
 ```bash
-asimov-mode validate
+asimov validate
 ```
 
 ### 4. Launch ASIMOV MODE
@@ -166,7 +166,7 @@ claude --dangerously-skip-permissions
 ls -la .asimov/ CLAUDE.md
 
 # Validate protocol
-asimov-mode validate
+asimov validate
 
 # Check hooks installed
 ls -la .git/hooks/pre-commit
@@ -179,7 +179,7 @@ git commit --allow-empty -m "test" --dry-run
 
 ### "warmup.yaml not found"
 ```bash
-asimov-mode init --type <your-type> --asimov
+asimov init --type <your-type> --asimov
 ```
 
 ### "Hooks not running"

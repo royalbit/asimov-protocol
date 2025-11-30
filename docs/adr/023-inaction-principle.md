@@ -150,7 +150,7 @@ The Asimov Protocol now makes this explicit and enforceable.
 
 - Isaac Asimov, "Runaround" (1942) - First appearance of Three Laws
 - [ADR-022: Date-Aware Search Protocol](./022-date-aware-search-protocol.md) - Freshness Protocol
-- [ADR-020: The Open Foundation](./020-asimov-mode-open-foundation.md) - Three Laws in YAML
+- [ADR-020: The Open Foundation](./020-asimov-open-foundation.md) - Three Laws in YAML
 - [The Information: Anthropic's Gross Margin](https://www.theinformation.com/articles/anthropics-gross-margin-flags-long-term-ai-profit-questions) - Vendor economics
 
 ## Notes

@@ -43,7 +43,7 @@ Why the gap?
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | forge | 18,338 | 41 | ~38 | crates.io |
-| asimov-mode | 17,118 | 10 | ~9 | crates.io |
+| asimov | 17,118 | 10 | ~9 | crates.io |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -180,7 +180,7 @@ Not optional. Required.
 > "Don't believe us. Check the git logs. It's all public."
 
 - [Forge commits](https://github.com/royalbit/forge/commits)
-- [Protocol commits](https://github.com/royalbit/asimov-protocol/commits)
+- [Protocol commits](https://github.com/royalbit/asimov/commits)
 - [crates.io downloads](https://crates.io/crates/royalbit-forge)
 
 ### For the Pragmatist
@@ -188,8 +188,8 @@ Not optional. Required.
 > "MIT licensed. Free. Try it on your next project."
 
 ```bash
-cargo install asimov-mode
-asimov-mode init --type rust
+cargo install royalbit-asimov
+asimov init --type rust
 ```
 
 ### For the Visionary
@@ -215,9 +215,9 @@ asimov-mode init --type rust
 ### The CLI (Free)
 
 ```bash
-asimov-mode validate        # Check your files
-asimov-mode init            # Generate templates
-asimov-mode validate --ethics-check  # Verify ethics
+asimov validate        # Check your files
+asimov init            # Generate templates
+asimov validate --ethics-check  # Verify ethics
 ```
 
 ### The Methodology (Documented)
@@ -235,9 +235,9 @@ asimov-mode validate --ethics-check  # Verify ethics
 ### 5 Minutes
 
 ```bash
-cargo install asimov-mode
+cargo install royalbit-asimov
 cd your-project
-asimov-mode init --type rust
+asimov init --type rust
 ```
 
 ### First Session
@@ -272,4 +272,4 @@ AI: [reports completion at gate]
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - 50-150x developer velocity with ethics built in.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov) - 50-150x developer velocity with ethics built in.*

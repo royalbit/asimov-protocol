@@ -4,17 +4,17 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "6.2.0"
+  version: "7.0.0"
   status: released
-  summary: "Inaction Principle (First Law Completeness)"
-  goal: ETHICAL_AUTONOMY
+  summary: "RoyalBit Namespace (royalbit-asimov crate, asimov binary)"
+  goal: CONSISTENCY
 
 next:
-  - version: "6.3.0"
+  - version: "7.1.0"
     summary: "JSON Schema for Editors"
     goal: DX_QUALITY
 
-  - version: "6.4.0"
+  - version: "7.2.0"
     summary: "Schema Standardization"
     goal: ANTI_HALLUCINATION
 

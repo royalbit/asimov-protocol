@@ -8,7 +8,7 @@
 
 ADR-002 introduced the Self-Healing Protocol with a "2-hour checkpoint" interval. This was **fiction** - a reasonable-sounding number not based on empirical data.
 
-This ADR documents **real compaction patterns** observed from building asimov-mode itself, and proposes a corrected self-healing mechanism.
+This ADR documents **real compaction patterns** observed from building asimov itself, and proposes a corrected self-healing mechanism.
 
 ### The Problem with ADR-002
 
@@ -43,7 +43,7 @@ alias: "claude --dangerously-skip-permissions --model opus"
 
 **Critical insight:** User's thinking budget equals the entire context window.
 
-### asimov-mode Build Data
+### asimov Build Data
 
 **Project statistics:**
 - Total source: ~394KB (~98,000 tokens)
@@ -205,7 +205,7 @@ on_confusion: "cat warmup.yaml && cat .claude_checkpoint.yaml"
 ## Implementation
 
 1. Update CLAUDE.md template in CLI
-2. Add `.forge/` directory support to `asimov-mode init`
+2. Add `.forge/` directory support to `asimov init`
 3. Update warmup.yaml to reference modules
 4. Add checkpoint writing to autonomous session flow
 5. Document new patterns in SPECIFICATION.md v2.0
@@ -227,7 +227,7 @@ ls .forge/*.yaml
 
 ### Empirical Data
 
-- asimov-mode git log: 32 commits analyzed
+- asimov git log: 32 commits analyzed
 - Session timestamps: Nov 25-26, 2025
 - Token estimates: Based on Opus 4.5 specs + user settings
 

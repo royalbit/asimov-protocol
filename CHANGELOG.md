@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0] - 2025-11-30
+
+### BREAKING: Renamed to `royalbit-asimov` (crate) / `asimov` (binary)
+
+**Crate namespace under RoyalBit. Binary name simplified to `asimov`.**
+
+#### What Changed
+
+| Before (v6.x) | After (v7.0.0) |
+|---------------|----------------|
+| `cargo install asimov-mode` | `cargo install royalbit-asimov` |
+| `asimov-mode validate` | `asimov validate` |
+| `asimov-mode init` | `asimov init` |
+| crates.io/asimov-mode | crates.io/royalbit-asimov |
+
+#### Migration
+
+```bash
+# Uninstall old binary
+cargo uninstall asimov-mode
+
+# Install new binary
+cargo install royalbit-asimov
+```
+
+#### Why Breaking?
+
+- Binary name changed: `asimov-mode` → `asimov`
+- Crate name changed on crates.io
+- All documentation, scripts, and hooks updated
+
+**No protocol file changes.** Your `.asimov/` directory and YAML files work unchanged.
+
+---
+
 ## [6.2.0] - 2025-11-30
 
 ### Added: The Inaction Principle (First Law Completeness)
@@ -109,8 +144,8 @@ This is a major structural change that cleans up the repository root and follows
 #### CLI Changes
 
 - CLI looks in `.asimov/` first, falls back to root for backwards compatibility
-- `asimov-mode init` now creates files in `.asimov/` directory
-- `asimov-mode validate` checks `.asimov/` directory
+- `asimov init` now creates files in `.asimov/` directory
+- `asimov validate` checks `.asimov/` directory
 - Regeneration creates files in `.asimov/`
 
 #### CLAUDE.md Changes
@@ -153,8 +188,8 @@ GitHub Actions now validates protocol files on every push and PR.
 #### CI Changes
 
 - **New job**: `Protocol Validation` in `.github/workflows/ci.yml`
-- **Runs**: `asimov-mode validate` - checks all protocol files
-- **Runs**: `asimov-mode lint-docs` - lints markdown documentation
+- **Runs**: `asimov validate` - checks all protocol files
+- **Runs**: `asimov lint-docs` - lints markdown documentation
 - **Quality gate**: PRs blocked if protocol files are invalid
 
 #### Why This Matters
@@ -166,9 +201,9 @@ Protocol validation was only running locally (pre-commit hook). Now it's enforce
 ### Fixed: Complete Rebrand Cleanup
 
 - **Remove**: `--skynet` CLI flag (was hidden deprecated alias)
-- **Fix**: Repository URLs in docs (asimov-mode → asimov-protocol)
+- **Fix**: Repository URLs in docs (asimov → asimov)
 - **Fix**: ADR documentation (--skynet → --asimov references)
-- **Fix**: Pre-commit hook now uses asimov-mode
+- **Fix**: Pre-commit hook now uses asimov
 
 ## [5.1.0] - 2025-11-30
 
@@ -201,8 +236,8 @@ Green coding principles now compiled into the CLI binary - cannot be removed by 
 
 #### CLI Changes
 
-- `asimov-mode validate` now shows Green Coding status
-- `asimov-mode refresh` displays green principles and anti-pattern count
+- `asimov validate` now shows Green Coding status
+- `asimov refresh` displays green principles and anti-pattern count
 - Refresh command labels rebranded (FORGE → ASIMOV)
 
 #### Integration
@@ -230,7 +265,7 @@ Comprehensive update of all documentation to use Asimov Protocol branding.
 - **Update**: CONTRIBUTING.md, close-external-prs.yml workflow
 - **Update**: All docs/ files - replace Forge Protocol → Asimov Protocol
 - **Update**: All `--skynet` flags → `--asimov` in documentation
-- **Update**: All `forge-protocol` commands → `asimov-mode`
+- **Update**: All `forge-protocol` commands → `asimov`
 - **Preserve**: Historical references in README.md and ADR-020 (intentional)
 
 ## [5.0.2] - 2025-11-30
@@ -248,9 +283,9 @@ Bug fixes to complete the v5.0.0 rebrand.
 #### Changes
 
 - **Fix CI**: Resolve clippy `assertions_on_constants` warning in ethics tests
-- **Fix e2e tests**: Update binary name from `forge-protocol` to `asimov-mode`
-- **Fix CI workflow**: Update binary check to `asimov-mode`
-- **Fix pre-commit hook**: Update to use `asimov-mode` binary
+- **Fix e2e tests**: Update binary name from `forge-protocol` to `asimov`
+- **Fix CI workflow**: Update binary check to `asimov`
+- **Fix pre-commit hook**: Update to use `asimov` binary
 - **Fix hooks**: Rebrand session-start.sh and pre-compact.sh to Asimov Protocol
 - **Fix green.yaml**: Update remaining Forge Protocol references
 - **Fix markdownlint**: Update config comment
@@ -268,16 +303,16 @@ Major breaking release: complete rebrand from "Forge Protocol" to "Asimov Protoc
 | Old | New |
 |-----|-----|
 | Forge Protocol | Asimov Protocol |
-| forge-protocol (crate) | asimov-mode (crate) |
-| forge-protocol (binary) | asimov-mode (binary) |
+| forge-protocol (crate) | asimov (crate) |
+| forge-protocol (binary) | asimov (binary) |
 
 #### Why v5.0.0?
 
 This is a major breaking change:
 - Crate name changed on crates.io
 - Binary name changed
-- All CLI commands now use `asimov-mode` instead of `forge-protocol`
-- GitHub repo renamed to `asimov-protocol`
+- All CLI commands now use `asimov` instead of `forge-protocol`
+- GitHub repo renamed to `asimov`
 
 #### Migration
 
@@ -286,15 +321,15 @@ This is a major breaking change:
 cargo uninstall forge-protocol
 
 # Install new
-cargo install asimov-mode
+cargo install royalbit-asimov
 ```
 
 #### The Name
 
-"asimov-protocol" was taken on crates.io (different project at v25.0.2).
-"asimov-mode" matches our terminology: "ASIMOV MODE ACTIVATED".
+"asimov" was taken on crates.io (different project at v25.0.2).
+"asimov" matches our terminology: "ASIMOV MODE ACTIVATED".
 
-See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for full rationale.
+See [ADR-020](docs/adr/020-asimov-open-foundation.md) for full rationale.
 
 ## [4.2.0] - 2025-11-29
 
@@ -327,7 +362,7 @@ Rename to "Asimov Mode" and restructure ethics around the explicit Three Laws:
 #### New Files
 
 - `asimov.yaml` - The Three Laws of Robotics in YAML
-- `docs/adr/020-asimov-mode-open-foundation.md` - The manifesto
+- `docs/adr/020-asimov-open-foundation.md` - The manifesto
 
 #### CLI Changes
 
@@ -342,7 +377,7 @@ Rename to "Asimov Mode" and restructure ethics around the explicit Three Laws:
 > Inspect the code. Challenge the rules. Fork if you disagree.
 > Adoption through consent, not control.
 
-See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for full rationale.
+See [ADR-020](docs/adr/020-asimov-open-foundation.md) for full rationale.
 
 ## [4.1.9] - 2025-11-29
 

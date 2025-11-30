@@ -19,8 +19,8 @@ No exceptions. No "I'll fix it later."
 | Tests | `cargo test` | All pass |
 | Lint | `cargo clippy -- -D warnings` | Zero warnings |
 | Format | `cargo fmt --check` | No changes needed |
-| Docs | `asimov-mode lint-docs` | No errors |
-| Protocol | `asimov-mode validate` | Valid YAML |
+| Docs | `asimov lint-docs` | No errors |
+| Protocol | `asimov validate` | Valid YAML |
 
 ## Why Zero Warnings?
 
@@ -93,8 +93,8 @@ echo "Checking format..."
 cargo fmt --check
 
 echo "Validating protocol..."
-asimov-mode validate . || true
-asimov-mode lint-docs . || exit 1
+asimov validate . || true
+asimov lint-docs . || exit 1
 
 echo "All gates passed!"
 ```
