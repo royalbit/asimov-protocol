@@ -2,7 +2,7 @@
 
 **Location:** Montreal, Quebec, Canada
 **Industry:** AI/Software Development
-**Project:** RoyalBit Asimov - Autonomous AI Session Continuity
+**Project:** RoyalBit Asimov - Self-Evolving Autonomous AI Protocol
 **Last Updated:** 2025-11-29
 
 ---

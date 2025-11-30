@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-The RoyalBit Asimov is a structured methodology that enables AI to work autonomously across multiple sessions with zero context loss. It's the secret sauce behind Forge v1.0.0 → v3.1.0 being built entirely by Claude working independently through dozens of sessions.
+The RoyalBit Asimov is a structured methodology for Self-Evolving Autonomous AI with ethics built in. It enables AI to work autonomously across multiple sessions with zero context loss. It's the secret sauce behind Forge v1.0.0 → v3.1.0 being built entirely by Claude working independently through dozens of sessions.
 
 ## The Problem
 

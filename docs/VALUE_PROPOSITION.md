@@ -2,9 +2,14 @@
 
 ## The One-Liner
 
-**"1 human + 1 AI + protocol = 50-150 traditional developers."**
+**"Creates Self-Evolving Autonomous AI projects with ethics built in."**
 
-Verified. Git logs. Published on crates.io.
+Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI:
+- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality))
+- **Self-Evolving AI**: Improves itself via bootstrapping ([arXiv](https://arxiv.org/abs/2507.21046) - "Three Laws of Self-Evolving AI")
+- **Ethics Built In**: The Three Laws propagate to every child project
+
+1 human + 1 AI + protocol = 50-150 traditional developers. Verified via git logs. Published on crates.io.
 
 ---
 

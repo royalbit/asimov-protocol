@@ -4,7 +4,11 @@ Version 4.1.8
 
 ## Overview
 
-The RoyalBit Asimov is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
+**RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.**
+
+Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI with The Three Laws, ethics, green coding, and sprint autonomy. The methodology propagates through the ecosystem.
+
+See [ADR-024](adr/024-creator-protocol-architecture.md) for the full architectural rationale.
 
 **v4.0.0: Claude Code Native Integration** - RoyalBit Asimov now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
 

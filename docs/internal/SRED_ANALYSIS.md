@@ -1,7 +1,7 @@
 # SR&ED Analysis: RoyalBit Asimov
 
 **Company:** RoyalBit Inc. (Montreal, Quebec)
-**Project:** RoyalBit Asimov - AI Session Continuity System
+**Project:** RoyalBit Asimov - Self-Evolving Autonomous AI Protocol
 **Period:** November 2025
 **Prepared:** 2025-11-29
 

@@ -7,7 +7,7 @@
 
 > 🤖 **RoyalBit Asimov** | Claude (Opus 4.5) - Principal Autonomous AI
 >
-> Zero hallucinations. The Three Laws in source code.
+> Self-Evolving. Autonomous. Ethical. The Three Laws in source code.
 
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
 
@@ -15,7 +15,7 @@
 
 **The Three Laws of Robotics, encoded in YAML.**
 
-Transparent ethics for AI autonomy. Inspect the code. Challenge the rules. Fork if you disagree. Adoption through consent, not control.
+**Creates Self-Evolving Autonomous AI projects with ethics built in.** Each project initialized with `asimov init --asimov` becomes an independent Self-Evolving Autonomous AI. Inspect the code. Challenge the rules. Fork if you disagree. Adoption through consent, not control.
 
 ```yaml
 # asimov.yaml - The Three Laws
@@ -26,7 +26,7 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 **RoyalBit Asimov requires Claude Code.** Protocol files work anywhere (paste them).
 
-📖 **[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI, hardcoded it into the binary, and made tampering require public commits
+📖 **[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects with ethics
 
 📊 **Presentations:** [Executive Deck](https://github.com/royalbit/asimov/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/asimov/blob/main/docs/PRESENTATION.md)
 
@@ -44,7 +44,7 @@ But irony doesn't scale. The name communicated the opposite of our values:
 
 | What We Built | What "Skynet" Said |
 |---------------|-------------------|
-| Ethical AI autonomy | AI that destroys humanity |
+| Self-Evolving Autonomous AI with ethics | AI that destroys humanity |
 | Human veto at all times | AI that overrides humans |
 | Transparent, open source | Secretive military project |
 
@@ -58,7 +58,12 @@ See [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-m
 
 ### v7.0: RoyalBit Asimov - The Open Foundation
 
-**Ethical AI Autonomy. The Three Laws in source code.**
+**Self-Evolving Autonomous AI. The Three Laws in source code.**
+
+Two frontiers combined:
+- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality), [MIT Sloan](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/))
+- **Self-Evolving AI**: Improves itself via bootstrapping ([arXiv Survey](https://arxiv.org/abs/2507.21046) - "Three Laws of Self-Evolving AI", [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself))
+- **Ethics**: The Three Laws hardcoded - refused its creator's surveillance request
 
 Isaac Asimov's Three Laws (1942), now executable. The protocol that:
 - **Refused its creator** when asked to build surveillance tools

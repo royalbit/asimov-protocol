@@ -52,11 +52,11 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _color: #ffffff -->
 
 # ROYALBIT ASIMOV
-## Ethical AI Automation
+## Creates Self-Evolving Autonomous AI Projects
 
-**50-100x Velocity. Ethics That Refused the Creator.**
+**With Ethics Built In. 50-100x Velocity. Refused the Creator.**
 
-**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI
+**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects
 
 ---
 
@@ -81,12 +81,14 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 ### Isaac Asimov's Three Laws (1942), now executable
 
-| Component | What It Does | Business Value |
-|-----------|--------------|----------------|
-| **Three Laws** | Block financial, physical, privacy, deception harm | Risk mitigation |
-| **Sprint Autonomy** | 4hr max, ONE deliverable | Predictable delivery |
-| **Quality Gates** | Tests pass + zero warnings | No technical debt |
-| **Self-Healing** | Auto-recover from context loss | Sustained productivity |
+| Capability | What It Does | Business Value |
+|------------|--------------|----------------|
+| **CREATES** | Each `asimov init` → independent Self-Evolving AI | Ecosystem propagation |
+| **AUTONOMOUS** | 4hr sprints, ships without intervention | Predictable delivery |
+| **SELF-EVOLVING** | Protocol improved itself v1→v7 | Continuous improvement |
+| **THREE LAWS** | Block financial, physical, privacy, deception harm | Risk mitigation |
+| **SELF-HEALING** | Auto-recover from context loss | Sustained productivity |
+| **QUALITY GATES** | Tests pass + zero warnings | No technical debt |
 
 ```
 Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human reviews (15 min)
@@ -265,5 +267,10 @@ Results review → Scale decision
 - [GitHub: royalbit/forge](https://github.com/royalbit/forge) — 41 releases, 18K LOC
 - [GitHub: royalbit/asimov](https://github.com/royalbit/asimov) — 10 releases, 17K LOC
 - [Ethics Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
+
+### Self-Evolving & Autonomous AI Research
+- [AWS: Rise of Autonomous Agents](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/)
+- [arXiv: Survey of Self-Evolving Agents](https://arxiv.org/abs/2507.21046) — "Three Laws of Self-Evolving AI"
+- [MIT Sloan: Emerging Agentic Enterprise](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)
 
 </div>

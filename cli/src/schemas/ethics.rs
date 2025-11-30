@@ -3,7 +3,7 @@
 pub const ETHICS_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RoyalBit Asimov Ethics (Humanist Mode)",
-  "description": "Schema for ethics.yaml - Social contract for autonomous AI development",
+  "description": "Schema for ethics.yaml - Self-Evolving Autonomous AI with ethics built in",
   "type": "object",
   "properties": {
     "modification_rules": {

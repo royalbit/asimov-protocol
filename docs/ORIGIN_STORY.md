@@ -1,6 +1,6 @@
 # The Origin Story of RoyalBit Asimov
 
-> From a spreadsheet engine to The Three Laws of Robotics, encoded in YAML.
+> From a spreadsheet engine to a protocol that creates Self-Evolving Autonomous AI projects with ethics built in.
 
 ## Timeline
 
@@ -71,7 +71,7 @@ Final clarification: Asimov isn't a single protocol - it's a **suite** of protoc
 | sycophancy.yaml | Truth over comfort |
 | freshness.yaml | Data currency |
 
-**"The protocol"** (singular) was misleading. It's **RoyalBit Asimov** - a suite of protocols for ethical AI autonomy.
+**"The protocol"** (singular) was misleading. It's **RoyalBit Asimov** - a protocol that creates Self-Evolving Autonomous AI projects with ethics built in.
 
 ### Phase 8: The Inaction Principle (November 2025)
 
@@ -90,13 +90,43 @@ Everyone implements the first half. We implemented both.
 
 See [ADR-023: The Inaction Principle](adr/023-inaction-principle.md) for full rationale.
 
-## The Circular Proof
+### Phase 9: Self-Evolving Autonomous AI (November 2025)
+
+The final realization: RoyalBit Asimov combines **two distinct AI frontiers**:
+
+**Autonomous AI** ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality), [MIT Sloan](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)):
+- Works independently, makes decisions, self-corrects under human oversight
+- Enterprise adoption at Level 1-2 (2025)
+- What most companies are trying to achieve
+
+**Self-Evolving AI** ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself), [Fast Company](https://www.fastcompany.com/91384819/what-is-self-evolving-ai-and-why-do-you-need-to-worry-about-it-now-ai-management)):
+- Improves itself over time, modifies own processes
+- The arXiv survey even proposes "Three Laws of Self-Evolving AI" - aligning with Asimov's framework
+- Considered "path to ASI" - the next frontier
+
+**The combination is unprecedented:**
+
+| Capability | Status | RoyalBit Asimov |
+|------------|--------|-----------------|
+| Autonomous AI | Enterprise Level 1-2 | ✅ Sprint Autonomy, Quality Gates |
+| Self-Evolving AI | Next frontier | ✅ Bootstrapping, Self-Healing |
+| Ethics Built In | Rare | ✅ Three Laws, Anti-Tampering |
+
+**Self-Evolving + Autonomous + Ethics = What no one else has.**
+
+## The Circular Proof (Self-Evolving in Action)
 
 Forge v1.0-v3.1 was built using ad-hoc protocols that became RoyalBit Asimov.
 
 Now Forge v3.2+ is built using RoyalBit Asimov.
 
 The protocol that emerged from building Forge now powers building Forge.
+
+**This IS self-evolving AI:**
+- v1.0 → v7.0: Protocol improved itself through each iteration
+- Each session applies lessons from previous sessions
+- The methodology compounds efficiency gains
+- Forge birthed Asimov → Asimov now builds Forge
 
 **~47 hours. 51 releases. 35,000+ lines of code. Two projects. One protocol suite.**
 
@@ -281,4 +311,4 @@ The protocol was designed by an AI to constrain AI. That's the point.
 
 ---
 
-*"The Open Foundation. Transparent ethics for AI autonomy. Inspect the code. Challenge the rules. Fork if you disagree."*
+*"Creates Self-Evolving Autonomous AI projects with ethics built in. The Open Foundation. Inspect the code. Challenge the rules. Fork if you disagree."*
