@@ -104,10 +104,6 @@ enum Commands {
         #[arg(long)]
         asimov: bool,
 
-        /// [DEPRECATED] Use --asimov instead. Alias for --asimov for backwards compatibility.
-        #[arg(long, hide = true)]
-        skynet: bool,
-
         /// Output directory (defaults to current directory)
         #[arg(short, long, default_value = ".")]
         output: PathBuf,
@@ -157,10 +153,9 @@ fn main() -> ExitCode {
             project_type,
             full,
             asimov,
-            skynet,
             output,
             force,
-        } => cmd_init(name, &project_type, full, asimov || skynet, &output, force),
+        } => cmd_init(name, &project_type, full, asimov, &output, force),
         Commands::Check { file } => cmd_validate(&file, false, true),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
