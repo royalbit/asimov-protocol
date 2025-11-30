@@ -14,8 +14,14 @@ next:
     summary: "Freshness Protocol (Date-Aware Search)"
     goal: ANTI_HALLUCINATION
     adr: "ADR-022"
-    priority: "TOP"
-    rationale: "Users misattribute stale data as hallucination. Force search for time-sensitive queries."
+    priority: "CRITICAL"
+    rationale: |
+      CONFIRMED: Vendors don't search by default to save money.
+      - Search costs $0.01 + thousands of tokens per query
+      - Anthropic 2024 gross margin: NEGATIVE 109%
+      - Claude docs: "disable search to conserve usage"
+      Users blamed for "hallucination" when it's vendor cost optimization.
+      Stale data ≠ Hallucination. Different problem, different solution.
 
   - version: "6.2.0"
     summary: "Schema Standardization"
