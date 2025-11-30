@@ -334,11 +334,8 @@ fn validate_directory_internal(
         }
     }
 
-    // Also validate CLAUDE.md if present (size check only, not schema)
-    // CLAUDE.md stays in base_dir, not .asimov/
-    if let Some(claude_md_result) = validate_claude_md(base_dir) {
-        results.push(claude_md_result);
-    }
+    // CLAUDE.md validation removed - CLAUDE.md is deprecated (ADR-024)
+    // SessionStart hooks provide context injection without needing CLAUDE.md
 
     if results.is_empty() {
         return Err(Error::ValidationError(
