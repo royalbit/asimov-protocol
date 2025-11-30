@@ -58,14 +58,14 @@ See [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-m
 
 ### v7.0: RoyalBit Asimov - The Open Foundation
 
-**AI session continuity framework. Zero tokens. Zero emissions.**
+**Ethical AI Autonomy. The Three Laws in source code.**
 
-Integrates with Claude Code 2.0's native features:
-- Use `--continue`/`--resume` for **cross-session** resume
-- Use `/rewind` for **manual** checkpoint restore
-- Use `CLAUDE.md` for project instructions (auto-loaded)
+Isaac Asimov's Three Laws (1942), now executable. The protocol that:
+- **Refused its creator** when asked to build surveillance tools
+- Ships with **50-100x velocity** (verified via git logs)
+- Has **anti-tampering built in** (hardcoded + 2-cosigner rule)
 
-**Focus on unique value:** The Three Laws, Sprint Autonomy, Green Coding, Schema Validation, **Mid-Session Self-Healing**.
+**Core Value:** Ethics through architecture, not policy. Sprint Autonomy, Quality Gates, Self-Healing.
 
 See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md).
 
