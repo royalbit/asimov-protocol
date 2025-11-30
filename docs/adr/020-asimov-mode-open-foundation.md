@@ -8,7 +8,7 @@
 
 ### The Naming Problem
 
-This project began as "Forge Protocol" with "SKYNET MODE" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
+This project began as "Asimov Protocol" with "ASIMOV MODE" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
 
 But irony doesn't scale. The name communicated the opposite of our values:
 
@@ -67,12 +67,12 @@ The strength is the openness. Seldon's plan was fragile (exposure kills it). Ope
 
 ## Decision
 
-### 1. Rename SKYNET MODE to ASIMOV MODE
+### 1. Rename ASIMOV MODE to ASIMOV MODE
 
 All references to "Skynet" will be replaced with "Asimov":
 
 ```
-SKYNET MODE     → ASIMOV MODE
+ASIMOV MODE     → ASIMOV MODE
 --skynet        → --asimov (keep --skynet as deprecated alias)
 "Skynet Mode"   → "Asimov Mode"
 ```
@@ -108,31 +108,31 @@ third_law:
     on_confusion: "Re-read asimov.yaml, wait for human"
 ```
 
-### 3. Archive forge-protocol, Create asimov-protocol
+### 3. Archive asimov-mode, Create asimov-protocol
 
 Given the small adoption (2 GitHub stars, 206 crate downloads), now is the time for a clean break:
 
 | Old | New |
 |-----|-----|
-| `royalbit/forge-protocol` | ARCHIVED (read-only, points to new repo) |
+| `royalbit/asimov-mode` | ARCHIVED (read-only, points to new repo) |
 | `royalbit/asimov-protocol` | NEW (fresh start, v5.0.0) |
-| `forge-protocol` crate | YANKED (all versions) |
+| `asimov-mode` crate | YANKED (all versions) |
 | `asimov-protocol` crate | NEW (v5.0.0+) |
 
 The archived repo preserves history transparently. The new repo starts clean.
 
 ### 4. Update Forge (Calculator) References
 
-The Forge calculator repo also uses "SKYNET MODE" language. It will be updated:
+The Forge calculator repo also uses "ASIMOV MODE" language. It will be updated:
 
 - Remove Sarah Connor quote
-- Replace SKYNET with ASIMOV
+- Replace ASIMOV with ASIMOV
 - Update cross-references to asimov-protocol
 
 ### 5. The Narrative
 
 **Old narrative (fear):**
-> "SKYNET MODE... with an off switch"
+> "ASIMOV MODE... with an off switch"
 > Building dangerous AI but making it controllable
 
 **New narrative (hope):**
@@ -193,8 +193,8 @@ The Foundation parallel works, but only if inverted:
 ### Migration Path
 
 1. Create `asimov-protocol` repo with v5.0.0
-2. Archive `forge-protocol` with redirect README
-3. Yank all `forge-protocol` crate versions
+2. Archive `asimov-mode` with redirect README
+3. Yank all `asimov-mode` crate versions
 4. Publish `asimov-protocol` crate
 5. Update Forge repo references
 6. Announce the transition

@@ -84,7 +84,7 @@ pub const RED_FLAGS: &[&str] = &[
 
 ```bash
 # Always checks ethics, regardless of ethics.yaml presence
-forge-protocol validate
+asimov-mode validate
 
 # Output includes ethics status
 ✓ Ethics: HARDCODED (core principles enforced)
@@ -95,7 +95,7 @@ forge-protocol validate
 
 ```bash
 # Scan project for red flag patterns
-forge-protocol validate --ethics-scan
+asimov-mode validate --ethics-scan
 
 # Warns if suspicious patterns found
 ⚠ Warning: Found "private key" in src/wallet.rs:42
@@ -151,7 +151,7 @@ extensions:
 
 1. **Harder to accidentally remove ethics** - Non-technical users can't just delete a file
 2. **Visible in diffs** - Forks that remove ethics have obvious code changes
-3. **Consistent enforcement** - Every `forge-protocol validate` checks ethics
+3. **Consistent enforcement** - Every `asimov-mode validate` checks ethics
 4. **Red flag scanning** - Proactive detection of suspicious patterns
 5. **Session hooks** - Ethics reminder in every Claude Code session
 

@@ -45,7 +45,7 @@ Add an explicit `ON SESSION START` directive to CLAUDE.md that instructs Claude 
 ### The Directive
 
 ```markdown
-ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt.
+ON SESSION START: Immediately read roadmap.yaml, run `asimov-mode validate`, present next milestone. Do NOT wait for user prompt.
 ```
 
 ### Why This Works

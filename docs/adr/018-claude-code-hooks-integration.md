@@ -6,7 +6,7 @@
 
 ## Context
 
-Forge Protocol relies on CLAUDE.md `@import` syntax to load protocol files (warmup.yaml,
+Asimov Protocol relies on CLAUDE.md `@import` syntax to load protocol files (warmup.yaml,
 ethics.yaml, green.yaml) into Claude's context. However, this approach has critical gaps:
 
 1. **No Auto-Start**: `@import` loads content as static context but doesn't trigger any
@@ -112,7 +112,7 @@ events.
 
 2. **Mid-Session Recovery**: PreCompact hook injects protocol rules before compaction,
    ensuring they survive in the summarized context. This is the missing piece for true
-   SKYNET MODE autonomy.
+   ASIMOV MODE autonomy.
 
 3. **Unique Differentiator**: No other AI coding assistant has this capability. Forge
    Protocol on Claude Code offers autonomous operation that competitors cannot match.
@@ -136,10 +136,10 @@ events.
 
 ### Vendor Neutrality Impact
 
-Forge Protocol remains vendor-neutral at the **file format** level:
+Asimov Protocol remains vendor-neutral at the **file format** level:
 - warmup.yaml, ethics.yaml, sprint.yaml, green.yaml work anywhere as static context
 
-But **autonomous operation** (SKYNET MODE) requires Claude Code:
+But **autonomous operation** (ASIMOV MODE) requires Claude Code:
 - SessionStart hook for auto-initialization
 - PreCompact hook for mid-session survival
 

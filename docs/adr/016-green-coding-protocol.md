@@ -10,7 +10,7 @@ Accepted
 
 ## Context
 
-Green Coding is a core principle of the Forge Protocol, alongside Ethics. Currently, green coding principles are embedded within `warmup.yaml`, but they deserve the same treatment as ethics:
+Green Coding is a core principle of the Asimov Protocol, alongside Ethics. Currently, green coding principles are embedded within `warmup.yaml`, but they deserve the same treatment as ethics:
 
 1. **Parity with Ethics**: Ethics has its own dedicated file (`ethics.yaml`) with:
    - Validation at session start
@@ -75,7 +75,7 @@ practices:
     - "Minimize dependencies"
 
 validation:
-  cli_command: "forge-protocol validate --green-check"
+  cli_command: "asimov-mode validate --green-check"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"
@@ -145,4 +145,4 @@ Update template to include:
 - [ADR-008: Ethics Protocol](008-ethics-protocol-humanist-mode.md)
 - [ADR-011: Hardcoded Ethics](011-hardcoded-ethics.md)
 - [ADR-012: Hardcoded Green Coding](012-hardcoded-green-coding.md) (Future)
-- [Forge Protocol Specification](../SPECIFICATION.md)
+- [Asimov Protocol Specification](../SPECIFICATION.md)

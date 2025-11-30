@@ -37,7 +37,7 @@ style: |
 ---
 
 <!--
-SKYNET MODE - Executive Deck Template
+ASIMOV MODE - Executive Deck Template
 =====================================
 Generic version for consultants and enterprises.
 Customize the "Questions?" slide with your company/contact info.
@@ -50,7 +50,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _backgroundColor: #0066b3 -->
 <!-- _color: #ffffff -->
 
-# SKYNET MODE
+# ASIMOV MODE
 ## Autonomous AI Development Protocol
 
 **Transforming AI from Cost Center to Competitive Advantage**
@@ -109,12 +109,12 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 # The Solution
 
-## SKYNET MODE
+## ASIMOV MODE
 ### Autonomous AI Development Protocol
 
 ---
 
-# SKYNET MODE: Five Components
+# ASIMOV MODE: Five Components
 
 | # | Component | Function | Business Value |
 |---|-----------|----------|----------------|
@@ -151,7 +151,7 @@ flowchart LR
 
 # The Proof: Real Numbers
 
-### Built with SKYNET MODE in ~38 hours
+### Built with ASIMOV MODE in ~38 hours
 
 | Metric | Delivered |
 |--------|-----------|
@@ -168,7 +168,7 @@ flowchart LR
 
 # Velocity Comparison
 
-| Metric | Traditional | SKYNET MODE | Improvement |
+| Metric | Traditional | ASIMOV MODE | Improvement |
 |--------|-------------|-------------|-------------|
 | Development time | 6-9 months | ~38 hours | **50-150x** |
 | LOC/day | 25 | 3,056 | **122x** |
@@ -209,7 +209,7 @@ flowchart LR
 
 ### Faster delivery = faster revenue
 
-| Scenario | Traditional | SKYNET MODE | Revenue Impact |
+| Scenario | Traditional | ASIMOV MODE | Revenue Impact |
 |----------|-------------|-------------|----------------|
 | Feature delivery | 3 months | 1 week | **12x faster to market** |
 | Client projects | 6 months | 1 month | **6x more projects/year** |
@@ -223,7 +223,7 @@ flowchart LR
 
 | Item | Cost |
 |------|------|
-| Forge Protocol license | **$0** (MIT open source) |
+| Asimov Protocol license | **$0** (MIT open source) |
 | CLI tool | **$0** (free) |
 | Training (per developer) | **2 hours** |
 | Pilot program (10 devs, 1 month) | **Internal time only** |
@@ -250,7 +250,7 @@ flowchart LR
 | Approach | Cost | Carbon | Speed |
 |----------|------|--------|-------|
 | Cloud AI validation | $0.02/file | ~0.5g CO₂ | 1-3 sec |
-| SKYNET MODE (local) | **$0** | **~0.002g** | **<100ms** |
+| ASIMOV MODE (local) | **$0** | **~0.002g** | **<100ms** |
 | **Reduction** | **100%** | **99.6%** | **20x** |
 
 ---
@@ -302,9 +302,9 @@ flowchart LR
 
 | Service | Description | Revenue Model |
 |---------|-------------|---------------|
-| **SKYNET Assessment** | Evaluate client AI readiness | Fixed fee |
+| **ASIMOV Assessment** | Evaluate client AI readiness | Fixed fee |
 | **Implementation** | Deploy protocol + training | Project-based |
-| **Managed SKYNET** | Ongoing optimization | Retainer |
+| **Managed ASIMOV** | Ongoing optimization | Retainer |
 | **AI Governance** | Compliance + audit trails | Annual contract |
 
 **Market positioning:** "Proven 50-100x AI velocity methodology"
@@ -316,7 +316,7 @@ flowchart LR
 | Claim | Proof |
 |-------|-------|
 | "Proven 50-100x velocity" | Forge project (public, auditable) |
-| "Zero AI rework methodology" | SKYNET MODE protocol |
+| "Zero AI rework methodology" | ASIMOV MODE protocol |
 | "Green AI development" | 99.6% carbon reduction |
 | "Bounded 4hr autonomous sessions" | Self-healing protocol |
 
@@ -342,20 +342,20 @@ flowchart LR
 | Security concerns | Local validation, no cloud data |
 | Adoption resistance | Start with pilot, prove ROI |
 
-**SKYNET MODE is designed to reduce risk, not introduce it.**
+**ASIMOV MODE is designed to reduce risk, not introduce it.**
 
 ---
 
 # Platform Requirements
 
-| AI Tool | SKYNET MODE | Why |
+| AI Tool | ASIMOV MODE | Why |
 |---------|-------------|-----|
 | **Claude Code** | ✓ Full | **Use this** |
 | ChatGPT | **Never** | Cloud-sandboxed |
 | Copilot | **Never** | Autocomplete only |
 | Cursor | **Unlikely** | Missing features |
 
-**Details:** [Vendor Implementation Guide](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Details:** [Vendor Implementation Guide](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -374,7 +374,7 @@ flowchart LR
 | Phase | Duration | Activity |
 |-------|----------|----------|
 | Week 1 | Setup | Select team, install protocol, training |
-| Week 2-3 | Execution | Real project with SKYNET MODE |
+| Week 2-3 | Execution | Real project with ASIMOV MODE |
 | Week 4 | Evaluation | Measure velocity, quality, ROI |
 
 **Pilot team:** 5-10 developers
@@ -426,7 +426,7 @@ flowchart LR
 | **Training** | 2 hours |
 | **Velocity** | **50-100x** proven |
 
-### Protocol is free. Claude subscription required for SKYNET MODE.
+### Protocol is free. Claude subscription required for ASIMOV MODE.
 
 ### ROI: $67K savings/dev/year vs ~$2.4K subscription cost
 
@@ -434,11 +434,11 @@ flowchart LR
 
 # Resources
 
-**Protocol:** [https://github.com/royalbit/forge-protocol](https://github.com/royalbit/forge-protocol)
+**Protocol:** [https://github.com/royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
 
 **Proof project:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**CLI:** `cargo install forge-protocol`
+**CLI:** `cargo install asimov-mode`
 
 ---
 
@@ -467,13 +467,13 @@ flowchart LR
 
 ### Full documentation available at:
 
-**Specification:** [SPECIFICATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/SPECIFICATION.md)
+**Specification:** [SPECIFICATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/SPECIFICATION.md)
 
-**Self-Healing Protocol:** [ADR-003](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md)
+**Self-Healing Protocol:** [ADR-003](https://github.com/royalbit/asimov-mode/blob/main/docs/adr/003-self-healing-real-compaction-data.md)
 
-**Hook Refresh (v2.1):** [ADR-006](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/006-git-hook-protocol-refresh.md)
+**Hook Refresh (v2.1):** [ADR-006](https://github.com/royalbit/asimov-mode/blob/main/docs/adr/006-git-hook-protocol-refresh.md)
 
-**Vendor Compatibility:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Vendor Compatibility:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -498,7 +498,7 @@ flowchart LR
 | GitHub Copilot | 1.5-2x | High | No | No |
 | ChatGPT | 2-3x | High | No | No |
 | Cursor | 2-3x | Medium | No | No |
-| **SKYNET MODE** | **50-100x** | **0%** | **Yes** | **Yes** |
+| **ASIMOV MODE** | **50-100x** | **0%** | **Yes** | **Yes** |
 
 ---
 
@@ -507,10 +507,10 @@ flowchart LR
 <div style="font-size: 0.85em;">
 
 **Q: Why Claude Code? Will other tools support this?**
-A: SKYNET MODE requires 4 architectural features only Claude Code has. Other tools have different architectures for different use cases. This won't change.
+A: ASIMOV MODE requires 4 architectural features only Claude Code has. Other tools have different architectures for different use cases. This won't change.
 
 **Q: Is this vendor lock-in?**
-A: For SKYNET MODE, yes. Protocol FILES are portable. The magic isn't.
+A: For ASIMOV MODE, yes. Protocol FILES are portable. The magic isn't.
 
 **Q: What about proprietary code security?**
 A: All validation is local. No code leaves your environment.

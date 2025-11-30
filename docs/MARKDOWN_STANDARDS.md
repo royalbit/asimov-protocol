@@ -12,22 +12,22 @@ Markdown rendering breaks silently. Common issues:
 | Unclosed blocks | Missing ` ``` ` | Rest of doc is code |
 | Invalid mermaid | Syntax errors | Blank diagram |
 
-## The Solution: forge-protocol lint-docs
+## The Solution: asimov-mode lint-docs
 
-The `forge-protocol` CLI includes a documentation linter that catches common issues.
+The `asimov-mode` CLI includes a documentation linter that catches common issues.
 
 ```bash
 # Install
-cargo install forge-protocol
+cargo install asimov-mode
 
 # Check documentation
-forge-protocol lint-docs                 # Check current directory
-forge-protocol lint-docs docs/           # Check specific directory
-forge-protocol lint-docs README.md       # Check specific file
+asimov-mode lint-docs                 # Check current directory
+asimov-mode lint-docs docs/           # Check specific directory
+asimov-mode lint-docs README.md       # Check specific file
 
 # Auto-fix issues
-forge-protocol lint-docs --fix           # Fix all files
-forge-protocol lint-docs docs/ --fix     # Fix specific directory
+asimov-mode lint-docs --fix           # Fix all files
+asimov-mode lint-docs docs/ --fix     # Fix specific directory
 ```
 
 ## What It Checks
@@ -84,8 +84,8 @@ Add to `.git/hooks/pre-commit`:
 #!/bin/bash
 
 # Lint documentation
-if command -v forge-protocol &> /dev/null; then
-    forge-protocol lint-docs . || exit 1
+if command -v asimov-mode &> /dev/null; then
+    asimov-mode lint-docs . || exit 1
 fi
 ```
 
@@ -103,21 +103,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install forge-protocol
-        run: cargo install forge-protocol
+      - name: Install asimov-mode
+        run: cargo install asimov-mode
 
       - name: Lint documentation
-        run: forge-protocol lint-docs .
+        run: asimov-mode lint-docs .
 ```
 
 ### Makefile
 
 ```makefile
 lint-docs:
-	forge-protocol lint-docs .
+	asimov-mode lint-docs .
 
 fix-docs:
-	forge-protocol lint-docs --fix .
+	asimov-mode lint-docs --fix .
 ```
 
 ## Combined Workflow
@@ -125,21 +125,21 @@ fix-docs:
 For comprehensive documentation quality:
 
 ```bash
-# 1. Check code blocks (forge-protocol)
-forge-protocol lint-docs .
+# 1. Check code blocks (asimov-mode)
+asimov-mode lint-docs .
 
 # 2. Check standard markdown rules (markdownlint)
 markdownlint-cli2 "**/*.md"
 
 # 3. Validate protocol files
-forge-protocol validate
+asimov-mode validate
 ```
 
 ## Related Tools
 
 | Tool | Purpose | Install |
 |------|---------|---------|
-| `forge-protocol lint-docs` | Code block closers | `cargo install forge-protocol` |
+| `asimov-mode lint-docs` | Code block closers | `cargo install asimov-mode` |
 | `markdownlint-cli2` | Standard markdown rules | `npm i -g markdownlint-cli2` |
 | `mermaid-cli` | Mermaid diagram validation | `npm i -g @mermaid-js/mermaid-cli` |
 
@@ -220,7 +220,7 @@ GitHub auto-detects user's theme preference. Any customization overrides this.
 
 ```bash
 # One command to enforce documentation standards
-forge-protocol lint-docs --fix .
+asimov-mode lint-docs --fix .
 ```
 
 **Result:** Documentation that renders correctly everywhere.

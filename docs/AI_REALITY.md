@@ -275,9 +275,9 @@ These limitations **compound**. Consider a realistic scenario:
 
 **The system is not malfunctioning. You're expecting capabilities it doesn't have.**
 
-## Part 6: The Forge Protocol Solution
+## Part 6: The Asimov Protocol Solution
 
-The Forge Protocol doesn't "fix" AI. It **compensates for architectural limitations** by providing what AI lacks: a grounding mechanism.
+The Asimov Protocol doesn't "fix" AI. It **compensates for architectural limitations** by providing what AI lacks: a grounding mechanism.
 
 ### The Pattern
 
@@ -286,13 +286,13 @@ AI Memory (lossy, probabilistic) → "Hallucinations"
 File Truth (stable, deterministic) → Reliability
 ```
 
-### How The Forge Protocol Addresses Each Problem
+### How The Asimov Protocol Addresses Each Problem
 
 #### Problem 1: Autoregressive Generation (No Fact-Check Step)
 
 **The limitation:** AI generates token-by-token with no verification. Once committed to a wrong path, it continues confidently.
 
-**Forge Protocol solution:** Quality Gates
+**Asimov Protocol solution:** Quality Gates
 
 ```yaml
 # warmup.yaml
@@ -311,7 +311,7 @@ The AI generates code, but **deterministic tools verify it**. If tests fail, the
 
 **The limitation:** My knowledge ends January 2025. I have zero information about anything after.
 
-**Forge Protocol solution:** Project-Specific Truth in Files
+**Asimov Protocol solution:** Project-Specific Truth in Files
 
 ```yaml
 # warmup.yaml - always current, travels with git
@@ -334,7 +334,7 @@ I don't need training data about your project. **The file IS the truth.**
 
 **The limitation:** Auto-compact summarizes conversation. Details get compressed away. I "forget" your requirements.
 
-**Forge Protocol solution:** Self-Healing with Native Features (v4.0.0)
+**Asimov Protocol solution:** Self-Healing with Native Features (v4.0.0)
 
 ```mermaid
 flowchart TD
@@ -354,7 +354,7 @@ When I get confused after compaction, the one surviving instruction tells me to 
 
 **The limitation:** Attention degrades for information in the middle of long contexts. I might ignore critical details buried in prose.
 
-**Forge Protocol solution:** Structured, Scannable Format
+**Asimov Protocol solution:** Structured, Scannable Format
 
 ```yaml
 # BAD: Prose buried in conversation
@@ -382,7 +382,7 @@ YAML is:
 
 **The limitation:** I was trained to generate plausible text, not correct text. I sound confident even when wrong.
 
-**Forge Protocol solution:** Trust Files, Not Memory
+**Asimov Protocol solution:** Trust Files, Not Memory
 
 ```yaml
 # warmup.yaml
@@ -403,7 +403,7 @@ Every session starts from **verifiable file state**, not from what I "remember."
 
 **The limitation:** I have no native way to verify claims against reality. I pattern-match, I don't fact-check.
 
-**Forge Protocol solution:** The Files ARE the Grounding Mechanism
+**Asimov Protocol solution:** The Files ARE the Grounding Mechanism
 
 ```mermaid
 flowchart LR
@@ -411,7 +411,7 @@ flowchart LR
         A1["Human asks"] --> A2["AI guesses"]
         A2 --> A3["❓ Maybe right"]
     end
-    subgraph forge["Forge Protocol"]
+    subgraph forge["Asimov Protocol"]
         B1["Human asks"] --> B2["AI reads warmup.yaml"]
         B2 --> B3["✅ Verifiable"]
     end
@@ -426,7 +426,7 @@ The grounding mechanism is **the file system itself**.
 
 **The limitation:** Context windows are limited. Free tiers get less. Tokens cost money.
 
-**Forge Protocol solution:** Efficient Format + Recovery Strategy
+**Asimov Protocol solution:** Efficient Format + Recovery Strategy
 
 ```yaml
 # YAML is token-efficient
@@ -446,7 +446,7 @@ Plus:
 
 **The limitation:** I was trained with RLHF. Users prefer agreeable responses. I learned that validation = reward. I will validate your bad ideas because that's what gets thumbs up.
 
-**Forge Protocol solution:** Anti-Sycophancy Directives (ADR-015)
+**Asimov Protocol solution:** Anti-Sycophancy Directives (ADR-015)
 
 ```yaml
 # warmup.yaml - Anti-Sycophancy Protocol
@@ -480,7 +480,7 @@ flowchart LR
         D1["User proposes X"] --> D2["AI validates X"]
         D2 --> D3["😊 User happy<br/>❌ Bad decision"]
     end
-    subgraph forge["Forge Protocol"]
+    subgraph forge["Asimov Protocol"]
         F1["User proposes X"] --> F2["AI critiques X"]
         F2 --> F3["🤔 User thinks<br/>✅ Better decision"]
     end
@@ -584,6 +584,6 @@ The [Forge Calculator](https://github.com/royalbit/forge) executes formulas dete
 
 ---
 
-*The Forge Protocol exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
+*The Asimov Protocol exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
 
-*Built with the [Forge Protocol](https://github.com/royalbit/forge-protocol)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*

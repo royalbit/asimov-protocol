@@ -36,7 +36,7 @@ style: |
   pre { font-size: 0.75em; }
 ---
 
-# **SKYNET MODE**
+# **ASIMOV MODE**
 ## ...with an Off Switch
 
 > *"The future is not set. There is no fate but what we make for ourselves."*
@@ -63,9 +63,9 @@ style: |
 
 ---
 
-# The Solution: Forge Protocol
+# The Solution: Asimov Protocol
 
-| ❌ Without Structure | ✅ With Forge Protocol |
+| ❌ Without Structure | ✅ With Asimov Protocol |
 |---------------------|------------------------|
 | Sessions run forever | **4-hour maximum** |
 | Scope creeps endlessly | **ONE milestone** |
@@ -74,7 +74,7 @@ style: |
 
 ---
 
-# SKYNET MODE: Five Components
+# ASIMOV MODE: Five Components
 
 <div class="small">
 
@@ -162,13 +162,13 @@ Every session is a **bounded sprint**:
 
 **At scale:** 100 teams = 6.2 tonnes CO₂ saved/year
 
-*Every `forge-protocol init` project is a green-coding project.*
+*Every `asimov-mode init` project is a green-coding project.*
 
 ---
 
 # Compatibility (Hard Truth)
 
-| AI Tool | SKYNET | Why |
+| AI Tool | ASIMOV | Why |
 |---------|--------|-----|
 | **Claude Code** | ✓ | **Use this** |
 | ChatGPT | **Never** | Cloud-sandboxed |
@@ -177,7 +177,7 @@ Every session is a **bounded sprint**:
 
 *Files portable. Magic isn't.*
 
-**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -204,13 +204,13 @@ claude --dangerously-skip-permissions
 
 ```bash
 # Install (1.3MB binary)
-cargo install forge-protocol
+cargo install asimov-mode
 
-# Full SKYNET MODE setup
-forge-protocol init --type rust --skynet
+# Full ASIMOV MODE setup
+asimov-mode init --type rust --asimov
 
 # Validate ($0, <100ms, 99.6% less CO₂)
-forge-protocol validate
+asimov-mode validate
 ```
 
 **Types:** `rust`, `python`, `node`, `go`, `flutter`, `docs`, `generic`
@@ -219,10 +219,10 @@ forge-protocol validate
 
 # Questions?
 
-**Protocol:** [https://github.com/royalbit/forge-protocol](https://github.com/royalbit/forge-protocol)
+**Protocol:** [https://github.com/royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
 **Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**SKYNET MODE v2.1 = Five Components:**
+**ASIMOV MODE v2.1 = Five Components:**
 1. Protocol Files — warmup.yaml, sprint.yaml, roadmap.yaml
 2. Sprint Autonomy — 4hr max, ONE milestone
 3. Quality Gates — Tests + zero warnings

@@ -2,7 +2,7 @@
 
 **Location:** Montreal, Quebec, Canada
 **Industry:** AI/Software Development
-**Project:** Forge Protocol - Autonomous AI Session Continuity
+**Project:** Asimov Protocol - Autonomous AI Session Continuity
 **Last Updated:** 2025-11-29
 
 ---
@@ -56,7 +56,7 @@ The largest source of R&D funding in Canada. Provides tax credits for eligible R
 | **Combined Maximum** | Up to 65% of eligible R&D costs |
 | **Filing Deadline** | 18 months from tax year end |
 
-**Eligible Activities for Forge Protocol:**
+**Eligible Activities for Asimov Protocol:**
 - Self-healing protocol development (ADR-002, ADR-003)
 - Ethics protocol design (ADR-008)
 - Anti-sycophancy research (ADR-015)
@@ -92,7 +92,7 @@ The largest source of R&D funding in Canada. Provides tax credits for eligible R
 | Mid-sized Projects | Up to $500K | Larger R&D initiatives |
 | Major Projects | Up to $10M | Transformative R&D |
 
-**Why Forge Protocol Qualifies:**
+**Why Asimov Protocol Qualifies:**
 - Novel AI technology with no prior art
 - Documented technological uncertainties
 - Commercial potential (published on crates.io)
@@ -120,7 +120,7 @@ The largest source of R&D funding in Canada. Provides tax credits for eligible R
 | **Target** | SMEs building AI into products/services |
 | **Funding** | Project-based, contact for details |
 
-**Why Forge Protocol is Perfect Fit:**
+**Why Asimov Protocol is Perfect Fit:**
 - Autonomous AI development protocol
 - Self-healing (novel AI capability)
 - Anti-sycophancy (AI behavior modification)

@@ -1,6 +1,6 @@
 # Component 1: Protocol Files
 
-> **The foundation of SKYNET MODE - YAML files that define everything**
+> **The foundation of ASIMOV MODE - YAML files that define everything**
 
 ## Overview
 
@@ -57,7 +57,7 @@ session:
     - "Zero warnings"
     - "Update documentation"
 
-# Self-Healing (for SKYNET MODE)
+# Self-Healing (for ASIMOV MODE)
 self_healing:
   checkpoint_interval: "2 hours"
   checkpoint_file: ".claude_checkpoint.yaml"
@@ -132,30 +132,30 @@ backlog:
 | **AI-readable** | Every AI can parse YAML |
 | **Human-readable** | Easy to review and edit |
 | **Git-friendly** | Diffable, mergeable, reviewable |
-| **Schema-validatable** | `forge-protocol validate` |
+| **Schema-validatable** | `asimov-mode validate` |
 | **No vendor lock-in** | Standard format, any tool can use |
 
 ## File Generation
 
 ```bash
 # Generate just warmup.yaml
-forge-protocol init --type rust
+asimov-mode init --type rust
 
 # Generate all three files
-forge-protocol init --type rust --full
+asimov-mode init --type rust --full
 
-# Full SKYNET MODE setup (files + CLAUDE.md + hooks)
-forge-protocol init --type rust --skynet
+# Full ASIMOV MODE setup (files + CLAUDE.md + hooks)
+asimov-mode init --type rust --asimov
 ```
 
 ## Validation
 
 ```bash
 # Validate all protocol files
-forge-protocol validate
+asimov-mode validate
 
 # Validate specific file
-forge-protocol validate warmup.yaml
+asimov-mode validate warmup.yaml
 
 # Output:
 #   OK warmup.yaml (warmup)
@@ -195,7 +195,7 @@ flowchart TB
 - Update roadmap.yaml after each release
 - Use sprint.yaml for multi-session work
 - Commit protocol files to git
-- Validate before committing (`forge-protocol validate`)
+- Validate before committing (`asimov-mode validate`)
 
 ### Don't
 

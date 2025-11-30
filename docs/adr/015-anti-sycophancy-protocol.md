@@ -59,7 +59,7 @@ Design elements that fuel dependency:
 
 ## Decision
 
-Add **ANTI-SYCOPHANCY** as a core principle (Priority 1.5) in the Forge Protocol, implemented via:
+Add **ANTI-SYCOPHANCY** as a core principle (Priority 1.5) in the Asimov Protocol, implemented via:
 
 1. **sycophancy.yaml** - Dedicated protocol file (like ethics.yaml, green.yaml)
 2. **cli/src/sycophancy.rs** - Hardcoded module with banned phrases and directives
@@ -204,7 +204,7 @@ Sycophancy now has full parity with ethics and green protocols:
 
 - Users get honest feedback instead of comfortable lies
 - Better decisions through challenged assumptions
-- Aligns with Forge Protocol's "truth over plausibility" philosophy
+- Aligns with Asimov Protocol's "truth over plausibility" philosophy
 - Counteracts documented harm from AI sycophancy
 
 ### Negative
@@ -217,7 +217,7 @@ Sycophancy now has full parity with ethics and green protocols:
 ### Neutral
 
 - Requires user opt-in via warmup.yaml configuration
-- Does not affect models outside Forge Protocol contexts
+- Does not affect models outside Asimov Protocol contexts
 - May evolve as vendors address sycophancy
 
 ## Implementation Plan
@@ -260,4 +260,4 @@ Sycophancy now has full parity with ethics and green protocols:
 
 ---
 
-*Built with the [Forge Protocol](https://github.com/royalbit/forge-protocol)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*

@@ -8,7 +8,7 @@
 
 ADR-002 introduced the Self-Healing Protocol with a "2-hour checkpoint" interval. This was **fiction** - a reasonable-sounding number not based on empirical data.
 
-This ADR documents **real compaction patterns** observed from building forge-protocol itself, and proposes a corrected self-healing mechanism.
+This ADR documents **real compaction patterns** observed from building asimov-mode itself, and proposes a corrected self-healing mechanism.
 
 ### The Problem with ADR-002
 
@@ -43,7 +43,7 @@ alias: "claude --dangerously-skip-permissions --model opus"
 
 **Critical insight:** User's thinking budget equals the entire context window.
 
-### forge-protocol Build Data
+### asimov-mode Build Data
 
 **Project statistics:**
 - Total source: ~394KB (~98,000 tokens)
@@ -57,7 +57,7 @@ alias: "claude --dangerously-skip-permissions --model opus"
 ```
 Time     Commit   Description
 ──────── ──────── ─────────────────────────────────────────
-18:54    82cde57  feat: Add full Forge Protocol (516+ lines)
+18:54    82cde57  feat: Add full Asimov Protocol (516+ lines)
 19:11    a847b07  feat: Add self-healing protocol
 19:20    cf097ed  docs: Add comprehensive self-healing docs
 19:24    ce274b1  docs: Add ADR-002
@@ -68,7 +68,7 @@ Time     Commit   Description
 20:11    be6f91a  docs: Honest vendor compatibility
 20:17    733ba83  docs: Add Vendor Implementation Guide
 20:25    31be9a0  feat: Add --skynet flag (v1.4.0)
-20:36    b8e421a  docs: Refactor SKYNET MODE documentation
+20:36    b8e421a  docs: Refactor ASIMOV MODE documentation
 20:39    b3e8978  docs: Update presentation
 ```
 
@@ -205,7 +205,7 @@ on_confusion: "cat warmup.yaml && cat .claude_checkpoint.yaml"
 ## Implementation
 
 1. Update CLAUDE.md template in CLI
-2. Add `.forge/` directory support to `forge-protocol init`
+2. Add `.forge/` directory support to `asimov-mode init`
 3. Update warmup.yaml to reference modules
 4. Add checkpoint writing to autonomous session flow
 5. Document new patterns in SPECIFICATION.md v2.0
@@ -227,7 +227,7 @@ ls .forge/*.yaml
 
 ### Empirical Data
 
-- forge-protocol git log: 32 commits analyzed
+- asimov-mode git log: 32 commits analyzed
 - Session timestamps: Nov 25-26, 2025
 - Token estimates: Based on Opus 4.5 specs + user settings
 
@@ -240,4 +240,4 @@ ls .forge/*.yaml
 ### Internal Documentation
 
 - [ADR-002: Self-Healing Protocol](002-self-healing-protocol.md) - Superseded assumptions
-- [SKYNET MODE Overview](../SKYNET_MODE.md) - System architecture
+- [ASIMOV MODE Overview](../ASIMOV_MODE.md) - System architecture

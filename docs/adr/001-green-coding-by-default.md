@@ -6,7 +6,7 @@
 
 ## Context
 
-The Forge Protocol provides session continuity for AI-assisted development. As AI tools become more prevalent, the environmental and financial costs of cloud AI usage are growing:
+The Asimov Protocol provides session continuity for AI-assisted development. As AI tools become more prevalent, the environmental and financial costs of cloud AI usage are growing:
 
 - **Cost**: AI API calls cost $0.002-0.04+ per validation (input + output tokens)
 - **Carbon**: Each API call produces ~0.5g CO₂ (data center compute + network)
@@ -19,7 +19,7 @@ Meanwhile, local CLI tools can perform the same validations at:
 
 ## Decision
 
-**All projects initialized with `forge-protocol init` will include a `green_coding` section by default.**
+**All projects initialized with `asimov-mode init` will include a `green_coding` section by default.**
 
 This is not optional. Green coding is a core protocol principle, not an add-on feature.
 
@@ -59,9 +59,9 @@ green_coding:
 ### Why Not Make It Optional
 
 1. **Defaults matter**: Most users keep defaults; optional green = mostly not green
-2. **Consistency**: All Forge Protocol projects share the same values
+2. **Consistency**: All Asimov Protocol projects share the same values
 3. **Education**: Exposes every user to green coding concepts
-4. **Brand**: "Forge Protocol = Green Protocol" is a clear identity
+4. **Brand**: "Asimov Protocol = Green Protocol" is a clear identity
 
 ### What Green Coding Is NOT
 
@@ -92,11 +92,11 @@ green_coding:
 ## Compliance
 
 This ADR applies to:
-- `forge-protocol init` (all templates)
+- `asimov-mode init` (all templates)
 - Documentation (SPECIFICATION.md, README.md)
 - Example configurations
 
 ## References
 
 - [Green Coding Economics](../GREEN_CODING.md) - Full cost/carbon analysis
-- [Forge Protocol Specification](../SPECIFICATION.md) - Protocol schema
+- [Asimov Protocol Specification](../SPECIFICATION.md) - Protocol schema

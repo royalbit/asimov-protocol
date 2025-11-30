@@ -1,6 +1,6 @@
-# Forge Protocol Goals
+# Asimov Protocol Goals
 
-Core values and strategic direction for the Forge Protocol.
+Core values and strategic direction for the Asimov Protocol.
 
 ## Core Values (Priority Order)
 
@@ -50,15 +50,15 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - `CLAUDE.md` memory hierarchy
 - Auto-compact at 95% capacity
 
-**Forge Protocol's unique value:**
+**Asimov Protocol's unique value:**
 - Ethics Protocol (ethics.yaml)
 - Green Protocol (green.yaml)
 - Anti-Sycophancy Protocol (sycophancy.yaml)
 - Sprint Autonomy (4hr max, 1 milestone)
 - Mid-session self-healing (warmup.yaml re-read)
-- Schema Validation (`forge-protocol validate`)
+- Schema Validation (`asimov-mode validate`)
 
-**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during SKYNET MODE is NOT replaced.
+**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during ASIMOV MODE is NOT replaced.
 
 See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 

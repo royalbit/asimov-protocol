@@ -163,9 +163,9 @@ Separation provides defense in depth. If one mechanism fails, others remain.
 
 This ADR applies to:
 
-1. **All Forge Protocol projects** - Must include self_healing section
-2. **forge-protocol init** - Templates include self-healing by default
-3. **Documentation** - SKYNET_MODE.md, component docs, README
+1. **All Asimov Protocol projects** - Must include self_healing section
+2. **asimov-mode init** - Templates include self-healing by default
+3. **Documentation** - ASIMOV_MODE.md, component docs, README
 
 ## Verification
 
@@ -194,6 +194,6 @@ grep -q "claude_checkpoint" .gitignore && echo "✓ checkpoint in .gitignore"
 
 ### Internal Documentation
 
-- [SKYNET MODE Overview](../SKYNET_MODE.md) - Complete autonomous AI development system
+- [ASIMOV MODE Overview](../ASIMOV_MODE.md) - Complete autonomous AI development system
 - [Self-Healing Component](../components/4-SELF_HEALING.md) - Self-healing specification
 - [Setup Guide](../SETUP.md) - Per-project-type setup

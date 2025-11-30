@@ -1,4 +1,4 @@
-# Value Proposition: Why Forge Protocol
+# Value Proposition: Why Asimov Protocol
 
 ## The One-Liner
 
@@ -15,13 +15,13 @@ AI coding assistants exist. But they deliver 1.1-1.6x productivity at best.
 | Tool | Productivity Gain | Source |
 |------|-------------------|--------|
 | GitHub Copilot | 1.1-1.6x | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590) |
-| Forge Protocol | **50-150x** | Git logs, crates.io |
+| Asimov Protocol | **50-150x** | Git logs, crates.io |
 
 Why the gap?
 
 **Copilot**: Autocomplete. Suggestions. You're still driving.
 
-**Forge Protocol**: AI executes autonomously. You review at milestones. The methodology compounds.
+**Asimov Protocol**: AI executes autonomously. You review at milestones. The methodology compounds.
 
 ---
 
@@ -43,7 +43,7 @@ Why the gap?
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | forge | 18,338 | 41 | ~38 | crates.io |
-| forge-protocol | 17,118 | 10 | ~9 | crates.io |
+| asimov-mode | 17,118 | 10 | ~9 | crates.io |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -108,7 +108,7 @@ Why the gap?
 
 ### vs GitHub Copilot
 
-| Metric | Copilot | Forge Protocol |
+| Metric | Copilot | Asimov Protocol |
 |--------|---------|----------------|
 | Productivity | 1.1-1.6x | **50-150x** |
 | Mode | Autocomplete | **Autonomous sessions** |
@@ -118,7 +118,7 @@ Why the gap?
 
 ### vs Devin / SWE-Agent
 
-| Metric | Devin et al. | Forge Protocol |
+| Metric | Devin et al. | Asimov Protocol |
 |--------|--------------|----------------|
 | Benchmark success | 13.86% | **51 releases shipped** |
 | Maturity | "Still maturing" | **Production proven** |
@@ -128,7 +128,7 @@ Why the gap?
 
 ### vs Traditional Development
 
-| Metric | Traditional | Forge Protocol |
+| Metric | Traditional | Asimov Protocol |
 |--------|-------------|----------------|
 | LOC/day | 25 | 3,056 |
 | MVP timeline | 3-6 months | Days to weeks |
@@ -180,7 +180,7 @@ Not optional. Required.
 > "Don't believe us. Check the git logs. It's all public."
 
 - [Forge commits](https://github.com/royalbit/forge/commits)
-- [Protocol commits](https://github.com/royalbit/forge-protocol/commits)
+- [Protocol commits](https://github.com/royalbit/asimov-mode/commits)
 - [crates.io downloads](https://crates.io/crates/royalbit-forge)
 
 ### For the Pragmatist
@@ -188,8 +188,8 @@ Not optional. Required.
 > "MIT licensed. Free. Try it on your next project."
 
 ```bash
-cargo install forge-protocol
-forge-protocol init --type rust
+cargo install asimov-mode
+asimov-mode init --type rust
 ```
 
 ### For the Visionary
@@ -215,9 +215,9 @@ forge-protocol init --type rust
 ### The CLI (Free)
 
 ```bash
-forge-protocol validate        # Check your files
-forge-protocol init            # Generate templates
-forge-protocol validate --ethics-check  # Verify ethics
+asimov-mode validate        # Check your files
+asimov-mode init            # Generate templates
+asimov-mode validate --ethics-check  # Verify ethics
 ```
 
 ### The Methodology (Documented)
@@ -235,9 +235,9 @@ forge-protocol validate --ethics-check  # Verify ethics
 ### 5 Minutes
 
 ```bash
-cargo install forge-protocol
+cargo install asimov-mode
 cd your-project
-forge-protocol init --type rust
+asimov-mode init --type rust
 ```
 
 ### First Session
@@ -264,7 +264,7 @@ AI: [reports completion at gate]
 
 **Traditional development**: 25 LOC/day, 3-6 months to MVP, team of 5-10.
 
-**With Forge Protocol**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
+**With Asimov Protocol**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
 
 **The math**: 50-150x velocity, verified, published, free.
 
@@ -272,4 +272,4 @@ AI: [reports completion at gate]
 
 ---
 
-*Built with the [Forge Protocol](https://github.com/royalbit/forge-protocol) - 50-150x developer velocity with ethics built in.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode) - 50-150x developer velocity with ethics built in.*

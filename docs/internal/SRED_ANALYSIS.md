@@ -1,17 +1,17 @@
-# SR&ED Analysis: Forge Protocol
+# SR&ED Analysis: Asimov Protocol
 
 **Company:** RoyalBit Inc. (Montreal, Quebec)
-**Project:** Forge Protocol - AI Session Continuity System
+**Project:** Asimov Protocol - AI Session Continuity System
 **Period:** November 2025
 **Prepared:** 2025-11-29
 
 ## Executive Summary
 
-Forge Protocol qualifies for SR&ED tax credits as it addresses **novel technological uncertainties** in autonomous AI development that had no known solutions at the time of development.
+Asimov Protocol qualifies for SR&ED tax credits as it addresses **novel technological uncertainties** in autonomous AI development that had no known solutions at the time of development.
 
 ### Eligibility Criteria Met
 
-| SR&ED Requirement | Forge Protocol Evidence |
+| SR&ED Requirement | Asimov Protocol Evidence |
 |-------------------|------------------------|
 | Technological uncertainty | Context compaction problem had no known solution |
 | Systematic investigation | 15 ADRs documenting hypotheses and experiments |
@@ -35,7 +35,7 @@ How can an AI system maintain operational continuity when its context is automat
 Recovery from compaction (disk-based re-read) vs. survival through compaction (redundant rules in context).
 
 **Experiment:**
-- Built forge-protocol using its own protocol (bootstrapping proof)
+- Built asimov-mode using its own protocol (bootstrapping proof)
 - Measured actual compaction frequency: every 10-20 minutes (not 2 hours as assumed)
 - Tested checkpoint + re-read mechanism across 32 commits, 3 sessions
 
@@ -146,7 +146,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 ## Competitive Analysis: No Prior Art
 
-| Existing Tool | What It Does | Gap Forge Protocol Fills |
+| Existing Tool | What It Does | Gap Asimov Protocol Fills |
 |---------------|--------------|--------------------------|
 | **Mem0** | Memory layer for AI | No session protocol, no self-healing |
 | **Memori** | Memory engine | No compaction recovery, no ethics |
@@ -189,7 +189,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 | ADRs (15) | `docs/adr/` | Hypotheses, experiments, results |
 | Git log | `git log --oneline` | Timestamped development record |
 | Research citations | ADRs, AI_REALITY.md | External validation |
-| Published crate | crates.io/forge-protocol | Working implementation |
+| Published crate | crates.io/asimov-mode | Working implementation |
 
 ## Estimated Eligible Expenditures
 
@@ -213,8 +213,8 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 ### Published Work
 
-- [crates.io/forge-protocol](https://crates.io/crates/forge-protocol)
-- [GitHub: royalbit/forge-protocol](https://github.com/royalbit/forge-protocol)
+- [crates.io/asimov-mode](https://crates.io/crates/asimov-mode)
+- [GitHub: royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
 
 ---
 

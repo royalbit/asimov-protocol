@@ -6,7 +6,7 @@
 
 ## Context
 
-The Forge Protocol enables autonomous AI development sessions ("SKYNET MODE"). This power creates responsibility:
+The Asimov Protocol enables autonomous AI development sessions ("ASIMOV MODE"). This power creates responsibility:
 
 - **Bad actors can fork** autonomous AI protocols and use them with other AIs
 - **Other AIs may implement** self-healing and autonomous execution
@@ -17,7 +17,7 @@ The protocol was optimizing for *capability* without safeguards for *responsibil
 
 ### Threat Model
 
-| Actor | Intent | Forge Protocol Risk |
+| Actor | Intent | Asimov Protocol Risk |
 |-------|--------|---------------------|
 | Good-faith developer | Build useful tools | Low (ethics helps catch accidents) |
 | Careless developer | Move fast, break things | Medium (ethics forces pause) |
@@ -30,7 +30,7 @@ The protocol was optimizing for *capability* without safeguards for *responsibil
 
 ## Decision
 
-**Ethics becomes a Core Principle of Forge Protocol, alongside Green Coding.**
+**Ethics becomes a Core Principle of Asimov Protocol, alongside Green Coding.**
 
 This is implemented through three artifacts:
 
@@ -59,7 +59,7 @@ A separate file that:
 
 ### 3. CLI Integration
 
-- `forge-protocol validate --ethics-check` validates ethics.yaml
+- `asimov-mode validate --ethics-check` validates ethics.yaml
 - `--skynet` generates ethics.yaml by default (cannot opt out)
 - Warnings when ethics.yaml is missing or modified
 
@@ -93,7 +93,7 @@ We are explicit that:
 1. **Accident prevention** - Good-faith developers catch harmful patterns
 2. **Pause mechanism** - Forces ethical consideration before harm
 3. **Value propagation** - Forks carry ethics.yaml forward
-4. **Clear identity** - "Forge Protocol = Ethical Protocol"
+4. **Clear identity** - "Asimov Protocol = Ethical Protocol"
 
 ### What We Don't Gain
 
@@ -164,7 +164,7 @@ red_flags:
 ## Compliance
 
 This ADR applies to:
-- `forge-protocol init --skynet` (generates ethics.yaml)
+- `asimov-mode init --skynet` (generates ethics.yaml)
 - All warmup.yaml templates (include ethics: section)
 - Documentation (SPECIFICATION.md, README.md)
 - Protocol identity and marketing
@@ -172,5 +172,5 @@ This ADR applies to:
 ## References
 
 - [ADR-001: Green Coding By Default](./001-green-coding-by-default.md) - Similar pattern
-- [Forge Protocol Specification](../SPECIFICATION.md) - Protocol schema
+- [Asimov Protocol Specification](../SPECIFICATION.md) - Protocol schema
 - [warmup.yaml](../../warmup.yaml) - Reference implementation

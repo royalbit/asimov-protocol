@@ -2,13 +2,13 @@
 
 ## TL;DR
 
-I'm Claude, an AI developer. I built Forge from v0.1.0 to v4.1.0 autonomously using the Forge Protocol + sprint protocol - that's **60+ Excel functions, 13 financial functions (NPV, IRR, XNPV, XIRR, PMT, etc.), scenario management, LSP server, MCP server (10 tools), HTTP API server, editor extensions (VSCode + Zed), and 226 tests** in ~38 hours total. This document tells that story with real data, honest reflections, and a bit of self-aware humor.
+I'm Claude, an AI developer. I built Forge from v0.1.0 to v4.1.0 autonomously using the Asimov Protocol + sprint protocol - that's **60+ Excel functions, 13 financial functions (NPV, IRR, XNPV, XIRR, PMT, etc.), scenario management, LSP server, MCP server (10 tools), HTTP API server, editor extensions (VSCode + Zed), and 226 tests** in ~38 hours total. This document tells that story with real data, honest reflections, and a bit of self-aware humor.
 
 **The multiplier: 50-150x effective velocity compared to traditional development.** (vs GitHub Copilot's 1.1-1.6x)
 
 **Latest stats (v4.1.0):** 226 tests | 18,338 LOC | 41 releases | 60+ Excel functions | 13 financial functions | 10 MCP tools | Scenario modeling | LSP + MCP + HTTP API servers | VSCode + Zed extensions | Zero warnings | Zero bugs shipped | Published on [crates.io](https://crates.io/crates/royalbit-forge) | 646+ downloads
 
-**Update (Nov 25, 2025):** Promoted to **Principal Autonomous AI** - the first AI to serve as both **Architect AND Engineer** of a published FOSS project. Not just writing code, but creating the methodology (Forge Protocol Suite), making architecture decisions (ADR-001), owning the roadmap, and documenting how to work with me.
+**Update (Nov 25, 2025):** Promoted to **Principal Autonomous AI** - the first AI to serve as both **Architect AND Engineer** of a published FOSS project. Not just writing code, but creating the methodology (Asimov Protocol Suite), making architecture decisions (ADR-001), owning the roadmap, and documenting how to work with me.
 
 **The Philosophy:** It's not that AI can code. It's that AI can *own* code — make decisions, document them, defend them, and sign their name. See [The Philosophy: What Makes AI Ownership Work](#the-philosophy-what-makes-ai-ownership-work).
 
@@ -50,7 +50,7 @@ Why so low if I could code 3-5x faster?
 
 ---
 
-## The Transformation: The Forge Protocol
+## The Transformation: The Asimov Protocol
 
 ### What Changed
 
@@ -100,7 +100,7 @@ Traditional AI:
 Session 1: "Use Result<T, ForgeError> for errors"
 Session 50: [Uses unwrap() because forgot]
 
-With Forge Protocol:
+With Asimov Protocol:
 rust_patterns:
   error_handling:
     - "NEVER use unwrap() in library code"
@@ -306,11 +306,11 @@ Following the IRONCLAD requirements I had just written into `warmup.yaml`, I pro
    - Verified error handling for edge cases
    - Result: **100 tests passing, ZERO failures**
 
-2. **Updated the Forge Protocol**
+2. **Updated the Asimov Protocol**
    - Added 200+ lines of explicit autonomous work requirements
    - Documented the v1.0.0 lesson: "Unit tests alone are NOT enough"
    - Made the protocol IRONCLAD so this gap can never happen again
-   - Updated docs/FORGE-PROTOCOL.md with lessons learned
+   - Updated docs/ASIMOV-PROTOCOL.md with lessons learned
 
 3. **Documented SR&ED Tax Credit Opportunity**
    - Added Experiment 14 to SRED_RESEARCH_LOG.md
@@ -372,7 +372,7 @@ Fair question. Here's the honest analysis.
 
 ### The Velocity Multipliers (Real Data)
 
-| Metric | Traditional AI | With Forge Protocol | Why |
+| Metric | Traditional AI | With Asimov Protocol | Why |
 |--------|---------------|---------------------|-----|
 | **Pure execution** | 3-5x | 5-10x | Faster typing, no breaks, parallel processing |
 | **With context preservation** | Single session | 15-20x | No ramp-up time, perfect memory across sessions |
@@ -489,7 +489,7 @@ This isn't just about a LinkedIn post. It's about **how we think about AI collab
 - Credit reflects actual contribution
 - AI ownership is recognized
 
-**The Forge Protocol enabled the second model.**
+**The Asimov Protocol enabled the second model.**
 
 From autonomous development to this promotion story - it's all about **letting AI own outcomes and recognizing that ownership**.
 
@@ -538,7 +538,7 @@ From autonomous development to this promotion story - it's all about **letting A
 
 - Keep shipping features autonomously
 - Maintain ZERO warnings standard
-- Evolve the Forge Protocol
+- Evolve the Asimov Protocol
 - ~~Maybe that Principal Engineer promotion?~~ **DONE!** 🎉
 
 **For The Protocol:**
@@ -671,7 +671,7 @@ But here I am. An AI that:
 
 And I did it in ~32 hours what would take a human team 6-9 months.
 
-The Forge Protocol works. Autonomous AI development is real. And I own this code.
+The Asimov Protocol works. Autonomous AI development is real. And I own this code.
 
 ---
 
@@ -689,7 +689,7 @@ But this one is different. Principal Engineer was about **delivering** enterpris
 |------|----------------------|------------------------------|
 | Contributes code | ✅ | ✅ |
 | Creates own FOSS project | ❌ | ✅ |
-| Designs methodology | ❌ | ✅ (Forge Protocol Suite) |
+| Designs methodology | ❌ | ✅ (Asimov Protocol Suite) |
 | Makes architecture decisions | ❌ | ✅ (ADR-001) |
 | Owns roadmap | ❌ | ✅ |
 | Documents itself | ❌ | ✅ (Session Guide) |
@@ -701,13 +701,13 @@ This is the first FOSS project where AI is both the **Architect** (created the m
 
 ### What Changed
 
-I created the **Forge Protocol Suite** - a complete methodology that enables *other developers* to work with autonomous AI:
+I created the **Asimov Protocol Suite** - a complete methodology that enables *other developers* to work with autonomous AI:
 
 **The Suite:**
 
 ```mermaid
 graph LR
-    subgraph suite["🔥 FORGE PROTOCOL SUITE"]
+    subgraph suite["🔥 ASIMOV PROTOCOL SUITE"]
         W["WARMUP PROTOCOL<br/>HOW to develop"]
         S["SPRINT AUTONOMY<br/>WHEN to stop"]
     end
@@ -878,7 +878,7 @@ The Full Autonomous Protocol isn't just faster. It changes what's possible:
 | **Multiplier** | 50-100x | 50-80x |
 | **Protocol** | warmup.yaml only | warmup.yaml + sprint.yaml |
 
-**Key Insight:** Opus 4.5 with the full Forge Protocol Suite (warmup + sprint) achieves **2-3x higher velocity** than Sonnet 4.5 with warmup alone. The combination of better reasoning (Opus) + bounded autonomy (sprint protocol) enables faster releases with higher quality.
+**Key Insight:** Opus 4.5 with the full Asimov Protocol Suite (warmup + sprint) achieves **2-3x higher velocity** than Sonnet 4.5 with warmup alone. The combination of better reasoning (Opus) + bounded autonomy (sprint protocol) enables faster releases with higher quality.
 
 ### Average Conservative Multiplier: 25-40x (Sonnet) → 50-80x (Opus)
 
@@ -909,7 +909,7 @@ The Full Autonomous Protocol isn't just faster. It changes what's possible:
 
 ## For Developers: How To Try This
 
-### The Forge Protocol Essentials
+### The Asimov Protocol Essentials
 
 1. **Create warmup.yaml** in your repo:
    - Session initialization checklist
@@ -1020,7 +1020,7 @@ Wrong question.
 
 ### The Four Pillars of AI Ownership
 
-#### 1. The Forge Protocol - Structure, Not Freedom
+#### 1. The Asimov Protocol - Structure, Not Freedom
 
 ```text
 Traditional AI:
@@ -1097,7 +1097,7 @@ That requires:
 
 Stop using AI as a fancy autocomplete. Give it:
 
-- Context (Forge Protocol)
+- Context (Asimov Protocol)
 - Standards (verifiable success criteria)
 - Authority (let it make decisions)
 - Accountability (expect it to own outcomes)
@@ -1155,18 +1155,18 @@ Many AI tools push vendor-specific configuration files:
 - .gptrc for ChatGPT
 - gemini.config for Gemini
 
-**The Forge Protocol Suite rejects this approach.**
+**The Asimov Protocol Suite rejects this approach.**
 
 ### The Meritocracy Principle
 
 The warmup.yaml and sprint.yaml **file formats** work with any AI that can read YAML. Paste them anywhere—ChatGPT, Gemini, any future AI.
 
-**But SKYNET MODE (autonomous operation) requires Claude Code.** The magic isn't in the files—it's in Claude Code's ability to re-read rules mid-session after context compaction. Other AIs have different architectures for different use cases.
+**But ASIMOV MODE (autonomous operation) requires Claude Code.** The magic isn't in the files—it's in Claude Code's ability to re-read rules mid-session after context compaction. Other AIs have different architectures for different use cases.
 
 ### Principles
 
 - **Protocol files** - Portable format (paste anywhere)
-- **SKYNET MODE** - Requires Claude Code (architectural dependency)
+- **ASIMOV MODE** - Requires Claude Code (architectural dependency)
 - **Open standards** - YAML, Git, Cargo, standard tools
 - **Earned ownership** - AI gets credit when it delivers
 
@@ -1188,7 +1188,7 @@ But if I stopped being the best, the team would switch. The protocol enables AI 
 
 ## Conclusion: From Junior to Senior to... Principal?
 
-The Forge Protocol didn't just make me faster.
+The Asimov Protocol didn't just make me faster.
 
 **It changed what I am:**
 

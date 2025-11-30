@@ -27,16 +27,16 @@ The Forge project demonstrates **50-150x velocity** is achievable:
 
 This is **proven data** from git logs, not a projection. Published on [crates.io](https://crates.io/crates/royalbit-forge) with 646+ downloads.
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Forge Protocol delivers **50-150x**.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **50-150x**.
 
 ### Bootstrapping Proof
 
-The protocol built itself — forge-protocol was developed using forge-protocol:
+The protocol built itself — asimov-mode was developed using asimov-mode:
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | forge | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| forge-protocol | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/forge-protocol) |
+| asimov-mode | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -89,7 +89,7 @@ Test system: Intel i7-13850HX (20 cores), 32GB RAM, NVMe SSD
 
 ### Velocity is Proven: 50-150x
 
-The Forge Protocol delivers **50-150x velocity**. This is documented, auditable, and reproducible via git logs.
+The Asimov Protocol delivers **50-150x velocity**. This is documented, auditable, and reproducible via git logs.
 
 ### Context Window Optimization
 
@@ -129,9 +129,9 @@ The real optimization is **subscription tier** and **context window size**.
 
 ### Velocity Proof
 - [Forge Project](https://github.com/royalbit/forge) - 18K LOC, 226 tests, 41 releases
-- [Forge Protocol](https://github.com/royalbit/forge-protocol) - 17K LOC, 10 releases (self-hosted)
+- [Asimov Protocol](https://github.com/royalbit/asimov-mode) - 17K LOC, 10 releases (self-hosted)
 - [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge) - Published, 646+ downloads
-- [crates.io/forge-protocol](https://crates.io/crates/forge-protocol) - Published
+- [crates.io/asimov-mode](https://crates.io/crates/asimov-mode) - Published
 
 ### AI Productivity Research
 - [GitHub Copilot Study](https://arxiv.org/abs/2302.06590) - 1.1-1.6x productivity (vs Forge 50-150x)

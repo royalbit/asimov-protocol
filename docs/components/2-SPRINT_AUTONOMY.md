@@ -1,6 +1,6 @@
 # Component 2: Sprint Autonomy
 
-> **Bounded sessions that ship - the "Off Switch" in SKYNET MODE**
+> **Bounded sessions that ship - the "Off Switch" in ASIMOV MODE**
 
 ## Overview
 

@@ -63,7 +63,7 @@ Available after recovery: ~82K tokens for work
 | Session history accumulation | HIGH | If checkpoint appends instead of replaces |
 | No pruning discipline | HIGH | Checkpoint grows over multi-hour sessions |
 
-### Current Protocol File Sizes (Forge Protocol itself)
+### Current Protocol File Sizes (Asimov Protocol itself)
 
 | File | Lines | Est. Tokens | % of 200K |
 |------|-------|-------------|-----------|
@@ -180,15 +180,15 @@ The full task history lives in `sprint.yaml` (committed) not `.claude_checkpoint
 
 ### 3. CLI Validation
 
-Add to `forge-protocol validate`:
+Add to `asimov-mode validate`:
 
 ```bash
-$ forge-protocol validate .claude_checkpoint.yaml
+$ asimov-mode validate .claude_checkpoint.yaml
 ✓ Valid checkpoint file
 ⚠ Warning: 45 lines exceeds recommended 30 lines
   Suggestion: Prune completed tasks to last 5
 
-$ forge-protocol validate warmup.yaml
+$ asimov-mode validate warmup.yaml
 ✓ Valid warmup file
 ⚠ Warning: 690 lines exceeds recommended 200 lines
   Suggestion: Use modular structure (.forge/ directory)
@@ -237,7 +237,7 @@ This is a larger change - defer to separate milestone.
 - [x] Add checkpoint JSON schema for CLI validation
 
 ### Phase 2: CLI Enforcement (v3.1.0) - DONE
-- [x] Add checkpoint validation to `forge-protocol validate`
+- [x] Add checkpoint validation to `asimov-mode validate`
 - [x] Warn on oversized files (soft limit: 20 lines, hard limit: 30 lines)
 - [x] Add CLAUDE.md size validation (soft limit: 10 lines, hard limit: 15 lines)
 - [x] Add warmup.yaml size validation (soft limit: 200 lines, hard limit: 500 lines)

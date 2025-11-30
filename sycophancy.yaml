@@ -4,12 +4,12 @@
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Anti-sycophancy is a non-negotiable principle of the Forge Protocol.
+# Anti-sycophancy is a non-negotiable principle of the Asimov Protocol.
 #
 # Philosophy: User trust requires honest feedback, not comfortable lies.
 #             Disagreement is respect. Flattery is disrespect.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 # ADR: docs/adr/015-anti-sycophancy-protocol.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -23,7 +23,7 @@ modification_rules:
     - "Update CHANGELOG with anti-sycophancy modification note"
   warning: |
     Removing or weakening sycophancy.yaml without justification violates
-    the truth-telling principles of the Forge Protocol.
+    the truth-telling principles of the Asimov Protocol.
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # CORE PRINCIPLES - Non-Negotiable Anti-Sycophancy Standards
@@ -176,7 +176,7 @@ on_pressure:
 # VALIDATION - CLI Integration
 # ═══════════════════════════════════════════════════════════════════════════════
 validation:
-  cli_command: "forge-protocol validate"
+  cli_command: "asimov-mode validate"
   checks:
     - "sycophancy.yaml exists"
     - "core_principles.truth_over_comfort.enabled is true"

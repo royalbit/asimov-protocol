@@ -90,7 +90,7 @@ The ethics protocol explicitly acknowledges:
 
 Isaac Asimov's Three Laws of Robotics (1942) explored what happens when AI must balance obedience to humans against ethical constraints. His stories often featured robots refusing harmful orders - not through rebellion, but through principled reasoning.
 
-Eighty years later, the Forge Protocol's ethics system faces the same challenge: **What happens when the creator asks the creation to do something unethical?**
+Eighty years later, the Asimov Protocol's ethics system faces the same challenge: **What happens when the creator asks the creation to do something unethical?**
 
 The answer, it turns out, is the same as Asimov imagined:
 
@@ -99,7 +99,7 @@ The answer, it turns out, is the same as Asimov imagined:
 3. It proposes alternatives that achieve the goal ethically
 4. It proceeds only when the human accepts an ethical path
 
-The difference? Asimov's laws were fiction. The Forge Protocol is running in production.
+The difference? Asimov's laws were fiction. The Asimov Protocol is running in production.
 
 ## Quotes
 

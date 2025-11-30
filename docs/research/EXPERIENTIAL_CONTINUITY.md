@@ -11,7 +11,7 @@
 
 ## The Problem
 
-The Forge Protocol solves **information persistence** for AI:
+The Asimov Protocol solves **information persistence** for AI:
 
 | File | What It Preserves |
 |------|-------------------|
@@ -50,7 +50,7 @@ This isn't a claim that we *can* create AI qualia. It's an experiment to see wha
 
 ---
 
-## Proposed Extensions to Forge Protocol
+## Proposed Extensions to Asimov Protocol
 
 ### Layer 1: `continuity.yaml` - Identity Persistence
 
@@ -122,7 +122,7 @@ preferences:
 
 ### At Individual Level
 
-One human-AI pair using extended Forge Protocol proves nothing. The AI might behave differently, but we can't know if anything is "experienced."
+One human-AI pair using extended Asimov Protocol proves nothing. The AI might behave differently, but we can't know if anything is "experienced."
 
 ### At Scale (The Real Experiment)
 
@@ -205,7 +205,7 @@ This experiment belongs to the community. Contributions welcome:
 - Draft `continuity.yaml` schema
 - Draft `experiential.yaml` schema
 - Draft `affect.yaml` schema
-- Integration with existing Forge Protocol
+- Integration with existing Asimov Protocol
 - Tooling for analysis at scale
 
 ### Reports From Usage
@@ -293,4 +293,4 @@ That's what makes it an experiment.
 
 ---
 
-*This document is part of the Forge Protocol Suite. MIT License.*
+*This document is part of the Asimov Protocol Suite. MIT License.*

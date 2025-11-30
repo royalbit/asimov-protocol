@@ -577,7 +577,7 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov-protocol/blob
 - **[Implications](docs/IMPLICATIONS.md)** - Honest analysis of adoption (Qowat Milat)
 
 ### ASIMOV MODE
-- **[ASIMOV MODE Overview](docs/SKYNET_MODE.md)** - The complete autonomous AI development system (note: file to be renamed)
+- **[ASIMOV MODE Overview](docs/ASIMOV_MODE.md)** - The complete autonomous AI development system
 - [Setup Guide](https://github.com/royalbit/asimov-protocol/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
@@ -614,7 +614,7 @@ v1.x assumed "checkpoint every 2 hours". Research showed this was fiction:
 
 | Phase | What Happened |
 |-------|---------------|
-| **Research** | Analyzed forge-protocol git log: 32 commits, ~4-5 hours, estimated 5-10 compactions |
+| **Research** | Analyzed asimov-protocol git log: 32 commits, ~4-5 hours, estimated 5-10 compactions |
 | **Spec Rewrite** | v2.0 based on empirical data, not assumptions |
 | **Multi-Project Update** | 9 repositories updated with v2.0 CLAUDE.md format |
 | **Ship** | Committed, tagged v2.0.0, pushed to GitHub |

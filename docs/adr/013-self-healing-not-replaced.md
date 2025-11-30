@@ -43,7 +43,7 @@ Self-healing addresses **context compaction during a running session**:
 ```
 Session starts
     ↓
-AI works autonomously (SKYNET MODE)
+AI works autonomously (ASIMOV MODE)
     ↓
 ~15 minutes pass (heavy reasoning)
     ↓
@@ -88,7 +88,7 @@ The self-healing protocol (re-read from disk on confusion) is **NOT replaced** b
 
 ### Clarify What IS Replaced
 
-| Feature | Old (Forge Protocol) | New (Claude Code Native) | Scope |
+| Feature | Old (Asimov Protocol) | New (Claude Code Native) | Scope |
 |---------|---------------------|-------------------------|-------|
 | Cross-session resume | Custom handoff files | `--continue`/`--resume` | **Between sessions** |
 | Manual checkpoint restore | `.claude_checkpoint.yaml` | `/rewind` | **Manual command** |
@@ -103,7 +103,7 @@ The self-healing protocol (re-read from disk on confusion) is **NOT replaced** b
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │  MID-SESSION (Compaction happens here)                  │   │
 │  │                                                         │   │
-│  │  Self-healing: warmup.yaml re-read ← FORGE PROTOCOL    │   │
+│  │  Self-healing: warmup.yaml re-read ← ASIMOV PROTOCOL    │   │
 │  │  Task tracking: TodoWrite ← Claude Code native          │   │
 │  │  Manual restore: /rewind ← Claude Code native           │   │
 │  └─────────────────────────────────────────────────────────┘   │

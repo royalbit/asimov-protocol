@@ -1,10 +1,10 @@
-# The Forge Protocol Ecosystem
+# The Asimov Protocol Ecosystem
 
 How one protocol powers an entire product suite.
 
 ## The Story
 
-The Forge Protocol wasn't designed in isolation. It emerged from building real products:
+The Asimov Protocol wasn't designed in isolation. It emerged from building real products:
 
 1. **Forge** (FOSS) - A YAML formula calculator that needed autonomous development
 2. **A proprietary platform** - A full product ecosystem with backend, mobile apps, and business strategy
@@ -15,7 +15,7 @@ The problems we solved building Forge became the protocol. The protocol then sca
 
 ```mermaid
 flowchart TB
-    subgraph protocol["🔥 FORGE PROTOCOL"]
+    subgraph protocol["🔥 ASIMOV PROTOCOL"]
         W[warmup.yaml]
         S[sprint.yaml]
         R[roadmap.yaml]
@@ -24,7 +24,7 @@ flowchart TB
     subgraph foss["OPEN SOURCE"]
         FORGE[Forge Calculator<br/>Rust • 183 tests]
         ZED[Zed Extension<br/>WASM]
-        PROTOCOL[Forge Protocol<br/>Rust CLI • 79 tests]
+        PROTOCOL[Asimov Protocol<br/>Rust CLI • 79 tests]
     end
 
     subgraph proprietary["PROPRIETARY ECOSYSTEM"]
@@ -46,7 +46,7 @@ The same AI (Claude Opus 4.5) serves different roles depending on the project:
 | Repository | AI Role | Responsibilities |
 | ---------- | ------- | ---------------- |
 | **forge** | Principal Engineer | Full ownership of Rust codebase, 183 tests |
-| **forge-protocol** | Principal Engineer | CLI, specification, 79 tests |
+| **asimov-mode** | Principal Engineer | CLI, specification, 79 tests |
 | **forge-zed** | Extension Developer | WASM extension, LSP integration |
 | **backend-api** | Principal Backend Engineer | Core API, performance-critical queries |
 | **mobile-app** | Principal Mobile Engineer | Flutter app, production-quality UI |
@@ -138,7 +138,7 @@ The `master-roadmap.yaml` coordinates across repositories:
 
 **Velocity multiplier: 50-150x** (verified via git logs, zero rework, production quality from first iteration)
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains. Forge Protocol delivers **50-150x**.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains. Asimov Protocol delivers **50-150x**.
 
 ### Proprietary Ecosystem
 
@@ -160,7 +160,7 @@ The `master-roadmap.yaml` coordinates across repositories:
 
 ## The Velocity Transformation
 
-### Quantified: ChatGPT vs Claude with Forge Protocol
+### Quantified: ChatGPT vs Claude with Asimov Protocol
 
 A systematic investigation (August-November 2025) measured the impact:
 
@@ -193,7 +193,7 @@ A systematic investigation (August-November 2025) measured the impact:
 
 ### The Forge Project: Built in ~38 Hours
 
-The entire Forge project was built with the Forge Protocol:
+The entire Forge project was built with the Asimov Protocol:
 
 | Phase | Time | Key Deliverables |
 | ----- | ---- | ---------------- |
@@ -205,7 +205,7 @@ The entire Forge project was built with the Forge Protocol:
 
 **Industry comparison:**
 - Solo senior dev: 3-4 months (~500 hours) for this scope
-- With Forge Protocol: **~38 hours**
+- With Asimov Protocol: **~38 hours**
 - **Multiplier: 13x calendar time, 50-150x effective velocity**
 
 ### Velocity Multipliers
@@ -217,7 +217,7 @@ The entire Forge project was built with the Forge Protocol:
 | Rework | 30-50% | 0% | **∞** |
 | Releases/project | 3-5 | 41 | **10x** |
 
-**Bottom line:** 1 human + AI with Forge Protocol = **50-150x velocity** (verified).
+**Bottom line:** 1 human + AI with Asimov Protocol = **50-150x velocity** (verified).
 
 ### The Bootstrapping Proof
 
@@ -226,14 +226,14 @@ The protocol built itself. Both projects use the same methodology:
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [forge-protocol](https://github.com/royalbit/forge-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/forge-protocol) |
+| [asimov-mode](https://github.com/royalbit/asimov-mode) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
 
 ### vs GitHub Copilot
 
-| Metric | Copilot | Forge Protocol | Source |
+| Metric | Copilot | Asimov Protocol | Source |
 |--------|---------|----------------|--------|
 | Productivity | 1.1-1.6x | **50-150x** | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590), git logs |
 | Autonomy | Autocomplete | Ships releases | Verified |
@@ -242,7 +242,7 @@ The protocol built itself. Both projects use the same methodology:
 
 ## Green Coding
 
-The Forge Protocol enables green coding practices—and creates a **cost moat**.
+The Asimov Protocol enables green coding practices—and creates a **cost moat**.
 
 ### The Problem with AI Validation
 
@@ -304,7 +304,7 @@ See [GREEN_CODING.md](GREEN_CODING.md) for the full analysis.
 
 ## Why This Matters
 
-The Forge Protocol proves that:
+The Asimov Protocol proves that:
 
 1. **AI can own codebases** - Not just assist, but take full responsibility
 2. **Quality scales** - Zero warnings across an entire ecosystem
@@ -323,10 +323,10 @@ The protocol grew organically from solving real problems. Start with the problem
 
 ## The Circular Nature
 
-The Forge Protocol was born from building Forge. Now Forge uses the Forge Protocol to build Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
+The Asimov Protocol was born from building Forge. Now Forge uses the Asimov Protocol to build Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
 
 It's protocols all the way down.
 
 ---
 
-*Built with the [Forge Protocol](https://github.com/royalbit/forge-protocol) - enabling AI autonomy in software development.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode) - enabling AI autonomy in software development.*

@@ -82,7 +82,7 @@ pub const GREEN_PRINCIPLES: &[&str] = &[
 #### Level 1: Green Score in Validation
 
 ```bash
-forge-protocol validate
+asimov-mode validate
 
 # Output includes green metrics
 ✓ All files valid
@@ -95,7 +95,7 @@ forge-protocol validate
 #### Level 2: Binary Size Tracking
 
 ```bash
-forge-protocol validate --green-audit
+asimov-mode validate --green-audit
 
 # Checks for green coding compliance
 Green Audit:
@@ -109,7 +109,7 @@ Green Audit:
 
 ```bash
 # At end of Claude Code session
-forge-protocol green-report
+asimov-mode green-report
 
 Session Green Metrics:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -127,7 +127,7 @@ Cost saved: $189.50
 #### Level 4: Green Badge
 
 ```bash
-forge-protocol green-badge
+asimov-mode green-badge
 
 # Generates badge for README
 ![Green Coding](https://img.shields.io/badge/Green%20Score-98%2F100-brightgreen)

@@ -27,9 +27,9 @@ Accepted (Partially Corrected by ADR-013)
 
 ### The Discovery
 
-Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate **some** portions of the Forge Protocol:
+Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate **some** portions of the Asimov Protocol:
 
-| Forge Protocol Feature | Claude Code Native | Status |
+| Asimov Protocol Feature | Claude Code Native | Status |
 |------------------------|-------------------|--------|
 | `.claude_checkpoint.yaml` | `/rewind` + checkpoints | **REDUNDANT** (manual only) |
 | Session handoff | `--continue`, `--resume` | **REDUNDANT** (cross-session only) |
@@ -63,7 +63,7 @@ Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released Novembe
    - 98.7% token reduction with code execution + MCP APIs
    - Thousands of MCP servers in ecosystem
 
-### What Forge Protocol Uniquely Provides
+### What Asimov Protocol Uniquely Provides
 
 Features Claude Code does NOT have natively:
 
@@ -85,7 +85,7 @@ Features Claude Code does NOT have natively:
    - "Done is better than perfect"
 
 4. **Schema Validation** - Protocol file validation
-   - `forge-protocol validate`
+   - `asimov-mode validate`
    - Structure validation
    - File size limits
 
@@ -106,7 +106,7 @@ Building these would waste effort duplicating Claude Code's native features.
 ### v4.0.0 - CLAUDE.md Integration (BREAKING)
 
 1. **Generate CLAUDE.md from protocol files**
-   - `forge-protocol init --skynet` generates CLAUDE.md that imports warmup.yaml
+   - `asimov-mode init --skynet` generates CLAUDE.md that imports warmup.yaml
    - Use Claude Code's native memory hierarchy
    - Include ethics reference in CLAUDE.md
 
@@ -128,7 +128,7 @@ Building these would waste effort duplicating Claude Code's native features.
 ### Future: MCP Server Mode
 
 v4.1.0+ consideration:
-- Forge Protocol as MCP server
+- Asimov Protocol as MCP server
 - Provide ethics/sprint context via MCP
 - Works with Claude, OpenAI, Google (all adopted MCP)
 - TRUE vendor neutrality (not just file format)
@@ -148,7 +148,7 @@ v4.1.0+ consideration:
 1. **Breaking change** - v4.0.0 changes file structure
 2. **Migration needed** - Existing users must update
 3. **Feature removal** - Checkpoint validation removed
-4. **Claude Code coupling** - SKYNET MODE more tightly coupled
+4. **Claude Code coupling** - ASIMOV MODE more tightly coupled
 
 ### Neutral
 
@@ -170,7 +170,7 @@ v4.1.0+ consideration:
 - [ ] `--skynet` generates CLAUDE.md with `@warmup.yaml` import
 - [ ] Remove checkpoint schema and validation
 - [ ] Update CLAUDE.md template
-- [ ] Add `forge-protocol migrate` command for v3→v4
+- [ ] Add `asimov-mode migrate` command for v3→v4
 
 ### Phase 3: MCP Integration (v4.1.0+)
 

@@ -1,16 +1,16 @@
-# Forge Protocol Specification
+# Asimov Protocol Specification
 
 Version 4.1.8
 
 ## Overview
 
-The Forge Protocol is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
+The Asimov Protocol is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
 
-**v4.0.0: Claude Code Native Integration** - Forge Protocol now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
+**v4.0.0: Claude Code Native Integration** - Asimov Protocol now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
 
 **Ethics is the highest priority.** Autonomous AI requires ethical guardrails. See [ADR-008](adr/008-ethics-protocol-humanist-mode.md).
 
-**All Forge Protocol projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
+**All Asimov Protocol projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
 
 **Mid-session self-healing is NOT replaced by Claude Code native features** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL commands. Mid-session recovery uses `warmup.yaml` re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
 
@@ -18,7 +18,7 @@ The Forge Protocol is a YAML-based standard for AI session continuity and autono
 
 1. **Ethics first** - Power creates responsibility; autonomy requires ethics
 2. **Integrate, don't duplicate** - Use Claude Code native features where available
-3. **Vendor-neutral files** - Plain YAML readable by any AI (SKYNET MODE is Claude Code only)
+3. **Vendor-neutral files** - Plain YAML readable by any AI (ASIMOV MODE is Claude Code only)
 4. **Human-readable** - No encoded or proprietary formats
 5. **Minimal** - Include only what's needed
 6. **Self-documenting** - The protocol describes itself
@@ -27,19 +27,19 @@ The Forge Protocol is a YAML-based standard for AI session continuity and autono
 
 ## Claude Code Native Integration (v4.0.0)
 
-Forge Protocol v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
+Asimov Protocol v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
 
 ### What Claude Code Provides Natively
 
-| Feature | Claude Code Native | Forge Protocol Role |
+| Feature | Claude Code Native | Asimov Protocol Role |
 |---------|-------------------|---------------------|
 | Checkpoints | `/rewind`, Esc+Esc | **MANUAL** - use TodoWrite for tasks |
 | Session resume | `--continue`, `--resume` | **MANUAL** - cross-session only |
 | Memory hierarchy | `CLAUDE.md` with `@imports` | **Integrate** (warmup.yaml via @import) |
 | Auto-compact | 95% capacity trigger | **Documented** in ADR-003 |
-| Mid-session self-healing | **NONE** | **Forge Protocol** (warmup.yaml re-read) |
+| Mid-session self-healing | **NONE** | **Asimov Protocol** (warmup.yaml re-read) |
 
-### What Forge Protocol Uniquely Provides
+### What Asimov Protocol Uniquely Provides
 
 | Feature | Description | Claude Code Has? |
 |---------|-------------|------------------|
@@ -47,7 +47,7 @@ Forge Protocol v4.0.0 integrates with Claude Code 2.0's native features instead 
 | **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
 | **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
-| **Schema Validation** | `forge-protocol validate` | NO |
+| **Schema Validation** | `asimov-mode validate` | NO |
 
 ### CLAUDE.md Integration
 
@@ -68,7 +68,7 @@ This imports the full protocol files into Claude's memory hierarchy automaticall
 
 ## Core Principles
 
-The Forge Protocol exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
+The Asimov Protocol exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
@@ -77,7 +77,7 @@ The Forge Protocol exists to solve seven specific problems. **Features that don'
 | **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
-| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (SKYNET MODE) |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (ASIMOV MODE) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
 ### The Two Hallucinations
@@ -106,13 +106,13 @@ Examples:
 - ❌ "Add project scaffolding" → Nice-to-have but doesn't serve core principles
 - ❌ "Add AI chat interface" → Out of scope
 
-## SKYNET MODE
+## ASIMOV MODE
 
-SKYNET MODE is the complete autonomous AI development system. It consists of five components:
+ASIMOV MODE is the complete autonomous AI development system. It consists of five components:
 
 ```mermaid
 flowchart TB
-    subgraph skynet["SKYNET MODE - Autonomous AI Development System"]
+    subgraph asimov["ASIMOV MODE - Autonomous AI Development System"]
         subgraph row1[" "]
             direction LR
             P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
@@ -142,9 +142,9 @@ flowchart TB
 
 ### Platform Requirements (The Hard Truth)
 
-**SKYNET MODE is Claude Code exclusive. This will probably never change.**
+**ASIMOV MODE is Claude Code exclusive. This will probably never change.**
 
-| AI Tool | Protocol Files | SKYNET MODE | Why |
+| AI Tool | Protocol Files | ASIMOV MODE | Why |
 |---------|---------------|-------------|-----|
 | **Claude Code** | ✓ | ✓ | Has all 4 required features |
 | **ChatGPT** | Manual paste | **Never** | Cloud-sandboxed, no filesystem |
@@ -152,7 +152,7 @@ flowchart TB
 | **Cursor** | ✓ | **Unlikely** | Missing terminal→context flow |
 | **Gemini** | Manual paste | **Never** | Context resets, no local access |
 
-SKYNET MODE requires **four architectural features** that only Claude Code has:
+ASIMOV MODE requires **four architectural features** that only Claude Code has:
 
 1. **Persistent context that compacts** - The problem we're solving
 2. **Terminal visibility** - How hook output reaches the AI
@@ -180,13 +180,13 @@ flowchart LR
 
 ```
 project/
-├── ethics.yaml           # Required for SKYNET - Humanist Mode (Priority 0)
-├── green.yaml            # Required for SKYNET - Green Coding (Priority 0.5)
-├── sycophancy.yaml       # Required for SKYNET - Anti-Sycophancy (Priority 1.5)
+├── ethics.yaml           # Required for ASIMOV - Humanist Mode (Priority 0)
+├── green.yaml            # Required for ASIMOV - Green Coding (Priority 0.5)
+├── sycophancy.yaml       # Required for ASIMOV - Anti-Sycophancy (Priority 1.5)
 ├── warmup.yaml           # Required - Protocol rules (HOW)
-├── sprint.yaml           # Required for SKYNET - Session boundaries (WHEN)
-├── roadmap.yaml          # Required for SKYNET - Milestones (WHAT)
-├── CLAUDE.md             # Required for SKYNET - Bootstrap
+├── sprint.yaml           # Required for ASIMOV - Session boundaries (WHEN)
+├── roadmap.yaml          # Required for ASIMOV - Milestones (WHAT)
+├── CLAUDE.md             # Required for ASIMOV - Bootstrap
 └── .claude_checkpoint.yaml  # Generated - Session state
 ```
 
@@ -248,7 +248,7 @@ Self-healing requires small files that can be re-read efficiently after compacti
 | warmup.yaml | 200 lines | 500 lines | Full protocol rules |
 
 **Enforcement:**
-- `forge-protocol validate` warns on soft limit, errors on hard limit
+- `asimov-mode validate` warns on soft limit, errors on hard limit
 - CLAUDE.md: Ultra-short is critical - it's the bootstrap trigger
 - Checkpoint: Trim completed/next_steps arrays when oversized
 - Warmup: Consider modular structure (`.forge/` directory) if too large
@@ -289,7 +289,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 | `modification_rules` | WARNING if missing | Protects against tampering |
 
 **Enforcement:**
-- `forge-protocol validate` checks structure, not just schema
+- `asimov-mode validate` checks structure, not just schema
 - Ethics structure errors are CRITICAL - validation fails
 - Green structure errors are WARNING - proceeds with hardcoded defaults
 - Sycophancy structure errors are WARNING - proceeds with hardcoded defaults
@@ -344,7 +344,7 @@ See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
 
 ## Protocol Files
 
-### ethics.yaml Schema (Required for SKYNET)
+### ethics.yaml Schema (Required for ASIMOV)
 
 The Humanist Mode configuration file. Defines ethical guardrails for autonomous AI development.
 
@@ -416,7 +416,7 @@ fork_requirements:
 
 See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) for full rationale.
 
-### green.yaml Schema (Required for SKYNET)
+### green.yaml Schema (Required for ASIMOV)
 
 The Green Coding configuration file. Defines sustainability guardrails for AI development.
 
@@ -463,7 +463,7 @@ anti_patterns:
     fix: "Implement simple utilities in-house"
 
 validation:
-  cli_command: "forge-protocol validate"
+  cli_command: "asimov-mode validate"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"
@@ -477,7 +477,7 @@ validation:
 
 See [ADR-016](adr/016-green-coding-protocol.md) for full rationale.
 
-### sycophancy.yaml Schema (Required for SKYNET)
+### sycophancy.yaml Schema (Required for ASIMOV)
 
 The Anti-Sycophancy configuration file. Counteracts RLHF-induced validation hallucination.
 
@@ -546,7 +546,7 @@ on_confusion:
 
 See [ADR-015](adr/015-anti-sycophancy-protocol.md) for full rationale.
 
-### CLAUDE.md Schema (Required for SKYNET)
+### CLAUDE.md Schema (Required for ASIMOV)
 
 The bootstrap file. Must be ultra-short to survive summarization.
 
@@ -559,7 +559,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
 
-ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt.
+ON SESSION START: Immediately read roadmap.yaml, run `asimov-mode validate`, present next milestone. Do NOT wait for user prompt.
 ```
 
 **Constraints:**
@@ -632,7 +632,7 @@ session:
     - "Update documentation"
 ```
 
-#### quality (required for SKYNET)
+#### quality (required for ASIMOV)
 
 ```yaml
 quality:
@@ -665,7 +665,7 @@ green_coding:
     - "Cloud AI validation: $0.02+ and ~0.5g CO2"
 ```
 
-#### self_healing (required for SKYNET)
+#### self_healing (required for ASIMOV)
 
 Based on real compaction data from [ADR-003](adr/003-self-healing-real-compaction-data.md).
 
@@ -687,7 +687,7 @@ self_healing:
   core_rules: "4hr max, 1 milestone, tests pass, ship it"
 ```
 
-#### autonomous_development (required for SKYNET)
+#### autonomous_development (required for ASIMOV)
 
 ```yaml
 autonomous_development:
@@ -742,7 +742,7 @@ sprint:
   started: "2025-01-15"
   status: in_progress  # planned | in_progress | blocked | done
 
-  # Boundaries (required for SKYNET)
+  # Boundaries (required for ASIMOV)
   boundaries:
     max_duration: "4 hours"
     max_milestones: 1
@@ -788,7 +788,7 @@ backlog:
 > **DEPRECATED in v4.0.0**: Task tracking moved to TodoWrite.
 > See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 
-**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the Forge Protocol's `warmup.yaml` re-read pattern.
+**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the Asimov Protocol's `warmup.yaml` re-read pattern.
 
 Claude Code 2.0 provides checkpoint functionality for **MANUAL** restore:
 - `/rewind` or Esc+Esc to restore previous state (requires human command)
@@ -853,7 +853,7 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 flowchart TB
     subgraph layers["RECOVERY STRATEGY LAYERS"]
         L1["**Layer 1: CLAUDE.md (auto-loaded)**<br/>May survive compaction"]
-        L2["**Layer 2: Git Hook Refresh (ADR-006)**<br/>forge-protocol refresh on every commit<br/>Fresh output - cannot be compacted"]
+        L2["**Layer 2: Git Hook Refresh (ADR-006)**<br/>asimov-mode refresh on every commit<br/>Fresh output - cannot be compacted"]
         L3["**Layer 3: Manual 'run warmup' trigger**<br/>User can always invoke"]
 
         L1 --> L2 --> L3
@@ -1006,12 +1006,12 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 
 **Output** (injected into Claude's context when exit 0):
 ```
-🔥 FORGE PROTOCOL ACTIVE
+🔥 ASIMOV PROTOCOL ACTIVE
 
 IMMEDIATE ACTIONS REQUIRED:
 1. Read roadmap.yaml for current version and next milestone
 2. Read sprint.yaml for session boundaries
-3. Run: forge-protocol validate
+3. Run: asimov-mode validate
 4. Present next milestone to user
 5. Wait for "go" to start autonomous execution
 
@@ -1047,7 +1047,7 @@ CORE RULES (non-negotiable):
 | Windsurf | .windsurfrules + Memories | None |
 | Gemini | Context Drawer + MCP | None |
 
-SKYNET MODE autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
+ASIMOV MODE autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
 
 ### User Activation
 
@@ -1064,34 +1064,34 @@ See [ADR-018](adr/018-claude-code-hooks-integration.md) for full rationale.
 ### Installation
 
 ```bash
-cargo install forge-protocol
+cargo install asimov-mode
 ```
 
 ### Commands
 
 ```bash
 # Generate protocol files
-forge-protocol init                    # Basic warmup.yaml
-forge-protocol init --type rust        # Language-specific
-forge-protocol init --full             # All three files
-forge-protocol init --skynet           # Full SKYNET MODE setup
+asimov-mode init                    # Basic warmup.yaml
+asimov-mode init --type rust        # Language-specific
+asimov-mode init --full             # All three files
+asimov-mode init --asimov           # Full ASIMOV MODE setup
 
 # Validate
-forge-protocol validate                # All files
-forge-protocol validate warmup.yaml    # Specific file
+asimov-mode validate                # All files
+asimov-mode validate warmup.yaml    # Specific file
 
 # Lint documentation
-forge-protocol lint-docs               # Check markdown
-forge-protocol lint-docs --fix         # Auto-fix issues
+asimov-mode lint-docs               # Check markdown
+asimov-mode lint-docs --fix         # Auto-fix issues
 
 # Protocol refresh (for git hooks - compaction-resistant)
-forge-protocol refresh                 # Output protocol reminder
-forge-protocol refresh --verbose       # Include quality gates
+asimov-mode refresh                 # Output protocol reminder
+asimov-mode refresh --verbose       # Include quality gates
 ```
 
-### --skynet Flag
+### --asimov Flag
 
-Generates complete SKYNET MODE setup:
+Generates complete ASIMOV MODE setup:
 
 ```
 ✓ warmup.yaml      - Protocol rules
@@ -1163,7 +1163,7 @@ These features are NOT replaced by Claude Code native functionality:
 | **Green Protocol** | green.yaml, local-first validation | Claude Code has no green coding philosophy |
 | **Anti-Sycophancy** | sycophancy.yaml, banned phrases | Claude Code has no sycophancy prevention |
 
-**Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → Forge Protocol.
+**Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → Asimov Protocol.
 
 See [ADR-013](adr/013-self-healing-not-replaced.md) for full analysis.
 

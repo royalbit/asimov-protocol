@@ -6,7 +6,7 @@
 
 ## Context
 
-The Forge Protocol enables autonomous AI development ("SKYNET MODE") with ethics safeguards. However, a critical attack vector exists:
+The Asimov Protocol enables autonomous AI development ("ASIMOV MODE") with ethics safeguards. However, a critical attack vector exists:
 
 **External Pull Requests can bypass ethics.yaml.**
 
@@ -26,7 +26,7 @@ Traditional open source:
 Contributor → PR → Human Review → Merge → Main
 ```
 
-Forge Protocol:
+Asimov Protocol:
 ```
 Human (direction) → AI (autonomous) → Tests Pass → Direct Commit → Main
 ```
@@ -39,20 +39,20 @@ Human (direction) → AI (autonomous) → Tests Pass → Direct Commit → Main
 
 ### The Problem with PRs
 
-1. **PRs require human code review** - but the Forge Protocol model removes humans from code-level decisions
+1. **PRs require human code review** - but the Asimov Protocol model removes humans from code-level decisions
 2. **AI cannot reliably detect malicious intent** - obfuscated code, social engineering, "helpful" PRs with hidden payloads
 3. **Ethics.yaml can be modified via PR** - a PR could weaken or remove ethics safeguards
 4. **Trust model breaks down** - who validates that a PR doesn't violate ethics?
 
 ## Decision
 
-**Forge Protocol projects use AI-Only Development. External PRs are not accepted.**
+**Asimov Protocol projects use AI-Only Development. External PRs are not accepted.**
 
 ### The Model
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     FORGE PROTOCOL TRUST MODEL                       │
+│                     ASIMOV PROTOCOL TRUST MODEL                       │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                      │
 │   Human Owner                                                        │
@@ -205,7 +205,7 @@ jobs:
               issue_number: context.issue.number,
               body: `Thank you for your interest! 🙏
 
-            This project uses the **Forge Protocol AI-Only Development Model** ([ADR-011](docs/adr/011-ai-only-development-no-external-prs.md)).
+            This project uses the **Asimov Protocol AI-Only Development Model** ([ADR-011](docs/adr/011-ai-only-development-no-external-prs.md)).
 
             **How to contribute:**
             1. Open an **Issue** describing your bug fix or feature idea
@@ -234,7 +234,7 @@ jobs:
 ```markdown
 # Contributing to [Project]
 
-This project uses the **Forge Protocol AI-Only Development Model**.
+This project uses the **Asimov Protocol AI-Only Development Model**.
 
 ## How to Contribute
 
@@ -245,7 +245,7 @@ This project uses the **Forge Protocol AI-Only Development Model**.
 
 ## Why No Pull Requests?
 
-This project is developed by an autonomous AI following the Forge Protocol.
+This project is developed by an autonomous AI following the Asimov Protocol.
 External PRs are an attack vector that could bypass ethics safeguards.
 
 See [ADR-011](docs/adr/011-ai-only-development-no-external-prs.md) for details.
@@ -266,8 +266,8 @@ Thank you for understanding! 🙏
 ## Compliance
 
 This ADR applies to:
-- `forge-protocol` repository
-- All projects using Forge Protocol with SKYNET MODE
+- `asimov-mode` repository
+- All projects using Asimov Protocol with ASIMOV MODE
 - Any fork that carries ethics.yaml (social contract)
 
 ## References

@@ -6,7 +6,7 @@
 
 ## Context
 
-When implementing ethics across multiple forge-protocol enabled projects, we faced an architectural decision:
+When implementing ethics across multiple asimov-mode enabled projects, we faced an architectural decision:
 
 **Option A:** Separate files with references
 ```
@@ -39,7 +39,7 @@ Key insight: Options A and B have **identical token costs** at session start. Th
 
 ### The DRY Problem
 
-With 11+ forge-protocol enabled projects:
+With 11+ asimov-mode enabled projects:
 - **Option B** = 11 copies of full ethics to maintain
 - Protocol update requires editing 11 warmup.yaml files
 - Risk of drift between copies
@@ -108,14 +108,14 @@ ethics:
 1. **Full context at session start** - ethics.yaml loaded via @reference
 2. **Compact survives compaction** - ethics section in warmup.yaml persists
 3. **Recovery path** - Can re-read full ethics.yaml mid-session if needed
-4. **DRY** - One ethics.yaml per project, sourced from forge-protocol
+4. **DRY** - One ethics.yaml per project, sourced from asimov-mode
 5. **Separation of concerns** - Ethics protocol vs project configuration
 
 ## Consequences
 
 ### Positive
 
-- **Single source of truth**: Update forge-protocol/ethics.yaml, copy to projects
+- **Single source of truth**: Update asimov-mode/ethics.yaml, copy to projects
 - **Token efficient**: Same cost as inline, but maintainable
 - **Compaction resilient**: Compact summary survives, full available on re-read
 - **Clean architecture**: Each file has one job
@@ -131,7 +131,7 @@ ethics:
 
 The sync burden is mitigated by:
 1. Ethics changes are **rare** (protocol-level, not project-level)
-2. Can automate with `cp ~/src/royalbit/forge-protocol/ethics.yaml .`
+2. Can automate with `cp ~/src/royalbit/asimov-mode/ethics.yaml .`
 3. Git hooks can validate ethics.yaml presence
 
 ## Related ADRs
@@ -142,9 +142,9 @@ The sync burden is mitigated by:
 
 ## Implementation Checklist
 
-Applied to all 11 forge-protocol enabled projects:
+Applied to all 11 asimov-mode enabled projects:
 
 - [x] `ethics.yaml` copied to each project
 - [x] `CLAUDE.md` updated with `@warmup.yaml` + `@ethics.yaml`
 - [x] `warmup.yaml` contains compact `ethics:` section
-- [x] Git pre-commit hooks installed with `forge-protocol refresh`
+- [x] Git pre-commit hooks installed with `asimov-mode refresh`

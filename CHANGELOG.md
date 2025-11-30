@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.3] - 2025-11-30
+
+### Fixed: Complete Documentation Rebrand
+
+Comprehensive update of all documentation to use Asimov Protocol branding.
+
+#### Changes
+
+- **Rename**: `docs/SKYNET_MODE.md` → `docs/ASIMOV_MODE.md`
+- **Update**: CLAUDE.md, sycophancy.yaml, ethics.yaml, green.yaml
+- **Update**: CONTRIBUTING.md, close-external-prs.yml workflow
+- **Update**: All docs/ files - replace Forge Protocol → Asimov Protocol
+- **Update**: All `--skynet` flags → `--asimov` in documentation
+- **Update**: All `forge-protocol` commands → `asimov-mode`
+- **Preserve**: Historical references in README.md and ADR-020 (intentional)
+
 ## [5.0.2] - 2025-11-30
 
 ### Fixed: Clippy Warning in Sycophancy Tests

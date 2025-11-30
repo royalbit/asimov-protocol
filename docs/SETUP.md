@@ -1,15 +1,15 @@
-# SKYNET MODE Setup Guide
+# ASIMOV MODE Setup Guide
 
 > **One command to full autonomous session capability**
 
 ## Quick Start
 
 ```bash
-# Install forge-protocol
-cargo install forge-protocol
+# Install asimov-mode
+cargo install asimov-mode
 
-# Full SKYNET MODE setup
-forge-protocol init --type rust --skynet
+# Full ASIMOV MODE setup
+asimov-mode init --type rust --asimov
 
 # Launch and go
 claude --dangerously-skip-permissions
@@ -36,7 +36,7 @@ project/
 ### Rust
 
 ```bash
-forge-protocol init --type rust --skynet
+asimov-mode init --type rust --asimov
 ```
 
 **Hooks:** Uses cargo-husky (add to Cargo.toml dev-dependencies)
@@ -49,7 +49,7 @@ forge-protocol init --type rust --skynet
 ### Python
 
 ```bash
-forge-protocol init --type python --skynet
+asimov-mode init --type python --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit` + `.hooks/install.sh`
@@ -63,7 +63,7 @@ forge-protocol init --type python --skynet
 ### Node.js
 
 ```bash
-forge-protocol init --type node --skynet
+asimov-mode init --type node --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit` (or use husky)
@@ -76,7 +76,7 @@ forge-protocol init --type node --skynet
 ### Go
 
 ```bash
-forge-protocol init --type go --skynet
+asimov-mode init --type go --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
@@ -89,7 +89,7 @@ forge-protocol init --type go --skynet
 ### Flutter
 
 ```bash
-forge-protocol init --type flutter --skynet
+asimov-mode init --type flutter --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
@@ -102,13 +102,13 @@ forge-protocol init --type flutter --skynet
 ### Documentation
 
 ```bash
-forge-protocol init --type docs --skynet
+asimov-mode init --type docs --asimov
 ```
 
 **Hooks:** `.hooks/pre-commit`
 
 **Quality gates:**
-- `forge-protocol lint-docs .`
+- `asimov-mode lint-docs .`
 - `markdownlint '**/*.md'`
 
 ## Post-Setup Steps
@@ -140,10 +140,10 @@ $EDITOR roadmap.yaml
 ### 3. Validate
 
 ```bash
-forge-protocol validate
+asimov-mode validate
 ```
 
-### 4. Launch SKYNET MODE
+### 4. Launch ASIMOV MODE
 
 ```bash
 # Terminal 1: Launch Claude Code
@@ -161,7 +161,7 @@ claude --dangerously-skip-permissions
 ls -la warmup.yaml CLAUDE.md
 
 # Validate protocol
-forge-protocol validate
+asimov-mode validate
 
 # Check hooks installed
 ls -la .git/hooks/pre-commit
@@ -174,7 +174,7 @@ git commit --allow-empty -m "test" --dry-run
 
 ### "warmup.yaml not found"
 ```bash
-forge-protocol init --type <your-type> --skynet
+asimov-mode init --type <your-type> --asimov
 ```
 
 ### "Hooks not running"
@@ -204,7 +204,7 @@ Say: "Re-read warmup.yaml and .claude_checkpoint.yaml"
 
 ## Related Documentation
 
-- [SKYNET MODE Overview](SKYNET_MODE.md)
+- [ASIMOV MODE Overview](ASIMOV_MODE.md)
 - [Component 1: Protocol Files](components/1-PROTOCOL_FILES.md)
 - [Component 4: Self-Healing](components/4-SELF_HEALING.md)
 - [Vendor Implementation](VENDOR_IMPLEMENTATION.md)

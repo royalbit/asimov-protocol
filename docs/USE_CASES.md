@@ -1,6 +1,6 @@
 # Use Cases: What You Can Build
 
-The Forge Protocol isn't just for coding faster. It's a methodology for autonomous, ethical, sustainable development across multiple domains.
+The Asimov Protocol isn't just for coding faster. It's a methodology for autonomous, ethical, sustainable development across multiple domains.
 
 ## Proven Use Cases
 
@@ -225,8 +225,8 @@ AI executes. Human directs. That's the model.
 ### Validation
 
 ```bash
-forge-protocol validate
-forge-protocol validate --ethics-check
+asimov-mode validate
+asimov-mode validate --ethics-check
 ```
 
 ---
@@ -245,7 +245,7 @@ forge-protocol validate --ethics-check
 
 **Verify it yourself**: [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-### Forge Protocol (Bootstrapped)
+### Asimov Protocol (Bootstrapped)
 
 | Metric | Value |
 |--------|-------|
@@ -285,4 +285,4 @@ If the protocol displaces your job, it also enables your next chapter:
 
 ---
 
-*Built with the [Forge Protocol](https://github.com/royalbit/forge-protocol)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*

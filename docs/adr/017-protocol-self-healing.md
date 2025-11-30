@@ -31,7 +31,7 @@ Implement **auto-regeneration** of missing protocol files during validation:
 ### 1. Auto-Regeneration Behavior
 
 ```
-forge-protocol validate
+asimov-mode validate
 ```
 
 When validation runs and detects missing files:
@@ -45,14 +45,14 @@ When validation runs and detects missing files:
 | roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton template) |
 | CLAUDE.md | NEVER AUTO-CREATE | Bootstrap must be intentional |
 
-**Note on sprint.yaml:** Sprint is a PROTOCOL, not optional data. It defines session boundaries (4hr max, 1 milestone, mandatory stop). Without sprint boundaries, SKYNET MODE has no stopping discipline.
+**Note on sprint.yaml:** Sprint is a PROTOCOL, not optional data. It defines session boundaries (4hr max, 1 milestone, mandatory stop). Without sprint boundaries, ASIMOV MODE has no stopping discipline.
 
 **Note on roadmap.yaml:** Roadmap is DATA, but essential for autonomous operation. Auto-generated as a skeleton template with one placeholder milestone that guides the user/AI to define actual work.
 
 ### 2. Regeneration Output
 
 ```
-forge-protocol validate
+asimov-mode validate
 
 ⚠️  REGENERATED: ethics.yaml (was missing)
 ⚠️  REGENERATED: warmup.yaml (was missing)
@@ -83,7 +83,7 @@ CLAUDE.md is **never** auto-regenerated because:
 Unlike other protocol files which regenerate with full content, roadmap.yaml regenerates as a **skeleton template**:
 
 ```yaml
-# Forge Protocol - Roadmap
+# Asimov Protocol - Roadmap
 metadata:
   current_version: "0.1.0"
   last_updated: "2025-01-01"
@@ -133,16 +133,16 @@ On validation:
 
 ```bash
 # Normal validation (auto-regenerates missing files)
-forge-protocol validate
+asimov-mode validate
 
 # Skip auto-regeneration
-forge-protocol validate --no-regenerate
+asimov-mode validate --no-regenerate
 
 # Force regeneration even if files exist
-forge-protocol init --skynet --force
+asimov-mode init --asimov --force
 
 # Update checksums after intentional modifications
-forge-protocol validate --update-checksums
+asimov-mode validate --update-checksums
 ```
 
 ## Consequences
@@ -198,4 +198,4 @@ forge-protocol validate --update-checksums
 
 - [ADR-011: Hardcoded Ethics](011-hardcoded-ethics.md)
 - [ADR-016: Green Coding Protocol](016-green-coding-protocol.md)
-- [Forge Protocol Specification](../SPECIFICATION.md)
+- [Asimov Protocol Specification](../SPECIFICATION.md)

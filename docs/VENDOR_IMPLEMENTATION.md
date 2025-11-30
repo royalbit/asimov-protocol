@@ -4,17 +4,17 @@
 
 ## Executive Summary: The Uncomfortable Reality
 
-**SKYNET MODE works with Claude Code. It will probably never work with other AI tools.**
+**ASIMOV MODE works with Claude Code. It will probably never work with other AI tools.**
 
 This document explains why, without the marketing-friendly spin.
 
 ## The Brutal Truth
 
-### What SKYNET MODE Requires
+### What ASIMOV MODE Requires
 
 ```mermaid
 flowchart TB
-    subgraph reqs["SKYNET MODE REQUIREMENTS"]
+    subgraph reqs["ASIMOV MODE REQUIREMENTS"]
         R1["**1. Persistent conversation context that compacts**<br/>The PROBLEM we're solving"]
         R2["**2. Terminal/shell visibility**<br/>How hook output reaches the AI"]
         R3["**3. File system read access mid-session**<br/>How the AI re-reads warmup.yaml"]
@@ -60,13 +60,13 @@ flowchart TB
 
 ### The Hook Refresh Mechanism (ADR-006)
 
-This is the v2.1.0 innovation that makes SKYNET MODE resilient:
+This is the v2.1.0 innovation that makes ASIMOV MODE resilient:
 
 ```mermaid
 flowchart TB
     A["Git commit triggers"] --> B["Pre-commit hook runs"]
-    B --> C["forge-protocol refresh outputs banner"]
-    C --> D["Terminal shows SKYNET MODE reminder"]
+    B --> C["asimov-mode refresh outputs banner"]
+    C --> D["Terminal shows ASIMOV MODE reminder"]
     D --> E["Claude Code SEES terminal output"]
     E --> F["Fresh context injection<br/>(not compacted!)"]
     F --> G["AI knows to re-read warmup.yaml"]
@@ -97,10 +97,10 @@ Anyone can use these files - just paste them:
 ### The Validation CLI (Universal)
 
 ```bash
-cargo install forge-protocol
-forge-protocol validate          # Works anywhere
-forge-protocol lint-docs         # Works anywhere
-forge-protocol init              # Works anywhere
+cargo install asimov-mode
+asimov-mode validate          # Works anywhere
+asimov-mode lint-docs         # Works anywhere
+asimov-mode init              # Works anywhere
 ```
 
 The CLI is just a Rust binary. It doesn't need AI integration.
@@ -126,11 +126,11 @@ Use them for what they're good at:
 - **Copilot**: Autocomplete, inline suggestions, small completions
 - **Claude Code**: Autonomous multi-hour coding sessions
 
-Different tools for different jobs. The Forge Protocol is specifically designed for **autonomous development**, which currently only Claude Code supports.
+Different tools for different jobs. The Asimov Protocol is specifically designed for **autonomous development**, which currently only Claude Code supports.
 
 ### Q: Is this vendor lock-in?
 
-**Yes, for SKYNET MODE.** There's no sugarcoating this.
+**Yes, for ASIMOV MODE.** There's no sugarcoating this.
 
 The protocol FILES are vendor-neutral. The SELF-HEALING mechanism is Claude Code exclusive.
 
@@ -141,7 +141,7 @@ If another vendor builds a tool with:
 - Filesystem access mid-session
 - Auto-loaded config files
 
-...then SKYNET MODE would work there too. But as of November 2025, only Claude Code has all five.
+...then ASIMOV MODE would work there too. But as of November 2025, only Claude Code has all five.
 
 ### Q: Should I wait for other tools to catch up?
 
@@ -163,19 +163,19 @@ The protocol is designed so that IF alternatives emerge, migration is easy (it's
 
 ## The Bottom Line
 
-**The Forge Protocol has two layers:**
+**The Asimov Protocol has two layers:**
 
 1. **Protocol Files** (warmup.yaml, sprint.yaml, roadmap.yaml)
    - Universal
    - Any AI can read them (if you paste them)
    - Useful but manual
 
-2. **SKYNET MODE** (Self-healing, hooks, autonomous sessions)
+2. **ASIMOV MODE** (Self-healing, hooks, autonomous sessions)
    - Claude Code exclusive
    - Requires specific architecture
    - No realistic path for other vendors
 
-**Stop hoping other tools will "catch up."** They're building different products for different use cases. If you want SKYNET MODE, use Claude Code. If you prefer other tools, use the protocol files manually and accept the limitations.
+**Stop hoping other tools will "catch up."** They're building different products for different use cases. If you want ASIMOV MODE, use Claude Code. If you prefer other tools, use the protocol files manually and accept the limitations.
 
 This isn't marketing. It's reality.
 
@@ -183,7 +183,7 @@ This isn't marketing. It's reality.
 
 ## For Vendors (If You're Actually Interested)
 
-If you're a vendor and genuinely want to implement SKYNET MODE compatibility, here's what you'd need to build:
+If you're a vendor and genuinely want to implement ASIMOV MODE compatibility, here's what you'd need to build:
 
 ### Minimum Requirements
 
@@ -227,10 +227,10 @@ If you implement this, test with:
 # 6. Verify rules are restored
 ```
 
-If all six steps work, you have SKYNET MODE compatibility.
+If all six steps work, you have ASIMOV MODE compatibility.
 
 ---
 
 *Last updated: 2025-11-27*
 
-*This document is intentionally blunt. The Forge Protocol's value is in honest assessment of what's possible, not in marketing fiction about vendor-neutral futures that aren't coming.*
+*This document is intentionally blunt. The Asimov Protocol's value is in honest assessment of what's possible, not in marketing fiction about vendor-neutral futures that aren't coming.*
