@@ -4,11 +4,11 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 use forge_protocol::{
     check_ethics_status, check_markdown_file, checkpoint_template, claude_md_template,
-    ethics_template, find_markdown_files, fix_markdown_file, hook_installer_template,
-    is_protocol_file, precommit_hook_template, red_flags, roadmap_template,
-    scan_directory_for_red_flags, sprint_template, uses_cargo_husky, validate_directory,
-    validate_file, warmup_template, EthicsStatus, ProjectType, CORE_PRINCIPLES,
-    HUMAN_VETO_COMMANDS,
+    ethics_template, find_markdown_files, fix_markdown_file, green_template,
+    hook_installer_template, is_protocol_file, precommit_hook_template, red_flags,
+    roadmap_template, scan_directory_for_red_flags, sprint_template, uses_cargo_husky,
+    validate_directory_with_regeneration, validate_file, warmup_template, EthicsStatus,
+    ProjectType, CORE_PRINCIPLES, HUMAN_VETO_COMMANDS,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -74,6 +74,10 @@ enum Commands {
         /// Scan project files for red flag patterns (security, financial, privacy, deception)
         #[arg(long)]
         ethics_scan: bool,
+
+        /// Skip auto-regeneration of missing protocol files
+        #[arg(long)]
+        no_regenerate: bool,
     },
 
     /// Initialize new protocol files
@@ -133,7 +137,11 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Validate { path, ethics_scan } => cmd_validate(&path, ethics_scan),
+        Commands::Validate {
+            path,
+            ethics_scan,
+            no_regenerate,
+        } => cmd_validate(&path, ethics_scan, !no_regenerate),
         Commands::Init {
             name,
             project_type,
@@ -142,7 +150,7 @@ fn main() -> ExitCode {
             output,
             force,
         } => cmd_init(name, &project_type, full, skynet, &output, force),
-        Commands::Check { file } => cmd_validate(&file, false),
+        Commands::Check { file } => cmd_validate(&file, false, true),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
     }
@@ -246,7 +254,7 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     ExitCode::SUCCESS
 }
 
-fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
+fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
     println!("{}", "Forge Protocol Validator".bold().green());
     println!();
 
@@ -264,8 +272,8 @@ fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
     println!("  {} Ethics: {}", "✓".green(), ethics_display);
     println!();
 
-    let results = if path.is_file() {
-        // Validate single file
+    let (results, regen_info) = if path.is_file() {
+        // Validate single file (no regeneration for single files)
         let filename = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
         if !is_protocol_file(filename) {
             eprintln!(
@@ -276,22 +284,40 @@ fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
         }
 
         match validate_file(path) {
-            Ok(result) => vec![result],
+            Ok(result) => (vec![result], forge_protocol::RegenerationInfo::default()),
             Err(e) => {
                 eprintln!("{} {}", "Error:".bold().red(), e);
                 return ExitCode::FAILURE;
             }
         }
     } else {
-        // Validate directory
-        match validate_directory(path) {
-            Ok(results) => results,
+        // Validate directory with regeneration
+        match validate_directory_with_regeneration(path, regenerate) {
+            Ok((results, info)) => (results, info),
             Err(e) => {
                 eprintln!("{} {}", "Error:".bold().red(), e);
                 return ExitCode::FAILURE;
             }
         }
     };
+
+    // Print regeneration info first
+    if !regen_info.is_empty() {
+        for (filename, is_warn) in &regen_info.regenerated {
+            let level = if *is_warn {
+                "⚠️  REGENERATED".yellow()
+            } else {
+                "ℹ️  REGENERATED".bright_cyan()
+            };
+            let suffix = if filename == "roadmap.yaml" {
+                " [skeleton]"
+            } else {
+                ""
+            };
+            println!("  {} {} (was missing){}", level, filename, suffix);
+        }
+        println!();
+    }
 
     // Print results
     let mut has_errors = false;
@@ -304,11 +330,18 @@ fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
             "FAIL".bold().red()
         };
 
+        let regen_suffix = if result.regenerated {
+            " [REGENERATED]".dimmed()
+        } else {
+            "".into()
+        };
+
         println!(
-            "  {} {} ({})",
+            "  {} {} ({}){}",
             status,
             result.file.bright_blue(),
-            result.schema_type.dimmed()
+            result.schema_type.dimmed(),
+            regen_suffix
         );
 
         for error in &result.errors {
@@ -374,11 +407,21 @@ fn cmd_validate(path: &Path, ethics_scan: bool) -> ExitCode {
         );
         ExitCode::FAILURE
     } else {
-        println!(
-            "{} {} file(s) valid",
-            "Success:".bold().green(),
-            results.len()
-        );
+        let regen_count = regen_info.regenerated.len();
+        if regen_count > 0 {
+            println!(
+                "{} {} file(s) valid ({} regenerated)",
+                "Success:".bold().green(),
+                results.len(),
+                regen_count
+            );
+        } else {
+            println!(
+                "{} {} file(s) valid",
+                "Success:".bold().green(),
+                results.len()
+            );
+        }
         ExitCode::SUCCESS
     }
 }
@@ -433,6 +476,7 @@ fn cmd_init(
     if skynet {
         files.push(("CLAUDE.md", claude_md_template(&project_name, project_type)));
         files.push(("ethics.yaml", ethics_template()));
+        files.push(("green.yaml", green_template()));
         // Generate example checkpoint file (will be gitignored)
         files.push((
             ".claude_checkpoint.yaml.example",

@@ -277,8 +277,10 @@ fn e2e_validate_directory() {
     )
     .unwrap();
 
+    // Use --no-regenerate to only validate existing files
     let output = Command::new(binary_path())
         .arg("validate")
+        .arg("--no-regenerate")
         .arg(temp_dir.path())
         .output()
         .expect("Failed to execute");
@@ -303,8 +305,10 @@ fn e2e_validate_directory_no_protocol_files() {
     let temp_dir = TempDir::new().unwrap();
     fs::write(temp_dir.path().join("config.yaml"), "key: value").unwrap();
 
+    // Use --no-regenerate to prevent auto-creation of missing files
     let output = Command::new(binary_path())
         .arg("validate")
+        .arg("--no-regenerate")
         .arg(temp_dir.path())
         .output()
         .expect("Failed to execute");

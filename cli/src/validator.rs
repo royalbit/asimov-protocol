@@ -13,6 +13,7 @@ pub struct ValidationResult {
     pub is_valid: bool,
     pub errors: Vec<String>,
     pub warnings: Vec<String>,
+    pub regenerated: bool,
 }
 
 impl ValidationResult {
@@ -23,6 +24,7 @@ impl ValidationResult {
             is_valid: true,
             errors: Vec::new(),
             warnings: Vec::new(),
+            regenerated: false,
         }
     }
 
@@ -33,6 +35,7 @@ impl ValidationResult {
             is_valid: false,
             errors,
             warnings: Vec::new(),
+            regenerated: false,
         }
     }
 
@@ -45,6 +48,12 @@ impl ValidationResult {
     /// Add multiple warnings to the validation result
     pub fn with_warnings(mut self, warnings: Vec<String>) -> Self {
         self.warnings.extend(warnings);
+        self
+    }
+
+    /// Mark this result as regenerated
+    pub fn with_regenerated(mut self) -> Self {
+        self.regenerated = true;
         self
     }
 }
@@ -184,23 +193,106 @@ fn check_file_size(schema_type: &str, line_count: usize) -> Vec<String> {
     warnings
 }
 
+/// Regeneration info returned when files are auto-created
+#[derive(Debug, Default)]
+pub struct RegenerationInfo {
+    /// Files that were regenerated (filename, is_warn_level)
+    pub regenerated: Vec<(String, bool)>,
+}
+
+impl RegenerationInfo {
+    pub fn is_empty(&self) -> bool {
+        self.regenerated.is_empty()
+    }
+}
+
 /// Validate all protocol files in a directory
 pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
-    let mut results = Vec::new();
+    validate_directory_with_options(dir, true)
+}
 
-    // Look for protocol files
+/// Validate all protocol files in a directory with regeneration control
+pub fn validate_directory_with_options(
+    dir: &Path,
+    regenerate: bool,
+) -> Result<Vec<ValidationResult>> {
+    let (results, _info) = validate_directory_internal(dir, regenerate)?;
+    Ok(results)
+}
+
+/// Validate all protocol files in a directory, returning regeneration info
+pub fn validate_directory_with_regeneration(
+    dir: &Path,
+    regenerate: bool,
+) -> Result<(Vec<ValidationResult>, RegenerationInfo)> {
+    validate_directory_internal(dir, regenerate)
+}
+
+/// Internal implementation that returns both results and regeneration info
+fn validate_directory_internal(
+    dir: &Path,
+    regenerate: bool,
+) -> Result<(Vec<ValidationResult>, RegenerationInfo)> {
+    use crate::templates::{
+        ethics_template, green_template, roadmap_template, sprint_template, warmup_template,
+        ProjectType,
+    };
+
+    let mut results = Vec::new();
+    let mut regen_info = RegenerationInfo::default();
+
+    // Required protocol files with their templates and warn level
+    // (filename, template_fn, is_warn_level)
+    #[allow(clippy::type_complexity)]
+    let required_files: Vec<(&str, Box<dyn Fn() -> String>, bool)> = vec![
+        ("ethics.yaml", Box::new(ethics_template), true), // WARN
+        (
+            "warmup.yaml",
+            Box::new(|| warmup_template("project", ProjectType::Generic)),
+            true,
+        ), // WARN
+        ("green.yaml", Box::new(green_template), false),  // INFO
+        ("sprint.yaml", Box::new(sprint_template), false), // INFO
+        ("roadmap.yaml", Box::new(roadmap_template), false), // INFO
+    ];
+
+    // Check and regenerate missing required files
+    for (filename, template_fn, is_warn) in &required_files {
+        let file_path = dir.join(filename);
+        if !file_path.exists() && regenerate {
+            // Regenerate the file
+            let content = template_fn();
+            if let Err(e) = std::fs::write(&file_path, &content) {
+                return Err(Error::ValidationError(format!(
+                    "Failed to regenerate {}: {}",
+                    filename, e
+                )));
+            }
+            regen_info
+                .regenerated
+                .push((filename.to_string(), *is_warn));
+        }
+    }
+
+    // Look for protocol files (including optional ones)
     let protocol_files = [
         "warmup.yaml",
         "sprint.yaml",
         "roadmap.yaml",
         "ethics.yaml",
+        "green.yaml",
         ".claude_checkpoint.yaml",
     ];
 
     for filename in &protocol_files {
         let file_path = dir.join(filename);
         if file_path.exists() {
-            results.push(validate_file(&file_path)?);
+            let mut result = validate_file(&file_path)?;
+            // Mark as regenerated if it was just created
+            if regen_info.regenerated.iter().any(|(f, _)| f == *filename) {
+                result = result.with_regenerated();
+            }
+            results.push(result);
         }
     }
 
@@ -216,7 +308,7 @@ pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
         ));
     }
 
-    Ok(results)
+    Ok((results, regen_info))
 }
 
 /// Convert serde_yaml::Value to serde_json::Value
@@ -237,6 +329,7 @@ pub fn is_protocol_file(filename: &str) -> bool {
             || name.contains("sprint")
             || name.contains("roadmap")
             || name.contains("ethics")
+            || name.contains("green")
             || name.contains("checkpoint"))
 }
 
@@ -679,7 +772,7 @@ identity:
     fn test_validate_directory_with_all_files() {
         let temp_dir = TempDir::new().unwrap();
 
-        // Create all three protocol files
+        // Create all protocol files (without regeneration)
         std::fs::write(
             temp_dir.path().join("warmup.yaml"),
             "identity:\n  project: Test",
@@ -696,7 +789,8 @@ identity:
         )
         .unwrap();
 
-        let results = validate_directory(temp_dir.path()).unwrap();
+        // Use no-regenerate to only validate existing files
+        let results = validate_directory_with_options(temp_dir.path(), false).unwrap();
         assert_eq!(results.len(), 3);
         assert!(results.iter().all(|r| r.is_valid));
     }
@@ -711,7 +805,8 @@ identity:
         )
         .unwrap();
 
-        let results = validate_directory(temp_dir.path()).unwrap();
+        // Use no-regenerate to only validate existing warmup.yaml
+        let results = validate_directory_with_options(temp_dir.path(), false).unwrap();
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].schema_type, "warmup");
     }
@@ -722,7 +817,8 @@ identity:
 
         std::fs::write(temp_dir.path().join("config.yaml"), "key: value").unwrap();
 
-        let result = validate_directory(temp_dir.path());
+        // Use no-regenerate - should fail because no protocol files exist
+        let result = validate_directory_with_options(temp_dir.path(), false);
         assert!(result.is_err());
         match result {
             Err(Error::ValidationError(msg)) => {
@@ -740,6 +836,8 @@ identity:
         assert!(is_protocol_file("warmup.yaml"));
         assert!(is_protocol_file("sprint.yaml"));
         assert!(is_protocol_file("roadmap.yaml"));
+        assert!(is_protocol_file("ethics.yaml"));
+        assert!(is_protocol_file("green.yaml"));
         assert!(is_protocol_file("WARMUP.yaml"));
         assert!(is_protocol_file("SPRINT.YAML"));
         assert!(is_protocol_file("my_warmup.yaml"));
@@ -913,5 +1011,140 @@ self_healing:
             "Should warn about late on_confusion position: {:?}",
             warnings
         );
+    }
+
+    // ========== Auto-Regeneration Tests (v4.1.5) ==========
+
+    #[test]
+    fn test_regeneration_info_empty() {
+        let info = RegenerationInfo::default();
+        assert!(info.is_empty());
+    }
+
+    #[test]
+    fn test_regeneration_info_not_empty() {
+        let mut info = RegenerationInfo::default();
+        info.regenerated.push(("ethics.yaml".to_string(), true));
+        assert!(!info.is_empty());
+    }
+
+    #[test]
+    fn test_validate_directory_regenerates_missing_files() {
+        let temp_dir = tempfile::tempdir().unwrap();
+
+        // Start with empty directory
+        let (results, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
+
+        // Should have regenerated all required files
+        assert!(!info.is_empty(), "Should have regenerated files");
+        assert!(
+            info.regenerated.iter().any(|(f, _)| f == "ethics.yaml"),
+            "Should regenerate ethics.yaml"
+        );
+        assert!(
+            info.regenerated.iter().any(|(f, _)| f == "warmup.yaml"),
+            "Should regenerate warmup.yaml"
+        );
+        assert!(
+            info.regenerated.iter().any(|(f, _)| f == "green.yaml"),
+            "Should regenerate green.yaml"
+        );
+        assert!(
+            info.regenerated.iter().any(|(f, _)| f == "sprint.yaml"),
+            "Should regenerate sprint.yaml"
+        );
+        assert!(
+            info.regenerated.iter().any(|(f, _)| f == "roadmap.yaml"),
+            "Should regenerate roadmap.yaml"
+        );
+
+        // All results should be valid
+        assert!(
+            results.iter().all(|r| r.is_valid),
+            "All regenerated files should be valid"
+        );
+    }
+
+    #[test]
+    fn test_validate_directory_no_regenerate_flag() {
+        let temp_dir = tempfile::tempdir().unwrap();
+
+        // With regenerate=false, should fail because no files exist
+        let result = validate_directory_with_regeneration(temp_dir.path(), false);
+        assert!(
+            result.is_err(),
+            "Should error when no files exist and regeneration disabled"
+        );
+    }
+
+    #[test]
+    fn test_validate_directory_marks_regenerated_results() {
+        let temp_dir = tempfile::tempdir().unwrap();
+
+        let (results, _) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
+
+        // All results should be marked as regenerated
+        assert!(
+            results.iter().all(|r| r.regenerated),
+            "All results should be marked as regenerated"
+        );
+    }
+
+    #[test]
+    fn test_validate_directory_existing_files_not_regenerated() {
+        let temp_dir = tempfile::tempdir().unwrap();
+
+        // Create a warmup.yaml file manually
+        let warmup_content = r#"
+identity:
+  project: "Test"
+"#;
+        std::fs::write(temp_dir.path().join("warmup.yaml"), warmup_content).unwrap();
+
+        let (results, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
+
+        // warmup.yaml should NOT be in regenerated list
+        assert!(
+            !info.regenerated.iter().any(|(f, _)| f == "warmup.yaml"),
+            "Existing warmup.yaml should not be regenerated"
+        );
+
+        // warmup.yaml result should NOT be marked as regenerated
+        let warmup_result = results.iter().find(|r| r.file.contains("warmup.yaml"));
+        assert!(
+            warmup_result.is_some(),
+            "Should have warmup.yaml in results"
+        );
+        assert!(
+            !warmup_result.unwrap().regenerated,
+            "Existing file should not be marked as regenerated"
+        );
+    }
+
+    #[test]
+    fn test_regeneration_warn_levels() {
+        let temp_dir = tempfile::tempdir().unwrap();
+
+        let (_, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
+
+        // ethics.yaml and warmup.yaml should have warn level = true
+        for (filename, is_warn) in &info.regenerated {
+            match filename.as_str() {
+                "ethics.yaml" | "warmup.yaml" => {
+                    assert!(*is_warn, "{} should have WARN level", filename);
+                }
+                "green.yaml" | "sprint.yaml" | "roadmap.yaml" => {
+                    assert!(!*is_warn, "{} should have INFO level", filename);
+                }
+                _ => {}
+            }
+        }
+    }
+
+    #[test]
+    fn test_validation_result_with_regenerated() {
+        let result = ValidationResult::success("test.yaml".to_string(), "warmup".to_string())
+            .with_regenerated();
+        assert!(result.regenerated);
     }
 }

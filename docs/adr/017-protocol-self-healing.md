@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Date
 
@@ -41,9 +41,13 @@ When validation runs and detects missing files:
 | ethics.yaml | AUTO-CREATE + WARN | Ethics must exist, user should know |
 | green.yaml | AUTO-CREATE + INFO | Green is required but less critical |
 | warmup.yaml | AUTO-CREATE + WARN | Core protocol, user should know |
-| sprint.yaml | SKIP | Optional file |
-| roadmap.yaml | SKIP | Optional file |
+| sprint.yaml | AUTO-CREATE + INFO | Session boundary protocol (WHEN to stop) |
+| roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton template) |
 | CLAUDE.md | NEVER AUTO-CREATE | Bootstrap must be intentional |
+
+**Note on sprint.yaml:** Sprint is a PROTOCOL, not optional data. It defines session boundaries (4hr max, 1 milestone, mandatory stop). Without sprint boundaries, SKYNET MODE has no stopping discipline.
+
+**Note on roadmap.yaml:** Roadmap is DATA, but essential for autonomous operation. Auto-generated as a skeleton template with one placeholder milestone that guides the user/AI to define actual work.
 
 ### 2. Regeneration Output
 
@@ -51,16 +55,20 @@ When validation runs and detects missing files:
 forge-protocol validate
 
 ⚠️  REGENERATED: ethics.yaml (was missing)
-ℹ️  REGENERATED: green.yaml (was missing)
 ⚠️  REGENERATED: warmup.yaml (was missing)
+ℹ️  REGENERATED: green.yaml (was missing)
+ℹ️  REGENERATED: sprint.yaml (was missing)
+ℹ️  REGENERATED: roadmap.yaml (was missing) [skeleton]
 
   ✓ Ethics: HARDCODED (regenerated from defaults)
 
   OK ./warmup.yaml (warmup) [REGENERATED]
   OK ./ethics.yaml (ethics) [REGENERATED]
   OK ./green.yaml (green) [REGENERATED]
+  OK ./sprint.yaml (sprint) [REGENERATED]
+  OK ./roadmap.yaml (roadmap) [REGENERATED]
 
-Success: 3 file(s) valid (3 regenerated)
+Success: 5 file(s) valid (5 regenerated)
 ```
 
 ### 3. CLAUDE.md Exception
@@ -70,7 +78,38 @@ CLAUDE.md is **never** auto-regenerated because:
 - Auto-creating it would enable protocol without consent
 - Deleting CLAUDE.md is the "off switch" for the protocol
 
-### 4. Checksum Validation (Future)
+### 4. Roadmap Skeleton Template
+
+Unlike other protocol files which regenerate with full content, roadmap.yaml regenerates as a **skeleton template**:
+
+```yaml
+# Forge Protocol - Roadmap
+metadata:
+  current_version: "0.1.0"
+  last_updated: "2025-01-01"
+
+current:
+  version: "0.1.0"
+  status: planned
+  summary: "Define your first milestone"
+  description: |
+    Replace this with your actual milestone:
+    - What problem are you solving?
+    - What does "done" look like?
+    - Can it ship in 4 hours or less?
+  features:
+    - "[ ] Define milestone scope"
+
+backlog:
+  - "Add future milestones here"
+```
+
+**Why skeleton?** Roadmap is DATA, not RULES. We can't know what milestones make sense for a project. The skeleton:
+- Passes validation (has required fields)
+- Clearly signals "fill this in"
+- Guides bounded thinking (4hr milestone sizing)
+
+### 5. Checksum Validation (Future)
 
 For v4.1.5+, add optional checksum validation:
 
@@ -90,7 +129,7 @@ On validation:
 - WARN if modified (not ERROR - modifications may be intentional)
 - Update hash after successful validation with `--update-checksums`
 
-### 5. CLI Commands
+### 6. CLI Commands
 
 ```bash
 # Normal validation (auto-regenerates missing files)
@@ -128,10 +167,12 @@ forge-protocol validate --update-checksums
 ## Implementation
 
 ### Phase 1: Auto-Regeneration (v4.1.5)
-- [ ] Detect missing required files during validation
-- [ ] Auto-create from templates
-- [ ] Display regeneration warnings
-- [ ] Add `--no-regenerate` flag
+- [x] Detect missing required files during validation
+- [x] Auto-create from templates (ethics, warmup, green, sprint, roadmap)
+- [x] Display regeneration warnings (WARN for ethics/warmup, INFO for others)
+- [x] Add `--no-regenerate` flag
+- [x] Roadmap uses skeleton template (not full protocol)
+- [x] Add `green_template()` function
 
 ### Phase 2: Checksum Validation (v4.2.0)
 - [ ] Generate checksums on `init`

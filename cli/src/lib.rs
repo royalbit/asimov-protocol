@@ -47,11 +47,12 @@ pub use markdown::{
     LintError, LintResult,
 };
 pub use templates::{
-    checkpoint_template, claude_md_template, ethics_template, hook_installer_template,
-    precommit_hook_template, roadmap_template, sprint_template, uses_cargo_husky, warmup_template,
-    ProjectType,
+    checkpoint_template, claude_md_template, ethics_template, green_template,
+    hook_installer_template, precommit_hook_template, roadmap_template, sprint_template,
+    uses_cargo_husky, warmup_template, ProjectType,
 };
 pub use validator::{
     check_ethics_structure, check_warmup_structure, is_protocol_file, validate_claude_md,
-    validate_directory, validate_file, FileSizeLimits, ValidationResult,
+    validate_directory, validate_directory_with_options, validate_directory_with_regeneration,
+    validate_file, FileSizeLimits, RegenerationInfo, ValidationResult,
 };

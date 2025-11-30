@@ -1,6 +1,6 @@
 # Forge Protocol Specification
 
-Version 4.0.0
+Version 4.1.5
 
 ## Overview
 
@@ -180,9 +180,9 @@ flowchart LR
 project/
 ├── ethics.yaml           # Required for SKYNET - Humanist Mode
 ├── green.yaml            # Required for SKYNET - Green Coding
-├── warmup.yaml           # Required - Protocol rules
-├── sprint.yaml           # Optional - Current sprint
-├── roadmap.yaml          # Optional - Milestones
+├── warmup.yaml           # Required - Protocol rules (HOW)
+├── sprint.yaml           # Required for SKYNET - Session boundaries (WHEN)
+├── roadmap.yaml          # Required for SKYNET - Milestones (WHAT)
 ├── CLAUDE.md             # Required for SKYNET - Bootstrap
 └── .claude_checkpoint.yaml  # Generated - Session state
 ```
@@ -288,11 +288,13 @@ Protocol files auto-regenerate when missing during validation. Recovery over sur
 | File Missing | Action | Rationale |
 |--------------|--------|-----------|
 | ethics.yaml | AUTO-CREATE + WARN | Ethics must exist |
-| green.yaml | AUTO-CREATE + INFO | Required but less critical |
 | warmup.yaml | AUTO-CREATE + WARN | Core protocol |
-| sprint.yaml | SKIP | Optional file |
-| roadmap.yaml | SKIP | Optional file |
+| green.yaml | AUTO-CREATE + INFO | Required but less critical |
+| sprint.yaml | AUTO-CREATE + INFO | Session boundary protocol |
+| roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton) |
 | CLAUDE.md | **NEVER** | Bootstrap must be intentional |
+
+**Note:** Sprint is a PROTOCOL (defines WHEN to stop), not optional data. Roadmap regenerates as a skeleton template with one placeholder milestone.
 
 **Why CLAUDE.md is Never Auto-Created:**
 - CLAUDE.md is the "on switch" - human must add it intentionally
@@ -948,6 +950,8 @@ See [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-ana
 
 ## Architecture Decisions
 
+- [ADR-017: Protocol Self-Healing](adr/017-protocol-self-healing.md) - **v4.1.5** Auto-regeneration
+- [ADR-016: Green Coding Protocol](adr/016-green-coding-protocol.md) - **v4.1.2** Dedicated green.yaml
 - [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-analysis.md) - **v4.0.0** 50-150x proven
 - [ADR-009: Claude Code Native Integration](adr/009-claude-code-native-integration.md) - **v4.0.0** Strategic pivot
 - [ADR-008: Ethics Protocol and Humanist Mode](adr/008-ethics-protocol-humanist-mode.md) - v3.0.0

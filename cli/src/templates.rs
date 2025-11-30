@@ -777,6 +777,69 @@ fork_requirements:
     .to_string()
 }
 
+/// Generate green.yaml template for Green Coding Protocol
+pub fn green_template() -> String {
+    r#"# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                      GREEN.YAML - SUSTAINABILITY PROTOCOL v1.0                ║
+# ║                    Local-First Tools. Zero Emissions. Ship Green.             ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+#
+# IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
+# Green coding is a non-negotiable principle of the Forge Protocol.
+#
+# Philosophy: Every token has a carbon cost. Every API call burns energy.
+#             Local tools are free - in money AND emissions.
+#
+# Protocol: https://github.com/royalbit/forge-protocol
+
+modification_rules:
+  immutable_without: "2 human co-signers with public justification"
+
+core_principles:
+  status: "REQUIRED"
+  local_first:
+    enabled: true
+    description: "Use CLI tools for validation, linting, formatting - not AI"
+  token_efficiency:
+    enabled: true
+    description: "Reserve AI tokens for complex reasoning, not routine tasks"
+  binary_efficiency:
+    enabled: true
+    description: "Smaller binaries = less bandwidth = less energy"
+  carbon_awareness:
+    enabled: true
+    description: "Track and minimize carbon footprint"
+
+practices:
+  general:
+    - "Local-first: No API calls for routine tasks"
+    - "Prefer compiled languages or efficient runtimes"
+    - "Minimize dependencies (each dep has carbon cost)"
+    - "Cache aggressively (reduce redundant computation)"
+
+anti_patterns:
+  ai_for_validation:
+    pattern: "Asking AI to check if code compiles or passes lint"
+    fix: "Run cargo check, cargo clippy, npm run lint locally"
+  ai_for_formatting:
+    pattern: "Asking AI to format code"
+    fix: "Run cargo fmt, prettier, black locally"
+  bloated_dependencies:
+    pattern: "Adding packages for trivial functionality"
+    fix: "Implement simple utilities in-house"
+
+validation:
+  cli_command: "forge-protocol validate"
+  checks:
+    - "green.yaml exists"
+    - "core_principles.local_first.enabled is true"
+    - "core_principles.token_efficiency.enabled is true"
+
+motto: "Ship fast. Ship small. Ship green."
+"#
+    .to_string()
+}
+
 /// Generate a starter sprint.yaml template
 pub fn sprint_template() -> String {
     r#"# Forge Protocol - Sprint Tracking
@@ -800,10 +863,14 @@ sprint:
     .to_string()
 }
 
-/// Generate a starter roadmap.yaml template
+/// Generate a starter roadmap.yaml template (skeleton for self-healing)
+/// This is a minimal template that guides users to define their milestones.
 pub fn roadmap_template() -> String {
     r#"# Forge Protocol - Roadmap
 # https://github.com/royalbit/forge-protocol
+#
+# This is a SKELETON template. Replace with your actual milestones.
+# Each milestone should be completable in 4 hours or less.
 
 metadata:
   current_version: "0.1.0"
@@ -811,23 +878,19 @@ metadata:
 
 current:
   version: "0.1.0"
-  status: in_progress
-  summary: "Initial Release"
-  highlights:
-    - "Core functionality"
-    - "Basic documentation"
-
-next:
-  version: "0.2.0"
   status: planned
-  summary: "Next Milestone"
+  summary: "Define your first milestone"
+  description: |
+    Replace this with your actual milestone:
+    - What problem are you solving?
+    - What does "done" look like?
+    - Can it ship in 4 hours or less?
   features:
-    - "Feature one"
-    - "Feature two"
+    - "[ ] Define milestone scope"
+    - "[ ] Define success criteria"
 
 backlog:
-  - "Future idea one"
-  - "Future idea two"
+  - "Add future milestones here"
 "#
     .to_string()
 }
@@ -1371,7 +1434,7 @@ mod tests {
             "Should have metadata section"
         );
         assert!(yaml.get("current").is_some(), "Should have current section");
-        assert!(yaml.get("next").is_some(), "Should have next section");
+        // Skeleton template doesn't have "next" section - it's minimal
         assert!(yaml.get("backlog").is_some(), "Should have backlog section");
     }
 
@@ -1381,16 +1444,12 @@ mod tests {
         let yaml: serde_yaml::Value = serde_yaml::from_str(&template).unwrap();
 
         let current_status = yaml["current"]["status"].as_str().unwrap();
-        let next_status = yaml["next"]["status"].as_str().unwrap();
 
         let valid_statuses = ["planned", "in_progress", "released"];
         assert!(
             valid_statuses.contains(&current_status),
             "Current status should be valid"
         );
-        assert!(
-            valid_statuses.contains(&next_status),
-            "Next status should be valid"
-        );
+        // Skeleton template only has "current" status, no "next"
     }
 }

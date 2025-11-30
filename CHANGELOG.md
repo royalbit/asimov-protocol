@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.5] - 2025-11-29
+
+### Added: Protocol Self-Healing (ADR-017)
+
+Auto-regenerate missing protocol files during validation. Recovery over surveillance.
+
+#### Auto-Regeneration Behavior
+
+When `forge-protocol validate` runs and detects missing files:
+
+| File Missing | Action | Level |
+|--------------|--------|-------|
+| ethics.yaml | AUTO-CREATE | WARN |
+| warmup.yaml | AUTO-CREATE | WARN |
+| green.yaml | AUTO-CREATE | INFO |
+| sprint.yaml | AUTO-CREATE | INFO |
+| roadmap.yaml | AUTO-CREATE | INFO (skeleton) |
+| CLAUDE.md | NEVER | - |
+
+- **WARN level**: Critical protocols (ethics, warmup) - user should know
+- **INFO level**: Supporting protocols - auto-created silently
+- **Skeleton template**: roadmap.yaml creates minimal template with one placeholder milestone
+
+#### New CLI Flag
+
+- **`--no-regenerate`**: Skip auto-creation of missing files
+  ```bash
+  forge-protocol validate --no-regenerate
+  ```
+
+#### New Features
+
+- **green.yaml schema**: Full validation support for green coding protocol
+- **green_template()**: Template generator for green.yaml
+- **Skeleton roadmap template**: Minimal roadmap with guidance text
+
+#### Sprint is Now a Protocol
+
+Sprint.yaml is reclassified from "optional data" to "required protocol":
+- Defines session boundaries (WHEN to stop)
+- Without sprint boundaries, SKYNET MODE has no stopping discipline
+- Auto-created on validation like other protocols
+
+#### Why CLAUDE.md is Never Auto-Created
+
+- CLAUDE.md is the "on switch" - human must add it intentionally
+- Auto-creating would enable protocol without consent
+- Deleting CLAUDE.md is the "off switch" for the protocol
+
+See [ADR-017](docs/adr/017-protocol-self-healing.md) for full rationale.
+
 ## [4.1.2] - 2025-11-29
 
 ### Added: Green Coding Protocol Separation (ADR-016)

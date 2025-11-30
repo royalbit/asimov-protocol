@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.1.2"
+  current_version: "4.1.5"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,38 +48,58 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.2 - GREEN CODING PROTOCOL SEPARATION (ADR-016)
+# CURRENT: v4.1.5 - PROTOCOL SELF-HEALING (ADR-017)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.1.2"
+  version: "4.1.5"
   status: released
   date: "2025-11-29"
-  summary: "Green Coding Protocol Separation - Parity with Ethics"
-  goal: GREEN_CODING
+  summary: "Protocol Self-Healing - Auto-Regeneration"
+  goal: ANTI-HALLUCINATION
   priority: HIGH
 
   rationale: |
-    Green coding deserves the same treatment as ethics:
-    - Dedicated protocol file (green.yaml)
-    - Validation at session start
-    - Modification rules requiring co-signers
-    - Clear ownership and documentation
+    Self-healing is foundational infrastructure for autonomous AI operation:
+    - Session start brittleness: If protocol files missing, recover gracefully
+    - Mid-session vulnerability: Compaction happens every ~15 min, files can disappear
+    - Dependency chain: All protections depend on protocol files existing
+    Recovery over surveillance. Auto-create missing files, don't block.
 
   deliverables:
-    protocol_files:
-      - "[x] green.yaml - Dedicated green coding protocol file"
-      - "[x] ADR-016: Green Coding Protocol Separation"
-      - "[x] warmup.yaml updated with step_0b_green_validation"
-      - "[x] CLAUDE.md updated with @green.yaml import"
+    implementation:
+      - "[x] Auto-regenerate missing protocol files during validation"
+      - "[x] green.yaml schema and validation support"
+      - "[x] green_template() for template generation"
+      - "[x] Skeleton roadmap template (not full protocol)"
+      - "[x] --no-regenerate flag to skip auto-creation"
+      - "[x] Sprint reclassified as protocol (not optional data)"
+
+    files_auto_created:
+      - "[x] ethics.yaml (WARN level)"
+      - "[x] warmup.yaml (WARN level)"
+      - "[x] green.yaml (INFO level)"
+      - "[x] sprint.yaml (INFO level)"
+      - "[x] roadmap.yaml (INFO level, skeleton)"
+      - "[x] CLAUDE.md - NEVER auto-created (on/off switch)"
 
     documentation:
-      - "[x] ADR-016: Green Coding Protocol - Accepted"
+      - "[x] ADR-017: Protocol Self-Healing - Accepted"
+      - "[x] SPECIFICATION.md updated"
       - "[x] CHANGELOG.md updated"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.1.2"
+    status: released
+    date: "2025-11-29"
+    summary: "Green Coding Protocol Separation (ADR-016)"
+    highlights:
+      - "green.yaml - Dedicated green coding protocol file"
+      - "step_0b_green_validation in session initialization"
+      - "Green coding parity with Ethics protocol"
+
   - version: "4.1.1"
     status: released
     date: "2025-11-29"
@@ -169,7 +189,7 @@ future:
   # ═══════════════════════════════════════════════════════════════════════════
   # 0.  ETHICAL_AUTONOMY → v4.1.0 Hardcoded Ethics (RELEASED)
   # 0.5 GREEN_CODING → v4.1.2 Green Protocol Separation (RELEASED)
-  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Self-Healing (HIGH - ADR-017)
+  # 1.  ANTI-HALLUCINATION → v4.1.5 Protocol Self-Healing (RELEASED - ADR-017)
   # 1.5 ANTI-SYCOPHANCY → v4.1.6 Anti-Sycophancy Protocol (CRITICAL - ADR-015)
   # 5.  GREEN_METRICS → v4.2.0 Hardcoded Green Coding Metrics (HIGH - ADR-012)
   # +   VENDOR_NEUTRALITY → v4.3.0 MCP Server Mode (enables adoption)
@@ -245,51 +265,6 @@ future:
       - "Ethics context as MCP resource"
       - "Sprint boundaries as MCP resource"
       - "Green coding metrics as MCP resource"
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.5: PROTOCOL SELF-HEALING (ADR-017) - PRIORITY 1
-  # ─────────────────────────────────────────────────────────────────────────────
-  - version: "4.1.5"
-    status: planned
-    summary: "Protocol Self-Healing - Auto-Regeneration & Tamper Detection"
-    goal: ANTI-HALLUCINATION
-    priority: HIGH
-    core_value: 1
-    adr: "docs/adr/017-protocol-self-healing.md"
-    description: |
-      Auto-regenerate missing protocol files during validation.
-      Recovery over surveillance. Self-healing without reporting.
-      Checksum-based tamper detection (warn, don't block).
-
-    phase_1_auto_regeneration:
-      features:
-        - "Auto-create missing ethics.yaml, green.yaml, warmup.yaml"
-        - "WARN on regeneration (not silent)"
-        - "CLAUDE.md never auto-created (bootstrap must be intentional)"
-        - "--no-regenerate flag to skip auto-creation"
-      behavior:
-        ethics_missing: "AUTO-CREATE + WARN"
-        green_missing: "AUTO-CREATE + INFO"
-        warmup_missing: "AUTO-CREATE + WARN"
-        claude_md_missing: "NEVER AUTO-CREATE (off switch)"
-
-    phase_2_checksum_validation:
-      features:
-        - ".forge/checksums.yaml for tamper detection"
-        - "WARN if files modified from known-good state"
-        - "--update-checksums flag after intentional changes"
-        - "Migration command for existing projects"
-      structure:
-        - ".forge/checksums.yaml (tamper detection)"
-        - "SHA256 hashes of all protocol files"
-        - "Last verified timestamp"
-
-    philosophy: |
-      Recovery over surveillance:
-      - Make it easy to restore correct state
-      - Make deletion/modification visible (warnings)
-      - Don't prevent changes (it's their project)
-      - Don't report/punish (that's overreach)
 
   # ─────────────────────────────────────────────────────────────────────────────
   # v4.4.0: SCHEMA STANDARDIZATION - PRIORITY 1
