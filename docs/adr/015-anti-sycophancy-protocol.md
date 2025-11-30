@@ -260,4 +260,4 @@ Sycophancy now has full parity with ethics and green protocols:
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol)*

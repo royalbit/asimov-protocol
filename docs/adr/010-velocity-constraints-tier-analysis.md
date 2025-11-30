@@ -129,7 +129,7 @@ The real optimization is **subscription tier** and **context window size**.
 
 ### Velocity Proof
 - [Forge Project](https://github.com/royalbit/forge) - 18K LOC, 226 tests, 41 releases
-- [Asimov Protocol](https://github.com/royalbit/asimov-mode) - 17K LOC, 10 releases (self-hosted)
+- [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - 17K LOC, 10 releases (self-hosted)
 - [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge) - Published, 646+ downloads
 - [crates.io/asimov-mode](https://crates.io/crates/asimov-mode) - Published
 

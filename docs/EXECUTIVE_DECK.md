@@ -355,7 +355,7 @@ flowchart LR
 | Copilot | **Never** | Autocomplete only |
 | Cursor | **Unlikely** | Missing features |
 
-**Details:** [Vendor Implementation Guide](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Details:** [Vendor Implementation Guide](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -434,7 +434,7 @@ flowchart LR
 
 # Resources
 
-**Protocol:** [https://github.com/royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
+**Protocol:** [https://github.com/royalbit/asimov-protocol](https://github.com/royalbit/asimov-protocol)
 
 **Proof project:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
@@ -467,13 +467,13 @@ flowchart LR
 
 ### Full documentation available at:
 
-**Specification:** [SPECIFICATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/SPECIFICATION.md)
+**Specification:** [SPECIFICATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/SPECIFICATION.md)
 
-**Self-Healing Protocol:** [ADR-003](https://github.com/royalbit/asimov-mode/blob/main/docs/adr/003-self-healing-real-compaction-data.md)
+**Self-Healing Protocol:** [ADR-003](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md)
 
-**Hook Refresh (v2.1):** [ADR-006](https://github.com/royalbit/asimov-mode/blob/main/docs/adr/006-git-hook-protocol-refresh.md)
+**Hook Refresh (v2.1):** [ADR-006](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/006-git-hook-protocol-refresh.md)
 
-**Vendor Compatibility:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Vendor Compatibility:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 

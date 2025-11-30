@@ -11,7 +11,7 @@
 #
 # Defense in depth: This is ONE layer. Real safety requires human oversight.
 #
-# Protocol: https://github.com/royalbit/asimov-mode
+# Protocol: https://github.com/royalbit/asimov-protocol
 # ADR: docs/adr/008-ethics-protocol-humanist-mode.md
 
 # ═══════════════════════════════════════════════════════════════════════════════

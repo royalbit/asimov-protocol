@@ -285,4 +285,4 @@ If the protocol displaces your job, it also enables your next chapter:
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol)*

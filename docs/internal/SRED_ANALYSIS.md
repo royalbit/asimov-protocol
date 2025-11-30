@@ -214,7 +214,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 ### Published Work
 
 - [crates.io/asimov-mode](https://crates.io/crates/asimov-mode)
-- [GitHub: royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
+- [GitHub: royalbit/asimov-mode](https://github.com/royalbit/asimov-protocol)
 
 ---
 

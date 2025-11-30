@@ -586,4 +586,4 @@ The [Forge Calculator](https://github.com/royalbit/forge) executes formulas dete
 
 *The Asimov Protocol exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol)*

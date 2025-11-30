@@ -226,7 +226,7 @@ The protocol built itself. Both projects use the same methodology:
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [asimov-mode](https://github.com/royalbit/asimov-mode) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
+| [asimov-mode](https://github.com/royalbit/asimov-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -329,4 +329,4 @@ It's protocols all the way down.
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode) - enabling AI autonomy in software development.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - enabling AI autonomy in software development.*

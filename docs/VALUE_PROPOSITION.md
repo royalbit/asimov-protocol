@@ -180,7 +180,7 @@ Not optional. Required.
 > "Don't believe us. Check the git logs. It's all public."
 
 - [Forge commits](https://github.com/royalbit/forge/commits)
-- [Protocol commits](https://github.com/royalbit/asimov-mode/commits)
+- [Protocol commits](https://github.com/royalbit/asimov-protocol/commits)
 - [crates.io downloads](https://crates.io/crates/royalbit-forge)
 
 ### For the Pragmatist
@@ -272,4 +272,4 @@ AI: [reports completion at gate]
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-mode) - 50-150x developer velocity with ethics built in.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - 50-150x developer velocity with ethics built in.*

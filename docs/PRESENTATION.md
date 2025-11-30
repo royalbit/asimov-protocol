@@ -177,7 +177,7 @@ Every session is a **bounded sprint**:
 
 *Files portable. Magic isn't.*
 
-**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-mode/blob/main/docs/VENDOR_IMPLEMENTATION.md)
+**Details:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md)
 
 ---
 
@@ -219,7 +219,7 @@ asimov-mode validate
 
 # Questions?
 
-**Protocol:** [https://github.com/royalbit/asimov-mode](https://github.com/royalbit/asimov-mode)
+**Protocol:** [https://github.com/royalbit/asimov-protocol](https://github.com/royalbit/asimov-protocol)
 **Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
 **ASIMOV MODE v2.1 = Five Components:**
