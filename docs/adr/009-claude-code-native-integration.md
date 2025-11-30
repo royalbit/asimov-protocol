@@ -106,7 +106,7 @@ Building these would waste effort duplicating Claude Code's native features.
 ### v4.0.0 - CLAUDE.md Integration (BREAKING)
 
 1. **Generate CLAUDE.md from protocol files**
-   - `asimov-mode init --skynet` generates CLAUDE.md that imports warmup.yaml
+   - `asimov-mode init --asimov` generates CLAUDE.md that imports warmup.yaml
    - Use Claude Code's native memory hierarchy
    - Include ethics reference in CLAUDE.md
 
@@ -167,7 +167,7 @@ v4.1.0+ consideration:
 
 ### Phase 2: CLI Changes (v4.0.0)
 
-- [ ] `--skynet` generates CLAUDE.md with `@warmup.yaml` import
+- [ ] `--asimov` generates CLAUDE.md with `@warmup.yaml` import
 - [ ] Remove checkpoint schema and validation
 - [ ] Update CLAUDE.md template
 - [ ] Add `asimov-mode migrate` command for v3→v4

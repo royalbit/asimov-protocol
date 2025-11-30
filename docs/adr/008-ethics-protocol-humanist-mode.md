@@ -60,7 +60,7 @@ A separate file that:
 ### 3. CLI Integration
 
 - `asimov-mode validate --ethics-check` validates ethics.yaml
-- `--skynet` generates ethics.yaml by default (cannot opt out)
+- `--asimov` generates ethics.yaml by default (cannot opt out)
 - Warnings when ethics.yaml is missing or modified
 
 ## Rationale
@@ -152,7 +152,7 @@ red_flags:
 1. Create `ethics.yaml` template
 2. Add `ethics:` section to warmup.yaml templates
 3. Add `--ethics-check` to CLI validation
-4. Update `--skynet` to generate ethics.yaml
+4. Update `--asimov` to generate ethics.yaml
 5. Document in SPECIFICATION.md
 
 ### Phase 2: Future
@@ -164,7 +164,7 @@ red_flags:
 ## Compliance
 
 This ADR applies to:
-- `asimov-mode init --skynet` (generates ethics.yaml)
+- `asimov-mode init --asimov` (generates ethics.yaml)
 - All warmup.yaml templates (include ethics: section)
 - Documentation (SPECIFICATION.md, README.md)
 - Protocol identity and marketing

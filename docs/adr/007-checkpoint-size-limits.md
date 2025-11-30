@@ -241,12 +241,12 @@ This is a larger change - defer to separate milestone.
 - [x] Warn on oversized files (soft limit: 20 lines, hard limit: 30 lines)
 - [x] Add CLAUDE.md size validation (soft limit: 10 lines, hard limit: 15 lines)
 - [x] Add warmup.yaml size validation (soft limit: 200 lines, hard limit: 500 lines)
-- [x] Generate example checkpoint in `--skynet` setup
+- [x] Generate example checkpoint in `--asimov` setup
 
 ### Phase 3: Modular Structure (Future)
 - [ ] Implement `.forge/` directory support
 - [ ] Split warmup.yaml template
-- [ ] Update `--skynet` to generate modular structure
+- [ ] Update `--asimov` to generate modular structure
 
 ## Resolved Questions
 
