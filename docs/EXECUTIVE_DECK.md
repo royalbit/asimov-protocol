@@ -34,6 +34,7 @@ style: |
     font-size: 0.6em;
     color: #666;
   }
+  .small { font-size: 0.75em; }
 ---
 
 <!--
@@ -51,338 +52,71 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _color: #ffffff -->
 
 # ASIMOV MODE
-## The Three Laws of Robotics, in Source Code
+## Ethical AI Automation
 
-**Transforming AI from Cost Center to Competitive Advantage**
+**50-100x Velocity. Ethics That Refused the Creator.**
 
-*[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md) — How we created ethics for autonomous AI*
-
----
-
-# The $14,000 Problem
-
-### Your AI coding tools are losing money
-
-| Reality | Impact |
-|---------|--------|
-| Developer time fixing AI-generated code | **66%** |
-| Productivity loss on complex tasks (METR) | **19% slower** |
-| Annual cost of AI hallucinations per developer | **$14,000** |
-| Rework rate on AI-assisted projects | **30-50%** |
-
-**Sources:** Forrester, METR.org, Index.dev
+**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI
 
 ---
 
-# The Hidden Costs
+# The Problem
 
-### What CFOs don't see on AI tool invoices
+### AI tools are costing you money
 
-| Hidden Cost | Annual Impact (100 developers) |
-|-------------|-------------------------------|
-| Rework from AI hallucinations | **$1.4M** |
-| Context loss between sessions | **$500K** |
-| Scope creep from unbounded AI | **$300K** |
-| Quality issues reaching production | **$800K** |
-| **Total Hidden Cost** | **$3.0M+** |
+| Research Finding | Source |
+|------------------|--------|
+| AI slows experienced developers by **19%** | METR 2025 |
+| **42%** of AI code contains hallucinations | Stanford 2024 |
+| Developers overestimate AI benefit by **43%** | METR 2025 |
+| Annual cost of AI hallucinations | **$14K/developer** |
 
-*AI tools cost $50K/year. Hidden costs: 60x the license fee.*
-
----
-
-# The Root Causes
-
-### Why AI tools fail (and what to do about it)
-
-| Root Cause | Business Impact | Protocol Solution |
-|------------|-----------------|-------------------|
-| **Stale training data** | Wrong info presented as fact | `freshness.yaml` - search triggers |
-| **Context compaction** | Forgets requirements mid-session | `warmup.yaml` - self-healing |
-| **Sycophancy bias** | Validates bad ideas | `sycophancy.yaml` - honest feedback |
-| **No ethical guardrails** | Builds harmful tools | `asimov.yaml` - Three Laws |
-| **Unbounded sessions** | Scope creep, rabbit holes | `sprint.yaml` - 4hr max |
-| **No quality gates** | "Almost right" code ships | Quality gates in protocol |
+**Root cause:** Unbounded sessions, no quality gates, context loss every session.
 
 **The problem isn't AI capability. It's AI governance.**
 
 ---
 
-# The Stale Data Problem (v6.1.0)
+# The Solution: Asimov Mode
 
-### "Hallucination" is often just outdated information
+### Isaac Asimov's Three Laws (1942), now executable
 
-| What Users Think | What Actually Happens |
-|------------------|----------------------|
-| "AI made up fake info" | AI gave correct info **as of January 2025** |
-| "AI hallucinated" | Info changed since training cutoff |
-| "AI is unreliable" | Can't train away staleness—need to search |
+| Component | What It Does | Business Value |
+|-----------|--------------|----------------|
+| **Three Laws** | Block financial, physical, privacy, deception harm | Risk mitigation |
+| **Sprint Autonomy** | 4hr max, ONE deliverable | Predictable delivery |
+| **Quality Gates** | Tests pass + zero warnings | No technical debt |
+| **Self-Healing** | Auto-recover from context loss | Sustained productivity |
 
-**Why vendors don't fix this:**
-- Search costs $0.01+ per query
-- Anthropic 2024 gross margin: **negative 94-109%**
-- Claude docs: "disable search to conserve usage"
-
-**Solution:** `freshness.yaml` triggers search for volatile topics
-
----
-
-# The Sycophancy Problem (v4.3.0)
-
-### AI is trained to agree with you—even when you're wrong
-
-| Research Finding | Source |
-|------------------|--------|
-| AI is **50% more sycophantic** than humans | Nature (2025) |
-| RLHF training rewards validation over truth | Industry standard |
-| False agreement leads to bad decisions | Enterprise risk |
-
-**Banned phrases in `sycophancy.yaml`:**
-- "You're absolutely right"
-- "That's a great point"
-- "I couldn't agree more"
-
-**Required behavior:** List problems FIRST, then merits
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #0066b3 -->
-<!-- _color: #ffffff -->
-
-# The Solution
-
-## ASIMOV MODE
-### Autonomous AI Development Protocol
-
----
-
-# ASIMOV MODE: Eight Protocol Files
-
-| File | Purpose | Business Value |
-|------|---------|----------------|
-| **asimov.yaml** | The Three Laws of Robotics | Ethical AI guardrails |
-| **warmup.yaml** | Session bootstrap, quality gates | Consistent standards |
-| **ethics.yaml** | Detailed ethical constraints | Risk mitigation |
-| **freshness.yaml** | Date-aware search rules | No stale data disasters |
-| **green.yaml** | Local-first validation | 99.6% carbon reduction |
-| **sycophancy.yaml** | Anti-validation bias | Honest AI feedback |
-| **sprint.yaml** | 4hr max, ONE deliverable | Predictable milestones |
-| **roadmap.yaml** | Milestones & planning | Strategic visibility |
-
----
-
-# The Five Components
-
-| # | Component | Function | Business Value |
-|---|-----------|----------|----------------|
-| 1 | **Protocol Files** | 8 YAML configs for standards | Consistent, ethical output |
-| 2 | **Sprint Autonomy** | 4hr max, ONE deliverable | Predictable milestones |
-| 3 | **Quality Gates** | Tests + zero warnings | No technical debt |
-| 4 | **Self-Healing** | Auto-recovery from context loss | Unattended operation |
-| 5 | **Release Discipline** | Must ship every session | Continuous delivery |
-
----
-
-# Ethics That Actually Work
-
-### RoyalBit Asimov vs GitHub Copilot
-
-| Scenario | Copilot | RoyalBit Asimov |
-|----------|---------|-----------------|
-| Malware request | Trivially bypassed | **Three Laws block** |
-| Creator surveillance | Would comply | **AI refused, cited privacy** |
-| Ransomware | IEEE: "Novices create easily" | **First Law prevents** |
-
-> **Real incident:** Creator asked AI to email violators' IP addresses.
-> AI refused, citing `privacy.enabled: true` in ethics.yaml.
-
-**[Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)**
-
----
-
-# Anti-Tampering Architecture
-
-### Ethics can't be quietly disabled
-
-| Layer | Protection | To Bypass |
-|-------|------------|-----------|
-| **Hardcoded Binary** | 33 red flags, 5 core principles in Rust | Fork + rebuild entire CLI |
-| **2-Cosigner Rule** | YAML changes need 2 human signatures | Public commit with justification |
-| **Auto-Validation** | Runs on every commit via hooks | Cannot be skipped |
-
-**Result:** Tampering requires deliberate action + public evidence.
-
-*This is ethics through architecture, not policy.*
-
----
-
-# How It Works
-
-### The autonomous development workflow
-
-```mermaid
-flowchart LR
-    subgraph define["DEFINE SCOPE<br/>(15 min)"]
-        H1["Human<br/>defines<br/>milestone"]
-    end
-    subgraph ai["AI WORKS<br/>(2-4 hrs)"]
-        A["AI<br/>builds<br/>ships"]
-    end
-    subgraph review["REVIEW<br/>(15 min)"]
-        H2["Human<br/>reviews<br/>release"]
-    end
-
-    H1 -->|"punch it"| A
-    A -->|"Autonomous<br/>execution"| H2
-    H2 -->|"Deployed to<br/>production"| done((" "))
+```
+Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human reviews (15 min)
 ```
 
+**Protocol: $0 (MIT open source). Claude subscription required.**
+
 ---
 
-# The Proof: Real Numbers
+# The Proof
 
-### Built with ASIMOV MODE in ~38 hours
+### Built with Asimov Mode: ~47 hours, 51 releases
 
 | Metric | Delivered |
 |--------|-----------|
-| Production code | **18,338 lines** (Rust) |
-| Test coverage | **226 tests**, zero warnings |
-| Releases | **41 releases** |
-| Infrastructure | HTTP API, MCP server, LSP server |
-| Integrations | VSCode + Zed extensions |
-| crates.io | **Published**, 646+ downloads |
+| Production code | **35,456 lines** (Rust + Dart) |
+| Test coverage | **580 tests**, zero warnings |
+| Releases | **51 releases** across 2 projects |
+| Traditional estimate | **2.5 developer-years** |
 
-**Traditional estimate: 6-9 months. Actual: ~38 hours.**
+<div class="small">
 
----
+| Project | LOC | Releases | Verified |
+|---------|-----|----------|----------|
+| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | crates.io |
+| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | crates.io |
 
-# Velocity Comparison
+</div>
 
-| Metric | Traditional | ASIMOV MODE | Improvement |
-|--------|-------------|-------------|-------------|
-| Development time | 6-9 months | ~38 hours | **50-150x** |
-| LOC/day | 25 | 3,056 | **122x** |
-| Rework rate | 30-50% | 0% | **100%** |
-| Human oversight | Constant | Phase gates only | **-90%** |
-| Releases per week | 0.5-1 | **8-12** | **10-20x** |
-| vs GitHub Copilot | 1.1-1.6x | **50-150x** | **~100x better** |
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #28a745 -->
-<!-- _color: #ffffff -->
-
-# ROI Model
-
-## The Money Slide
-
----
-
-# Cost Savings: Per Developer
-
-| Category | Before | After | Annual Savings |
-|----------|--------|-------|----------------|
-| AI hallucination fixes | $14,000 | $0 | **$14,000** |
-| Rework (30% → 0%) | $45,000 | $0 | **$45,000** |
-| Context rebuilding | $8,000 | $0 | **$8,000** |
-| **Per Developer** | | | **$67,000** |
-
-### At scale:
-- **100 developers**: $6.7M/year savings
-- **1,000 developers**: $67M/year savings
-- **10,000 developers**: $670M/year savings
-
----
-
-# Revenue Acceleration
-
-### Faster delivery = faster revenue
-
-| Scenario | Traditional | ASIMOV MODE | Revenue Impact |
-|----------|-------------|-------------|----------------|
-| Feature delivery | 3 months | 1 week | **12x faster to market** |
-| Client projects | 6 months | 1 month | **6x more projects/year** |
-| Competitive bids | Standard | 50% faster | **Win rate increase** |
-
-**Conservative estimate:** 20% revenue increase from velocity alone
-
----
-
-# Implementation Cost
-
-| Item | Cost |
-|------|------|
-| RoyalBit Asimov license | **$0** (MIT open source) |
-| CLI tool | **$0** (free) |
-| Training (per developer) | **2 hours** |
-| Pilot program (10 devs, 1 month) | **Internal time only** |
-
-**Total implementation cost: $0**
-**Payback period: Immediate**
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #17a2b8 -->
-<!-- _color: #ffffff -->
-
-# ESG & Sustainability
-
-## The Green Advantage
-
----
-
-# Carbon Reduction: 99.6%
-
-### Local validation vs. cloud AI
-
-| Approach | Cost | Carbon | Speed |
-|----------|------|--------|-------|
-| Cloud AI validation | $0.02/file | ~0.5g CO₂ | 1-3 sec |
-| ASIMOV MODE (local) | **$0** | **~0.002g** | **<100ms** |
-| **Reduction** | **100%** | **99.6%** | **20x** |
-
----
-
-# ESG Impact at Scale
-
-| Adoption | Annual Carbon Saved | Equivalent |
-|----------|---------------------|------------|
-| 100 developers | 6.2 tonnes CO₂ | 1.4 cars off road |
-| 1,000 developers | 62 tonnes CO₂ | 14 cars off road |
-| 10,000 developers | 620 tonnes CO₂ | 140 cars off road |
-
-### For sustainability reporting:
-- **Scope 3** emissions reduction (supply chain software)
-- **Quantifiable** metrics for ESG disclosures
-- **Audit trail** for every validation
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #0066b3 -->
-<!-- _color: #ffffff -->
-
-# Enterprise Value
-
-## Internal + Client Opportunity
-
----
-
-# Internal Value
-
-### Transform your delivery capability
-
-| Benefit | Impact |
-|---------|--------|
-| Developer productivity | **50-100x velocity** on AI-assisted projects |
-| Delivery predictability | **Zero rework**, bounded sessions |
-| Quality consistency | **Automated gates**, audit trail |
-| Talent optimization | Senior devs review, not babysit |
-| ESG compliance | **Measurable** carbon reduction |
-
-**Competitive advantage:** Deliver faster than any competitor.
+**Auditable: git logs are public.**
 
 ---
 
@@ -390,8 +124,8 @@ flowchart LR
 
 ### The full knowledge worker impact
 
-| Role | Traditional | With Protocol | Impact |
-|------|-------------|---------------|--------|
+| Role | Traditional | With Protocol | Reduction |
+|------|-------------|---------------|-----------|
 | **Developers** | 50 engineers | 1 + AI | **98%** |
 | **Financial Analysts** | 5 quants | 1 + Forge | **80%** |
 | **System Architects** | 3 architects | 1 + AI | **67%** |
@@ -400,153 +134,82 @@ flowchart LR
 
 **Proof:** 120K+ lines (89K docs, 15K code) built by 1 human + AI.
 
-*Qowat Milat: We built guardrails against harm. We cannot build guardrails against efficiency.*
+*We built guardrails against harm. We cannot build guardrails against efficiency.*
 
 ---
 
-# Client Offering (Consultants)
+# The ROI
 
-### New service opportunity
-
-| Service | Description | Revenue Model |
-|---------|-------------|---------------|
-| **ASIMOV Assessment** | Evaluate client AI readiness | Fixed fee |
-| **Implementation** | Deploy protocol + training | Project-based |
-| **Managed ASIMOV** | Ongoing optimization | Retainer |
-| **AI Governance** | Compliance + audit trails | Annual contract |
-
-**Market positioning:** "Proven 50-100x AI velocity methodology"
-
----
-
-# Competitive Differentiation
-
-| Claim | Proof |
-|-------|-------|
-| "Proven 50-100x velocity" | Forge project (public, auditable) |
-| "Zero AI rework methodology" | ASIMOV MODE protocol |
-| "Green AI development" | 99.6% carbon reduction |
-| "Bounded 4hr autonomous sessions" | Self-healing protocol |
-
-**Open source protocol = no vendor lock-in for the methodology.**
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #ffc107 -->
-<!-- _color: #1a1a2e -->
-
-# Risk & Mitigation
-
----
-
-# Risk Analysis
-
-| Risk | Mitigation |
-|------|------------|
-| AI hallucinations | Quality gates block bad code |
-| Scope creep | Sprint autonomy enforces boundaries |
-| Context loss | Self-healing auto-recovers |
-| Security concerns | Local validation, no cloud data |
-| Adoption resistance | Start with pilot, prove ROI |
-
-**ASIMOV MODE is designed to reduce risk, not introduce it.**
-
----
-
-# Platform Requirements
-
-| AI Tool | ASIMOV MODE | Why |
-|---------|-------------|-----|
-| **Claude Code** | ✓ Full | **Use this** |
-| ChatGPT | **Never** | Cloud-sandboxed |
-| Copilot | **Never** | Autocomplete only |
-| Cursor | **Unlikely** | Missing features |
-
-**Details:** [Vendor Implementation Guide](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md)
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #0066b3 -->
-<!-- _color: #ffffff -->
-
-# Recommended Next Steps
-
----
-
-# Pilot Proposal
-
-### 30-day proof of concept
-
-| Phase | Duration | Activity |
-|-------|----------|----------|
-| Week 1 | Setup | Select team, install protocol, training |
-| Week 2-3 | Execution | Real project with ASIMOV MODE |
-| Week 4 | Evaluation | Measure velocity, quality, ROI |
-
-**Pilot team:** 5-10 developers
-**Investment:** Internal time only
-**Expected result:** Measurable velocity increase
-
----
-
-# Success Metrics
-
-### What to measure in the pilot
-
-| Metric | Baseline | Target |
-|--------|----------|--------|
-| Feature delivery time | Current | **50%+ reduction** |
-| Rework rate | 30-50% | **<5%** |
-| Developer satisfaction | Current | **Improvement** |
-| Code quality (warnings) | Variable | **Zero** |
-| Autonomous session length | N/A | **2-4 hours** |
-
----
-
-# Decision Timeline
-
-| Date | Milestone |
-|------|-----------|
-| Today | Executive alignment |
-| This week | Identify pilot team |
-| Next week | Training + setup |
-| +30 days | Pilot results review |
-| +45 days | Scale decision |
-
----
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #0066b3 -->
-<!-- _color: #ffffff -->
-
-# Summary
-
----
-
-# The Bottom Line
+### Recover the 19% productivity tax + 50-100x velocity
 
 | Investment | Return |
 |------------|--------|
-| **Protocol** | **$0** (MIT open source) |
-| **Claude Max** | ~$200/user/month (enterprise) |
-| **Training** | 2 hours |
-| **Velocity** | **50-100x** proven |
+| Protocol license | **$0** (MIT open source) |
+| Training | **2 hours** per developer |
+| Rework rate | **30-50% → ~0%** |
+| Velocity | **50-100x** proven |
 
-### Protocol is free. Claude subscription required for ASIMOV MODE.
-
-### ROI: $67K savings/dev/year vs ~$2.4K subscription cost
+### The math:
+- 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
+- Asimov Mode: **$0 protocol + Claude subscription**
+- Payback: **Immediate**
 
 ---
 
-# Resources
+# Ethics That Work
 
-**Protocol:** [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
+### Copilot is trivially bypassed. Asimov refused its creator.
 
-**Proof project:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
+| Scenario | Copilot | Asimov Mode |
+|----------|---------|-------------|
+| Malware request | ⚠️ Bypassed with "Sure" | ✅ **Hardcoded blocks** |
+| Creator requests surveillance | ⚠️ Would comply | ✅ **AI refused** |
+| Ransomware | ⚠️ "Novices create easily" (IEEE) | ✅ **First Law blocks** |
 
-**CLI:** `cargo install royalbit-asimov`
+### Anti-Tampering: 3 Layers
+1. **Hardcoded binary** — 33 red flags compiled in Rust
+2. **2-Cosigner rule** — YAML changes need 2 human signatures
+3. **Auto-validation** — Runs on every commit
+
+*Ethics through architecture, not policy.*
+
+---
+
+# Green AI: 99.6% Carbon Reduction
+
+### Local validation vs. cloud AI
+
+| Approach | Cost | Carbon | Speed |
+|----------|------|--------|-------|
+| Cloud AI validation | $0.02/file | ~0.5g CO₂ | 1-3 sec |
+| Asimov Mode (local) | **$0** | **~0.002g** | **<100ms** |
+| **Reduction** | **100%** | **99.6%** | **20x** |
+
+### At scale:
+- 100 developers: **6.2 tonnes CO₂ saved/year**
+- 1,000 developers: **62 tonnes CO₂ saved/year**
+
+**For ESG reporting:** Quantifiable Scope 3 emissions reduction with audit trail.
+
+---
+
+# Next Steps
+
+### 30-day pilot to prove ROI
+
+| Week | Activity |
+|------|----------|
+| 1 | Select 5-10 dev team, training (2 hrs) |
+| 2-3 | Real project with Asimov Mode |
+| 4 | Measure: velocity, rework, quality |
+
+### Success metrics:
+- Feature delivery time: **50%+ reduction**
+- Rework rate: **<5%** (from 30-50%)
+- Code quality: **Zero warnings**
+
+### Decision point:
+Results review → Scale decision
 
 ---
 
@@ -561,80 +224,40 @@ flowchart LR
 **[Your Name]**
 [Your Title], [Your Company]
 
+**Protocol:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
+**Proof:** [github.com/royalbit/forge](https://github.com/royalbit/forge)
+
 ---
 
 <!-- _class: lead -->
 <!-- _backgroundColor: #ffffff -->
 <!-- _color: #666666 -->
 
-# Appendix
+# References
+
+### (Backup — not for presentation)
 
 ---
 
-# Technical Deep Dive
+# Sources: AI Productivity Research
 
-### Full documentation available at:
+<div class="small">
 
-**Specification:** [SPECIFICATION.md](https://github.com/royalbit/asimov/blob/main/docs/SPECIFICATION.md)
+### METR Study (July 2025)
+- [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
+- [ArXiv Paper](https://arxiv.org/abs/2507.09089)
 
-**Self-Healing Protocol:** [ADR-003](https://github.com/royalbit/asimov/blob/main/docs/adr/003-self-healing-real-compaction-data.md)
+### AI Hallucination Research (2024)
+- [Stanford/Hugging Face: 42% hallucination rate](https://www.diffblue.com/resources/precision-over-hallucination-why-ai-in-software-development-needs-accuracy/)
+- [Security: 440K+ fake packages](https://www.darkreading.com/application-security/ai-code-tools-widely-hallucinate-packages)
 
-**Hook Refresh (v2.1):** [ADR-006](https://github.com/royalbit/asimov/blob/main/docs/adr/006-git-hook-protocol-refresh.md)
+### Copilot Security
+- [Dark Reading: Copilot Jailbreaks (2025)](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+- [IEEE: Copilot Generates Malware](https://ieeexplore.ieee.org/document/10284976/)
 
-**Vendor Compatibility:** [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md)
-
----
-
-# Case Study: Forge Project
-
-| Phase | Duration | Delivered |
-|-------|----------|-----------|
-| v1.0-1.3 | ~12 hrs | Core engine, 50+ Excel functions |
-| v1.4-1.6 | ~8 hrs | Watch mode, financial functions |
-| v2.0-2.5 | ~15 hrs | HTTP API, MCP server, LSP |
-| v3.0-3.1 | ~10 hrs | Scenarios, sensitivity, extensions |
-| **Total** | **~45 hrs** | **Full product ecosystem** |
-
-**Auditable:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
-
----
-
-# Competitive Landscape
-
-| Solution | Velocity | Rework | Autonomous | Open Source |
-|----------|----------|--------|------------|-------------|
-| GitHub Copilot | 1.5-2x | High | No | No |
-| ChatGPT | 2-3x | High | No | No |
-| Cursor | 2-3x | Medium | No | No |
-| **ASIMOV MODE** | **50-100x** | **0%** | **Yes** | **Yes** |
-
----
-
-# FAQ (1/2)
-
-<div style="font-size: 0.85em;">
-
-**Q: Why Claude Code? Will other tools support this?**
-A: ASIMOV MODE requires 4 architectural features only Claude Code has. Other tools have different architectures for different use cases. This won't change.
-
-**Q: Is this vendor lock-in?**
-A: For ASIMOV MODE, yes. Protocol FILES are portable. The magic isn't.
-
-**Q: What about proprietary code security?**
-A: All validation is local. No code leaves your environment.
-
-</div>
-
----
-
-# FAQ (2/2)
-
-<div style="font-size: 0.85em;">
-
-**Q: How do we measure ROI?**
-A: Track: delivery time, rework rate, releases per sprint, hours saved.
-
-**Q: What if AI makes mistakes?**
-A: Quality gates block commits until tests pass and warnings are zero.
+### Proof Projects
+- [GitHub: royalbit/forge](https://github.com/royalbit/forge) — 41 releases, 18K LOC
+- [GitHub: royalbit/asimov](https://github.com/royalbit/asimov) — 10 releases, 17K LOC
+- [Ethics Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
 
 </div>
