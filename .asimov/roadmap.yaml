@@ -4,25 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "6.0.0"
+  version: "6.1.0"
   status: released
-  summary: "Protocol Directory Structure (.asimov/)"
-  goal: QUALITY
+  summary: "Freshness Protocol (Date-Aware Search)"
+  goal: ANTI_HALLUCINATION
 
 next:
-  - version: "6.1.0"
-    summary: "Freshness Protocol (Date-Aware Search)"
-    goal: ANTI_HALLUCINATION
-    adr: "ADR-022"
-    priority: "CRITICAL"
-    rationale: |
-      CONFIRMED: Vendors don't search by default to save money.
-      - Search costs $0.01 + thousands of tokens per query
-      - Anthropic 2024 gross margin: NEGATIVE 109%
-      - Claude docs: "disable search to conserve usage"
-      Users blamed for "hallucination" when it's vendor cost optimization.
-      Stale data ≠ Hallucination. Different problem, different solution.
-
   - version: "6.2.0"
     summary: "Schema Standardization"
     goal: ANTI_HALLUCINATION

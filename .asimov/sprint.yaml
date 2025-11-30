@@ -11,47 +11,46 @@ rules:
   mantra: "Done is better than perfect. Ship it."
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.8 - SESSION START AUTO-RESPONSE (ADR-019)
+# CURRENT: v6.1.0 - FRESHNESS PROTOCOL (ADR-022)
 # ═══════════════════════════════════════════════════════════════════════════════
 sprint:
-  current: "v4.1.8 - Session Start Auto-Response"
-  started: "2025-11-29"
+  current: "v6.1.0 - Freshness Protocol (Date-Aware Search)"
+  started: "2025-11-30"
   status: done
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # SESSION START AUTO-RESPONSE (ADR-019)
+  # FRESHNESS PROTOCOL (ADR-022)
   # ─────────────────────────────────────────────────────────────────────────────
-  # v4.1.7 hooks inject context but do NOT trigger automatic response.
-  # CLAUDE.md "ON SESSION START" directive forces Claude to act immediately.
+  # Stale data ≠ Hallucination. Different problem, different solution.
+  # Users misattribute outdated info as "hallucination" - the fix is search.
   # ─────────────────────────────────────────────────────────────────────────────
 
   tasks:
-    - "[x] Update CLAUDE.md with 'ON SESSION START' directive"
-    - "[x] Create ADR-019: Session Start Auto-Response"
-    - "[x] Update SPECIFICATION.md with new CLAUDE.md schema"
-    - "[x] Update warmup.yaml session_trigger_flow with step_0_auto_init"
-    - "[x] Update roadmap.yaml with v4.1.8"
+    - "[x] Create ADR-022: Date-Aware Search Protocol"
+    - "[x] Create freshness.yaml with model cutoffs and search rules"
+    - "[x] Update SPECIFICATION.md with freshness protocol"
+    - "[x] Verify sources (Anthropic margins, Claude docs, Issue #600)"
+    - "[x] Bump cli/Cargo.toml version to 6.1.0"
     - "[x] Update CHANGELOG.md"
-    - "[x] Bump cli/Cargo.toml version to 4.1.8"
+    - "[x] Update roadmap.yaml"
     - "[x] Run tests and validate"
 
   deliverables:
-    - "CLAUDE.md - 'ON SESSION START' directive"
-    - "ADR-019: Session Start Auto-Response Directive"
-    - "SPECIFICATION.md: Updated CLAUDE.md schema (15 line limit)"
-    - "warmup.yaml: step_0_auto_init in session_trigger_flow"
+    - "ADR-022: Date-Aware Search Protocol (with verified sources)"
+    - "freshness.yaml: Model cutoffs, always-search keywords, volatile domains"
+    - "CHANGELOG.md: v6.1.0 entry"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PREVIOUS SPRINTS (completed)
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
-  sprint: "v4.1.7 - Claude Code Hooks Schema Fix"
+  sprint: "v6.0.0 - Protocol Directory Structure (.asimov/)"
   status: done
-  date: "2025-11-29"
+  date: "2025-11-30"
   highlights:
-    - "Correct hooks config in .claude/settings.json"
-    - "SessionStart + PreCompact events working"
-    - "Discovered: hooks inject context but don't trigger response"
+    - "All protocol files moved to .asimov/ directory"
+    - "CLI looks in .asimov/ first, falls back to root"
+    - "CLAUDE.md @imports updated to @.asimov/ prefix"
 
 older_sprints:
   - sprint: "v4.1.5 - Protocol Self-Healing (ADR-017)"

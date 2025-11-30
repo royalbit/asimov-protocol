@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.0] - 2025-11-30
+
+### Added: Freshness Protocol (Date-Aware Search)
+
+**Stale data ≠ Hallucination. Different problem, different solution.**
+
+Users misattribute "stale data" errors as "hallucination." The Freshness Protocol addresses this by instructing AI to search for current information on time-sensitive topics.
+
+#### New Protocol File
+
+- **`freshness.yaml`** - Date-aware search rules for time-sensitive queries
+
+#### Key Features
+
+- **Model cutoff awareness** - Explicit cutoff dates for Claude, GPT, Gemini, Grok
+- **Always-search keywords** - "current", "latest", "pricing", "version", etc.
+- **Volatile domains** - Crypto, AI/ML, cloud APIs, startups (high staleness risk)
+- **Behavior rules** - Search first when available, disclose risk when not
+- **Session integration** - Calculate months since cutoff on session start
+
+#### Why This Matters
+
+| Problem | Reality |
+|---------|---------|
+| "AI hallucinated" | AI gave correct info *as of training cutoff* |
+| User blames AI | Info changed in 10+ months since cutoff |
+| Wrong solution | Can't train away staleness - need to search |
+
+#### Evidence-Based Design
+
+ADR-022 documents the business reality:
+- Web search costs $0.01 + thousands of tokens per query
+- Anthropic 2024 gross margin: negative 94-109%
+- Claude docs literally say "disable search to conserve usage"
+
+The protocol makes vendor cost optimization visible and provides explicit rules for freshness.
+
+See [ADR-022](docs/adr/022-date-aware-search-protocol.md) for full rationale and sources.
+
 ## [6.0.0] - 2025-11-30
 
 ### BREAKING: Protocol Directory Structure (.asimov/)

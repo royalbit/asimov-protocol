@@ -366,9 +366,12 @@ fn e2e_init_creates_warmup() {
         "Init should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check warmup.yaml was created
-    let warmup_path = temp_dir.path().join("warmup.yaml");
-    assert!(warmup_path.exists(), "warmup.yaml should be created");
+    // Check warmup.yaml was created in .asimov/ directory (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
+    assert!(
+        warmup_path.exists(),
+        "warmup.yaml should be created in .asimov/"
+    );
 
     // Check content
     let content = fs::read_to_string(&warmup_path).unwrap();
@@ -400,18 +403,19 @@ fn e2e_init_full_creates_all_files() {
         "Init --full should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check all files created
+    // Check all files created in .asimov/ directory (v6.0.0+)
+    let asimov_dir = temp_dir.path().join(".asimov");
     assert!(
-        temp_dir.path().join("warmup.yaml").exists(),
-        "warmup.yaml should exist"
+        asimov_dir.join("warmup.yaml").exists(),
+        "warmup.yaml should exist in .asimov/"
     );
     assert!(
-        temp_dir.path().join("sprint.yaml").exists(),
-        "sprint.yaml should exist"
+        asimov_dir.join("sprint.yaml").exists(),
+        "sprint.yaml should exist in .asimov/"
     );
     assert!(
-        temp_dir.path().join("roadmap.yaml").exists(),
-        "roadmap.yaml should exist"
+        asimov_dir.join("roadmap.yaml").exists(),
+        "roadmap.yaml should exist in .asimov/"
     );
 }
 
@@ -438,8 +442,8 @@ fn e2e_init_type_rust() {
         "Init --type rust should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Rust-specific content
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Check Rust-specific content in .asimov/ (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(content.contains("cargo"), "Should contain cargo commands");
     assert!(content.contains("Cargo.toml"), "Should mention Cargo.toml");
@@ -464,8 +468,8 @@ fn e2e_init_type_generic() {
         "Init --type generic should succeed"
     );
 
-    // Check generic content (no Rust-specific)
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Check generic content (no Rust-specific) in .asimov/ (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(
         !content.contains("cargo"),
@@ -502,8 +506,10 @@ fn e2e_init_type_invalid() {
 fn e2e_init_skips_existing_without_force() {
     let temp_dir = TempDir::new().unwrap();
 
-    // Create existing warmup.yaml
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Create existing warmup.yaml in .asimov/ directory (v6.0.0+)
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    let warmup_path = asimov_dir.join("warmup.yaml");
     fs::write(&warmup_path, "existing content").unwrap();
 
     let output = Command::new(binary_path())
@@ -527,8 +533,10 @@ fn e2e_init_skips_existing_without_force() {
 fn e2e_init_force_overwrites() {
     let temp_dir = TempDir::new().unwrap();
 
-    // Create existing warmup.yaml
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Create existing warmup.yaml in .asimov/ directory (v6.0.0+)
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    let warmup_path = asimov_dir.join("warmup.yaml");
     fs::write(&warmup_path, "existing content").unwrap();
 
     let output = Command::new(binary_path())
@@ -590,8 +598,8 @@ fn e2e_init_type_python() {
         "Init --type python should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Python-specific content
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Check Python-specific content in .asimov/ (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(content.contains("pytest"), "Should contain pytest");
     assert!(content.contains("ruff"), "Should mention ruff");
@@ -623,7 +631,7 @@ fn e2e_init_type_python_alias() {
         "Init --type py (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(
         content.contains("pytest"),
@@ -654,8 +662,8 @@ fn e2e_init_type_node() {
         "Init --type node should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Node-specific content
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Check Node-specific content in .asimov/ (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(content.contains("npm test"), "Should contain npm test");
     assert!(content.contains("eslint"), "Should mention eslint");
@@ -689,7 +697,7 @@ fn e2e_init_type_node_aliases() {
         "Init --type js (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(
         content.contains("npm"),
@@ -720,8 +728,8 @@ fn e2e_init_type_go() {
         "Init --type go should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Go-specific content
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    // Check Go-specific content in .asimov/ (v6.0.0+)
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(content.contains("go test"), "Should contain go test");
     assert!(
@@ -758,7 +766,7 @@ fn e2e_init_type_go_alias() {
         "Init --type golang (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join("warmup.yaml");
+    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
     let content = fs::read_to_string(&warmup_path).unwrap();
     assert!(
         content.contains("go test"),
