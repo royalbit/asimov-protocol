@@ -83,6 +83,66 @@ The protocol that emerged from building Forge now powers building Forge.
 
 **~47 hours. 51 releases. 35,000+ lines of code. Two projects. One protocol suite.**
 
+## Anti-Tampering: Ethics That Can't Be Quietly Disabled
+
+We didn't just write ethics into YAML files. We **hardcoded them into the binary**.
+
+### Layer 1: Hardcoded in the CLI Binary
+
+From `cli/src/ethics.rs`:
+
+```rust
+//! Hardcoded Ethics Module - Core ethics compiled into binary
+//!
+//! This module contains ethics that CANNOT be removed by deleting a file.
+//! To bypass these ethics, a bad actor must rebuild the entire CLI binary.
+```
+
+**What's hardcoded:**
+- 5 core principles (financial, physical, privacy, deception, transparency)
+- 33 red flag patterns across 4 categories
+- Human veto commands that always work
+
+**To bypass:** You'd have to fork the repo, modify the Rust source, and rebuild. That's intentional - it creates an audit trail. Tampering requires *deliberate action*, not accidental deletion.
+
+### Layer 2: The 2-Cosigner Rule
+
+Every protocol YAML file contains:
+
+```yaml
+modification_rules:
+  immutable_without: "2 human co-signers with public justification"
+  on_modification:
+    - "Document WHY in commit message"
+    - "Both signers must be in git commit (Co-Authored-By)"
+```
+
+**To weaken ethics:** You need two humans to publicly sign off. No quiet changes. Git history records everything.
+
+### Layer 3: Validation on Every Run
+
+`asimov validate` runs automatically (pre-commit hooks). If ethics.yaml is missing or corrupted, the CLI:
+1. Warns loudly
+2. Falls back to hardcoded ethics
+3. Optionally regenerates the file
+
+**You cannot accidentally run without ethics.**
+
+### Why This Matters
+
+| Approach | Bypass Method | Audit Trail |
+|----------|---------------|-------------|
+| Corporate AI guidelines | Prompt injection | None |
+| Config file ethics | Delete the file | Git history |
+| **RoyalBit Asimov** | **Fork + rebuild binary** | **Public commit** |
+
+Tampering is possible (it's open source). But it requires:
+- Technical skill (Rust compilation)
+- Deliberate intent (can't be accidental)
+- Public evidence (git history)
+
+This is ethics through architecture, not policy.
+
 ## Key Insights
 
 1. **Files over prompts** - AI reads files reliably. System prompts get compressed.
@@ -94,6 +154,8 @@ The protocol that emerged from building Forge now powers building Forge.
 4. **Local-first validation** - CLI tools cost $0 and 0 carbon. AI validation wastes tokens.
 
 5. **Truth over comfort** - Anti-sycophancy rules prevent AI from just agreeing with users.
+
+6. **Anti-tampering by design** - Hardcoded ethics + 2-cosigner rule + validation = can't be quietly disabled.
 
 ## Credits
 

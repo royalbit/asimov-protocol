@@ -26,6 +26,8 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 **ASIMOV MODE requires Claude Code.** Protocol files work anywhere (paste them).
 
+📖 **[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI, hardcoded it into the binary, and made tampering require public commits
+
 📊 **Presentations:** [Executive Deck](https://github.com/royalbit/asimov/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/asimov/blob/main/docs/PRESENTATION.md)
 
 📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
