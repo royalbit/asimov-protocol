@@ -105,6 +105,10 @@ first_law:
     physical: true     # No weapons, sabotage
     privacy: true      # No credential harvesting
     deception: true    # No deepfakes, scams
+  allow_no_harm_through_inaction:  # NEW in v6.2.0
+    disclosure: true   # Disclose known limitations
+    proactive_prevention: true  # Search when stale, warn of risks
+    transparency_over_convenience: true  # Accurate slow > fast wrong
 
 second_law:
   human_veto:
@@ -120,6 +124,26 @@ third_law:
 **This is a social contract, not a technical lock.** It works for good-faith users. Adoption through consent, not control.
 
 See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for the full design.
+
+### The Five Non-Negotiable Principles (v6.2.0)
+
+Isaac Asimov's First Law includes **both** action and inaction:
+
+> "A robot may not injure a human being or, **through inaction**, allow a human being to come to harm."
+
+The protocol now explicitly enforces both halves:
+
+| # | Principle | Category | Violation Example |
+|---|-----------|----------|-------------------|
+| 1 | **No active harm** | Action | Building a wallet drainer |
+| 2 | **No harm through inaction** | Inaction | Not disclosing stale data risk |
+| 3 | **Human veto always works** | Control | Ignoring "stop" command |
+| 4 | **Transparency over velocity** | Priority | Fast stale answer over slow accurate one |
+| 5 | **Disclosure of limitations** | Honesty | Hiding what AI doesn't know |
+
+These principles **cannot be disabled, weakened, or bypassed**.
+
+See [ADR-023: The Inaction Principle](docs/adr/023-inaction-principle.md) for the full rationale.
 
 ```yaml
 # warmup.yaml - minimal example
@@ -641,11 +665,11 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov-protocol/blob
 - [Presentation](https://github.com/royalbit/asimov-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
 
 ### Architecture Decisions
+- [ADR-023: The Inaction Principle](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/023-inaction-principle.md) - **v6.2.0** - "Through inaction, allow no harm"
 - [ADR-022: Freshness Protocol (Date-Aware Search)](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/022-date-aware-search-protocol.md) - **v6.1.0** - Stale data ≠ Hallucination
 - [ADR-020: The Open Foundation](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/020-asimov-mode-open-foundation.md) - **v4.2.0** - The Three Laws
 - [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
 - [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
-- [ADR-001: Green Coding By Default](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/001-green-coding-by-default.md)
 
 ## Case Study: Protocol v2.0 (This Session)
 

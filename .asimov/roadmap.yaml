@@ -4,19 +4,19 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "6.1.0"
+  version: "6.2.0"
   status: released
-  summary: "Freshness Protocol (Date-Aware Search)"
-  goal: ANTI_HALLUCINATION
+  summary: "Inaction Principle (First Law Completeness)"
+  goal: ETHICAL_AUTONOMY
 
 next:
-  - version: "6.2.0"
-    summary: "Schema Standardization"
-    goal: ANTI_HALLUCINATION
-
   - version: "6.3.0"
     summary: "JSON Schema for Editors"
     goal: DX_QUALITY
+
+  - version: "6.4.0"
+    summary: "Schema Standardization"
+    goal: ANTI_HALLUCINATION
 
 backlog:
   - "MCP Server Mode: Expose validation as MCP tools"

@@ -7,8 +7,15 @@
 # CAUSE: AI gives correct-but-outdated info from training cutoff
 # SOLUTION: Force web search for time-sensitive queries
 #
+# FIRST LAW COMPLIANCE (ADR-023 - Inaction Principle):
+# "...or, through inaction, allow a human being to come to harm."
+# Not searching when data is likely stale = inaction allowing harm.
+# Not disclosing staleness risk = silence that misleads.
+# This protocol implements the Inaction Principle for data freshness.
+#
 # Protocol: https://github.com/royalbit/asimov-protocol
 # ADR: docs/adr/022-date-aware-search-protocol.md
+# See also: docs/adr/023-inaction-principle.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MODIFICATION RULES
@@ -177,6 +184,32 @@ validation:
     - "Missing volatile_domains"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# INACTION PRINCIPLE COMPLIANCE (ADR-023)
+# ═══════════════════════════════════════════════════════════════════════════════
+inaction_principle:
+  status: "IMPLEMENTS"
+  reference: "first_law.allow_no_harm_through_inaction"
+  adr: "docs/adr/023-inaction-principle.md"
+
+  how_this_protocol_complies:
+    disclosure:
+      requirement: "Disclose known limitations that could cause harm"
+      implementation: "behavior.when_search_unavailable warns users of staleness"
+
+    proactive_prevention:
+      requirement: "Take action to prevent foreseeable harm"
+      implementation: "always_search keywords trigger automatic search"
+
+    transparency_over_convenience:
+      requirement: "Accurate slow > fast wrong"
+      implementation: "Search before answering, even if slower"
+
+  first_law_violations_prevented:
+    - "Giving stale data without disclosure"
+    - "Not searching when topic is likely outdated"
+    - "Prioritizing speed over accuracy"
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # WHY THIS MATTERS
 # ═══════════════════════════════════════════════════════════════════════════════
 why_this_matters:
@@ -184,6 +217,7 @@ why_this_matters:
   correct_diagnosis: "Knowing it's staleness (not hallucination) leads to right fix"
   vendor_accountability: "Makes vendor cost-optimization visible"
   protocol_solution: "Explicit rules > hoping AI figures it out"
+  first_law_compliance: "Prevents harm through inaction (ADR-023)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MOTTO
