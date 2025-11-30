@@ -4,17 +4,17 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "5.2.0"
+  version: "6.0.0"
   status: released
-  summary: "CI Integration"
-  goal: QUALITY_GATE
+  summary: "Protocol Directory Structure (.asimov/)"
+  goal: QUALITY
 
 next:
-  - version: "5.3.0"
+  - version: "6.1.0"
     summary: "Schema Standardization"
     goal: ANTI_HALLUCINATION
 
-  - version: "5.4.0"
+  - version: "6.2.0"
     summary: "JSON Schema for Editors"
     goal: DX_QUALITY
 

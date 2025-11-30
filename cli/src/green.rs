@@ -148,7 +148,14 @@ impl std::fmt::Display for GreenStatus {
 }
 
 /// Check if green.yaml exists and return appropriate status
+/// Checks .asimov/ first, then falls back to root for backwards compatibility
 pub fn check_green_status(dir: &Path) -> GreenStatus {
+    // Check .asimov/ first (v6.0.0+)
+    let asimov_path = dir.join(".asimov").join("green.yaml");
+    if asimov_path.exists() {
+        return GreenStatus::Extended;
+    }
+    // Fall back to root for backwards compatibility
     let green_path = dir.join("green.yaml");
     if green_path.exists() {
         GreenStatus::Extended

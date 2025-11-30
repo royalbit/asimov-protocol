@@ -206,6 +206,33 @@ impl RegenerationInfo {
     }
 }
 
+/// The protocol directory name (v6.0.0+)
+pub const PROTOCOL_DIR: &str = ".asimov";
+
+/// Resolve the protocol directory for a given base directory.
+/// Returns `.asimov/` if it exists, otherwise returns the base directory.
+/// This provides backwards compatibility with pre-6.0.0 installations.
+pub fn resolve_protocol_dir(base_dir: &Path) -> std::path::PathBuf {
+    let asimov_dir = base_dir.join(PROTOCOL_DIR);
+    if asimov_dir.exists() && asimov_dir.is_dir() {
+        asimov_dir
+    } else {
+        base_dir.to_path_buf()
+    }
+}
+
+/// Ensure the .asimov directory exists, creating it if necessary.
+/// Returns the path to the .asimov directory.
+pub fn ensure_protocol_dir(base_dir: &Path) -> Result<std::path::PathBuf> {
+    let asimov_dir = base_dir.join(PROTOCOL_DIR);
+    if !asimov_dir.exists() {
+        std::fs::create_dir_all(&asimov_dir).map_err(|e| {
+            Error::ValidationError(format!("Failed to create .asimov directory: {}", e))
+        })?;
+    }
+    Ok(asimov_dir)
+}
+
 /// Validate all protocol files in a directory
 pub fn validate_directory(dir: &Path) -> Result<Vec<ValidationResult>> {
     validate_directory_with_options(dir, true)
@@ -230,13 +257,16 @@ pub fn validate_directory_with_regeneration(
 
 /// Internal implementation that returns both results and regeneration info
 fn validate_directory_internal(
-    dir: &Path,
+    base_dir: &Path,
     regenerate: bool,
 ) -> Result<(Vec<ValidationResult>, RegenerationInfo)> {
     use crate::templates::{
         ethics_template, green_template, roadmap_template, sprint_template, sycophancy_template,
         warmup_template, ProjectType,
     };
+
+    // Resolve protocol directory (.asimov/ or root for backwards compatibility)
+    let protocol_dir = resolve_protocol_dir(base_dir);
 
     let mut results = Vec::new();
     let mut regen_info = RegenerationInfo::default();
@@ -259,11 +289,14 @@ fn validate_directory_internal(
 
     // Check and regenerate missing required files
     for (filename, template_fn, is_warn) in &required_files {
-        let file_path = dir.join(filename);
+        let file_path = protocol_dir.join(filename);
         if !file_path.exists() && regenerate {
+            // Ensure .asimov directory exists before regenerating
+            ensure_protocol_dir(base_dir)?;
+            let regen_path = base_dir.join(PROTOCOL_DIR).join(filename);
             // Regenerate the file
             let content = template_fn();
-            if let Err(e) = std::fs::write(&file_path, &content) {
+            if let Err(e) = std::fs::write(&regen_path, &content) {
                 return Err(Error::ValidationError(format!(
                     "Failed to regenerate {}: {}",
                     filename, e
@@ -274,6 +307,9 @@ fn validate_directory_internal(
                 .push((filename.to_string(), *is_warn));
         }
     }
+
+    // Re-resolve protocol dir in case we just created .asimov/
+    let protocol_dir = resolve_protocol_dir(base_dir);
 
     // Look for protocol files (including optional ones)
     let protocol_files = [
@@ -287,7 +323,7 @@ fn validate_directory_internal(
     ];
 
     for filename in &protocol_files {
-        let file_path = dir.join(filename);
+        let file_path = protocol_dir.join(filename);
         if file_path.exists() {
             let mut result = validate_file(&file_path)?;
             // Mark as regenerated if it was just created
@@ -299,13 +335,14 @@ fn validate_directory_internal(
     }
 
     // Also validate CLAUDE.md if present (size check only, not schema)
-    if let Some(claude_md_result) = validate_claude_md(dir) {
+    // CLAUDE.md stays in base_dir, not .asimov/
+    if let Some(claude_md_result) = validate_claude_md(base_dir) {
         results.push(claude_md_result);
     }
 
     if results.is_empty() {
         return Err(Error::ValidationError(
-            "No protocol files found (warmup.yaml, sprint.yaml, roadmap.yaml, ethics.yaml, sycophancy.yaml)"
+            "No protocol files found in .asimov/ or root (warmup.yaml, sprint.yaml, roadmap.yaml, ethics.yaml, sycophancy.yaml)"
                 .to_string(),
         ));
     }
@@ -1101,12 +1138,14 @@ self_healing:
     fn test_validate_directory_existing_files_not_regenerated() {
         let temp_dir = tempfile::tempdir().unwrap();
 
-        // Create a warmup.yaml file manually
+        // Create .asimov directory and warmup.yaml file manually
+        let asimov_dir = temp_dir.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
         let warmup_content = r#"
 identity:
   project: "Test"
 "#;
-        std::fs::write(temp_dir.path().join("warmup.yaml"), warmup_content).unwrap();
+        std::fs::write(asimov_dir.join("warmup.yaml"), warmup_content).unwrap();
 
         let (results, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
 

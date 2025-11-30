@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] - 2025-11-30
+
+### BREAKING: Protocol Directory Structure (.asimov/)
+
+**All protocol files now live in `.asimov/` directory.**
+
+This is a major structural change that cleans up the repository root and follows conventional patterns like `.github/`, `.claude/`, `.vscode/`.
+
+#### What Changed
+
+| Before (v5.x) | After (v6.0.0) |
+|---------------|----------------|
+| `/warmup.yaml` | `/.asimov/warmup.yaml` |
+| `/ethics.yaml` | `/.asimov/ethics.yaml` |
+| `/green.yaml` | `/.asimov/green.yaml` |
+| `/sycophancy.yaml` | `/.asimov/sycophancy.yaml` |
+| `/asimov.yaml` | `/.asimov/asimov.yaml` |
+| `/roadmap.yaml` | `/.asimov/roadmap.yaml` |
+| `/sprint.yaml` | `/.asimov/sprint.yaml` |
+
+#### CLI Changes
+
+- CLI looks in `.asimov/` first, falls back to root for backwards compatibility
+- `asimov-mode init` now creates files in `.asimov/` directory
+- `asimov-mode validate` checks `.asimov/` directory
+- Regeneration creates files in `.asimov/`
+
+#### CLAUDE.md Changes
+
+```markdown
+# Before
+@warmup.yaml
+@ethics.yaml
+@green.yaml
+
+# After
+@.asimov/warmup.yaml
+@.asimov/ethics.yaml
+@.asimov/green.yaml
+```
+
+#### Migration
+
+```bash
+# Create .asimov directory
+mkdir -p .asimov
+
+# Move protocol files
+mv warmup.yaml ethics.yaml green.yaml sycophancy.yaml .asimov/
+mv asimov.yaml roadmap.yaml sprint.yaml .asimov/
+
+# Update CLAUDE.md imports to use @.asimov/ prefix
+```
+
+See [ADR-021](docs/adr/021-protocol-directory-structure.md) for full rationale.
+
 ## [5.2.0] - 2025-11-30
 
 ### Added: CI Protocol Validation (Quality Gate)

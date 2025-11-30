@@ -284,7 +284,14 @@ impl std::fmt::Display for EthicsStatus {
 }
 
 /// Check if ethics.yaml exists and return appropriate status
+/// Checks .asimov/ first, then falls back to root for backwards compatibility
 pub fn check_ethics_status(dir: &Path) -> EthicsStatus {
+    // Check .asimov/ first (v6.0.0+)
+    let asimov_path = dir.join(".asimov").join("ethics.yaml");
+    if asimov_path.exists() {
+        return EthicsStatus::Extended;
+    }
+    // Fall back to root for backwards compatibility
     let ethics_path = dir.join("ethics.yaml");
     if ethics_path.exists() {
         EthicsStatus::Extended

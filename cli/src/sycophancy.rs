@@ -162,7 +162,14 @@ impl std::fmt::Display for SycophancyStatus {
 }
 
 /// Check if sycophancy.yaml exists and return appropriate status
+/// Checks .asimov/ first, then falls back to root for backwards compatibility
 pub fn check_sycophancy_status(dir: &Path) -> SycophancyStatus {
+    // Check .asimov/ first (v6.0.0+)
+    let asimov_path = dir.join(".asimov").join("sycophancy.yaml");
+    if asimov_path.exists() {
+        return SycophancyStatus::Extended;
+    }
+    // Fall back to root for backwards compatibility
     let sycophancy_path = dir.join("sycophancy.yaml");
     if sycophancy_path.exists() {
         SycophancyStatus::Extended

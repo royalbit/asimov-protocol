@@ -63,7 +63,8 @@ pub use templates::{
     sycophancy_template, uses_cargo_husky, warmup_template, ProjectType,
 };
 pub use validator::{
-    check_ethics_structure, check_warmup_structure, is_protocol_file, validate_claude_md,
-    validate_directory, validate_directory_with_options, validate_directory_with_regeneration,
-    validate_file, FileSizeLimits, RegenerationInfo, ValidationResult,
+    check_ethics_structure, check_warmup_structure, ensure_protocol_dir, is_protocol_file,
+    resolve_protocol_dir, validate_claude_md, validate_directory, validate_directory_with_options,
+    validate_directory_with_regeneration, validate_file, FileSizeLimits, RegenerationInfo,
+    ValidationResult, PROTOCOL_DIR,
 };

@@ -575,9 +575,25 @@ fn cmd_init(
         ));
     }
 
+    // Create .asimov directory for protocol files
+    let asimov_dir = output.join(".asimov");
+    if let Err(e) = std::fs::create_dir_all(&asimov_dir) {
+        eprintln!(
+            "  {} Failed to create .asimov directory - {}",
+            "ERROR".bold().red(),
+            e
+        );
+        return ExitCode::FAILURE;
+    }
+
     // Write protocol files
     for (filename, content) in &files {
-        let file_path = output.join(filename);
+        // CLAUDE.md and .claude_checkpoint.yaml.example stay in root, protocol files go to .asimov/
+        let file_path = if filename.ends_with(".md") || filename.starts_with('.') {
+            output.join(filename)
+        } else {
+            asimov_dir.join(filename)
+        };
 
         if file_path.exists() && !force {
             println!(

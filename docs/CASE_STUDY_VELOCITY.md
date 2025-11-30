@@ -154,7 +154,7 @@ flowchart TD
 
 > **The Three Laws work even against the project creator. This is the difference between content filtering and principled ethics.**
 
-**Source:** [asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/asimov.yaml)
+**Source:** [asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml)
 
 ---
 
@@ -181,7 +181,7 @@ COPILOT (cloud AI):
   Carbon footprint: Cloud compute for every keystroke
 ```
 
-**Source:** [green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/green.yaml)
+**Source:** [green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml)
 
 ---
 
@@ -205,7 +205,7 @@ Sycophancy leads to:
 - Technical debt from unquestioned code
 - Security vulnerabilities from unchallenged assumptions
 
-**Source:** [sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/sycophancy.yaml)
+**Source:** [sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml)
 
 ---
 
@@ -673,10 +673,10 @@ For teams building **complete products** (not just code), the Asimov Protocol pr
 
 - **GitHub Repository**: [https://github.com/royalbit/asimov-protocol](https://github.com/royalbit/asimov-protocol)
 - **crates.io**: [https://crates.io/crates/asimov-mode](https://crates.io/crates/asimov-mode)
-- **Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov-protocol/blob/main/asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/asimov.yaml)
-- **Ethics Protocol**: [https://github.com/royalbit/asimov-protocol/blob/main/ethics.yaml](https://github.com/royalbit/asimov-protocol/blob/main/ethics.yaml)
-- **Green Coding**: [https://github.com/royalbit/asimov-protocol/blob/main/green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/green.yaml)
-- **Anti-Sycophancy**: [https://github.com/royalbit/asimov-protocol/blob/main/sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/sycophancy.yaml)
+- **Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/asimov.yaml)
+- **Ethics Protocol**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/ethics.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/ethics.yaml)
+- **Green Coding**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/green.yaml)
+- **Anti-Sycophancy**: [https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml](https://github.com/royalbit/asimov-protocol/blob/main/.asimov/sycophancy.yaml)
 
 ### Benchmarks & Tools
 

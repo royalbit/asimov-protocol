@@ -21,10 +21,15 @@ claude --dangerously-skip-permissions
 
 ```
 project/
-├── warmup.yaml           # Protocol rules (HOW)
-├── sprint.yaml           # Session boundaries (WHEN)
-├── roadmap.yaml          # Milestones (WHAT)
-├── CLAUDE.md             # Self-healing trigger
+├── .asimov/              # Protocol directory (v6.0.0+)
+│   ├── warmup.yaml       # Protocol rules (HOW)
+│   ├── sprint.yaml       # Session boundaries (WHEN)
+│   ├── roadmap.yaml      # Milestones (WHAT)
+│   ├── asimov.yaml       # The Three Laws
+│   ├── ethics.yaml       # Ethics configuration
+│   ├── green.yaml        # Green coding principles
+│   └── sycophancy.yaml   # Anti-sycophancy rules
+├── CLAUDE.md             # Self-healing trigger (@.asimov/warmup.yaml)
 ├── .gitignore            # + .claude_checkpoint.yaml
 └── .hooks/               # Pre-commit hooks
     ├── pre-commit
@@ -133,8 +138,8 @@ cargo test
 
 ```bash
 # Edit with your project details
-$EDITOR warmup.yaml
-$EDITOR roadmap.yaml
+$EDITOR .asimov/warmup.yaml
+$EDITOR .asimov/roadmap.yaml
 ```
 
 ### 3. Validate
@@ -158,7 +163,7 @@ claude --dangerously-skip-permissions
 
 ```bash
 # Check files exist
-ls -la warmup.yaml CLAUDE.md
+ls -la .asimov/ CLAUDE.md
 
 # Validate protocol
 asimov-mode validate
@@ -186,11 +191,11 @@ cargo test
 
 ### "Self-healing not working"
 1. Check CLAUDE.md exists
-2. Check CLAUDE.md has "re-read warmup.yaml" instruction
-3. Check warmup.yaml has self_healing section
+2. Check CLAUDE.md has "@.asimov/warmup.yaml" import
+3. Check .asimov/warmup.yaml has self_healing section
 
 ### "AI forgets rules"
-Say: "Re-read warmup.yaml and .claude_checkpoint.yaml"
+Say: "Re-read .asimov/warmup.yaml"
 
 ## Requirements Summary
 
@@ -198,7 +203,7 @@ Say: "Re-read warmup.yaml and .claude_checkpoint.yaml"
 |-----------|----------|
 | Claude Code | Yes |
 | `--dangerously-skip-permissions` | Yes (for autonomy) |
-| warmup.yaml | Yes |
+| .asimov/ directory | Yes (v6.0.0+) |
 | CLAUDE.md | Yes (for self-healing) |
 | Pre-commit hooks | Recommended |
 

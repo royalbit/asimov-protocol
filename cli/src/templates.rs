@@ -1305,10 +1305,10 @@ markdownlint '**/*.md'               # Standard lint
     format!(
         r#"# {}
 
-@warmup.yaml
-@ethics.yaml
-@green.yaml
-@sycophancy.yaml
+@.asimov/warmup.yaml
+@.asimov/ethics.yaml
+@.asimov/green.yaml
+@.asimov/sycophancy.yaml
 
 ## Core Rules
 
