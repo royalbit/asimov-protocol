@@ -8,29 +8,21 @@
 # See: docs/adr/ for detailed rationale
 
 current:
-  version: "5.0.3"
+  version: "5.1.0"
   status: released
-  summary: "Complete Documentation Rebrand"
-  goal: ETHICAL_AUTONOMY
-  adr: "docs/adr/020-asimov-mode-open-foundation.md"
+  summary: "Hardcoded Green Coding Metrics"
+  goal: GREEN_CODING
+  adr: "docs/adr/012-hardcoded-green-coding.md"
   deliverables:
-    - "[x] ADR-020: The Open Foundation manifesto"
-    - "[x] asimov.yaml - Three Laws structure"
-    - "[x] CLI support for asimov.yaml"
-    - "[x] --asimov flag (--skynet as deprecated alias)"
-    - "[x] Rename to asimov-mode on crates.io"
-    - "[x] Full rebrand: Forge Protocol → Asimov Protocol"
-    - "[x] warmup.yaml - ASIMOV MODE references"
-    - "[x] CLAUDE.md - @asimov.yaml reference"
-    - "[x] CHANGELOG.md update"
-    - "[x] Version bump to 5.0.0"
+    - "[x] cli/src/green.rs - Hardcoded green coding module"
+    - "[x] GreenPrinciples struct (local_first, token_efficiency, binary_efficiency, carbon_awareness)"
+    - "[x] Anti-patterns module (AI_FOR_ROUTINE, BLOATED_DEPS, UNOPTIMIZED_BUILDS, TOKEN_WASTE)"
+    - "[x] Green status in validate command output"
+    - "[x] Green principles in refresh command output"
+    - "[x] 12 unit tests for green module"
+    - "[x] Rebrand refresh command labels (FORGE → ASIMOV)"
 
 next:
-  - version: "5.1.0"
-    summary: "Hardcoded Green Coding Metrics"
-    goal: GREEN_CODING
-    adr: "docs/adr/012-hardcoded-green-coding.md"
-
   - version: "5.2.0"
     summary: "MCP Server Mode"
     goal: VENDOR_NEUTRALITY
