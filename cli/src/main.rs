@@ -1,12 +1,13 @@
 //! Asimov Protocol CLI - The Three Laws of Robotics, encoded in YAML
 
 use asimov_mode::{
-    asimov_template, banned_phrases, check_ethics_status, check_markdown_file,
-    check_sycophancy_status, checkpoint_template, claude_md_template, find_markdown_files,
-    fix_markdown_file, green_template, hook_installer_template, is_protocol_file,
-    precommit_hook_template, red_flags, roadmap_template, scan_directory_for_red_flags,
-    sprint_template, sycophancy_template, uses_cargo_husky, validate_directory_with_regeneration,
-    validate_file, warmup_template, EthicsStatus, ProjectType, SycophancyStatus, CORE_PRINCIPLES,
+    anti_patterns, asimov_template, banned_phrases, check_ethics_status, check_green_status,
+    check_markdown_file, check_sycophancy_status, checkpoint_template, claude_md_template,
+    find_markdown_files, fix_markdown_file, green_template, hook_installer_template,
+    is_protocol_file, precommit_hook_template, red_flags, roadmap_template,
+    scan_directory_for_red_flags, sprint_template, sycophancy_template, uses_cargo_husky,
+    validate_directory_with_regeneration, validate_file, warmup_template, EthicsStatus,
+    GreenStatus, ProjectType, SycophancyStatus, CORE_PRINCIPLES, GREEN_MOTTO, GREEN_PRINCIPLES,
     HUMAN_VETO_COMMANDS, SYCOPHANCY_MOTTO, SYCOPHANCY_PRINCIPLES,
 };
 use clap::{Parser, Subcommand};
@@ -180,7 +181,10 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     println!();
 
     // Ethics reminder (hardcoded - cannot be removed)
-    println!("{}", "[FORGE ETHICS] Core principles ACTIVE".bold().green());
+    println!(
+        "{}",
+        "[ASIMOV ETHICS] Core principles ACTIVE".bold().green()
+    );
     println!(
         "  {} Financial: {} | Physical: {} | Privacy: {} | Deception: {}",
         "✓".green(),
@@ -220,7 +224,7 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     // Anti-sycophancy reminder (hardcoded - cannot be removed)
     println!(
         "{}",
-        "[FORGE ANTI-SYCOPHANCY] Core principles ACTIVE"
+        "[ASIMOV ANTI-SYCOPHANCY] Core principles ACTIVE"
             .bold()
             .cyan()
     );
@@ -248,6 +252,40 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
         "✓".green(),
         banned_phrases::count(),
         SYCOPHANCY_MOTTO.dimmed()
+    );
+    println!();
+
+    // Green coding reminder (hardcoded - cannot be removed)
+    println!(
+        "{}",
+        "[ASIMOV GREEN CODING] Core principles ACTIVE"
+            .bold()
+            .bright_green()
+    );
+    println!(
+        "  {} Local-first: {} | Token efficiency: {} | Binary efficiency: {}",
+        "✓".green(),
+        if GREEN_PRINCIPLES.local_first {
+            "on".green()
+        } else {
+            "off".red()
+        },
+        if GREEN_PRINCIPLES.token_efficiency {
+            "on".green()
+        } else {
+            "off".red()
+        },
+        if GREEN_PRINCIPLES.binary_efficiency {
+            "on".green()
+        } else {
+            "off".red()
+        },
+    );
+    println!(
+        "  {} Anti-patterns: {} patterns | Motto: {}",
+        "✓".green(),
+        anti_patterns::count(),
+        GREEN_MOTTO.dimmed()
     );
     println!();
 
@@ -319,6 +357,14 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
         SycophancyStatus::Extended => "EXTENDED (core + sycophancy.yaml)".bright_green(),
     };
     println!("  {} Anti-Sycophancy: {}", "✓".green(), sycophancy_display);
+
+    // Show hardcoded green coding status
+    let green_status = check_green_status(dir);
+    let green_display = match green_status {
+        GreenStatus::Hardcoded => "HARDCODED (local-first always)".bright_cyan(),
+        GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
+    };
+    println!("  {} Green Coding: {}", "✓".green(), green_display);
     println!();
 
     let (results, regen_info) = if path.is_file() {

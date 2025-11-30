@@ -30,6 +30,7 @@
 
 pub mod error;
 pub mod ethics;
+pub mod green;
 pub mod markdown;
 pub mod schemas;
 pub mod sycophancy;
@@ -42,6 +43,10 @@ pub use ethics::{
     check_ethics_status, red_flags, scan_directory_for_red_flags, scan_file_for_red_flags,
     CorePrinciples, EthicsStatus, RedFlagCategory, RedFlagMatch, CORE_PRINCIPLES,
     HUMAN_VETO_COMMANDS,
+};
+pub use green::{
+    anti_patterns, best_practices, carbon, check_green_status, cost, AntiPatternCategory,
+    GreenPrinciples, GreenStatus, GREEN_PRINCIPLES, MOTTO as GREEN_MOTTO,
 };
 pub use markdown::{
     check_file as check_markdown_file, find_markdown_files, fix_file as fix_markdown_file,

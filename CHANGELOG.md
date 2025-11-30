@@ -5,6 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.0] - 2025-11-30
+
+### Added: Hardcoded Green Coding Metrics (ADR-012)
+
+**Ship fast. Ship small. Ship green.**
+
+Green coding principles now compiled into the CLI binary - cannot be removed by deleting files.
+
+#### New Files
+
+- `cli/src/green.rs` - Hardcoded green coding module
+
+#### Core Principles (Hardcoded)
+
+| Principle | Description |
+|-----------|-------------|
+| Local-First | Prefer CLI tools over cloud AI for routine tasks |
+| Token Efficiency | Reserve AI tokens for complex reasoning |
+| Binary Efficiency | Smaller binaries = less bandwidth = less energy |
+| Carbon Awareness | Track and minimize carbon footprint |
+
+#### Anti-Patterns Tracked
+
+17+ wasteful patterns flagged across categories:
+- AI for routine: "ask AI to validate syntax", "ask AI to run tests"
+- Bloated deps: "add package for trivial function"
+- Unoptimized builds: "ship debug build", "skip binary compression"
+- Token waste: "ask AI for error codes", "repeat same question"
+
+#### CLI Changes
+
+- `asimov-mode validate` now shows Green Coding status
+- `asimov-mode refresh` displays green principles and anti-pattern count
+- Refresh command labels rebranded (FORGE → ASIMOV)
+
+#### Integration
+
+Green status appears in validation output alongside Ethics and Anti-Sycophancy:
+
+```
+✓ Ethics: EXTENDED (core + ethics.yaml)
+✓ Anti-Sycophancy: EXTENDED (core + sycophancy.yaml)
+✓ Green Coding: EXTENDED (core + green.yaml)
+```
+
+See [ADR-012](docs/adr/012-hardcoded-green-coding.md) for full rationale.
+
 ## [5.0.3] - 2025-11-30
 
 ### Fixed: Complete Documentation Rebrand
