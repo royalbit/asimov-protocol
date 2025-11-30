@@ -6,7 +6,7 @@ identity:
   project: "RoyalBit Asimov"
   tagline: "Vendor-neutral AI session continuity"
   type: "rust"
-  version: "7.0.6"
+  version: "7.0.7"
   repo: "https://github.com/royalbit/asimov"
   license: "MIT"
 
