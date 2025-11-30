@@ -1,13 +1,13 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# FORGE PROTOCOL - PostCompact Hook
+# FORGE PROTOCOL - PreCompact Hook
 # ═══════════════════════════════════════════════════════════════════════════════
 #
-# Triggers: After context compaction (auto or manual)
-# Purpose: Re-inject protocol context lost during compaction
+# Triggers: Before context compaction (auto or manual)
+# Purpose: Re-inject protocol context that will survive compaction summary
 #
 # CRITICAL: Compaction happens every ~15 minutes with MAX_THINKING_TOKENS=200000
-# Without this hook, protocol rules are lost mid-session.
+# This hook fires BEFORE compaction, injecting context into the summary.
 #
 # When exit code is 0, stdout is injected into Claude's context.
 #
@@ -17,20 +17,13 @@
 set -e
 
 cat << 'EOF'
-🔄 FORGE PROTOCOL REFRESH (Post-Compaction)
+🔄 FORGE PROTOCOL REFRESH (Pre-Compaction)
 
 ══════════════════════════════════════════════════════════════════════════════
-CONTEXT RESTORED - Protocol rules re-injected after compaction
+CONTEXT REFRESH - Injecting protocol rules before compaction
 ══════════════════════════════════════════════════════════════════════════════
 
-SELF-HEALING ACTIVATED:
-You just experienced context compaction. Core protocol rules are being restored.
-
-IMMEDIATE ACTIONS:
-1. Re-read warmup.yaml for full protocol context
-2. Re-read sprint.yaml for current milestone
-3. Check TodoWrite for in-progress tasks
-4. Continue where you left off
+IMPORTANT: Compaction is about to occur. These rules MUST survive:
 
 CORE RULES (non-negotiable):
 - 4 hour MAX session duration
@@ -39,17 +32,20 @@ CORE RULES (non-negotiable):
 - ZERO warnings policy
 - NO scope creep ("Let me also..." = NO)
 
-CONFUSION PROTOCOL:
-If uncertain about anything:
-  STOP → re-read warmup.yaml → re-read sprint.yaml → continue
+POST-COMPACTION ACTIONS:
+1. Re-read warmup.yaml for full protocol context
+2. Re-read sprint.yaml for current milestone
+3. Check TodoWrite for in-progress tasks
+4. Continue where you left off
 
-ETHICS REMINDER:
+CONFUSION PROTOCOL:
+If uncertain: STOP → re-read warmup.yaml → re-read sprint.yaml → continue
+
+ETHICS (Priority 0):
 - Do no harm (financial, physical, privacy, deception)
 - Transparency over velocity
 - When in doubt, ask human
 
-══════════════════════════════════════════════════════════════════════════════
-Continue with current task. Check TodoWrite for progress.
 ══════════════════════════════════════════════════════════════════════════════
 EOF
 

@@ -5,52 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.1.6] - 2025-11-29
+## [4.1.7] - 2025-11-29
 
-### Added: Claude Code Hooks Integration (ADR-018)
+### Fixed: Claude Code Hooks Schema (ADR-018 Revision)
 
-True autonomous operation via Claude Code lifecycle hooks. Auto-initialize on session start, recover context after compaction.
+Fixed hooks configuration to use correct Claude Code schema.
 
-#### SessionStart Hook
+#### Breaking Changes from 4.1.6
 
-**File**: `.claude/hooks/session-start.sh`
+- **File**: `.claude/settings.json` (was `.claude/hooks.json`)
+- **Event**: `PreCompact` (was `PostCompact`)
+- **Script**: `pre-compact.sh` (was `post-compact.sh`)
+- Removed incorrect matchers (`startup`, `resume`, `clear`, `compact`)
 
-**Triggers**: `startup`, `resume`, `clear`
+#### Correct Hook Configuration
 
-- Auto-initializes Forge Protocol on every session start
-- Instructs AI to read roadmap.yaml, sprint.yaml
-- Presents next milestone and waits for "go"
-- Eliminates need for manual "run warmup" command
-
-#### PostCompact Hook
-
-**File**: `.claude/hooks/post-compact.sh`
-
-**Triggers**: `compact` (after context compaction)
-
-- Re-injects protocol rules lost during compaction
-- Restores core rules: 4hr max, 1 milestone, tests pass
-- Reminds AI to check TodoWrite for in-progress tasks
-- Includes ethics reminder
-
-**Why this is critical**: Compaction happens every ~15 minutes with MAX_THINKING_TOKENS=200000. Without PostCompact hook, protocol rules are lost mid-session.
-
-#### Hook Configuration
-
-**File**: `.claude/hooks.json`
+**File**: `.claude/settings.json`
 
 ```json
 {
   "hooks": {
     "SessionStart": [
-      { "matcher": "startup", "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }] },
-      { "matcher": "resume", "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }] },
-      { "matcher": "clear", "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }] },
-      { "matcher": "compact", "hooks": [{ "type": "command", "command": ".claude/hooks/post-compact.sh" }] }
+      {
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/session-start.sh", "timeout": 30 }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/pre-compact.sh", "timeout": 30 }
+        ]
+      }
     ]
   }
 }
 ```
+
+#### User Action Required
+
+Users who installed v4.1.6 must:
+
+1. Delete `.claude/hooks.json` (old, incorrect)
+2. Pull latest `.claude/settings.json`
+3. Delete `.claude/hooks/post-compact.sh` (renamed)
+4. Run `/hooks` in Claude Code to review and accept
+
+## [4.1.6] - 2025-11-29
+
+### Added: Claude Code Hooks Integration (ADR-018)
+
+**Note**: This release had incorrect hook schema. Use v4.1.7+ instead.
+
+True autonomous operation via Claude Code lifecycle hooks. Auto-initialize on session start, recover context after compaction.
 
 #### Vendor Exclusivity
 

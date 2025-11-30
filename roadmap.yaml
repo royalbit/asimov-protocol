@@ -1,7 +1,7 @@
 # Forge Protocol Roadmap
 
 metadata:
-  current_version: "4.1.6"
+  current_version: "4.1.7"
   last_updated: "2025-11-29"
   philosophy: "Integrate with Claude Code. Focus on unique value."
 
@@ -48,32 +48,36 @@ metadata:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v4.1.6 - CLAUDE CODE HOOKS INTEGRATION (ADR-018)
+# CURRENT: v4.1.7 - CLAUDE CODE HOOKS SCHEMA FIX (ADR-018 Revision)
 # ═══════════════════════════════════════════════════════════════════════════════
 current:
-  version: "4.1.6"
+  version: "4.1.7"
   status: released
   date: "2025-11-29"
-  summary: "Claude Code Hooks Integration - True Autonomous Operation"
+  summary: "Claude Code Hooks Schema Fix - Correct Configuration"
   goal: AUTONOMOUS_DEVELOPMENT
   priority: CRITICAL
 
   rationale: |
-    CLAUDE.md @import loads content but doesn't trigger execution.
-    Compaction loses protocol rules every ~15 minutes.
-    Without hooks, users must manually say "run warmup" every session.
-    SessionStart + PostCompact hooks enable TRUE autonomous operation.
+    v4.1.6 used incorrect hooks schema (wrong file, wrong events).
+    Hooks must be in .claude/settings.json, not .claude/hooks.json.
+    PreCompact event (not PostCompact) for context injection.
+    This fix enables TRUE autonomous operation.
 
   deliverables:
     implementation:
-      - "[x] .claude/hooks/session-start.sh - Auto-initialize on startup/resume/clear"
-      - "[x] .claude/hooks/post-compact.sh - Re-inject rules after compaction"
-      - "[x] .claude/hooks.json - Hook configuration"
+      - "[x] .claude/settings.json - Correct hook configuration location"
+      - "[x] .claude/hooks/session-start.sh - Auto-initialize on session start"
+      - "[x] .claude/hooks/pre-compact.sh - Inject rules before compaction"
 
     documentation:
-      - "[x] ADR-018: Claude Code Hooks Integration - Accepted"
-      - "[x] SPECIFICATION.md updated with hooks schema"
-      - "[x] CHANGELOG.md updated"
+      - "[x] ADR-018: Revised with correct schema"
+      - "[x] CHANGELOG.md updated with migration steps"
+
+  breaking_changes:
+    - "File: .claude/settings.json (was .claude/hooks.json)"
+    - "Event: PreCompact (was PostCompact)"
+    - "Script: pre-compact.sh (was post-compact.sh)"
 
   vendor_exclusivity: |
     Claude Code is the ONLY AI with lifecycle hooks.
@@ -84,6 +88,16 @@ current:
 # RELEASED VERSIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 previous:
+  - version: "4.1.6"
+    status: released
+    date: "2025-11-29"
+    summary: "Claude Code Hooks Integration (ADR-018) - SCHEMA ERROR"
+    highlights:
+      - "Initial hooks implementation with incorrect schema"
+      - "Used .claude/hooks.json (wrong - should be settings.json)"
+      - "Used PostCompact event (wrong - should be PreCompact)"
+      - "Superseded by v4.1.7"
+
   - version: "4.1.5"
     status: released
     date: "2025-11-29"

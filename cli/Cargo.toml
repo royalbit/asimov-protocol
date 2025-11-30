@@ -1,6 +1,6 @@
 [package]
 name = "forge-protocol"
-version = "4.1.6"
+version = "4.1.7"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "Humanist Mode: Ethical AI autonomy protocol with Claude Code native integration. Ethics, sprint autonomy, green coding. 50-100x velocity."

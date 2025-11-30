@@ -2,7 +2,7 @@
 
 ## Status
 
-**Accepted** - 2025-11-29
+**Revised** - 2025-11-29 (v4.1.7 - Fixed schema)
 
 ## Context
 
@@ -12,7 +12,7 @@ ethics.yaml, green.yaml) into Claude's context. However, this approach has criti
 1. **No Auto-Start**: `@import` loads content as static context but doesn't trigger any
    automatic execution. Users must manually say "run warmup" to initialize the protocol.
 
-2. **Post-Compaction Loss**: Context compaction happens every ~15 minutes (with
+2. **Pre-Compaction Loss**: Context compaction happens every ~15 minutes (with
    MAX_THINKING_TOKENS=200000). After compaction, protocol rules may be summarized away,
    leaving Claude operating without ethical constraints or sprint boundaries.
 
@@ -24,9 +24,9 @@ ethics.yaml, green.yaml) into Claude's context. However, this approach has criti
 
 Investigation of major AI coding assistants (November 2025) revealed:
 
-| AI | Session Init | Post-Compact |
-|----|-------------|--------------|
-| **Claude Code** | SessionStart hook | SessionStart (compact matcher) |
+| AI | Session Init | Pre-Compact |
+|----|-------------|-------------|
+| **Claude Code** | SessionStart hook | PreCompact hook |
 | Cursor | .cursorrules (static) | /summarize (manual) |
 | GitHub Copilot | .github/copilot-instructions.md | None |
 | Windsurf | .windsurfrules + Memories | None |
@@ -34,7 +34,7 @@ Investigation of major AI coding assistants (November 2025) revealed:
 | Grok | Prompt caching | None |
 
 **Finding**: Claude Code's lifecycle hooks are unique. No other AI coding assistant provides
-hooks for session initialization or post-compaction recovery.
+hooks for session initialization or pre-compaction injection.
 
 ## Decision
 
@@ -44,7 +44,7 @@ Implement Claude Code hooks to enable true autonomous operation:
 
 **File**: `.claude/hooks/session-start.sh`
 
-**Triggers**: `startup`, `resume`, `clear`
+**Triggers**: Session start, resume, clear
 
 **Behavior**:
 - Outputs protocol initialization message
@@ -52,47 +52,56 @@ Implement Claude Code hooks to enable true autonomous operation:
 - Presents next milestone
 - Waits for user confirmation ("go")
 
-### 2. PostCompact Hook
+### 2. PreCompact Hook
 
-**File**: `.claude/hooks/post-compact.sh`
+**File**: `.claude/hooks/pre-compact.sh`
 
-**Triggers**: `compact` (via SessionStart matcher)
+**Triggers**: Before context compaction
 
 **Behavior**:
 - Outputs protocol refresh message
-- Re-injects core rules (4hr max, 1 milestone, tests pass)
-- Instructs Claude to re-read warmup.yaml, sprint.yaml
+- Injects core rules that will survive in compaction summary
+- Instructs Claude to re-read warmup.yaml, sprint.yaml post-compaction
 - Reminds to check TodoWrite for in-progress tasks
 - Includes ethics reminder
 
 ### 3. Configuration
 
-**File**: `.claude/hooks.json`
+**File**: `.claude/settings.json`
 
 ```json
 {
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup",
-        "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }]
-      },
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/session-start.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
       {
-        "matcher": "resume",
-        "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }]
-      },
-      {
-        "matcher": "clear",
-        "hooks": [{ "type": "command", "command": ".claude/hooks/session-start.sh" }]
-      },
-      {
-        "matcher": "compact",
-        "hooks": [{ "type": "command", "command": ".claude/hooks/post-compact.sh" }]
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-compact.sh",
+            "timeout": 30
+          }
+        ]
       }
     ]
   }
 }
 ```
+
+**Note (v4.1.7)**: Initial release used incorrect `.claude/hooks.json` file and wrong event
+names. The correct location is `.claude/settings.json` with `SessionStart` and `PreCompact`
+events.
 
 ## Consequences
 
@@ -101,8 +110,9 @@ Implement Claude Code hooks to enable true autonomous operation:
 1. **True Auto-Start**: Protocol initializes automatically on every session without manual
    "run warmup" command.
 
-2. **Mid-Session Recovery**: PostCompact hook ensures protocol rules survive compaction.
-   This is the missing piece for true SKYNET MODE autonomy.
+2. **Mid-Session Recovery**: PreCompact hook injects protocol rules before compaction,
+   ensuring they survive in the summarized context. This is the missing piece for true
+   SKYNET MODE autonomy.
 
 3. **Unique Differentiator**: No other AI coding assistant has this capability. Forge
    Protocol on Claude Code offers autonomous operation that competitors cannot match.
@@ -111,7 +121,7 @@ Implement Claude Code hooks to enable true autonomous operation:
    now has defense-in-depth:
    - Missing files → auto-regenerate (v4.1.5)
    - Session start → auto-initialize (this ADR)
-   - Post-compaction → auto-recover (this ADR)
+   - Pre-compaction → inject context for survival (this ADR)
 
 ### Negative
 
@@ -131,7 +141,7 @@ Forge Protocol remains vendor-neutral at the **file format** level:
 
 But **autonomous operation** (SKYNET MODE) requires Claude Code:
 - SessionStart hook for auto-initialization
-- PostCompact hook for mid-session recovery
+- PreCompact hook for mid-session survival
 
 This is acceptable because:
 1. File-based protocols still provide value on all platforms
@@ -144,10 +154,10 @@ This is acceptable because:
 
 ```
 .claude/
-├── hooks.json           # Hook configuration
+├── settings.json        # Hook configuration (NOT hooks.json)
 └── hooks/
-    ├── session-start.sh # SessionStart hook (startup, resume, clear)
-    └── post-compact.sh  # PostCompact hook (after compaction)
+    ├── session-start.sh # SessionStart hook
+    └── pre-compact.sh   # PreCompact hook (NOT post-compact.sh)
 ```
 
 ### User Activation
@@ -167,8 +177,8 @@ Hooks can be tested manually:
 .claude/hooks/session-start.sh
 # Should output protocol initialization message
 
-# Test PostCompact hook
-.claude/hooks/post-compact.sh
+# Test PreCompact hook
+.claude/hooks/pre-compact.sh
 # Should output protocol refresh message
 ```
 
@@ -177,4 +187,8 @@ Hooks can be tested manually:
 - [Claude Code Hooks Documentation](https://docs.anthropic.com/claude-code/hooks)
 - [ADR-003: Compaction Reality](docs/adr/003-compaction-reality.md)
 - [ADR-017: Protocol Self-Healing](docs/adr/017-protocol-self-healing.md)
-- Nature 2025: AI Sycophancy Research
+
+## Revision History
+
+- **v4.1.6** (2025-11-29): Initial implementation with incorrect schema
+- **v4.1.7** (2025-11-29): Fixed schema - `.claude/settings.json`, `PreCompact` event
