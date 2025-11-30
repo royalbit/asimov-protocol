@@ -262,12 +262,14 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::assertions_on_constants)]
     fn test_carbon_constants() {
         assert!(carbon::CLOUD_AI_CARBON_G > carbon::LOCAL_CLI_CARBON_G);
         assert!(carbon::REDUCTION_PERCENT > 99.0);
     }
 
     #[test]
+    #[allow(clippy::assertions_on_constants)]
     fn test_cost_constants() {
         assert!(cost::CLOUD_AI_USD > cost::LOCAL_CLI_USD);
         assert_eq!(cost::LOCAL_CLI_USD, 0.0);
