@@ -11,10 +11,17 @@ current:
 
 next:
   - version: "6.1.0"
+    summary: "Freshness Protocol (Date-Aware Search)"
+    goal: ANTI_HALLUCINATION
+    adr: "ADR-022"
+    priority: "TOP"
+    rationale: "Users misattribute stale data as hallucination. Force search for time-sensitive queries."
+
+  - version: "6.2.0"
     summary: "Schema Standardization"
     goal: ANTI_HALLUCINATION
 
-  - version: "6.2.0"
+  - version: "6.3.0"
     summary: "JSON Schema for Editors"
     goal: DX_QUALITY
 

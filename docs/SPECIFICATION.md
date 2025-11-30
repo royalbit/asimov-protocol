@@ -46,6 +46,7 @@ Asimov Protocol v4.0.0 integrates with Claude Code 2.0's native features instead
 | **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags | NO |
 | **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
 | **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
+| **Freshness Protocol** | `freshness.yaml`, date-aware search, stale data prevention | NO |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
 | **Schema Validation** | `asimov-mode validate` | NO |
 
@@ -74,22 +75,24 @@ The Asimov Protocol exists to solve seven specific problems. **Features that don
 |----------|-----------|---------|----------|
 | **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Humanist Mode safeguards (ethics.yaml) |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
+| **1.25** | **FRESHNESS** | Stale data misattributed as hallucination | Date-aware search (freshness.yaml) |
 | **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
 | **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (ASIMOV MODE) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
-### The Two Hallucinations
+### The Three Hallucinations
 
-"Hallucination" has two forms, both caused by RLHF training:
+"Hallucination" has three forms with different root causes:
 
-| Type | What AI Does | Cause | Forge Solution |
-|------|--------------|-------|----------------|
+| Type | What AI Does | Cause | Asimov Protocol Solution |
+|------|--------------|-------|--------------------------|
 | **Factual Hallucination** | Generates plausible-sounding false *facts* | Training for plausibility, not accuracy | File-based grounding (warmup.yaml) |
-| **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives |
+| **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives (sycophancy.yaml) |
+| **Stale Data Hallucination** | Gives correct-but-outdated *information* | Training data cutoff + no search | Date-aware search (freshness.yaml) |
 
-See [ADR-015](adr/015-anti-sycophancy-protocol.md) and [AI_REALITY.md](AI_REALITY.md) for full analysis.
+See [ADR-015](adr/015-anti-sycophancy-protocol.md), [ADR-022](adr/022-date-aware-search-protocol.md), and [AI_REALITY.md](AI_REALITY.md) for full analysis.
 
 ### Scope Filter
 
@@ -180,44 +183,48 @@ flowchart LR
 
 ```
 project/
-├── ethics.yaml           # Required for ASIMOV - Humanist Mode (Priority 0)
-├── green.yaml            # Required for ASIMOV - Green Coding (Priority 0.5)
-├── sycophancy.yaml       # Required for ASIMOV - Anti-Sycophancy (Priority 1.5)
-├── warmup.yaml           # Required - Protocol rules (HOW)
-├── sprint.yaml           # Required for ASIMOV - Session boundaries (WHEN)
-├── roadmap.yaml          # Required for ASIMOV - Milestones (WHAT)
-├── CLAUDE.md             # Required for ASIMOV - Bootstrap
-└── .claude_checkpoint.yaml  # Generated - Session state
+├── .asimov/                  # Protocol directory (v6.0.0+)
+│   ├── asimov.yaml           # Required - Three Laws of Robotics
+│   ├── ethics.yaml           # Required - Humanist Mode (Priority 0)
+│   ├── green.yaml            # Required - Green Coding (Priority 0.5)
+│   ├── freshness.yaml        # Required - Date-Aware Search (Priority 1.25)
+│   ├── sycophancy.yaml       # Required - Anti-Sycophancy (Priority 1.5)
+│   ├── warmup.yaml           # Required - Protocol rules (HOW)
+│   ├── sprint.yaml           # Required - Session boundaries (WHEN)
+│   └── roadmap.yaml          # Required - Milestones (WHAT)
+├── CLAUDE.md                 # Required - Bootstrap
+└── .claude_checkpoint.yaml   # Generated - Session state
 ```
 
 ### Modular Structure (Large Projects)
 
-When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: ethics.yaml, green.yaml, and sycophancy.yaml must NEVER be modularized - they stay in project root.**
+When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: Core protocol files must NEVER be modularized - they stay in .asimov/.**
 
 ```
 project/
-├── ethics.yaml           # NEVER modularize - Priority 0
-├── green.yaml            # NEVER modularize - Priority 0.5
-├── sycophancy.yaml       # NEVER modularize - Priority 1.5
-├── warmup.yaml           # Core only (~100 lines)
-├── .forge/               # Protocol modules
-│   ├── identity.yaml     # Project identity/mission
-│   ├── files.yaml        # File structure docs
-│   ├── session.yaml      # Session workflow
-│   ├── quality.yaml      # Quality gates
-│   └── style.yaml        # Code style rules
-├── sprint.yaml
-├── roadmap.yaml
-├── CLAUDE.md
-└── .claude_checkpoint.yaml
+├── .asimov/                      # Protocol directory
+│   ├── asimov.yaml               # NEVER modularize - Three Laws
+│   ├── ethics.yaml               # NEVER modularize - Priority 0
+│   ├── green.yaml                # NEVER modularize - Priority 0.5
+│   ├── freshness.yaml            # NEVER modularize - Priority 1.25
+│   ├── sycophancy.yaml           # NEVER modularize - Priority 1.5
+│   ├── warmup.yaml               # Core only (~100 lines)
+│   ├── sprint.yaml               # Session boundaries
+│   ├── roadmap.yaml              # Milestones
+│   └── modules/                  # Protocol modules (if needed)
+│       ├── identity.yaml         # Project identity/mission
+│       ├── files.yaml            # File structure docs
+│       ├── session.yaml          # Session workflow
+│       ├── quality.yaml          # Quality gates
+│       └── style.yaml            # Code style rules
+├── CLAUDE.md                     # Bootstrap
+└── .claude_checkpoint.yaml       # Generated session state
 ```
 
 **Module Loading Order:**
 1. `warmup.yaml` - Always read first (contains `self_healing.on_confusion`)
-2. `.forge/*.yaml` - Loaded alphabetically when referenced
-3. `ethics.yaml` - Checked at validation time (never in .forge/)
-4. `green.yaml` - Checked at validation time (never in .forge/)
-5. `sycophancy.yaml` - Checked at validation time (never in .forge/)
+2. `.asimov/modules/*.yaml` - Loaded alphabetically when referenced
+3. Core protocol files - Checked at validation time (never in modules/)
 
 **Module Schemas:**
 
@@ -229,10 +236,12 @@ project/
 | quality.yaml | `tests`, `lint` | Quality gates |
 | style.yaml | `code` | Code style guidelines |
 
-**Why ethics.yaml, green.yaml, and sycophancy.yaml Cannot Be Modularized:**
-- ethics.yaml contains `human_veto` - the emergency stop capability
-- green.yaml contains core sustainability principles - non-negotiable for responsible AI
-- sycophancy.yaml contains anti-sycophancy directives - prevents validation hallucination
+**Why Core Protocol Files Cannot Be Modularized:**
+- `asimov.yaml` - The Three Laws of Robotics, foundational ethics
+- `ethics.yaml` - Contains `human_veto`, the emergency stop capability
+- `green.yaml` - Core sustainability principles, non-negotiable
+- `freshness.yaml` - Date-aware search rules, prevents stale data hallucination
+- `sycophancy.yaml` - Anti-sycophancy directives, prevents validation hallucination
 - Validation MUST error if `human_veto` is missing
 - Putting these in a module directory risks oversight during security review
 - Ethics is Priority 0, Green is Priority 0.5, Sycophancy is Priority 1.5 - visibility is mandatory

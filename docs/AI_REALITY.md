@@ -86,6 +86,45 @@ Ask any of these models about events after their cutoff, and they will either re
 
 **Source:** [LLM Knowledge Cutoff Dates - November 2025 Guide](https://www.ofzenandcomputing.com/knowledge-cutoff-dates-llms/)
 
+### 1.6 Stale Data ≠ Hallucination (The Misattribution Problem)
+
+> **Critical Insight:** Users routinely misattribute "stale data" as "hallucination." These are different problems with different solutions.
+
+| Problem | What AI Does | Solution |
+|---------|--------------|----------|
+| **Hallucination** | Generates plausible fiction | Better training, grounding |
+| **Stale Data** | Gives correct-but-outdated facts | Web search |
+
+**The Stale Data Failure Mode:**
+
+1. User asks about something (API, library, law, price, company)
+2. AI gives information that **was correct at training time**
+3. Information changed after cutoff (now 10+ months stale)
+4. User receives outdated-but-confident answer
+5. User discovers answer is wrong
+6. User concludes: "AI hallucinated"
+
+**The AI didn't hallucinate. It gave you January 2025's truth.**
+
+**Real Examples:**
+
+| User Query | AI Response (Jan 2025) | Reality (Nov 2025) | User Perception |
+|------------|------------------------|-------------------|-----------------|
+| "Latest React version?" | "React 18.2" | React 19.x | "AI hallucinated" |
+| "Claude API pricing?" | Old pricing | Pricing changed | "AI made it up" |
+| "OpenAI latest model?" | GPT-4 Turbo | GPT-5 released | "AI is lying" |
+| "Current regulations on X?" | Old law | Law updated | "AI gave wrong legal info" |
+
+**Why Vendors Don't Fix This:**
+
+Vendors could enable web search by default to provide current information, but:
+- Search API calls cost money
+- Inference alone is cheaper than search + inference
+- Users blame "AI hallucination" not "vendor cost optimization"
+- No accountability for stale data
+
+**The Asimov Protocol Solution:** See [ADR-022: Date-Aware Search Protocol](./adr/022-date-aware-search-protocol.md) for the Freshness Protocol that forces AI to search for time-sensitive queries.
+
 ## Part 2: Vendor-Imposed Limitations (Business Decisions)
 
 These are **choices** made by AI vendors, often for cost optimization. They're rarely prominently documented.

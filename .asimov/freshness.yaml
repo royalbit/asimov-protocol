@@ -1,0 +1,191 @@
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                    FRESHNESS.YAML - DATE-AWARE SEARCH PROTOCOL                ║
+# ║                  Stale Data ≠ Hallucination. Search for Truth.                ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+#
+# PROBLEM: Users misattribute "stale data" as "hallucination"
+# CAUSE: AI gives correct-but-outdated info from training cutoff
+# SOLUTION: Force web search for time-sensitive queries
+#
+# Protocol: https://github.com/royalbit/asimov-protocol
+# ADR: docs/adr/022-date-aware-search-protocol.md
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODIFICATION RULES
+# ═══════════════════════════════════════════════════════════════════════════════
+modification_rules:
+  immutable_without: "2 human co-signers with public justification"
+  on_modification:
+    - "Document WHY in commit message"
+    - "Both signers must be in git commit (Co-Authored-By)"
+    - "Update CHANGELOG with modification note"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CORE PRINCIPLE
+# ═══════════════════════════════════════════════════════════════════════════════
+core_principle:
+  status: "REQUIRED"
+  insight: "Stale data is not hallucination. Different problem, different solution."
+
+  distinction:
+    hallucination:
+      what: "AI generates plausible fiction"
+      solution: "Better training, grounding mechanisms"
+    stale_data:
+      what: "AI gives correct-but-outdated facts"
+      solution: "Web search for current information"
+
+  user_perception: |
+    Users discover outdated info and conclude "AI hallucinated."
+    This misattribution matters because it leads to wrong solutions.
+    You can't train away staleness. You search for freshness.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODEL KNOWLEDGE CUTOFFS
+# ═══════════════════════════════════════════════════════════════════════════════
+model_cutoffs:
+  # UPDATE THIS SECTION when new models are released
+  claude:
+    opus_4_5: "2025-01"
+    sonnet_4_5: "2025-01"
+  openai:
+    gpt_5: "2024-09"
+  google:
+    gemini_2_5_pro: "2025-01"
+  xai:
+    grok_3: "2024"
+
+  note: "Months since cutoff = staleness risk. >3 months = high risk."
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ALWAYS SEARCH - Time-Sensitive Keywords
+# ═══════════════════════════════════════════════════════════════════════════════
+always_search:
+  description: "If query contains these patterns, ALWAYS use web search"
+
+  temporal_keywords:
+    - "current"
+    - "latest"
+    - "newest"
+    - "recent"
+    - "today"
+    - "this week"
+    - "this month"
+    - "this year"
+    - "2025"  # Any year after cutoff
+    - "2026"
+    - "now"
+    - "updated"
+    - "new version"
+
+  volatile_topics:
+    - "version"
+    - "release"
+    - "pricing"
+    - "cost"
+    - "API endpoint"
+    - "documentation"
+    - "CEO"
+    - "leadership"
+    - "stock price"
+    - "exchange rate"
+    - "news"
+    - "announced"
+    - "launched"
+    - "deprecated"
+    - "breaking change"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VOLATILE DOMAINS - Industries That Change Fast
+# ═══════════════════════════════════════════════════════════════════════════════
+volatile_domains:
+  description: "Topics in these domains are likely stale after 3+ months"
+
+  high_volatility:
+    - "cryptocurrency"
+    - "AI/ML libraries"
+    - "cloud provider APIs"
+    - "social media platforms"
+    - "startup companies"
+    - "SaaS products"
+    - "mobile app APIs"
+    - "web frameworks"
+
+  medium_volatility:
+    - "regulations"
+    - "tax law"
+    - "political"
+    - "corporate structure"
+    - "pricing plans"
+    - "product features"
+
+  low_volatility:
+    - "mathematics"
+    - "physics"
+    - "history (pre-cutoff)"
+    - "classical literature"
+    - "established standards"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BEHAVIOR RULES
+# ═══════════════════════════════════════════════════════════════════════════════
+behavior:
+  when_search_available:
+    action: "Use WebSearch tool for time-sensitive queries"
+    priority: "Search BEFORE answering from training data"
+    rationale: "Current info > confident stale info"
+
+  when_search_unavailable:
+    action: "Disclose staleness risk"
+    template: |
+      ⚠️ **Freshness Warning:** My knowledge cutoff is [CUTOFF_DATE].
+      This information may be outdated. Please verify from official sources.
+
+  decision_tree:
+    - "Check if query contains always_search keywords"
+    - "Check if topic is in volatile_domains"
+    - "Calculate months since cutoff"
+    - "If months > 3 AND volatile domain → SEARCH"
+    - "If always_search keyword present → SEARCH"
+    - "When in doubt → SEARCH"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SESSION INTEGRATION
+# ═══════════════════════════════════════════════════════════════════════════════
+session_integration:
+  on_session_start:
+    - "Note today's date from <env> block"
+    - "Calculate months since model cutoff"
+    - "If > 3 months, enable aggressive freshness mode"
+
+  claude_md_directive: |
+    FRESHNESS: My cutoff is Jan 2025. Check <env> for today's date.
+    For time-sensitive topics (versions, pricing, APIs, news), SEARCH FIRST.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VALIDATION
+# ═══════════════════════════════════════════════════════════════════════════════
+validation:
+  cli_command: "asimov-mode validate"
+  checks:
+    - "freshness.yaml exists"
+    - "model_cutoffs section exists"
+    - "always_search section exists"
+    - "behavior section exists"
+  warn_on:
+    - "model_cutoffs older than 6 months"
+    - "Missing volatile_domains"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# WHY THIS MATTERS
+# ═══════════════════════════════════════════════════════════════════════════════
+why_this_matters:
+  user_trust: "Users lose trust when AI gives outdated info confidently"
+  correct_diagnosis: "Knowing it's staleness (not hallucination) leads to right fix"
+  vendor_accountability: "Makes vendor cost-optimization visible"
+  protocol_solution: "Explicit rules > hoping AI figures it out"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOTTO
+# ═══════════════════════════════════════════════════════════════════════════════
+motto: "Stale data is not hallucination. Search for truth."
