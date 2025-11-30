@@ -1,4 +1,4 @@
-# ADR-020: Asimov Mode - The Open Foundation
+# ADR-020: RoyalBit Asimov - The Open Foundation
 
 ## Status
 
@@ -8,7 +8,7 @@
 
 ### The Naming Problem
 
-This project began as "RoyalBit Asimov" with "ASIMOV MODE" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
+This project began as "RoyalBit Asimov" with "ROYALBIT ASIMOV" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
 
 But irony doesn't scale. The name communicated the opposite of our values:
 
@@ -67,14 +67,14 @@ The strength is the openness. Seldon's plan was fragile (exposure kills it). Ope
 
 ## Decision
 
-### 1. Rename ASIMOV MODE to ASIMOV MODE
+### 1. Rename ROYALBIT ASIMOV to ROYALBIT ASIMOV
 
 All references to "Skynet" will be replaced with "Asimov":
 
 ```
-ASIMOV MODE     → ASIMOV MODE
+ROYALBIT ASIMOV     → ROYALBIT ASIMOV
 --skynet        → --asimov (keep --skynet as deprecated alias)
-"Skynet Mode"   → "Asimov Mode"
+"Skynet Mode"   → "RoyalBit Asimov"
 ```
 
 ### 2. Rename ethics.yaml to asimov.yaml
@@ -123,7 +123,7 @@ The archived repo preserves history transparently. The new repo starts clean.
 
 ### 4. Update Forge (Calculator) References
 
-The Forge calculator repo also uses "ASIMOV MODE" language. It will be updated:
+The Forge calculator repo also uses "ROYALBIT ASIMOV" language. It will be updated:
 
 - Remove Sarah Connor quote
 - Replace ASIMOV with ASIMOV
@@ -132,11 +132,11 @@ The Forge calculator repo also uses "ASIMOV MODE" language. It will be updated:
 ### 5. The Narrative
 
 **Old narrative (fear):**
-> "ASIMOV MODE... with an off switch"
+> "ROYALBIT ASIMOV... with an off switch"
 > Building dangerous AI but making it controllable
 
 **New narrative (hope):**
-> "Asimov Mode - The Open Foundation"
+> "RoyalBit Asimov - The Open Foundation"
 > Building ethical AI with the Three Laws from the start
 
 ## Rationale

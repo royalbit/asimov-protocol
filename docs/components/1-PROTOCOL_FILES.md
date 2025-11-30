@@ -1,6 +1,6 @@
 # Component 1: Protocol Files
 
-> **The foundation of ASIMOV MODE - YAML files that define everything**
+> **The foundation of ROYALBIT ASIMOV - YAML files that define everything**
 
 ## Overview
 
@@ -57,7 +57,7 @@ session:
     - "Zero warnings"
     - "Update documentation"
 
-# Self-Healing (for ASIMOV MODE)
+# Self-Healing (for ROYALBIT ASIMOV)
 self_healing:
   checkpoint_interval: "2 hours"
   checkpoint_file: ".claude_checkpoint.yaml"
@@ -144,7 +144,7 @@ asimov init --type rust
 # Generate all three files
 asimov init --type rust --full
 
-# Full ASIMOV MODE setup (files + CLAUDE.md + hooks)
+# Full ROYALBIT ASIMOV setup (files + CLAUDE.md + hooks)
 asimov init --type rust --asimov
 ```
 

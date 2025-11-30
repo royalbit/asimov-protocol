@@ -1,4 +1,4 @@
-# ASIMOV MODE Setup Guide
+# ROYALBIT ASIMOV Setup Guide
 
 > **One command to full autonomous session capability**
 
@@ -8,7 +8,7 @@
 # Install asimov
 cargo install royalbit-asimov
 
-# Full ASIMOV MODE setup
+# Full ROYALBIT ASIMOV setup
 asimov init --type rust --asimov
 
 # Launch and go
@@ -148,7 +148,7 @@ $EDITOR .asimov/roadmap.yaml
 asimov validate
 ```
 
-### 4. Launch ASIMOV MODE
+### 4. Launch ROYALBIT ASIMOV
 
 ```bash
 # Terminal 1: Launch Claude Code
@@ -209,7 +209,7 @@ Say: "Re-read .asimov/warmup.yaml"
 
 ## Related Documentation
 
-- [ASIMOV MODE Overview](ASIMOV_MODE.md)
+- [ROYALBIT ASIMOV Overview](ASIMOV_MODE.md)
 - [Component 1: Protocol Files](components/1-PROTOCOL_FILES.md)
 - [Component 4: Self-Healing](components/4-SELF_HEALING.md)
 - [Vendor Implementation](VENDOR_IMPLEMENTATION.md)

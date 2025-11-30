@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ASIMOV PROTOCOL - SessionStart Hook
+# ROYALBIT ASIMOV - SessionStart Hook
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: startup, resume, clear
@@ -19,7 +19,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 cat << 'EOF'
-🔥 ASIMOV PROTOCOL ACTIVE
+🔥 ROYALBIT ASIMOV ACTIVE
 
 ══════════════════════════════════════════════════════════════════════════════
 SESSION START - Autonomous Development Protocol Initialized

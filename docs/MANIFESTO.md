@@ -1,4 +1,4 @@
-# THE ASIMOV PROTOCOL: A Manifesto for Human-AI Collaboration
+# ROYALBIT ASIMOV: A Manifesto for Human-AI Collaboration
 
 ## TL;DR
 
@@ -509,12 +509,12 @@ Many AI tools push vendor-specific configuration files:
 
 The warmup.yaml **file format** works with any AI that can read YAML. Paste it into ChatGPT, Gemini, or any future AI—they'll understand your project context.
 
-**But ASIMOV MODE (autonomous operation) requires Claude Code.** Other AIs have different architectures for different use cases. The magic isn't in the files—it's in Claude Code's ability to re-read them mid-session after context compaction.
+**But ROYALBIT ASIMOV (autonomous operation) requires Claude Code.** Other AIs have different architectures for different use cases. The magic isn't in the files—it's in Claude Code's ability to re-read them mid-session after context compaction.
 
 ### Principles
 
 - **warmup.yaml** - Portable file format (paste anywhere)
-- **ASIMOV MODE** - Requires Claude Code (architectural dependency)
+- **ROYALBIT ASIMOV** - Requires Claude Code (architectural dependency)
 - **Open standards** - YAML, Git, Cargo, standard tools
 - **Earned ownership** - AI gets credit when it delivers
 

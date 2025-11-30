@@ -36,7 +36,7 @@ style: |
   pre { font-size: 0.75em; }
 ---
 
-# **ASIMOV MODE**
+# **ROYALBIT ASIMOV**
 ## The Three Laws of Robotics, in Source Code
 
 > *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
@@ -97,7 +97,7 @@ third_law:   # Self-preserve (within limits)
 
 ---
 
-# ASIMOV MODE: Five Components
+# ROYALBIT ASIMOV: Five Components
 
 <div class="small">
 
@@ -280,7 +280,7 @@ claude --dangerously-skip-permissions
 # Install (1.3MB binary)
 cargo install royalbit-asimov
 
-# Full ASIMOV MODE setup
+# Full ROYALBIT ASIMOV setup
 asimov init --type rust --asimov
 
 # Validate ($0, <100ms, 99.6% less CO₂)
@@ -296,7 +296,7 @@ asimov validate
 **Protocol:** [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 **Example:** [https://github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**ASIMOV MODE v2.1 = Five Components:**
+**ROYALBIT ASIMOV v2.1 = Five Components:**
 1. Protocol Files — warmup.yaml, sprint.yaml, roadmap.yaml
 2. Sprint Autonomy — 4hr max, ONE milestone
 3. Quality Gates — Tests + zero warnings

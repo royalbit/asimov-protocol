@@ -58,7 +58,7 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - Mid-session self-healing (warmup.yaml re-read)
 - Schema Validation (`asimov validate`)
 
-**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during ASIMOV MODE is NOT replaced.
+**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during ROYALBIT ASIMOV is NOT replaced.
 
 See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 

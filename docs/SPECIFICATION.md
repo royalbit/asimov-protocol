@@ -18,7 +18,7 @@ The RoyalBit Asimov is a YAML-based standard for AI session continuity and auton
 
 1. **Ethics first** - Power creates responsibility; autonomy requires ethics
 2. **Integrate, don't duplicate** - Use Claude Code native features where available
-3. **Vendor-neutral files** - Plain YAML readable by any AI (ASIMOV MODE is Claude Code only)
+3. **Vendor-neutral files** - Plain YAML readable by any AI (ROYALBIT ASIMOV is Claude Code only)
 4. **Human-readable** - No encoded or proprietary formats
 5. **Minimal** - Include only what's needed
 6. **Self-documenting** - The protocol describes itself
@@ -79,7 +79,7 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 | **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
-| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (ASIMOV MODE) |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (ROYALBIT ASIMOV) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
 ### The Three Hallucinations
@@ -109,13 +109,13 @@ Examples:
 - ❌ "Add project scaffolding" → Nice-to-have but doesn't serve core principles
 - ❌ "Add AI chat interface" → Out of scope
 
-## ASIMOV MODE
+## ROYALBIT ASIMOV
 
-ASIMOV MODE is the complete autonomous AI development system. It consists of five components:
+ROYALBIT ASIMOV is the complete autonomous AI development system. It consists of five components:
 
 ```mermaid
 flowchart TB
-    subgraph asimov["ASIMOV MODE - Autonomous AI Development System"]
+    subgraph asimov["ROYALBIT ASIMOV - Autonomous AI Development System"]
         subgraph row1[" "]
             direction LR
             P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
@@ -145,9 +145,9 @@ flowchart TB
 
 ### Platform Requirements (The Hard Truth)
 
-**ASIMOV MODE is Claude Code exclusive. This will probably never change.**
+**ROYALBIT ASIMOV is Claude Code exclusive. This will probably never change.**
 
-| AI Tool | Protocol Files | ASIMOV MODE | Why |
+| AI Tool | Protocol Files | ROYALBIT ASIMOV | Why |
 |---------|---------------|-------------|-----|
 | **Claude Code** | ✓ | ✓ | Has all 4 required features |
 | **ChatGPT** | Manual paste | **Never** | Cloud-sandboxed, no filesystem |
@@ -155,7 +155,7 @@ flowchart TB
 | **Cursor** | ✓ | **Unlikely** | Missing terminal→context flow |
 | **Gemini** | Manual paste | **Never** | Context resets, no local access |
 
-ASIMOV MODE requires **four architectural features** that only Claude Code has:
+ROYALBIT ASIMOV requires **four architectural features** that only Claude Code has:
 
 1. **Persistent context that compacts** - The problem we're solving
 2. **Terminal visibility** - How hook output reaches the AI
@@ -1015,7 +1015,7 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 
 **Output** (injected into Claude's context when exit 0):
 ```
-🔥 ASIMOV PROTOCOL ACTIVE
+🔥 ROYALBIT ASIMOV ACTIVE
 
 IMMEDIATE ACTIONS REQUIRED:
 1. Read roadmap.yaml for current version and next milestone
@@ -1056,7 +1056,7 @@ CORE RULES (non-negotiable):
 | Windsurf | .windsurfrules + Memories | None |
 | Gemini | Context Drawer + MCP | None |
 
-ASIMOV MODE autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
+ROYALBIT ASIMOV autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
 
 ### User Activation
 
@@ -1083,7 +1083,7 @@ cargo install royalbit-asimov
 asimov init                    # Basic warmup.yaml
 asimov init --type rust        # Language-specific
 asimov init --full             # All three files
-asimov init --asimov           # Full ASIMOV MODE setup
+asimov init --asimov           # Full ROYALBIT ASIMOV setup
 
 # Validate
 asimov validate                # All files
@@ -1100,7 +1100,7 @@ asimov refresh --verbose       # Include quality gates
 
 ### --asimov Flag
 
-Generates complete ASIMOV MODE setup:
+Generates complete ROYALBIT ASIMOV setup:
 
 ```
 ✓ warmup.yaml      - Protocol rules

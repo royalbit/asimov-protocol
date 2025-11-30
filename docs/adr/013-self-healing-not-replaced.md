@@ -43,7 +43,7 @@ Self-healing addresses **context compaction during a running session**:
 ```
 Session starts
     ↓
-AI works autonomously (ASIMOV MODE)
+AI works autonomously (ROYALBIT ASIMOV)
     ↓
 ~15 minutes pass (heavy reasoning)
     ↓
@@ -103,7 +103,7 @@ The self-healing protocol (re-read from disk on confusion) is **NOT replaced** b
 │  ┌─────────────────────────────────────────────────────────┐   │
 │  │  MID-SESSION (Compaction happens here)                  │   │
 │  │                                                         │   │
-│  │  Self-healing: warmup.yaml re-read ← ASIMOV PROTOCOL    │   │
+│  │  Self-healing: warmup.yaml re-read ← ROYALBIT ASIMOV    │   │
 │  │  Task tracking: TodoWrite ← Claude Code native          │   │
 │  │  Manual restore: /rewind ← Claude Code native           │   │
 │  └─────────────────────────────────────────────────────────┘   │

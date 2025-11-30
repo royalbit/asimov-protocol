@@ -1,17 +1,17 @@
-# ASIMOV MODE
+# ROYALBIT ASIMOV
 
 > *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
 > — Isaac Asimov, First Law of Robotics (1942)
 
-## What is ASIMOV MODE?
+## What is ROYALBIT ASIMOV?
 
-ASIMOV MODE is a **complete autonomous AI development system** that enables bounded 4-hour sprints with consistent quality and shipping discipline. Self-healing enables multiple consecutive sessions without human intervention.
+ROYALBIT ASIMOV is a **complete autonomous AI development system** that enables bounded 4-hour sprints with consistent quality and shipping discipline. Self-healing enables multiple consecutive sessions without human intervention.
 
 It's not just one thing—it's five components working together:
 
 ```mermaid
 flowchart TB
-    subgraph asimov["ASIMOV MODE - Autonomous AI Development System"]
+    subgraph asimov["ROYALBIT ASIMOV - Autonomous AI Development System"]
         subgraph row1[" "]
             direction LR
             P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
@@ -57,7 +57,7 @@ Each component solves a specific failure mode:
 flowchart TB
     Human["**Human**<br/>'run warmup'<br/>'punch it'"]
 
-    subgraph claude["CLAUDE CODE (with ASIMOV MODE enabled)"]
+    subgraph claude["CLAUDE CODE (with ROYALBIT ASIMOV enabled)"]
         direction TB
         CM["CLAUDE.md<br/>(auto-load)"] --> WU["warmup.yaml<br/>(full rules)"]
         WU --> SP["sprint.yaml<br/>(bounds)"]
@@ -86,7 +86,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph session["ASIMOV MODE SESSION"]
+    subgraph session["ROYALBIT ASIMOV SESSION"]
         START((START))
         RW["'run warmup'<br/>Human triggers session"]
         LP["Load Protocol<br/>Read warmup.yaml, sprint.yaml, roadmap.yaml<br/>Present milestone + deliverables"]
@@ -114,12 +114,12 @@ flowchart TB
 
 | Requirement | Notes |
 |-------------|-------|
-| **Claude Code** | Required for ASIMOV MODE |
+| **Claude Code** | Required for ROYALBIT ASIMOV |
 | `--dangerously-skip-permissions` | Required for autonomous execution |
 | File system access | Read/write files |
 | CLAUDE.md auto-load | Triggers self-healing |
 
-**ASIMOV MODE requires Claude Code.** Other AI tools can use the protocol files (paste warmup.yaml), but cannot run unattended autonomous sessions.
+**ROYALBIT ASIMOV requires Claude Code.** Other AI tools can use the protocol files (paste warmup.yaml), but cannot run unattended autonomous sessions.
 
 See [Vendor Implementation Guide](VENDOR_IMPLEMENTATION.md) for what other tools would need.
 
@@ -139,7 +139,7 @@ See [Vendor Implementation Guide](VENDOR_IMPLEMENTATION.md) for what other tools
 # Install asimov
 cargo install royalbit-asimov
 
-# Full ASIMOV MODE setup
+# Full ROYALBIT ASIMOV setup
 asimov init --type rust --asimov
 
 # This creates:
@@ -164,7 +164,7 @@ claude --dangerously-skip-permissions
 
 ## The Result
 
-| Metric | Without ASIMOV | With ASIMOV MODE |
+| Metric | Without ASIMOV | With ROYALBIT ASIMOV |
 |--------|----------------|------------------|
 | Session length | 30-60min (manual intervention) | 4hr sprints (self-healing chains them) |
 | Shipping frequency | When human decides | Every session |

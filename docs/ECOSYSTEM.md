@@ -15,7 +15,7 @@ The problems we solved building Forge became the protocol. The protocol then sca
 
 ```mermaid
 flowchart TB
-    subgraph protocol["🔥 ASIMOV PROTOCOL"]
+    subgraph protocol["🔥 ROYALBIT ASIMOV"]
         W[warmup.yaml]
         S[sprint.yaml]
         R[roadmap.yaml]

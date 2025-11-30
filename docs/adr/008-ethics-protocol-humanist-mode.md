@@ -6,7 +6,7 @@
 
 ## Context
 
-The RoyalBit Asimov enables autonomous AI development sessions ("ASIMOV MODE"). This power creates responsibility:
+The RoyalBit Asimov enables autonomous AI development sessions ("ROYALBIT ASIMOV"). This power creates responsibility:
 
 - **Bad actors can fork** autonomous AI protocols and use them with other AIs
 - **Other AIs may implement** self-healing and autonomous execution

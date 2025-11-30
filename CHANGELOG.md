@@ -60,8 +60,8 @@ SessionStart hooks already inject context, making CLAUDE.md redundant (triple lo
 
 ### Fixed: README header consistency with Forge
 
-- **README**: Standardized header format - badges first, then ASIMOV MODE tagline
-- **README**: Added "🤖 ASIMOV MODE | Claude (Opus 4.5) - Principal Autonomous AI" tagline
+- **README**: Standardized header format - badges first, then RoyalBit Asimov tagline
+- **README**: Added "🤖 RoyalBit Asimov | Claude (Opus 4.5) - Principal Autonomous AI" tagline
 - **README**: Added "Zero hallucinations. The Three Laws in source code." subtitle
 - **README**: Preserved "The Three Laws were science fiction for 80 years" quote
 - **Forge README**: Reordered to badges first, tagline second (consistency)
@@ -69,7 +69,7 @@ SessionStart hooks already inject context, making CLAUDE.md redundant (triple lo
 Both projects now follow the same header structure:
 1. Title
 2. Badges (CI, crates.io, downloads, license)
-3. ASIMOV MODE tagline with project-specific subtitle
+3. RoyalBit Asimov tagline with project-specific subtitle
 
 ---
 

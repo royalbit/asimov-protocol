@@ -4,17 +4,17 @@
 
 ## Executive Summary: The Uncomfortable Reality
 
-**ASIMOV MODE works with Claude Code. It will probably never work with other AI tools.**
+**ROYALBIT ASIMOV works with Claude Code. It will probably never work with other AI tools.**
 
 This document explains why, without the marketing-friendly spin.
 
 ## The Brutal Truth
 
-### What ASIMOV MODE Requires
+### What ROYALBIT ASIMOV Requires
 
 ```mermaid
 flowchart TB
-    subgraph reqs["ASIMOV MODE REQUIREMENTS"]
+    subgraph reqs["ROYALBIT ASIMOV REQUIREMENTS"]
         R1["**1. Persistent conversation context that compacts**<br/>The PROBLEM we're solving"]
         R2["**2. Terminal/shell visibility**<br/>How hook output reaches the AI"]
         R3["**3. File system read access mid-session**<br/>How the AI re-reads warmup.yaml"]
@@ -60,13 +60,13 @@ flowchart TB
 
 ### The Hook Refresh Mechanism (ADR-006)
 
-This is the v2.1.0 innovation that makes ASIMOV MODE resilient:
+This is the v2.1.0 innovation that makes ROYALBIT ASIMOV resilient:
 
 ```mermaid
 flowchart TB
     A["Git commit triggers"] --> B["Pre-commit hook runs"]
     B --> C["asimov refresh outputs banner"]
-    C --> D["Terminal shows ASIMOV MODE reminder"]
+    C --> D["Terminal shows ROYALBIT ASIMOV reminder"]
     D --> E["Claude Code SEES terminal output"]
     E --> F["Fresh context injection<br/>(not compacted!)"]
     F --> G["AI knows to re-read warmup.yaml"]
@@ -130,7 +130,7 @@ Different tools for different jobs. The RoyalBit Asimov is specifically designed
 
 ### Q: Is this vendor lock-in?
 
-**Yes, for ASIMOV MODE.** There's no sugarcoating this.
+**Yes, for ROYALBIT ASIMOV.** There's no sugarcoating this.
 
 The protocol FILES are vendor-neutral. The SELF-HEALING mechanism is Claude Code exclusive.
 
@@ -141,7 +141,7 @@ If another vendor builds a tool with:
 - Filesystem access mid-session
 - Auto-loaded config files
 
-...then ASIMOV MODE would work there too. But as of November 2025, only Claude Code has all five.
+...then ROYALBIT ASIMOV would work there too. But as of November 2025, only Claude Code has all five.
 
 ### Q: Should I wait for other tools to catch up?
 
@@ -170,12 +170,12 @@ The protocol is designed so that IF alternatives emerge, migration is easy (it's
    - Any AI can read them (if you paste them)
    - Useful but manual
 
-2. **ASIMOV MODE** (Self-healing, hooks, autonomous sessions)
+2. **ROYALBIT ASIMOV** (Self-healing, hooks, autonomous sessions)
    - Claude Code exclusive
    - Requires specific architecture
    - No realistic path for other vendors
 
-**Stop hoping other tools will "catch up."** They're building different products for different use cases. If you want ASIMOV MODE, use Claude Code. If you prefer other tools, use the protocol files manually and accept the limitations.
+**Stop hoping other tools will "catch up."** They're building different products for different use cases. If you want ROYALBIT ASIMOV, use Claude Code. If you prefer other tools, use the protocol files manually and accept the limitations.
 
 This isn't marketing. It's reality.
 
@@ -183,7 +183,7 @@ This isn't marketing. It's reality.
 
 ## For Vendors (If You're Actually Interested)
 
-If you're a vendor and genuinely want to implement ASIMOV MODE compatibility, here's what you'd need to build:
+If you're a vendor and genuinely want to implement ROYALBIT ASIMOV compatibility, here's what you'd need to build:
 
 ### Minimum Requirements
 
@@ -227,7 +227,7 @@ If you implement this, test with:
 # 6. Verify rules are restored
 ```
 
-If all six steps work, you have ASIMOV MODE compatibility.
+If all six steps work, you have ROYALBIT ASIMOV compatibility.
 
 ---
 
