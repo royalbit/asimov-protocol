@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.3] - 2025-11-30
+
+### Fixed: README header consistency with Forge
+
+- **README**: Standardized header format - badges first, then ASIMOV MODE tagline
+- **README**: Added "🤖 ASIMOV MODE | Claude (Opus 4.5) - Principal Autonomous AI" tagline
+- **README**: Added "Zero hallucinations. The Three Laws in source code." subtitle
+- **README**: Preserved "The Three Laws were science fiction for 80 years" quote
+- **Forge README**: Reordered to badges first, tagline second (consistency)
+
+Both projects now follow the same header structure:
+1. Title
+2. Badges (CI, crates.io, downloads, license)
+3. ASIMOV MODE tagline with project-specific subtitle
+
+---
+
 ## [7.0.2] - 2025-11-30
 
 ### Fixed: Documentation consistency for crates.io

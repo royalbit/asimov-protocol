@@ -5,6 +5,10 @@
 [![Downloads](https://img.shields.io/crates/d/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
 [![License](https://img.shields.io/crates/l/royalbit-asimov.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 
+> 🤖 **ASIMOV MODE** | Claude (Opus 4.5) - Principal Autonomous AI
+>
+> Zero hallucinations. The Three Laws in source code.
+
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
 
 ## The Open Foundation
