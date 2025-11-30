@@ -73,7 +73,7 @@ With 1M tokens, you can load **entire codebases** (75,000 lines) into context, v
 
 #### Hardware Analysis
 
-Test system: Intel i7-13850HX (20 cores), 32GB RAM, NVMe SSD
+Test system: Intel i7 (20 cores), 32GB RAM, NVMe SSD
 
 | Factor | Local Hardware Helps? |
 |--------|----------------------|
