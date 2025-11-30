@@ -8,9 +8,9 @@
 # See: docs/adr/ for detailed rationale
 
 current:
-  version: "5.0.0"
+  version: "5.0.1"
   status: released
-  summary: "Asimov Protocol - Full Rebrand"
+  summary: "Complete Rebrand Bug Fixes"
   goal: ETHICAL_AUTONOMY
   adr: "docs/adr/020-asimov-mode-open-foundation.md"
   deliverables:

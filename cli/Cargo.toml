@@ -1,6 +1,6 @@
 [package]
 name = "asimov-mode"
-version = "5.0.0"
+version = "5.0.1"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "The Three Laws of Robotics, encoded in YAML. Transparent ethics for AI autonomy. ASIMOV MODE requires Claude Code."

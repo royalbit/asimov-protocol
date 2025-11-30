@@ -1,5 +1,5 @@
 #!/bin/bash
-# Forge Protocol pre-commit hook - mirrors CI checks
+# Asimov Protocol pre-commit hook - mirrors CI checks
 # Auto-installed by cargo-husky on `cargo test`
 
 set -e
@@ -23,14 +23,14 @@ fi
 cd "$REPO_ROOT"
 
 # Use local build if available, otherwise installed version
-if [ -f "$CLI_DIR/target/release/forge-protocol" ]; then
-    FP="$CLI_DIR/target/release/forge-protocol"
-elif [ -f "$CLI_DIR/target/debug/forge-protocol" ]; then
-    FP="$CLI_DIR/target/debug/forge-protocol"
-elif command -v forge-protocol &> /dev/null; then
-    FP="forge-protocol"
+if [ -f "$CLI_DIR/target/release/asimov-mode" ]; then
+    FP="$CLI_DIR/target/release/asimov-mode"
+elif [ -f "$CLI_DIR/target/debug/asimov-mode" ]; then
+    FP="$CLI_DIR/target/debug/asimov-mode"
+elif command -v asimov-mode &> /dev/null; then
+    FP="asimov-mode"
 else
-    echo "Warning: forge-protocol not found, skipping protocol checks"
+    echo "Warning: asimov-mode not found, skipping protocol checks"
     echo "Pre-commit checks passed!"
     exit 0
 fi

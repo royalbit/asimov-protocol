@@ -1,4 +1,4 @@
-//! End-to-end tests for forge-protocol CLI
+//! End-to-end tests for asimov-mode CLI
 //!
 //! These tests run the actual binary and verify CLI behavior.
 
@@ -7,19 +7,19 @@ use std::path::PathBuf;
 use std::process::Command;
 use tempfile::TempDir;
 
-/// Get the path to the forge-protocol binary
+/// Get the path to the asimov-mode binary
 fn binary_path() -> PathBuf {
     let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("target");
     path.push("release");
-    path.push("forge-protocol");
+    path.push("asimov-mode");
 
     if !path.exists() {
         // Fall back to debug build
         path.pop();
         path.pop();
         path.push("debug");
-        path.push("forge-protocol");
+        path.push("asimov-mode");
     }
 
     path
@@ -45,10 +45,7 @@ fn e2e_help_shows_usage() {
     assert!(output.status.success(), "Help should succeed");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(
-        stdout.contains("forge-protocol"),
-        "Should show program name"
-    );
+    assert!(stdout.contains("asimov-mode"), "Should show program name");
     assert!(stdout.contains("validate"), "Should show validate command");
     assert!(stdout.contains("init"), "Should show init command");
 }
@@ -63,10 +60,7 @@ fn e2e_version_shows_version() {
     assert!(output.status.success(), "Version should succeed");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(
-        stdout.contains("forge-protocol"),
-        "Should show program name"
-    );
+    assert!(stdout.contains("asimov-mode"), "Should show program name");
 }
 
 #[test]

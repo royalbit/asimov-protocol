@@ -303,7 +303,9 @@ mod tests {
     use tempfile::{NamedTempFile, TempDir};
 
     #[test]
+    #[allow(clippy::assertions_on_constants)]
     fn test_core_principles_all_enabled() {
+        // Intentionally testing that hardcoded constants are all true
         assert!(CORE_PRINCIPLES.financial);
         assert!(CORE_PRINCIPLES.physical);
         assert!(CORE_PRINCIPLES.privacy);

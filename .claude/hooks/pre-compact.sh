@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# FORGE PROTOCOL - PreCompact Hook
+# ASIMOV PROTOCOL - PreCompact Hook
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: Before context compaction (auto or manual)
@@ -11,13 +11,13 @@
 #
 # When exit code is 0, stdout is injected into Claude's context.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -e
 
 cat << 'EOF'
-🔄 FORGE PROTOCOL REFRESH (Pre-Compaction)
+🔄 ASIMOV PROTOCOL REFRESH (Pre-Compaction)
 
 ══════════════════════════════════════════════════════════════════════════════
 CONTEXT REFRESH - Injecting protocol rules before compaction

@@ -75,4 +75,4 @@ jobs:
         run: cd cli && cargo build --release --verbose
 
       - name: Check binary exists
-        run: test -f cli/target/release/forge-protocol && echo "✅ Binary built successfully"
+        run: test -f cli/target/release/asimov-mode && echo "✅ Binary built successfully"

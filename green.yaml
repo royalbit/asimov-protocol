@@ -4,12 +4,12 @@
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Green coding is a non-negotiable principle of the Forge Protocol.
+# Green coding is a non-negotiable principle of the Asimov Protocol.
 #
 # Philosophy: Every token has a carbon cost. Every API call burns energy.
 #             Local tools are free - in money AND emissions.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 # ADR: docs/adr/016-green-coding-protocol.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -23,7 +23,7 @@ modification_rules:
     - "Update CHANGELOG with green protocol modification note"
   warning: |
     Removing or weakening green.yaml without justification violates
-    the sustainability principles of the Forge Protocol.
+    the sustainability principles of the Asimov Protocol.
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # CORE PRINCIPLES - Non-Negotiable Green Coding Standards
@@ -169,7 +169,7 @@ anti_patterns:
 # VALIDATION - CLI Integration
 # ═══════════════════════════════════════════════════════════════════════════════
 validation:
-  cli_command: "forge-protocol validate"
+  cli_command: "asimov-mode validate"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.1] - 2025-11-30
+
+### Fixed: Complete Rebrand Bug Fixes
+
+Bug fixes to complete the v5.0.0 rebrand.
+
+#### Changes
+
+- **Fix CI**: Resolve clippy `assertions_on_constants` warning in ethics tests
+- **Fix e2e tests**: Update binary name from `forge-protocol` to `asimov-mode`
+- **Fix CI workflow**: Update binary check to `asimov-mode`
+- **Fix pre-commit hook**: Update to use `asimov-mode` binary
+- **Fix hooks**: Rebrand session-start.sh and pre-compact.sh to Asimov Protocol
+- **Fix green.yaml**: Update remaining Forge Protocol references
+- **Fix markdownlint**: Update config comment
+
 ## [5.0.0] - 2025-11-29
 
 ### BREAKING: Full Rebrand - Forge Protocol → Asimov Protocol
