@@ -4,13 +4,13 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 use royalbit_asimov::{
     anti_patterns, asimov_template, banned_phrases, check_ethics_status, check_green_status,
-    check_markdown_file, check_sycophancy_status, checkpoint_template, claude_md_template,
-    find_markdown_files, fix_markdown_file, green_template, hook_installer_template,
-    is_protocol_file, precommit_hook_template, red_flags, roadmap_template,
-    scan_directory_for_red_flags, sprint_template, sycophancy_template, uses_cargo_husky,
-    validate_directory_with_regeneration, validate_file, warmup_template, EthicsStatus,
-    GreenStatus, ProjectType, SycophancyStatus, CORE_PRINCIPLES, GREEN_MOTTO, GREEN_PRINCIPLES,
-    HUMAN_VETO_COMMANDS, SYCOPHANCY_MOTTO, SYCOPHANCY_PRINCIPLES,
+    check_markdown_file, check_sycophancy_status, checkpoint_template, find_markdown_files,
+    fix_markdown_file, green_template, hook_installer_template, is_protocol_file,
+    precommit_hook_template, red_flags, roadmap_template, scan_directory_for_red_flags,
+    sprint_template, sycophancy_template, uses_cargo_husky, validate_directory_with_regeneration,
+    validate_file, warmup_template, EthicsStatus, GreenStatus, ProjectType, SycophancyStatus,
+    CORE_PRINCIPLES, GREEN_MOTTO, GREEN_PRINCIPLES, HUMAN_VETO_COMMANDS, SYCOPHANCY_MOTTO,
+    SYCOPHANCY_PRINCIPLES,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -44,7 +44,6 @@ TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs 
 ASIMOV MODE (--asimov): Full autonomous session setup with The Three Laws
   - asimov.yaml (The Three Laws - required, cannot opt out)
   - All protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
-  - CLAUDE.md (auto-loaded by Claude Code)
   - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
   - .gitignore update (exclude checkpoint file)
 
@@ -564,7 +563,6 @@ fn cmd_init(
     }
 
     if asimov {
-        files.push(("CLAUDE.md", claude_md_template(&project_name, project_type)));
         files.push(("asimov.yaml", asimov_template()));
         files.push(("green.yaml", green_template()));
         files.push(("sycophancy.yaml", sycophancy_template()));
