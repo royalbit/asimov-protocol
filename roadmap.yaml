@@ -6,15 +6,18 @@
 current:
   version: "5.2.0"
   status: planned
-  summary: "MCP Server Mode"
-  goal: VENDOR_NEUTRALITY
+  summary: "CI Integration"
+  goal: QUALITY_GATE
 
 next:
   - version: "5.3.0"
     summary: "Schema Standardization"
-    goal: ANTI-HALLUCINATION
+    goal: ANTI_HALLUCINATION
+
+  - version: "5.4.0"
+    summary: "JSON Schema for Editors"
+    goal: DX_QUALITY
 
 backlog:
-  - "CI Integration: GitHub Action for protocol validation"
-  - "JSON Schema: Editor autocomplete for protocol files"
+  - "MCP Server Mode: Expose validation as MCP tools"
   - "VS Code Extension: Syntax highlighting, validation"
