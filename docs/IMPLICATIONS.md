@@ -8,7 +8,7 @@ This document is an honest assessment of what happens if the Asimov Protocol ach
 
 The Asimov Protocol exhibits three properties:
 
-1. **Bootstrapped**: asimov-mode was built using asimov-mode
+1. **Bootstrapped**: asimov was built using asimov
 2. **Self-documenting**: The AI updates its own roadmap, ADRs, specifications
 3. **Self-improving**: Each session applies lessons from previous sessions
 

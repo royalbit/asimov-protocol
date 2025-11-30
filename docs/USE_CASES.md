@@ -225,8 +225,8 @@ AI executes. Human directs. That's the model.
 ### Validation
 
 ```bash
-asimov-mode validate
-asimov-mode validate --ethics-check
+asimov validate
+asimov validate --ethics-check
 ```
 
 ---
@@ -285,4 +285,4 @@ If the protocol displaces your job, it also enables your next chapter:
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol)*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov)*

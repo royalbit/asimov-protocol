@@ -65,7 +65,7 @@ pub fn warmup_template(project_name: &str, project_type: ProjectType) -> String 
 fn warmup_generic(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -146,7 +146,7 @@ style:
 fn warmup_rust(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -242,7 +242,7 @@ style:
 fn warmup_python(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -335,7 +335,7 @@ style:
 fn warmup_node(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -427,7 +427,7 @@ style:
 fn warmup_go(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -522,7 +522,7 @@ style:
 fn warmup_flutter(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -614,7 +614,7 @@ style:
 fn warmup_docs(project_name: &str) -> String {
     format!(
         r#"# Asimov Protocol - Session Bootstrap
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 identity:
   project: "{}"
@@ -649,7 +649,7 @@ ethics:
 green_coding:
   philosophy: "Local-first tools over cloud AI for routine tasks"
   practices:
-    - "Use markdownlint/asimov-mode lint-docs for validation (not AI)"
+    - "Use markdownlint/asimov lint-docs for validation (not AI)"
     - "Reserve AI for content creation, not formatting"
     - "Generate diagrams with Mermaid (text-based)"
     - "Keep docs in git for version control"
@@ -670,18 +670,18 @@ session:
   start:
     - "Read warmup.yaml"
     - "git status"
-    - "asimov-mode lint-docs (verify baseline)"
+    - "asimov lint-docs (verify baseline)"
   during:
     - "Track progress"
     - "Validate frequently"
     - "Small, logical commits"
   end:
-    - "asimov-mode lint-docs (all pass)"
+    - "asimov lint-docs (all pass)"
     - "markdownlint '**/*.md' (if installed)"
     - "Review rendered output"
 
 quality:
-  lint: "asimov-mode lint-docs ."
+  lint: "asimov lint-docs ."
   markdown: "markdownlint '**/*.md'"
 
 style:
@@ -709,8 +709,8 @@ pub fn asimov_template() -> String {
 # Inspect the code. Challenge the rules. Fork if you disagree.
 # Adoption through consent, not control.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
-# ADR: docs/adr/020-asimov-mode-open-foundation.md
+# Protocol: https://github.com/royalbit/asimov
+# ADR: docs/adr/020-asimov-open-foundation.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # MODIFICATION RULES
@@ -892,7 +892,7 @@ zeroth_law:
 # VALIDATION
 # ═══════════════════════════════════════════════════════════════════════════════
 validation:
-  cli_command: "asimov-protocol validate"
+  cli_command: "asimov validate"
   checks:
     - "asimov.yaml exists"
     - "first_law.do_no_harm.* are all true"
@@ -924,7 +924,7 @@ pub fn ethics_template() -> String {
 # IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.
 # Defense in depth: This is ONE layer. Real safety requires human oversight.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1008,7 +1008,7 @@ pub fn green_template() -> String {
 # Philosophy: Every token has a carbon cost. Every API call burns energy.
 #             Local tools are free - in money AND emissions.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1047,7 +1047,7 @@ anti_patterns:
     fix: "Implement simple utilities in-house"
 
 validation:
-  cli_command: "asimov-mode validate"
+  cli_command: "asimov validate"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"
@@ -1071,7 +1071,7 @@ pub fn sycophancy_template() -> String {
 # Philosophy: User trust requires honest feedback, not comfortable lies.
 #             Disagreement is respect. Flattery is disrespect.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1135,7 +1135,7 @@ on_pressure:
     - "Pretend to change your mind without new information"
 
 validation:
-  cli_command: "asimov-mode validate"
+  cli_command: "asimov validate"
   checks:
     - "sycophancy.yaml exists"
     - "core_principles.truth_over_comfort.enabled is true"
@@ -1148,7 +1148,7 @@ motto: "Truth over comfort. Always."
 /// Generate a starter sprint.yaml template
 pub fn sprint_template() -> String {
     r#"# Asimov Protocol - Sprint Tracking
-# https://github.com/royalbit/asimov-protocol
+# https://github.com/royalbit/asimov
 
 sprint:
   current: "Initial setup"
@@ -1290,8 +1290,8 @@ flutter build apk             # Build Android
         }
         ProjectType::Docs => {
             r#"```bash
-asimov-mode lint-docs .           # Check markdown
-asimov-mode lint-docs --fix .     # Fix markdown
+asimov lint-docs .           # Check markdown
+asimov lint-docs --fix .     # Fix markdown
 markdownlint '**/*.md'               # Standard lint
 ```"#
         }
@@ -1393,28 +1393,28 @@ flutter test 2>/dev/null || true"#
     format!(
         r#"#!/bin/bash
 # Pre-commit hook for ASIMOV MODE
-# Generated by asimov-mode init --asimov
+# Generated by asimov init --asimov
 
 set -e
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROTOCOL REFRESH - Injects rules into fresh context (survives compaction)
 # ═══════════════════════════════════════════════════════════════════════════════
-if command -v asimov-mode &> /dev/null; then
-    asimov-mode refresh
+if command -v asimov &> /dev/null; then
+    asimov refresh
 fi
 
 {}
 
 # Asimov Protocol validation
-if command -v asimov-mode &> /dev/null; then
+if command -v asimov &> /dev/null; then
     echo "Validating protocol files..."
-    asimov-mode validate . || true
+    asimov validate . || true
 
     # lint-docs added in v1.3.0
-    if asimov-mode lint-docs --help &> /dev/null; then
+    if asimov lint-docs --help &> /dev/null; then
         echo "Linting documentation..."
-        asimov-mode lint-docs . || exit 1
+        asimov lint-docs . || exit 1
     fi
 fi
 
@@ -1428,7 +1428,7 @@ echo "Pre-commit checks passed!"
 pub fn hook_installer_template() -> String {
     r#"#!/bin/bash
 # Install git hooks for ASIMOV MODE
-# Generated by asimov-mode init --asimov
+# Generated by asimov init --asimov
 
 set -e
 

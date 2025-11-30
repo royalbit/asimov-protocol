@@ -75,7 +75,7 @@ practices:
     - "Minimize dependencies"
 
 validation:
-  cli_command: "asimov-mode validate --green-check"
+  cli_command: "asimov validate --green-check"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"

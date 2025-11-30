@@ -48,7 +48,7 @@ Asimov Protocol v4.0.0 integrates with Claude Code 2.0's native features instead
 | **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
 | **Freshness Protocol** | `freshness.yaml`, date-aware search, stale data prevention | NO |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
-| **Schema Validation** | `asimov-mode validate` | NO |
+| **Schema Validation** | `asimov validate` | NO |
 
 ### CLAUDE.md Integration
 
@@ -257,7 +257,7 @@ Self-healing requires small files that can be re-read efficiently after compacti
 | warmup.yaml | 200 lines | 500 lines | Full protocol rules |
 
 **Enforcement:**
-- `asimov-mode validate` warns on soft limit, errors on hard limit
+- `asimov validate` warns on soft limit, errors on hard limit
 - CLAUDE.md: Ultra-short is critical - it's the bootstrap trigger
 - Checkpoint: Trim completed/next_steps arrays when oversized
 - Warmup: Consider modular structure (`.forge/` directory) if too large
@@ -298,7 +298,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 | `modification_rules` | WARNING if missing | Protects against tampering |
 
 **Enforcement:**
-- `asimov-mode validate` checks structure, not just schema
+- `asimov validate` checks structure, not just schema
 - Ethics structure errors are CRITICAL - validation fails
 - Green structure errors are WARNING - proceeds with hardcoded defaults
 - Sycophancy structure errors are WARNING - proceeds with hardcoded defaults
@@ -472,7 +472,7 @@ anti_patterns:
     fix: "Implement simple utilities in-house"
 
 validation:
-  cli_command: "asimov-mode validate"
+  cli_command: "asimov validate"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"
@@ -568,7 +568,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 
 Rules: 4hr max, 1 milestone, tests pass, ship.
 
-ON SESSION START: Immediately read roadmap.yaml, run `asimov-mode validate`, present next milestone. Do NOT wait for user prompt.
+ON SESSION START: Immediately read roadmap.yaml, run `asimov validate`, present next milestone. Do NOT wait for user prompt.
 ```
 
 **Constraints:**
@@ -862,7 +862,7 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 flowchart TB
     subgraph layers["RECOVERY STRATEGY LAYERS"]
         L1["**Layer 1: CLAUDE.md (auto-loaded)**<br/>May survive compaction"]
-        L2["**Layer 2: Git Hook Refresh (ADR-006)**<br/>asimov-mode refresh on every commit<br/>Fresh output - cannot be compacted"]
+        L2["**Layer 2: Git Hook Refresh (ADR-006)**<br/>asimov refresh on every commit<br/>Fresh output - cannot be compacted"]
         L3["**Layer 3: Manual 'run warmup' trigger**<br/>User can always invoke"]
 
         L1 --> L2 --> L3
@@ -1020,7 +1020,7 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 IMMEDIATE ACTIONS REQUIRED:
 1. Read roadmap.yaml for current version and next milestone
 2. Read sprint.yaml for session boundaries
-3. Run: asimov-mode validate
+3. Run: asimov validate
 4. Present next milestone to user
 5. Wait for "go" to start autonomous execution
 
@@ -1073,29 +1073,29 @@ See [ADR-018](adr/018-claude-code-hooks-integration.md) for full rationale.
 ### Installation
 
 ```bash
-cargo install asimov-mode
+cargo install royalbit-asimov
 ```
 
 ### Commands
 
 ```bash
 # Generate protocol files
-asimov-mode init                    # Basic warmup.yaml
-asimov-mode init --type rust        # Language-specific
-asimov-mode init --full             # All three files
-asimov-mode init --asimov           # Full ASIMOV MODE setup
+asimov init                    # Basic warmup.yaml
+asimov init --type rust        # Language-specific
+asimov init --full             # All three files
+asimov init --asimov           # Full ASIMOV MODE setup
 
 # Validate
-asimov-mode validate                # All files
-asimov-mode validate warmup.yaml    # Specific file
+asimov validate                # All files
+asimov validate warmup.yaml    # Specific file
 
 # Lint documentation
-asimov-mode lint-docs               # Check markdown
-asimov-mode lint-docs --fix         # Auto-fix issues
+asimov lint-docs               # Check markdown
+asimov lint-docs --fix         # Auto-fix issues
 
 # Protocol refresh (for git hooks - compaction-resistant)
-asimov-mode refresh                 # Output protocol reminder
-asimov-mode refresh --verbose       # Include quality gates
+asimov refresh                 # Output protocol reminder
+asimov refresh --verbose       # Include quality gates
 ```
 
 ### --asimov Flag

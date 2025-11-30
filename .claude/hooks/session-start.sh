@@ -9,7 +9,7 @@
 # When exit code is 0, stdout is injected into Claude's context.
 # This replaces the need for manual "run warmup" command.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -e
@@ -28,7 +28,7 @@ SESSION START - Autonomous Development Protocol Initialized
 IMMEDIATE ACTIONS REQUIRED:
 1. Read roadmap.yaml for current version and next milestone
 2. Read sprint.yaml for session boundaries
-3. Run: asimov-mode validate
+3. Run: asimov validate
 4. Present next milestone to user
 5. Wait for "go" to start autonomous execution
 

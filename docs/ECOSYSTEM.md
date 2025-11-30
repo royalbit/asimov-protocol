@@ -46,7 +46,7 @@ The same AI (Claude Opus 4.5) serves different roles depending on the project:
 | Repository | AI Role | Responsibilities |
 | ---------- | ------- | ---------------- |
 | **forge** | Principal Engineer | Full ownership of Rust codebase, 183 tests |
-| **asimov-mode** | Principal Engineer | CLI, specification, 79 tests |
+| **asimov** | Principal Engineer | CLI, specification, 79 tests |
 | **forge-zed** | Extension Developer | WASM extension, LSP integration |
 | **backend-api** | Principal Backend Engineer | Core API, performance-critical queries |
 | **mobile-app** | Principal Mobile Engineer | Flutter app, production-quality UI |
@@ -226,7 +226,7 @@ The protocol built itself. Both projects use the same methodology:
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [asimov-mode](https://github.com/royalbit/asimov-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
+| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -329,4 +329,4 @@ It's protocols all the way down.
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov-protocol) - enabling AI autonomy in software development.*
+*Built with the [Asimov Protocol](https://github.com/royalbit/asimov) - enabling AI autonomy in software development.*

@@ -75,7 +75,7 @@ jobs:
         run: cd cli && cargo build --release --verbose
 
       - name: Check binary exists
-        run: test -f cli/target/release/asimov-mode && echo "✅ Binary built successfully"
+        run: test -f cli/target/release/asimov && echo "✅ Binary built successfully"
 
   validate:
     name: Protocol Validation
@@ -95,11 +95,11 @@ jobs:
             cli/target
           key: ${{ runner.os }}-cargo-validate-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Build asimov-mode
+      - name: Build asimov
         run: cd cli && cargo build --release
 
       - name: Validate protocol files
-        run: ./cli/target/release/asimov-mode validate
+        run: ./cli/target/release/asimov validate
 
       - name: Lint documentation
-        run: ./cli/target/release/asimov-mode lint-docs
+        run: ./cli/target/release/asimov lint-docs

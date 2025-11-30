@@ -59,7 +59,7 @@ A separate file that:
 
 ### 3. CLI Integration
 
-- `asimov-mode validate --ethics-check` validates ethics.yaml
+- `asimov validate --ethics-check` validates ethics.yaml
 - `--asimov` generates ethics.yaml by default (cannot opt out)
 - Warnings when ethics.yaml is missing or modified
 
@@ -164,7 +164,7 @@ red_flags:
 ## Compliance
 
 This ADR applies to:
-- `asimov-mode init --asimov` (generates ethics.yaml)
+- `asimov init --asimov` (generates ethics.yaml)
 - All warmup.yaml templates (include ethics: section)
 - Documentation (SPECIFICATION.md, README.md)
 - Protocol identity and marketing

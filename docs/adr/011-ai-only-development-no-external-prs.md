@@ -266,7 +266,7 @@ Thank you for understanding! 🙏
 ## Compliance
 
 This ADR applies to:
-- `asimov-mode` repository
+- `asimov` repository
 - All projects using Asimov Protocol with ASIMOV MODE
 - Any fork that carries ethics.yaml (social contract)
 

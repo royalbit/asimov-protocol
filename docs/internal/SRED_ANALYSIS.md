@@ -35,7 +35,7 @@ How can an AI system maintain operational continuity when its context is automat
 Recovery from compaction (disk-based re-read) vs. survival through compaction (redundant rules in context).
 
 **Experiment:**
-- Built asimov-mode using its own protocol (bootstrapping proof)
+- Built asimov using its own protocol (bootstrapping proof)
 - Measured actual compaction frequency: every 10-20 minutes (not 2 hours as assumed)
 - Tested checkpoint + re-read mechanism across 32 commits, 3 sessions
 
@@ -189,7 +189,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 | ADRs (15) | `docs/adr/` | Hypotheses, experiments, results |
 | Git log | `git log --oneline` | Timestamped development record |
 | Research citations | ADRs, AI_REALITY.md | External validation |
-| Published crate | crates.io/asimov-mode | Working implementation |
+| Published crate | crates.io/royalbit-asimov | Working implementation |
 
 ## Estimated Eligible Expenditures
 
@@ -213,8 +213,8 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 ### Published Work
 
-- [crates.io/asimov-mode](https://crates.io/crates/asimov-mode)
-- [GitHub: royalbit/asimov-mode](https://github.com/royalbit/asimov-protocol)
+- [crates.io/royalbit-asimov](https://crates.io/crates/royalbit-asimov)
+- [GitHub: royalbit/asimov](https://github.com/royalbit/asimov)
 
 ---
 

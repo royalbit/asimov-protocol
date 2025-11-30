@@ -11,7 +11,7 @@
 #
 # Defense in depth: This is ONE layer. Real safety requires human oversight.
 #
-# Protocol: https://github.com/royalbit/asimov-protocol
+# Protocol: https://github.com/royalbit/asimov
 # ADR: docs/adr/008-ethics-protocol-humanist-mode.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -219,7 +219,7 @@ fork_requirements:
 # VALIDATION - CLI Integration
 # ═══════════════════════════════════════════════════════════════════════════════
 validation:
-  cli_command: "asimov-mode validate --ethics-check"
+  cli_command: "asimov validate --ethics-check"
   checks:
     - "ethics.yaml exists"
     - "core_principles.do_no_harm.* are all true"

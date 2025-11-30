@@ -132,30 +132,30 @@ backlog:
 | **AI-readable** | Every AI can parse YAML |
 | **Human-readable** | Easy to review and edit |
 | **Git-friendly** | Diffable, mergeable, reviewable |
-| **Schema-validatable** | `asimov-mode validate` |
+| **Schema-validatable** | `asimov validate` |
 | **No vendor lock-in** | Standard format, any tool can use |
 
 ## File Generation
 
 ```bash
 # Generate just warmup.yaml
-asimov-mode init --type rust
+asimov init --type rust
 
 # Generate all three files
-asimov-mode init --type rust --full
+asimov init --type rust --full
 
 # Full ASIMOV MODE setup (files + CLAUDE.md + hooks)
-asimov-mode init --type rust --asimov
+asimov init --type rust --asimov
 ```
 
 ## Validation
 
 ```bash
 # Validate all protocol files
-asimov-mode validate
+asimov validate
 
 # Validate specific file
-asimov-mode validate warmup.yaml
+asimov validate warmup.yaml
 
 # Output:
 #   OK warmup.yaml (warmup)
@@ -195,7 +195,7 @@ flowchart TB
 - Update roadmap.yaml after each release
 - Use sprint.yaml for multi-session work
 - Commit protocol files to git
-- Validate before committing (`asimov-mode validate`)
+- Validate before committing (`asimov validate`)
 
 ### Don't
 

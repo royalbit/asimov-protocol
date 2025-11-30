@@ -1,9 +1,9 @@
 # Asimov Protocol
 
-[![CI](https://github.com/royalbit/asimov-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov-protocol/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/asimov-mode.svg)](https://crates.io/crates/asimov-mode)
-[![Downloads](https://img.shields.io/crates/d/asimov-mode.svg)](https://crates.io/crates/asimov-mode)
-[![License](https://img.shields.io/crates/l/asimov-mode.svg)](https://github.com/royalbit/asimov-protocol/blob/main/LICENSE)
+[![CI](https://github.com/royalbit/asimov/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov/actions/workflows/ci.yml)
+[![Crates.io](https://img.shields.io/crates/v/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
+[![Downloads](https://img.shields.io/crates/d/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
+[![License](https://img.shields.io/crates/l/royalbit-asimov.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
 
@@ -24,7 +24,7 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/PRESENTATION.md)
 
-📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [The Open Foundation (ADR-020)](docs/adr/020-asimov-mode-open-foundation.md)
+📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [The Open Foundation (ADR-020)](docs/adr/020-asimov-open-foundation.md)
 
 📈 **Case Study:** [Asimov Protocol vs Copilot](docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
 
@@ -46,7 +46,7 @@ But irony doesn't scale. The name communicated the opposite of our values:
 
 v4.2.0 fixes this. The ethics we encoded were always Asimov's Three Laws (1942). Now the name matches the values. The git history preserves the journey - we're not hiding that we learned and improved. History teaches.
 
-See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for the full story.
+See [ADR-020](docs/adr/020-asimov-open-foundation.md) for the full story.
 
 ---
 
@@ -123,7 +123,7 @@ third_law:
 
 **This is a social contract, not a technical lock.** It works for good-faith users. Adoption through consent, not control.
 
-See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for the full design.
+See [ADR-020](docs/adr/020-asimov-open-foundation.md) for the full design.
 
 ### The Five Non-Negotiable Principles (v6.2.0)
 
@@ -191,7 +191,7 @@ File truth (stable, deterministic) → Reliability
 - Don't let AI *imagine* your financial calculations → **execute them locally with [Forge](https://github.com/royalbit/forge)**
 - Don't let AI give *stale data confidently* → **search with freshness.yaml**
 
-📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
+📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
 
 ### The Freshness Protocol (freshness.yaml)
 
@@ -237,17 +237,17 @@ See [ADR-022: Date-Aware Search Protocol](docs/adr/022-date-aware-search-protoco
 
 ## CLI Validator
 
-Install from [crates.io](https://crates.io/crates/asimov-mode):
+Install from [crates.io](https://crates.io/crates/royalbit-asimov):
 
 ```bash
-cargo install asimov-mode
+cargo install royalbit-asimov
 ```
 
 Or build from source (smaller binary with UPX compression):
 
 ```bash
-git clone https://github.com/royalbit/asimov-protocol
-cd asimov-protocol
+git clone https://github.com/royalbit/asimov
+cd asimov
 make install-system    # Install to /usr/local/bin (1.3MB compressed)
 # OR
 make install-user      # Install to ~/.local/bin
@@ -256,31 +256,31 @@ make install-user      # Install to ~/.local/bin
 Validate your protocol files:
 
 ```bash
-asimov-mode validate              # Validate all files in current directory
-asimov-mode validate warmup.yaml  # Validate specific file
+asimov validate              # Validate all files in current directory
+asimov validate warmup.yaml  # Validate specific file
 ```
 
 Generate templates:
 
 ```bash
-asimov-mode init                  # Generate warmup.yaml (generic)
-asimov-mode init --type rust      # Generate Rust-specific template
-asimov-mode init --full           # Generate all three protocol files
-asimov-mode init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
+asimov init                  # Generate warmup.yaml (generic)
+asimov init --type rust      # Generate Rust-specific template
+asimov init --full           # Generate all three protocol files
+asimov init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
 ```
 
 Lint documentation:
 
 ```bash
-asimov-mode lint-docs             # Check all markdown files
-asimov-mode lint-docs --fix       # Auto-fix code block issues
+asimov lint-docs             # Check all markdown files
+asimov lint-docs --fix       # Auto-fix code block issues
 ```
 
 Refresh protocol context (for git hooks):
 
 ```bash
-asimov-mode refresh               # Output protocol reminder (compact-resistant)
-asimov-mode refresh --verbose     # Include quality gates from warmup.yaml
+asimov refresh               # Output protocol reminder (compact-resistant)
+asimov refresh --verbose     # Include quality gates from warmup.yaml
 ```
 
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
@@ -329,7 +329,7 @@ These aren't missing features. They're **different products for different use ca
 
 **Is this vendor lock-in?** Yes, for ASIMOV MODE. The files are portable. The magic isn't.
 
-See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
+See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
 ## Green Coding & ESG Impact
 
@@ -394,15 +394,15 @@ When organizations adopt the Asimov Protocol:
 
 ```bash
 # Install once (1.3MB)
-cargo install asimov-mode
+cargo install royalbit-asimov
 
 # Validate forever ($0, ~0.002g CO₂ per run)
-asimov-mode validate
+asimov validate
 ```
 
 *Ship fast. Ship small. Ship green.*
 
-See [Green Coding Economics](https://github.com/royalbit/asimov-protocol/blob/main/docs/GREEN_CODING.md) for the full analysis.
+See [Green Coding Economics](https://github.com/royalbit/asimov/blob/main/docs/GREEN_CODING.md) for the full analysis.
 
 ## Protocol Suite
 
@@ -433,7 +433,7 @@ The Asimov Protocol powers an entire product ecosystem:
 - 1,000+ line master roadmap
 - Comprehensive test suites across ecosystem
 
-See [ECOSYSTEM.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/ECOSYSTEM.md) for the full story.
+See [ECOSYSTEM.md](https://github.com/royalbit/asimov/blob/main/docs/ECOSYSTEM.md) for the full story.
 
 ## Use Case: The Forge Tool
 
@@ -519,12 +519,12 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 
 ### The Protocol Built Itself
 
-The ultimate proof: asimov-protocol was built using asimov-protocol.
+The ultimate proof: asimov was built using asimov.
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [asimov-protocol](https://github.com/royalbit/asimov-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
+| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
 | **Total** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases. Verify it yourself.**
@@ -636,9 +636,9 @@ Unique value that Claude Code doesn't have:
 | **The Three Laws** | `asimov.yaml`, `human_veto`, red flags |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns |
 | **Green Coding** | Zero tokens, ESG metrics |
-| **Schema Validation** | `asimov-mode validate` |
+| **Schema Validation** | `asimov validate` |
 
-See [Component 4: Self-Healing](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/4-SELF_HEALING.md) for details.
+See [Component 4: Self-Healing](https://github.com/royalbit/asimov/blob/main/docs/components/4-SELF_HEALING.md) for details.
 
 ## Documentation
 
@@ -649,27 +649,27 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov-protocol/blob
 
 ### ASIMOV MODE
 - **[ASIMOV MODE Overview](docs/ASIMOV_MODE.md)** - The complete autonomous AI development system
-- [Setup Guide](https://github.com/royalbit/asimov-protocol/blob/main/docs/SETUP.md) - Get started with one command
+- [Setup Guide](https://github.com/royalbit/asimov/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
-1. [Protocol Files](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
-2. [Sprint Autonomy](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
-3. [Quality Gates](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
-4. [Self-Healing](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
-5. [Release Discipline](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
+1. [Protocol Files](https://github.com/royalbit/asimov/blob/main/docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
+2. [Sprint Autonomy](https://github.com/royalbit/asimov/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
+3. [Quality Gates](https://github.com/royalbit/asimov/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
+4. [Self-Healing](https://github.com/royalbit/asimov/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
+5. [Release Discipline](https://github.com/royalbit/asimov/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
 
 ### Reference
-- [Full Specification](https://github.com/royalbit/asimov-protocol/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
-- [AI Reality](https://github.com/royalbit/asimov-protocol/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
-- [Vendor Implementation](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
-- [Presentation](https://github.com/royalbit/asimov-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
+- [Full Specification](https://github.com/royalbit/asimov/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
+- [AI Reality](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
+- [Vendor Implementation](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
+- [Presentation](https://github.com/royalbit/asimov/blob/main/docs/PRESENTATION.md) - Marp slide deck
 
 ### Architecture Decisions
-- [ADR-023: The Inaction Principle](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/023-inaction-principle.md) - **v6.2.0** - "Through inaction, allow no harm"
-- [ADR-022: Freshness Protocol (Date-Aware Search)](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/022-date-aware-search-protocol.md) - **v6.1.0** - Stale data ≠ Hallucination
-- [ADR-020: The Open Foundation](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/020-asimov-mode-open-foundation.md) - **v4.2.0** - The Three Laws
-- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
-- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
+- [ADR-023: The Inaction Principle](https://github.com/royalbit/asimov/blob/main/docs/adr/023-inaction-principle.md) - **v6.2.0** - "Through inaction, allow no harm"
+- [ADR-022: Freshness Protocol (Date-Aware Search)](https://github.com/royalbit/asimov/blob/main/docs/adr/022-date-aware-search-protocol.md) - **v6.1.0** - Stale data ≠ Hallucination
+- [ADR-020: The Open Foundation](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-open-foundation.md) - **v4.2.0** - The Three Laws
+- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
+- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/asimov/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
 
 ## Case Study: Protocol v2.0 (This Session)
 
@@ -686,7 +686,7 @@ v1.x assumed "checkpoint every 2 hours". Research showed this was fiction:
 
 | Phase | What Happened |
 |-------|---------------|
-| **Research** | Analyzed asimov-protocol git log: 32 commits, ~4-5 hours, estimated 5-10 compactions |
+| **Research** | Analyzed asimov git log: 32 commits, ~4-5 hours, estimated 5-10 compactions |
 | **Spec Rewrite** | v2.0 based on empirical data, not assumptions |
 | **Multi-Project Update** | 9 repositories updated with v2.0 CLAUDE.md format |
 | **Ship** | Committed, tagged v2.0.0, pushed to GitHub |
@@ -703,7 +703,7 @@ Claude: [rewrites spec, updates 9 projects, ships v2.0.0]
 
 **One session. One human. One milestone. Shipped.**
 
-See [ADR-003](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
+See [ADR-003](https://github.com/royalbit/asimov/blob/main/docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
 
 ## Origin
 
@@ -735,8 +735,8 @@ PRs require human code review, but humans reviewing AI-generated code is not the
 
 | Method | Description |
 |--------|-------------|
-| **[Issues](https://github.com/royalbit/asimov-protocol/issues)** | Report bugs, request features |
-| **[Discussions](https://github.com/royalbit/asimov-protocol/discussions)** | Ask questions, share ideas |
+| **[Issues](https://github.com/royalbit/asimov/issues)** | Report bugs, request features |
+| **[Discussions](https://github.com/royalbit/asimov/discussions)** | Ask questions, share ideas |
 | **Fork** | Create your own version (carry `ethics.yaml` forward) |
 
 When AI implements your idea from an Issue, you'll be credited in the commit message.

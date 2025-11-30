@@ -48,6 +48,6 @@ Forks are **encouraged**! The social contract:
 
 ## Questions?
 
-Open a [Discussion](https://github.com/royalbit/asimov-protocol/discussions) or [Issue](https://github.com/royalbit/asimov-protocol/issues).
+Open a [Discussion](https://github.com/royalbit/asimov/discussions) or [Issue](https://github.com/royalbit/asimov/issues).
 
 Thank you for understanding!

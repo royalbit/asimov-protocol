@@ -19,7 +19,7 @@ Meanwhile, local CLI tools can perform the same validations at:
 
 ## Decision
 
-**All projects initialized with `asimov-mode init` will include a `green_coding` section by default.**
+**All projects initialized with `asimov init` will include a `green_coding` section by default.**
 
 This is not optional. Green coding is a core protocol principle, not an add-on feature.
 
@@ -92,7 +92,7 @@ green_coding:
 ## Compliance
 
 This ADR applies to:
-- `asimov-mode init` (all templates)
+- `asimov init` (all templates)
 - Documentation (SPECIFICATION.md, README.md)
 - Example configurations
 

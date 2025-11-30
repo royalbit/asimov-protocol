@@ -3,7 +3,7 @@
 pub const ROADMAP_SCHEMA: &str = r#"
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/royalbit/asimov-protocol/schemas/roadmap.json",
+  "$id": "https://github.com/royalbit/asimov/schemas/roadmap.json",
   "title": "Asimov Protocol - roadmap.yaml",
   "description": "Milestone planning for the Asimov Protocol. See docs/PROTOCOL_GOALS.md for core values, CHANGELOG.md for release history.",
   "type": "object",

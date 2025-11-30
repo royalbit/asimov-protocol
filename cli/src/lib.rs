@@ -14,7 +14,7 @@
 //! # Example
 //!
 //! ```no_run
-//! use asimov_mode::{validate_file, validate_directory};
+//! use royalbit_asimov::{validate_file, validate_directory};
 //! use std::path::Path;
 //!
 //! // Validate a single file
