@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.2] - 2025-11-30
+
+### Fixed: Documentation consistency for crates.io
+
+- **README**: All relative links converted to full GitHub URLs (fixes broken links on crates.io)
+- **README**: Protocol Suite table updated from 5 to 8 protocol files
+- **README**: Fixed wrong ADR filename reference (`020-asimov-open-foundation.md` → `020-asimov-mode-open-foundation.md`)
+- **Executive Deck**: Added 8 Protocol Files slide, Root Causes analysis, Freshness/Sycophancy problem slides
+- **Presentations**: Sarah Connor quotes replaced with Isaac Asimov quotes
+
+---
+
 ## [7.0.1] - 2025-11-30
 
 ### Changed: GitHub repo renamed to `royalbit/asimov`

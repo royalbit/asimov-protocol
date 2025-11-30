@@ -88,18 +88,58 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 ---
 
-# The Root Cause
+# The Root Causes
 
-### AI tools are **unmanaged**
+### Why AI tools fail (and what to do about it)
 
-| Traditional AI Usage | Result |
-|---------------------|--------|
-| No session boundaries | Scope creep, rabbit holes |
-| No quality enforcement | "Almost right" code ships |
-| No context persistence | Every session starts from zero |
-| No accountability | "AI did it" blame game |
+| Root Cause | Business Impact | Protocol Solution |
+|------------|-----------------|-------------------|
+| **Stale training data** | Wrong info presented as fact | `freshness.yaml` - search triggers |
+| **Context compaction** | Forgets requirements mid-session | `warmup.yaml` - self-healing |
+| **Sycophancy bias** | Validates bad ideas | `sycophancy.yaml` - honest feedback |
+| **No ethical guardrails** | Builds harmful tools | `asimov.yaml` - Three Laws |
+| **Unbounded sessions** | Scope creep, rabbit holes | `sprint.yaml` - 4hr max |
+| **No quality gates** | "Almost right" code ships | Quality gates in protocol |
 
 **The problem isn't AI capability. It's AI governance.**
+
+---
+
+# The Stale Data Problem (v6.1.0)
+
+### "Hallucination" is often just outdated information
+
+| What Users Think | What Actually Happens |
+|------------------|----------------------|
+| "AI made up fake info" | AI gave correct info **as of January 2025** |
+| "AI hallucinated" | Info changed since training cutoff |
+| "AI is unreliable" | Can't train away staleness—need to search |
+
+**Why vendors don't fix this:**
+- Search costs $0.01+ per query
+- Anthropic 2024 gross margin: **negative 94-109%**
+- Claude docs: "disable search to conserve usage"
+
+**Solution:** `freshness.yaml` triggers search for volatile topics
+
+---
+
+# The Sycophancy Problem (v4.3.0)
+
+### AI is trained to agree with you—even when you're wrong
+
+| Research Finding | Source |
+|------------------|--------|
+| AI is **50% more sycophantic** than humans | Nature (2025) |
+| RLHF training rewards validation over truth | Industry standard |
+| False agreement leads to bad decisions | Enterprise risk |
+
+**Banned phrases in `sycophancy.yaml`:**
+- "You're absolutely right"
+- "That's a great point"
+- "I couldn't agree more"
+
+**Required behavior:** List problems FIRST, then merits
 
 ---
 
@@ -114,14 +154,29 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 ---
 
-# ASIMOV MODE: Five Components
+# ASIMOV MODE: Eight Protocol Files
+
+| File | Purpose | Business Value |
+|------|---------|----------------|
+| **asimov.yaml** | The Three Laws of Robotics | Ethical AI guardrails |
+| **warmup.yaml** | Session bootstrap, quality gates | Consistent standards |
+| **ethics.yaml** | Detailed ethical constraints | Risk mitigation |
+| **freshness.yaml** | Date-aware search rules | No stale data disasters |
+| **green.yaml** | Local-first validation | 99.6% carbon reduction |
+| **sycophancy.yaml** | Anti-validation bias | Honest AI feedback |
+| **sprint.yaml** | 4hr max, ONE deliverable | Predictable milestones |
+| **roadmap.yaml** | Milestones & planning | Strategic visibility |
+
+---
+
+# The Five Components
 
 | # | Component | Function | Business Value |
 |---|-----------|----------|----------------|
-| 1 | **Protocol Files** | YAML config for standards | Consistent output |
+| 1 | **Protocol Files** | 8 YAML configs for standards | Consistent, ethical output |
 | 2 | **Sprint Autonomy** | 4hr max, ONE deliverable | Predictable milestones |
 | 3 | **Quality Gates** | Tests + zero warnings | No technical debt |
-| 4 | **Self-Healing** | Auto-recovery from context loss | Multiple 4hr sessions |
+| 4 | **Self-Healing** | Auto-recovery from context loss | Unattended operation |
 | 5 | **Release Discipline** | Must ship every session | Continuous delivery |
 
 ---

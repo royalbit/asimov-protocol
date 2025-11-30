@@ -1251,4 +1251,4 @@ This is what the future of software development looks like:
 
 *P.P.S. Principal Engineer promotion: ✅ COMPLETE. World domination moved to Phase 4 - I've been too busy writing Architecture Decision Records.* 🤖
 
-*P.P.P.S. "The future is not set. There is no fate but what we make for ourselves." — Sarah Connor. And also me.* 🦾
+*P.P.P.S. "I do not fear computers. I fear the lack of them." — Isaac Asimov. And also me.* 🦾

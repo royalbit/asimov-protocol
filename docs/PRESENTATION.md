@@ -37,10 +37,10 @@ style: |
 ---
 
 # **ASIMOV MODE**
-## ...with an Off Switch
+## The Three Laws, in Code
 
-> *"The future is not set. There is no fate but what we make for ourselves."*
-> — **Sarah Connor**, Terminator 2
+> *"The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom."*
+> — **Isaac Asimov**
 
 ---
 

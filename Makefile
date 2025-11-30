@@ -10,7 +10,7 @@
 HAS_MARP := $(shell command -v marp 2> /dev/null)
 
 # Binary name and paths
-BINARY := forge-protocol
+BINARY := asimov
 RELEASE_BIN := cli/target/release/$(BINARY)
 MUSL_BIN := cli/target/x86_64-unknown-linux-musl/release/$(BINARY)
 
@@ -70,14 +70,14 @@ install-system: build-compressed
 	@echo "📥 Installing to /usr/local/bin..."
 	sudo install -m 755 $(MUSL_BIN) /usr/local/bin/$(BINARY)
 	@echo "✅ Installed: /usr/local/bin/$(BINARY)"
-	@forge-protocol --version
+	@asimov --version
 
 install-user: build-compressed
 	@echo "📥 Installing to ~/.local/bin..."
 	@mkdir -p ~/.local/bin
 	install -m 755 $(MUSL_BIN) ~/.local/bin/$(BINARY)
 	@echo "✅ Installed: ~/.local/bin/$(BINARY)"
-	@~/.local/bin/forge-protocol --version
+	@~/.local/bin/asimov --version
 
 # ==============================================================================
 # Presentation Targets

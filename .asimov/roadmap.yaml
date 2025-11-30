@@ -4,10 +4,10 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.1"
+  version: "7.0.2"
   status: released
-  summary: "GitHub repo renamed to royalbit/asimov"
-  goal: CONSISTENCY
+  summary: "Documentation consistency for crates.io"
+  goal: DX_QUALITY
 
 next:
   - version: "7.1.0"

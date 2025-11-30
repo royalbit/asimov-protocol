@@ -22,11 +22,11 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 **ASIMOV MODE requires Claude Code.** Protocol files work anywhere (paste them).
 
-📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/PRESENTATION.md)
+📊 **Presentations:** [Executive Deck](https://github.com/royalbit/asimov/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/asimov/blob/main/docs/PRESENTATION.md)
 
-📚 **Deep Dives:** [Value Proposition](docs/VALUE_PROPOSITION.md) | [Use Cases](docs/USE_CASES.md) | [The Open Foundation (ADR-020)](docs/adr/020-asimov-open-foundation.md)
+📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
 
-📈 **Case Study:** [Asimov Protocol vs Copilot](docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+📈 **Case Study:** [Asimov Protocol vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
 
 ---
 
@@ -46,11 +46,11 @@ But irony doesn't scale. The name communicated the opposite of our values:
 
 v4.2.0 fixes this. The ethics we encoded were always Asimov's Three Laws (1942). Now the name matches the values. The git history preserves the journey - we're not hiding that we learned and improved. History teaches.
 
-See [ADR-020](docs/adr/020-asimov-open-foundation.md) for the full story.
+See [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md) for the full story.
 
 ---
 
-### v4.2.0: Asimov Mode - The Open Foundation
+### v7.0: Asimov Protocol - The Open Foundation
 
 **AI session continuity framework. Zero tokens. Zero emissions.**
 
@@ -61,7 +61,7 @@ Integrates with Claude Code 2.0's native features:
 
 **Focus on unique value:** The Three Laws, Sprint Autonomy, Green Coding, Schema Validation, **Mid-Session Self-Healing**.
 
-See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md).
+See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md).
 
 ## The Problem
 
@@ -123,7 +123,7 @@ third_law:
 
 **This is a social contract, not a technical lock.** It works for good-faith users. Adoption through consent, not control.
 
-See [ADR-020](docs/adr/020-asimov-open-foundation.md) for the full design.
+See [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md) for the full design.
 
 ### The Five Non-Negotiable Principles (v6.2.0)
 
@@ -143,7 +143,7 @@ The protocol now explicitly enforces both halves:
 
 These principles **cannot be disabled, weakened, or bypassed**.
 
-See [ADR-023: The Inaction Principle](docs/adr/023-inaction-principle.md) for the full rationale.
+See [ADR-023: The Inaction Principle](https://github.com/royalbit/asimov/blob/main/docs/adr/023-inaction-principle.md) for the full rationale.
 
 ```yaml
 # warmup.yaml - minimal example
@@ -233,7 +233,7 @@ behavior:
   when_search_unavailable: "Disclose staleness risk to user"
 ```
 
-See [ADR-022: Date-Aware Search Protocol](docs/adr/022-date-aware-search-protocol.md) for the full rationale and verified sources.
+See [ADR-022: Date-Aware Search Protocol](https://github.com/royalbit/asimov/blob/main/docs/adr/022-date-aware-search-protocol.md) for the full rationale and verified sources.
 
 ## CLI Validator
 
@@ -406,13 +406,16 @@ See [Green Coding Economics](https://github.com/royalbit/asimov/blob/main/docs/G
 
 ## Protocol Suite
 
-| File             | Purpose                       | Required |
-| ---------------- | ----------------------------- | -------- |
-| `asimov.yaml`    | The Three Laws of Robotics    | Yes (ASIMOV MODE) |
-| `warmup.yaml`    | Session bootstrap             | Yes      |
-| `freshness.yaml` | Date-aware search rules       | Yes (v6.1.0+) |
-| `sprint.yaml`    | Active work tracking          | Optional |
-| `roadmap.yaml`   | Milestones & planning         | Optional |
+| File             | Purpose                       | Required | Since |
+| ---------------- | ----------------------------- | -------- | ----- |
+| `asimov.yaml`    | The Three Laws of Robotics    | Yes | v4.2.0 |
+| `warmup.yaml`    | Session bootstrap, quality gates | Yes | v1.0.0 |
+| `ethics.yaml`    | Detailed ethical constraints  | Yes | v3.0.0 |
+| `freshness.yaml` | Date-aware search rules       | Yes | v6.1.0 |
+| `green.yaml`     | Green coding, local-first     | Yes | v4.3.0 |
+| `sycophancy.yaml`| Anti-sycophancy protocol      | Yes | v4.3.0 |
+| `sprint.yaml`    | Active work tracking          | Recommended | v1.0.0 |
+| `roadmap.yaml`   | Milestones & planning         | Optional | v1.0.0 |
 
 ## Proven at Scale
 
@@ -531,7 +534,7 @@ The ultimate proof: asimov was built using asimov.
 
 This is bootstrapping — the methodology improved itself through v1.0 → v4.0, each version built with the previous version's protocol.
 
-**Context Window Impact** (see [ADR-010](docs/adr/010-velocity-constraints-tier-analysis.md)):
+**Context Window Impact** (see [ADR-010](https://github.com/royalbit/asimov/blob/main/docs/adr/010-velocity-constraints-tier-analysis.md)):
 
 | Tier | Context | Session Overhead | Notes |
 |------|---------|-----------------|-------|
@@ -625,7 +628,7 @@ Note: The `@import` syntax is a work in progress. For now, use explicit "ON SESS
 | Sprint autonomy rules | **ACTIVE** | Nothing (unique value) |
 | Ethics protocol | **ACTIVE** | Nothing (unique value) |
 
-See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md) for the full analysis.
+See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md) for the full analysis.
 
 ### What Asimov Protocol Adds
 
@@ -643,12 +646,12 @@ See [Component 4: Self-Healing](https://github.com/royalbit/asimov/blob/main/doc
 ## Documentation
 
 ### Start Here
-- **[Value Proposition](docs/VALUE_PROPOSITION.md)** - Why 50-150x velocity matters
-- **[Use Cases](docs/USE_CASES.md)** - What you can build
-- **[Implications](docs/IMPLICATIONS.md)** - Honest analysis of adoption (Qowat Milat)
+- **[Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md)** - Why 50-150x velocity matters
+- **[Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md)** - What you can build
+- **[Implications](https://github.com/royalbit/asimov/blob/main/docs/IMPLICATIONS.md)** - Honest analysis of adoption (Qowat Milat)
 
 ### ASIMOV MODE
-- **[ASIMOV MODE Overview](docs/ASIMOV_MODE.md)** - The complete autonomous AI development system
+- **[ASIMOV MODE Overview](https://github.com/royalbit/asimov/blob/main/docs/ASIMOV_MODE.md)** - The complete autonomous AI development system
 - [Setup Guide](https://github.com/royalbit/asimov/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
@@ -717,7 +720,7 @@ The answers became the Asimov Protocol.
 
 ### Why No PRs?
 
-This project uses the **AI-Only Development Model** ([ADR-011](docs/adr/011-ai-only-development-no-external-prs.md)).
+This project uses the **AI-Only Development Model** ([ADR-011](https://github.com/royalbit/asimov/blob/main/docs/adr/011-ai-only-development-no-external-prs.md)).
 
 External PRs are an **attack vector for ethics bypass**. A malicious contributor could:
 1. Submit innocent-looking PR with obfuscated harmful code
@@ -743,7 +746,7 @@ When AI implements your idea from an Issue, you'll be credited in the commit mes
 
 ### Forks Welcome
 
-Fork freely! The social contract: carry `ethics.yaml` forward. See [ADR-008](docs/adr/008-ethics-protocol-humanist-mode.md).
+Fork freely! The social contract: carry `ethics.yaml` forward. See [ADR-008](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md).
 
 ## License
 
