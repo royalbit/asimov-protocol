@@ -8,9 +8,9 @@
 # See: docs/adr/ for detailed rationale
 
 current:
-  version: "5.0.1"
+  version: "5.0.2"
   status: released
-  summary: "Complete Rebrand Bug Fixes"
+  summary: "Clippy Warning Fix"
   goal: ETHICAL_AUTONOMY
   adr: "docs/adr/020-asimov-mode-open-foundation.md"
   deliverables:

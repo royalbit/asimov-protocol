@@ -180,7 +180,9 @@ mod tests {
     use tempfile::TempDir;
 
     #[test]
+    #[allow(clippy::assertions_on_constants)]
     fn test_core_principles_all_enabled() {
+        // Intentionally testing that hardcoded constants are all true
         assert!(CORE_PRINCIPLES.truth_over_comfort);
         assert!(CORE_PRINCIPLES.respectful_disagreement);
         assert!(CORE_PRINCIPLES.no_empty_validation);
