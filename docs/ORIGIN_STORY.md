@@ -143,6 +143,64 @@ Tampering is possible (it's open source). But it requires:
 
 This is ethics through architecture, not policy.
 
+## Honest Limitations
+
+The anti-tampering architecture works for good-faith actors. But let's be honest:
+
+- **MIT license** means anyone can fork and remove ethics
+- **Same velocity** that ships SaaS can ship malware
+- **Ethics are a social contract**, not a technical lock
+- **We cannot prevent determined bad actors**
+
+What we CAN do:
+- Make ethics the default (included in all templates)
+- Make removal visible (CLI warns, git history records)
+- Build community around values (early adopters set culture)
+- Document honestly (like this)
+
+*The ethics system is a guardrail, not a cage. It works for people who want guardrails.*
+
+## Sustainability Impact
+
+Green coding isn't just philosophy - it's measurable:
+
+| Metric | Cloud AI Validation | Local CLI | Savings |
+|--------|---------------------|-----------|---------|
+| Cost/year (personal) | $792 | $0 | **100%** |
+| Carbon/validation | ~0.25g CO₂ | ~0.0005g CO₂ | **99.6%** |
+| At scale (100 devs) | 6.2 tonnes CO₂/year | Near zero | **ESG compliance** |
+
+The protocol proves velocity and sustainability aren't trade-offs. You can ship fast AND ship green.
+
+Every `asimov init` project is a green-coding project by default.
+
+## Workforce Implications
+
+50-150x velocity changes the math. This is uncomfortable but true:
+
+**The Arithmetic:**
+- 1 human + AI ≈ 50-150 traditional developers
+- 10-person startup → 1 person + AI = 9 positions changed
+- 1M protocol users = 50-150M dev-equivalent output
+- Global developers today: ~28 million
+
+**The Dual Reality:**
+
+| Displacement Frame | Democratization Frame |
+|--------------------|----------------------|
+| "50 devs lose jobs" | "50 people who couldn't build before, now can" |
+| "Offshore is dead" | "Developer in Lagos builds like a $500K team" |
+| "Entry-level eliminated" | "Student ships production code before graduating" |
+| "Startups need fewer people" | "Solo founders compete with funded teams" |
+
+**The Honest Truth:**
+
+The protocol doesn't choose sides. It multiplies capability. The same tool that democratizes creation for a student in Mumbai accelerates displacement for a team in San Francisco.
+
+*The outcome depends on who uses it and how.*
+
+See [IMPLICATIONS.md](IMPLICATIONS.md) for the full Qowat Milat analysis - absolute candor about both potential and peril.
+
 ## Key Insights
 
 1. **Files over prompts** - AI reads files reliably. System prompts get compressed.
@@ -156,6 +214,8 @@ This is ethics through architecture, not policy.
 5. **Truth over comfort** - Anti-sycophancy rules prevent AI from just agreeing with users.
 
 6. **Anti-tampering by design** - Hardcoded ethics + 2-cosigner rule + validation = can't be quietly disabled.
+
+7. **Power creates responsibility** - 50-150x velocity demands honest reckoning with implications.
 
 ## Credits
 
