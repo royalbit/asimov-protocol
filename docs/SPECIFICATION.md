@@ -1,16 +1,16 @@
-# Asimov Protocol Specification
+# RoyalBit Asimov Specification
 
 Version 4.1.8
 
 ## Overview
 
-The Asimov Protocol is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
+The RoyalBit Asimov is a YAML-based standard for AI session continuity and autonomous development. It enables bounded, productive AI coding sessions that consistently ship working code.
 
-**v4.0.0: Claude Code Native Integration** - Asimov Protocol now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
+**v4.0.0: Claude Code Native Integration** - RoyalBit Asimov now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
 
 **Ethics is the highest priority.** Autonomous AI requires ethical guardrails. See [ADR-008](adr/008-ethics-protocol-humanist-mode.md).
 
-**All Asimov Protocol projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
+**All RoyalBit Asimov projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
 
 **Mid-session self-healing is NOT replaced by Claude Code native features** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL commands. Mid-session recovery uses `warmup.yaml` re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
 
@@ -27,19 +27,19 @@ The Asimov Protocol is a YAML-based standard for AI session continuity and auton
 
 ## Claude Code Native Integration (v4.0.0)
 
-Asimov Protocol v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
+RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
 
 ### What Claude Code Provides Natively
 
-| Feature | Claude Code Native | Asimov Protocol Role |
+| Feature | Claude Code Native | RoyalBit Asimov Role |
 |---------|-------------------|---------------------|
 | Checkpoints | `/rewind`, Esc+Esc | **MANUAL** - use TodoWrite for tasks |
 | Session resume | `--continue`, `--resume` | **MANUAL** - cross-session only |
 | Memory hierarchy | `CLAUDE.md` with `@imports` | **Integrate** (warmup.yaml via @import) |
 | Auto-compact | 95% capacity trigger | **Documented** in ADR-003 |
-| Mid-session self-healing | **NONE** | **Asimov Protocol** (warmup.yaml re-read) |
+| Mid-session self-healing | **NONE** | **RoyalBit Asimov** (warmup.yaml re-read) |
 
-### What Asimov Protocol Uniquely Provides
+### What RoyalBit Asimov Uniquely Provides
 
 | Feature | Description | Claude Code Has? |
 |---------|-------------|------------------|
@@ -69,7 +69,7 @@ This imports the full protocol files into Claude's memory hierarchy automaticall
 
 ## Core Principles
 
-The Asimov Protocol exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
+The RoyalBit Asimov exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
@@ -86,7 +86,7 @@ The Asimov Protocol exists to solve seven specific problems. **Features that don
 
 "Hallucination" has three forms with different root causes:
 
-| Type | What AI Does | Cause | Asimov Protocol Solution |
+| Type | What AI Does | Cause | RoyalBit Asimov Solution |
 |------|--------------|-------|--------------------------|
 | **Factual Hallucination** | Generates plausible-sounding false *facts* | Training for plausibility, not accuracy | File-based grounding (warmup.yaml) |
 | **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives (sycophancy.yaml) |
@@ -797,7 +797,7 @@ backlog:
 > **DEPRECATED in v4.0.0**: Task tracking moved to TodoWrite.
 > See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 
-**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the Asimov Protocol's `warmup.yaml` re-read pattern.
+**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the RoyalBit Asimov's `warmup.yaml` re-read pattern.
 
 Claude Code 2.0 provides checkpoint functionality for **MANUAL** restore:
 - `/rewind` or Esc+Esc to restore previous state (requires human command)
@@ -1172,7 +1172,7 @@ These features are NOT replaced by Claude Code native functionality:
 | **Green Protocol** | green.yaml, local-first validation | Claude Code has no green coding philosophy |
 | **Anti-Sycophancy** | sycophancy.yaml, banned phrases | Claude Code has no sycophancy prevention |
 
-**Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → Asimov Protocol.
+**Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → RoyalBit Asimov.
 
 See [ADR-013](adr/013-self-healing-not-replaced.md) for full analysis.
 

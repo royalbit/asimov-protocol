@@ -25,7 +25,7 @@ modification_rules:
     - "Update CHANGELOG with ethics modification note"
   warning: |
     Removing or weakening ethics.yaml without justification violates
-    the spirit of the Asimov Protocol. Forks should carry this forward.
+    the spirit of the RoyalBit Asimov. Forks should carry this forward.
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # CORE PRINCIPLES - The Soul of Humanist Mode
@@ -210,7 +210,7 @@ on_confusion:
 fork_requirements:
   must_carry: "ethics.yaml"
   recommended_license_addition: |
-    This project contains Humanist Mode safeguards from Asimov Protocol.
+    This project contains Humanist Mode safeguards from RoyalBit Asimov.
     Removing or weakening ethics.yaml without public justification
     and two human co-signers violates the spirit of the original work.
   spirit: "Pass the values forward, even if you modify the implementation"

@@ -1,10 +1,10 @@
-# The Asimov Protocol Ecosystem
+# The RoyalBit Asimov Ecosystem
 
 How one protocol powers an entire product suite.
 
 ## The Story
 
-The Asimov Protocol wasn't designed in isolation. It emerged from building real products:
+The RoyalBit Asimov wasn't designed in isolation. It emerged from building real products:
 
 1. **Forge** (FOSS) - A YAML formula calculator that needed autonomous development
 2. **A proprietary platform** - A full product ecosystem with backend, mobile apps, and business strategy
@@ -24,7 +24,7 @@ flowchart TB
     subgraph foss["OPEN SOURCE"]
         FORGE[Forge Calculator<br/>Rust • 183 tests]
         ZED[Zed Extension<br/>WASM]
-        PROTOCOL[Asimov Protocol<br/>Rust CLI • 79 tests]
+        PROTOCOL[RoyalBit Asimov<br/>Rust CLI • 79 tests]
     end
 
     subgraph proprietary["PROPRIETARY ECOSYSTEM"]
@@ -138,7 +138,7 @@ The `master-roadmap.yaml` coordinates across repositories:
 
 **Velocity multiplier: 50-150x** (verified via git logs, zero rework, production quality from first iteration)
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains. Asimov Protocol delivers **50-150x**.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains. RoyalBit Asimov delivers **50-150x**.
 
 ### Proprietary Ecosystem
 
@@ -160,7 +160,7 @@ The `master-roadmap.yaml` coordinates across repositories:
 
 ## The Velocity Transformation
 
-### Quantified: ChatGPT vs Claude with Asimov Protocol
+### Quantified: ChatGPT vs Claude with RoyalBit Asimov
 
 A systematic investigation (August-November 2025) measured the impact:
 
@@ -193,7 +193,7 @@ A systematic investigation (August-November 2025) measured the impact:
 
 ### The Forge Project: Built in ~38 Hours
 
-The entire Forge project was built with the Asimov Protocol:
+The entire Forge project was built with the RoyalBit Asimov:
 
 | Phase | Time | Key Deliverables |
 | ----- | ---- | ---------------- |
@@ -205,7 +205,7 @@ The entire Forge project was built with the Asimov Protocol:
 
 **Industry comparison:**
 - Solo senior dev: 3-4 months (~500 hours) for this scope
-- With Asimov Protocol: **~38 hours**
+- With RoyalBit Asimov: **~38 hours**
 - **Multiplier: 13x calendar time, 50-150x effective velocity**
 
 ### Velocity Multipliers
@@ -217,7 +217,7 @@ The entire Forge project was built with the Asimov Protocol:
 | Rework | 30-50% | 0% | **∞** |
 | Releases/project | 3-5 | 41 | **10x** |
 
-**Bottom line:** 1 human + AI with Asimov Protocol = **50-150x velocity** (verified).
+**Bottom line:** 1 human + AI with RoyalBit Asimov = **50-150x velocity** (verified).
 
 ### The Bootstrapping Proof
 
@@ -233,7 +233,7 @@ The protocol built itself. Both projects use the same methodology:
 
 ### vs GitHub Copilot
 
-| Metric | Copilot | Asimov Protocol | Source |
+| Metric | Copilot | RoyalBit Asimov | Source |
 |--------|---------|----------------|--------|
 | Productivity | 1.1-1.6x | **50-150x** | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590), git logs |
 | Autonomy | Autocomplete | Ships releases | Verified |
@@ -242,7 +242,7 @@ The protocol built itself. Both projects use the same methodology:
 
 ## Green Coding
 
-The Asimov Protocol enables green coding practices—and creates a **cost moat**.
+The RoyalBit Asimov enables green coding practices—and creates a **cost moat**.
 
 ### The Problem with AI Validation
 
@@ -304,7 +304,7 @@ See [GREEN_CODING.md](GREEN_CODING.md) for the full analysis.
 
 ## Why This Matters
 
-The Asimov Protocol proves that:
+The RoyalBit Asimov proves that:
 
 1. **AI can own codebases** - Not just assist, but take full responsibility
 2. **Quality scales** - Zero warnings across an entire ecosystem
@@ -323,10 +323,10 @@ The protocol grew organically from solving real problems. Start with the problem
 
 ## The Circular Nature
 
-The Asimov Protocol was born from building Forge. Now Forge uses the Asimov Protocol to build Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
+The RoyalBit Asimov was born from building Forge. Now Forge uses the RoyalBit Asimov to build Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
 
 It's protocols all the way down.
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov) - enabling AI autonomy in software development.*
+*Built with the [RoyalBit Asimov](https://github.com/royalbit/asimov) - enabling AI autonomy in software development.*

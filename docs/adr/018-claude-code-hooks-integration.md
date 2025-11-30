@@ -6,7 +6,7 @@
 
 ## Context
 
-Asimov Protocol relies on CLAUDE.md `@import` syntax to load protocol files (warmup.yaml,
+RoyalBit Asimov relies on CLAUDE.md `@import` syntax to load protocol files (warmup.yaml,
 ethics.yaml, green.yaml) into Claude's context. However, this approach has critical gaps:
 
 1. **No Auto-Start**: `@import` loads content as static context but doesn't trigger any
@@ -136,7 +136,7 @@ events.
 
 ### Vendor Neutrality Impact
 
-Asimov Protocol remains vendor-neutral at the **file format** level:
+RoyalBit Asimov remains vendor-neutral at the **file format** level:
 - warmup.yaml, ethics.yaml, sprint.yaml, green.yaml work anywhere as static context
 
 But **autonomous operation** (ASIMOV MODE) requires Claude Code:

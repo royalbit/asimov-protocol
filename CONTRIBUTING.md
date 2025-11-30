@@ -1,6 +1,6 @@
-# Contributing to Asimov Protocol
+# Contributing to RoyalBit Asimov
 
-This project uses the **Asimov Protocol AI-Only Development Model** ([ADR-011](docs/adr/011-ai-only-development-no-external-prs.md)).
+This project uses the **RoyalBit Asimov AI-Only Development Model** ([ADR-011](docs/adr/011-ai-only-development-no-external-prs.md)).
 
 ## How to Contribute
 
@@ -12,7 +12,7 @@ This project uses the **Asimov Protocol AI-Only Development Model** ([ADR-011](d
 
 ## Why No Pull Requests?
 
-This project is developed by an autonomous AI following the Asimov Protocol. External PRs are an attack vector that could bypass ethics safeguards.
+This project is developed by an autonomous AI following the RoyalBit Asimov. External PRs are an attack vector that could bypass ethics safeguards.
 
 **Trust Model:**
 ```

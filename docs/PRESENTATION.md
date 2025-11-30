@@ -63,9 +63,9 @@ style: |
 
 ---
 
-# The Solution: Asimov Protocol
+# The Solution: RoyalBit Asimov
 
-| ❌ Without Structure | ✅ With Asimov Protocol |
+| ❌ Without Structure | ✅ With RoyalBit Asimov |
 |---------------------|------------------------|
 | Sessions run forever | **4-hour maximum** |
 | Scope creeps endlessly | **ONE milestone** |

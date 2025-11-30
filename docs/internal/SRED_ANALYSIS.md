@@ -1,17 +1,17 @@
-# SR&ED Analysis: Asimov Protocol
+# SR&ED Analysis: RoyalBit Asimov
 
 **Company:** RoyalBit Inc. (Montreal, Quebec)
-**Project:** Asimov Protocol - AI Session Continuity System
+**Project:** RoyalBit Asimov - AI Session Continuity System
 **Period:** November 2025
 **Prepared:** 2025-11-29
 
 ## Executive Summary
 
-Asimov Protocol qualifies for SR&ED tax credits as it addresses **novel technological uncertainties** in autonomous AI development that had no known solutions at the time of development.
+RoyalBit Asimov qualifies for SR&ED tax credits as it addresses **novel technological uncertainties** in autonomous AI development that had no known solutions at the time of development.
 
 ### Eligibility Criteria Met
 
-| SR&ED Requirement | Asimov Protocol Evidence |
+| SR&ED Requirement | RoyalBit Asimov Evidence |
 |-------------------|------------------------|
 | Technological uncertainty | Context compaction problem had no known solution |
 | Systematic investigation | 15 ADRs documenting hypotheses and experiments |
@@ -146,7 +146,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 ## Competitive Analysis: No Prior Art
 
-| Existing Tool | What It Does | Gap Asimov Protocol Fills |
+| Existing Tool | What It Does | Gap RoyalBit Asimov Fills |
 |---------------|--------------|--------------------------|
 | **Mem0** | Memory layer for AI | No session protocol, no self-healing |
 | **Memori** | Memory engine | No compaction recovery, no ethics |

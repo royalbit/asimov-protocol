@@ -88,7 +88,7 @@ The self-healing protocol (re-read from disk on confusion) is **NOT replaced** b
 
 ### Clarify What IS Replaced
 
-| Feature | Old (Asimov Protocol) | New (Claude Code Native) | Scope |
+| Feature | Old (RoyalBit Asimov) | New (Claude Code Native) | Scope |
 |---------|---------------------|-------------------------|-------|
 | Cross-session resume | Custom handoff files | `--continue`/`--resume` | **Between sessions** |
 | Manual checkpoint restore | `.claude_checkpoint.yaml` | `/rewind` | **Manual command** |

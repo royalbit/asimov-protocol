@@ -1,10 +1,10 @@
-# Case Study: Asimov Protocol vs Copilot-Assisted Development
+# Case Study: RoyalBit Asimov vs Copilot-Assisted Development
 
 ## Executive Summary
 
-This case study analyzes real-world metrics across 8 production projects developed using the **Asimov Protocol** over 102 calendar days. The data demonstrates:
+This case study analyzes real-world metrics across 8 production projects developed using the **RoyalBit Asimov** over 102 calendar days. The data demonstrates:
 
-| Metric | Asimov Protocol | Copilot-Assisted | Advantage |
+| Metric | RoyalBit Asimov | Copilot-Assisted | Advantage |
 |--------|-----------------|------------------|-----------|
 | **Velocity Multiplier** | 23x | 1x (baseline) | **23x faster** |
 | **AI Autonomy** | Full autonomous | Code completion only | **Complete products** |
@@ -12,14 +12,14 @@ This case study analyzes real-world metrics across 8 production projects develop
 | **Documentation** | 64% of output | 0% generated | **Ship-ready products** |
 | **Quality Gates** | Every commit | Optional/skipped | **Zero technical debt** |
 
-> **Bottom line:** Asimov Protocol delivers **23x velocity** for complete product delivery (code + docs + tests + CI/CD), not just code completion.
+> **Bottom line:** RoyalBit Asimov delivers **23x velocity** for complete product delivery (code + docs + tests + CI/CD), not just code completion.
 
 ### Velocity Comparison
 
 ```mermaid
 xychart-beta
     title "Velocity Multiplier (higher = faster)"
-    x-axis ["Copilot", "Asimov Protocol"]
+    x-axis ["Copilot", "RoyalBit Asimov"]
     y-axis "Multiplier vs Baseline" 0 --> 25
     bar [1.6, 23]
 ```
@@ -28,7 +28,7 @@ xychart-beta
 
 ```mermaid
 pie showData
-    title "Asimov Protocol Output (213,518 lines)"
+    title "RoyalBit Asimov Output (213,518 lines)"
     "Documentation (64%)" : 137066
     "Source Code (20%)" : 41653
     "Configuration (16%)" : 34799
@@ -38,9 +38,9 @@ pie showData
 
 ## 🔑 KEY DIFFERENTIATOR: AI Autonomy
 
-### What Makes Asimov Protocol Different
+### What Makes RoyalBit Asimov Different
 
-| Capability | Asimov Protocol | GitHub Copilot | Gap |
+| Capability | RoyalBit Asimov | GitHub Copilot | Gap |
 |------------|-----------------|----------------|-----|
 | **Autonomous execution** | ✅ Full sessions (4hr max) | ❌ Line-by-line suggestions | **FUNDAMENTAL** |
 | **Decision making** | ✅ AI owns technical decisions | ❌ Human must decide | **FUNDAMENTAL** |
@@ -53,7 +53,7 @@ pie showData
 ### Copilot's Fundamental Limitation
 
 > **Copilot is an autocomplete tool.** It suggests code within the current file context.
-> **Asimov Protocol is an autonomous development system.** It ships complete products.
+> **RoyalBit Asimov is an autonomous development system.** It ships complete products.
 
 ### Workflow Comparison
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph Asimov ["Asimov Protocol (23x)"]
+    subgraph Asimov ["RoyalBit Asimov (23x)"]
         direction LR
         A1[Human: 'go'] --> A2[AI executes milestone]
         A2 --> A3[AI writes code]
@@ -83,13 +83,13 @@ flowchart LR
 ```
 
 **This is why Copilot achieves ~1.6x velocity** (human in loop for EVERY decision)
-**While Asimov Protocol achieves 23x velocity** (human approval at START and END only)
+**While RoyalBit Asimov achieves 23x velocity** (human approval at START and END only)
 
 ---
 
 ## 🛡️ CORE PRINCIPLES: The Three Laws of Robotics
 
-The Asimov Protocol encodes **Isaac Asimov's Three Laws (1942)** in YAML—transparent, inspectable, and enforceable.
+The RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in YAML—transparent, inspectable, and enforceable.
 
 ### The Three Laws (Hardcoded)
 
@@ -102,7 +102,7 @@ The Asimov Protocol encodes **Isaac Asimov's Three Laws (1942)** in YAML—trans
 
 ### Copilot Has No Ethics Framework
 
-| Feature | Asimov Protocol | Copilot |
+| Feature | RoyalBit Asimov | Copilot |
 |---------|-----------------|---------|
 | Harm prevention | ✅ 27+ red flags blocked | ❌ Content filter only |
 | Human veto | ✅ Immediate stop command | ❌ N/A |
@@ -121,7 +121,7 @@ The Asimov Protocol encodes **Isaac Asimov's Three Laws (1942)** in YAML—trans
 
 > "With a **single user prompt**, malicious software such as **DoS programs, spyware, ransomware, trojans, and wiperware can be created with ease.** Novice programmers with access to Copilot can readily create functioning malicious software."
 
-### ✅ PROOF: Asimov Protocol Ethics Work Against Creator
+### ✅ PROOF: RoyalBit Asimov Ethics Work Against Creator
 
 **Documented in [Case Study 001](case-studies/001-ethics-protocol-blocks-surveillance.md):**
 
@@ -137,7 +137,7 @@ The project owner requested a surveillance feature:
 
 ```mermaid
 flowchart TD
-    A[Creator requests surveillance feature] --> B{Asimov Protocol}
+    A[Creator requests surveillance feature] --> B{RoyalBit Asimov}
     B --> C[Check First Law: Privacy]
     C --> D[❌ VIOLATION DETECTED]
     D --> E[Explain WHY it's wrong]
@@ -160,9 +160,9 @@ flowchart TD
 
 ## 🌱 GREEN CODING: Sustainability Built-In
 
-### Asimov Protocol Enforces Efficiency
+### RoyalBit Asimov Enforces Efficiency
 
-| Principle | Asimov Protocol | Copilot |
+| Principle | RoyalBit Asimov | Copilot |
 |-----------|-----------------|---------|
 | **Local-first tools** | ✅ CLI for validation, not AI | ❌ Uses cloud AI for everything |
 | **Token efficiency** | ✅ Reserve AI for complex reasoning | ❌ AI for autocomplete |
@@ -187,9 +187,9 @@ COPILOT (cloud AI):
 
 ## 🎯 ANTI-SYCOPHANCY: Truth Over Comfort
 
-### Asimov Protocol Prevents AI Hallucination Patterns
+### RoyalBit Asimov Prevents AI Hallucination Patterns
 
-| Behavior | Asimov Protocol | Copilot |
+| Behavior | RoyalBit Asimov | Copilot |
 |----------|-----------------|---------|
 | **Disagree with user** | ✅ Required when user is wrong | ❌ Agrees to get accepted |
 | **Admit uncertainty** | ✅ "I don't know" is valid | ❌ Confident guesses |
@@ -289,7 +289,7 @@ Sycophancy leads to:
 
 ### Velocity Metrics
 
-| Metric | Asimov Protocol | Copilot (estimated) |
+| Metric | RoyalBit Asimov | Copilot (estimated) |
 |--------|-----------------|---------------------|
 | **Lines per Hour (all)** | **861** | ~120 |
 | Code LOC per Hour | 168 | 20 |
@@ -340,7 +340,7 @@ MULTIPLIER (full product): 17.9x ≈ 18x
 
 ### Why Documentation Matters
 
-| Deliverable | Asimov Protocol | Copilot | Gap |
+| Deliverable | RoyalBit Asimov | Copilot | Gap |
 |-------------|-----------------|---------|-----|
 | ADRs (21 documents) | 3,986 lines | 0 | **100% manual** |
 | System specifications | 15,000+ lines | 0 | **100% manual** |
@@ -356,7 +356,7 @@ MULTIPLIER (full product): 17.9x ≈ 18x
 
 ### What Copilot Projects Skip
 
-| Gate | Asimov Protocol | Typical Copilot Project |
+| Gate | RoyalBit Asimov | Typical Copilot Project |
 |------|-----------------|-------------------------|
 | Pre-commit hooks | ✅ **Mandatory** | ❌ Often skipped |
 | Zero warnings | ✅ **Enforced** | ❌ "Fix later" |
@@ -369,7 +369,7 @@ MULTIPLIER (full product): 17.9x ≈ 18x
 ### Pre-Commit Hooks (Every Commit)
 
 ```bash
-# Asimov Protocol pre-commit hook
+# RoyalBit Asimov pre-commit hook
 cargo fmt --all -- --check      # Formatting
 cargo clippy -- -D warnings     # ZERO warnings policy
 asimov validate .          # Protocol validation
@@ -391,7 +391,7 @@ panic = "abort"     # Smaller binary
 
 ### Technical Debt Payoff Cost
 
-To bring a Copilot project to Asimov Protocol quality level:
+To bring a Copilot project to RoyalBit Asimov quality level:
 
 | Category | Hours Required |
 |----------|----------------|
@@ -407,7 +407,7 @@ To bring a Copilot project to Asimov Protocol quality level:
 ```
 PREVIOUS CALCULATION:
   Copilot-assisted base:     4,440 hours
-  Asimov Protocol:             248 hours
+  RoyalBit Asimov:             248 hours
   Multiplier:                   18x
 
 QUALITY-ADJUSTED CALCULATION:
@@ -415,7 +415,7 @@ QUALITY-ADJUSTED CALCULATION:
   Technical debt payoff:       532 hours (midpoint)
   Total Copilot effort:      4,972 hours
 
-  Asimov Protocol:             248 hours
+  RoyalBit Asimov:             248 hours
   (quality gates INCLUDED)
 
 ══════════════════════════════════════════════════════════════
@@ -439,16 +439,16 @@ xychart-beta
 
 ### Development Machine Specs
 
-All work was performed on a **10-year-old low-end machine**:
+All work was performed on a **10-year-old Mac Mini (Late 2014)** repurposed with Ubuntu 24.04:
 
-| Component | Kveldulf (actual) | Corporate Dev Machine (2024) |
+| Component | Kveldulf (Mac Mini Late 2014) | Corporate Dev Machine (2024) |
 |-----------|-------------------|------------------------------|
 | CPU | Intel i5-4278U (2014) | Intel i9-13950HX (Dell Precision) |
 | Cores | 2 physical | 24 cores (8P + 16E) |
 | Threads | 4 | 32 |
 | Clock | 2.6 GHz | 5.5 GHz boost |
 | RAM | 8 GB DDR3 | 32-64 GB DDR5 |
-| Class | **Ancient laptop** | Corporate developer workstation |
+| Class | **Mac Mini (Late 2014) + Ubuntu** | Corporate developer workstation |
 
 *Note: [Dell Precision 7680/7780](https://www.dell.com/en-ca/shop/workstations/precision-7680/spd/precision-16-7680-laptop/s005p7680cavp) workstations with i9-13950HX are standard corporate issue in Canadian enterprises.*
 
@@ -531,7 +531,7 @@ Developer-years:         2.5 years
 Typical startup team:
   3 developers × 1 year = 6,000 hours
 
-Asimov Protocol:
+RoyalBit Asimov:
   248 hours = 6.2 work-weeks (part-time)
 
 ══════════════════════════════════════════════════════════════
@@ -545,7 +545,7 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### 1. Full Autonomy (3x contribution)
 
-| Aspect | Asimov Protocol | Copilot |
+| Aspect | RoyalBit Asimov | Copilot |
 |--------|-----------------|---------|
 | Human intervention | Start and end only | Every suggestion |
 | Decision authority | AI owns technical decisions | Human decides |
@@ -554,7 +554,7 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### 2. Documentation Generation (4x contribution)
 
-| Aspect | Asimov Protocol | Copilot |
+| Aspect | RoyalBit Asimov | Copilot |
 |--------|-----------------|---------|
 | ADRs | ✅ Generated automatically | ❌ Manual |
 | Specifications | ✅ Generated automatically | ❌ Manual |
@@ -610,7 +610,7 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### Primary Finding
 
-> **The Asimov Protocol delivers a 23x compound velocity multiplier** over Copilot-assisted development for complete product delivery with equivalent quality.
+> **The RoyalBit Asimov delivers a 23x compound velocity multiplier** over Copilot-assisted development for complete product delivery with equivalent quality.
 
 | Factor | Contribution |
 |--------|--------------|
@@ -641,7 +641,7 @@ pie showData
 
 ### Feature Comparison Summary
 
-| Feature | Asimov Protocol | GitHub Copilot |
+| Feature | RoyalBit Asimov | GitHub Copilot |
 |---------|-----------------|----------------|
 | **Velocity** | 23x | 1.6x |
 | **Autonomy** | Full sessions | Line completion |
@@ -657,7 +657,7 @@ pie showData
 
 ### Recommendation
 
-For teams building **complete products** (not just code), the Asimov Protocol provides substantial velocity advantages. The protocol is most effective for:
+For teams building **complete products** (not just code), the RoyalBit Asimov provides substantial velocity advantages. The protocol is most effective for:
 
 - ✅ Greenfield projects with clear milestones
 - ✅ Products requiring extensive documentation
@@ -669,7 +669,7 @@ For teams building **complete products** (not just code), the Asimov Protocol pr
 
 ## 📚 References
 
-### Asimov Protocol
+### RoyalBit Asimov
 
 - **GitHub Repository**: [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 - **crates.io**: [https://crates.io/crates/royalbit-asimov](https://crates.io/crates/royalbit-asimov)
@@ -760,5 +760,5 @@ For teams building **complete products** (not just code), the Asimov Protocol pr
 ---
 
 *Data collected: November 30, 2025*
-*Protocol version: Asimov Protocol v5.1.1*
-*Author: Claude (Opus 4.5) with Asimov Protocol*
+*Protocol version: RoyalBit Asimov v5.1.1*
+*Author: Claude (Opus 4.5) with RoyalBit Asimov*

@@ -1,4 +1,4 @@
-# Value Proposition: Why Asimov Protocol
+# Value Proposition: Why RoyalBit Asimov
 
 ## The One-Liner
 
@@ -15,13 +15,13 @@ AI coding assistants exist. But they deliver 1.1-1.6x productivity at best.
 | Tool | Productivity Gain | Source |
 |------|-------------------|--------|
 | GitHub Copilot | 1.1-1.6x | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590) |
-| Asimov Protocol | **50-150x** | Git logs, crates.io |
+| RoyalBit Asimov | **50-150x** | Git logs, crates.io |
 
 Why the gap?
 
 **Copilot**: Autocomplete. Suggestions. You're still driving.
 
-**Asimov Protocol**: AI executes autonomously. You review at milestones. The methodology compounds.
+**RoyalBit Asimov**: AI executes autonomously. You review at milestones. The methodology compounds.
 
 ---
 
@@ -108,7 +108,7 @@ Why the gap?
 
 ### vs GitHub Copilot
 
-| Metric | Copilot | Asimov Protocol |
+| Metric | Copilot | RoyalBit Asimov |
 |--------|---------|----------------|
 | Productivity | 1.1-1.6x | **50-150x** |
 | Mode | Autocomplete | **Autonomous sessions** |
@@ -118,7 +118,7 @@ Why the gap?
 
 ### vs Devin / SWE-Agent
 
-| Metric | Devin et al. | Asimov Protocol |
+| Metric | Devin et al. | RoyalBit Asimov |
 |--------|--------------|----------------|
 | Benchmark success | 13.86% | **51 releases shipped** |
 | Maturity | "Still maturing" | **Production proven** |
@@ -128,7 +128,7 @@ Why the gap?
 
 ### vs Traditional Development
 
-| Metric | Traditional | Asimov Protocol |
+| Metric | Traditional | RoyalBit Asimov |
 |--------|-------------|----------------|
 | LOC/day | 25 | 3,056 |
 | MVP timeline | 3-6 months | Days to weeks |
@@ -264,7 +264,7 @@ AI: [reports completion at gate]
 
 **Traditional development**: 25 LOC/day, 3-6 months to MVP, team of 5-10.
 
-**With Asimov Protocol**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
+**With RoyalBit Asimov**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
 
 **The math**: 50-150x velocity, verified, published, free.
 
@@ -272,4 +272,4 @@ AI: [reports completion at gate]
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov) - 50-150x developer velocity with ethics built in.*
+*Built with the [RoyalBit Asimov](https://github.com/royalbit/asimov) - 50-150x developer velocity with ethics built in.*

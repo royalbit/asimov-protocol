@@ -10,7 +10,7 @@ Isaac Asimov's First Law of Robotics (1942):
 
 > **"A robot may not injure a human being or, through inaction, allow a human being to come to harm."**
 
-The Asimov Protocol's `asimov.yaml` implemented the first half ("may not injure") but left the second half ("through inaction, allow harm") implicit rather than explicit.
+The RoyalBit Asimov's `asimov.yaml` implemented the first half ("may not injure") but left the second half ("through inaction, allow harm") implicit rather than explicit.
 
 ### The Gap
 
@@ -57,7 +57,7 @@ Add explicit `allow_no_harm_through_inaction` section to `asimov.yaml` First Law
 
 ### The Five Non-Negotiable Principles
 
-After this upgrade, the Asimov Protocol enforces:
+After this upgrade, the RoyalBit Asimov enforces:
 
 | # | Principle | Category | Violation Example |
 |---|-----------|----------|-------------------|
@@ -144,7 +144,7 @@ If an AI:
 
 That AI is **violating the First Law through inaction**.
 
-The Asimov Protocol now makes this explicit and enforceable.
+The RoyalBit Asimov now makes this explicit and enforceable.
 
 ## References
 

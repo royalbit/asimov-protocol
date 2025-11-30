@@ -83,7 +83,7 @@ CLAUDE.md is **never** auto-regenerated because:
 Unlike other protocol files which regenerate with full content, roadmap.yaml regenerates as a **skeleton template**:
 
 ```yaml
-# Asimov Protocol - Roadmap
+# RoyalBit Asimov - Roadmap
 metadata:
   current_version: "0.1.0"
   last_updated: "2025-01-01"
@@ -198,4 +198,4 @@ asimov validate --update-checksums
 
 - [ADR-011: Hardcoded Ethics](011-hardcoded-ethics.md)
 - [ADR-016: Green Coding Protocol](016-green-coding-protocol.md)
-- [Asimov Protocol Specification](../SPECIFICATION.md)
+- [RoyalBit Asimov Specification](../SPECIFICATION.md)

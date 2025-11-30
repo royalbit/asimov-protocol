@@ -2,11 +2,11 @@
 
 > **Qowat Milat**: The Romulan way of Absolute Candor. Speaking truth without filter, deception, or sugar-coating.
 
-This document is an honest assessment of what happens if the Asimov Protocol achieves mass adoption. Both the transformative potential and the uncomfortable realities.
+This document is an honest assessment of what happens if the RoyalBit Asimov achieves mass adoption. Both the transformative potential and the uncomfortable realities.
 
 ## What "Self-Evolving" Means
 
-The Asimov Protocol exhibits three properties:
+The RoyalBit Asimov exhibits three properties:
 
 1. **Bootstrapped**: asimov was built using asimov
 2. **Self-documenting**: The AI updates its own roadmap, ADRs, specifications
@@ -258,7 +258,7 @@ Both happen. Good actors build amazing things. Bad actors build harmful things. 
 
 ## The Bottom Line
 
-**The Asimov Protocol is powerful.** 50-150x velocity is real and verified.
+**The RoyalBit Asimov is powerful.** 50-150x velocity is real and verified.
 
 **Power creates responsibility.** The ethics and green coding principles exist because velocity without values is dangerous.
 
