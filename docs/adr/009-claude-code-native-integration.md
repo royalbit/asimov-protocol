@@ -27,9 +27,9 @@ Accepted (Partially Corrected by ADR-013)
 
 ### The Discovery
 
-Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate **some** portions of the Asimov Protocol:
+Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released November 2025) now includes native features that duplicate **some** portions of the RoyalBit Asimov:
 
-| Asimov Protocol Feature | Claude Code Native | Status |
+| RoyalBit Asimov Feature | Claude Code Native | Status |
 |------------------------|-------------------|--------|
 | `.claude_checkpoint.yaml` | `/rewind` + checkpoints | **REDUNDANT** (manual only) |
 | Session handoff | `--continue`, `--resume` | **REDUNDANT** (cross-session only) |
@@ -63,7 +63,7 @@ Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released Novembe
    - 98.7% token reduction with code execution + MCP APIs
    - Thousands of MCP servers in ecosystem
 
-### What Asimov Protocol Uniquely Provides
+### What RoyalBit Asimov Uniquely Provides
 
 Features Claude Code does NOT have natively:
 
@@ -128,7 +128,7 @@ Building these would waste effort duplicating Claude Code's native features.
 ### Future: MCP Server Mode
 
 v4.1.0+ consideration:
-- Asimov Protocol as MCP server
+- RoyalBit Asimov as MCP server
 - Provide ethics/sprint context via MCP
 - Works with Claude, OpenAI, Google (all adopted MCP)
 - TRUE vendor neutrality (not just file format)

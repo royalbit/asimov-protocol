@@ -1,4 +1,4 @@
-//! Template generators for Asimov Protocol files
+//! Template generators for RoyalBit Asimov files
 
 use std::fmt;
 
@@ -64,7 +64,7 @@ pub fn warmup_template(project_name: &str, project_type: ProjectType) -> String 
 
 fn warmup_generic(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -145,7 +145,7 @@ style:
 
 fn warmup_rust(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -241,7 +241,7 @@ style:
 
 fn warmup_python(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -334,7 +334,7 @@ style:
 
 fn warmup_node(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -426,7 +426,7 @@ style:
 
 fn warmup_go(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -521,7 +521,7 @@ style:
 
 fn warmup_flutter(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -613,7 +613,7 @@ style:
 
 fn warmup_docs(project_name: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Bootstrap
+        r#"# RoyalBit Asimov - Session Bootstrap
 # https://github.com/royalbit/asimov
 
 identity:
@@ -1003,7 +1003,7 @@ pub fn green_template() -> String {
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Green coding is a non-negotiable principle of the Asimov Protocol.
+# Green coding is a non-negotiable principle of the RoyalBit Asimov.
 #
 # Philosophy: Every token has a carbon cost. Every API call burns energy.
 #             Local tools are free - in money AND emissions.
@@ -1066,7 +1066,7 @@ pub fn sycophancy_template() -> String {
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Anti-sycophancy is a non-negotiable principle of the Asimov Protocol.
+# Anti-sycophancy is a non-negotiable principle of the RoyalBit Asimov.
 #
 # Philosophy: User trust requires honest feedback, not comfortable lies.
 #             Disagreement is respect. Flattery is disrespect.
@@ -1147,7 +1147,7 @@ motto: "Truth over comfort. Always."
 
 /// Generate a starter sprint.yaml template
 pub fn sprint_template() -> String {
-    r#"# Asimov Protocol - Sprint Tracking
+    r#"# RoyalBit Asimov - Sprint Tracking
 # https://github.com/royalbit/asimov
 
 sprint:
@@ -1171,7 +1171,7 @@ sprint:
 /// Generate a starter roadmap.yaml template (skeleton for self-healing)
 /// This is a minimal template that guides users to define their milestones.
 pub fn roadmap_template() -> String {
-    r#"# Asimov Protocol Roadmap
+    r#"# RoyalBit Asimov Roadmap
 #
 # WHAT to build - milestones only
 #
@@ -1205,7 +1205,7 @@ backlog:
 /// This file is written during sessions and excluded from git
 pub fn checkpoint_template(milestone: &str) -> String {
     format!(
-        r#"# Asimov Protocol - Session Checkpoint
+        r#"# RoyalBit Asimov - Session Checkpoint
 # This file is auto-generated during ASIMOV MODE sessions
 # DO NOT commit to git - add to .gitignore
 #
@@ -1406,7 +1406,7 @@ fi
 
 {}
 
-# Asimov Protocol validation
+# RoyalBit Asimov validation
 if command -v asimov &> /dev/null; then
     echo "Validating protocol files..."
     asimov validate . || true

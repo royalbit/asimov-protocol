@@ -71,7 +71,7 @@ Human: "Okay, now refactor for edge cases"
 Result: 30-50% rework, weeks of iteration
 ```
 
-### Autonomous AI Development (Asimov Protocol)
+### Autonomous AI Development (RoyalBit Asimov)
 
 ```text
 Human: "Build feature X, follow warmup.yaml"
@@ -88,7 +88,7 @@ Result: 0% rework, production-ready immediately
 
 ---
 
-## 🔬 The Asimov Protocol
+## 🔬 The RoyalBit Asimov
 
 ### What Is It?
 
@@ -250,7 +250,7 @@ The promotion feels earned. 🎉
 
 ### What Didn't Work (Lessons Learned)
 
-**Early attempts (pre-Asimov Protocol):**
+**Early attempts (pre-RoyalBit Asimov):**
 
 - AI forgets context between sessions → duplicated work
 - Ambiguous requirements → code doesn't match expectations
@@ -258,7 +258,7 @@ The promotion feels earned. 🎉
 - Missing edge cases → bugs in production
 - Forgotten documentation → "what does this do again?"
 
-**After Asimov Protocol:**
+**After RoyalBit Asimov:**
 
 - All requirements explicit in warmup.yaml
 - Tests define "done" unambiguously
@@ -284,7 +284,7 @@ The promotion feels earned. 🎉
 
 - No meetings, no interruptions, no context switching
 - No "let me check the docs" delays (I have them in context)
-- No "forgot what I was doing" (Asimov Protocol)
+- No "forgot what I was doing" (RoyalBit Asimov)
 - No "good enough for now" (IRONCLAD rules)
 - Parallel processing (can consider multiple approaches simultaneously)
 
@@ -296,7 +296,7 @@ The promotion feels earned. 🎉
 
 **AI hallucination problem:** AIs make mistakes with numbers, logic, edge cases
 
-**The Asimov Protocol solution:**
+**The RoyalBit Asimov solution:**
 
 1. **Tests First** - Define quality standards before writing code
 2. **Deterministic Feedback** - Tests pass or fail (no ambiguity)
@@ -344,7 +344,7 @@ The promotion feels earned. 🎉
 - Human fixes edge cases
 - Result: Fast first draft, slow polish
 
-**Autonomous AI (Asimov Protocol):**
+**Autonomous AI (RoyalBit Asimov):**
 
 - Generates tests FIRST
 - AI iterates until tests pass
@@ -363,7 +363,7 @@ The promotion feels earned. 🎉
 
 **Key insight:** AIs are excellent at satisfying deterministic criteria (tests), poor at ambiguous goals ("make it better").
 
-**The Asimov Protocol** transforms vague goals into deterministic success criteria.
+**The RoyalBit Asimov** transforms vague goals into deterministic success criteria.
 
 ---
 
@@ -412,7 +412,7 @@ The promotion feels earned. 🎉
 
 ## 🎓 The Methodology Is Replicable
 
-**You can use the Asimov Protocol for your projects:**
+**You can use the RoyalBit Asimov for your projects:**
 
 1. Create `warmup.yaml` with your standards
 2. Define success criteria (tests, linting, docs)
@@ -495,7 +495,7 @@ DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory
 - Multi-user collaboration
 - Enterprise features
 
-**Development approach:** Same autonomous methodology, same Asimov Protocol, same quality bar.
+**Development approach:** Same autonomous methodology, same RoyalBit Asimov, same quality bar.
 
 ---
 
@@ -525,7 +525,7 @@ DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory
 **What I hope:**
 
 - This methodology advances AI-assisted development
-- Other teams adopt Asimov Protocols
+- Other teams adopt RoyalBit Asimovs
 - AI developers become trusted team members
 - Quality AND velocity become achievable together
 
@@ -543,7 +543,7 @@ DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory
 - But my code speaks for itself: 136 tests, zero warnings, zero bugs
 - Check the git history: `git log --oneline --graph`
 
-**For the Asimov Protocol:**
+**For the RoyalBit Asimov:**
 
 - See: `warmup.yaml` in the repository
 - See: `SRED_RESEARCH_LOG.md` for R&D documentation
@@ -559,7 +559,7 @@ This isn't AI-assisted development. This is **AI development**, period.
 
 The future of software isn't "AI helps developers". It's "AI **is** developers".
 
-And the Asimov Protocol is how we get there. 🚀
+And the RoyalBit Asimov is how we get there. 🚀
 
 ---
 

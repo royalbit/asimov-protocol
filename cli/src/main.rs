@@ -1,4 +1,4 @@
-//! Asimov Protocol CLI - The Three Laws of Robotics, encoded in YAML
+//! RoyalBit Asimov CLI - The Three Laws of Robotics, encoded in YAML
 
 use clap::{Parser, Subcommand};
 use colored::Colorize;
@@ -18,9 +18,9 @@ use std::process::ExitCode;
 #[derive(Parser)]
 #[command(name = "asimov")]
 #[command(about = "Green coding CLI for AI development - zero tokens, zero emissions")]
-#[command(long_about = "Asimov Protocol CLI - The Three Laws of Robotics
+#[command(long_about = "RoyalBit Asimov CLI - The Three Laws of Robotics
 
-Validates protocol files against the Asimov Protocol specification:
+Validates protocol files against the RoyalBit Asimov specification:
   - asimov.yaml  - The Three Laws (required in ASIMOV MODE)
   - warmup.yaml  - Session bootstrap (required)
   - sprint.yaml  - Active work tracking (optional)
@@ -328,7 +328,7 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
 }
 
 fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
-    println!("{}", "Asimov Protocol Validator".bold().green());
+    println!("{}", "RoyalBit Asimov Validator".bold().green());
     println!();
 
     // Show hardcoded ethics status
@@ -543,7 +543,7 @@ fn cmd_init(
         }
     }
 
-    println!("{}", "Asimov Protocol Init".bold().green());
+    println!("{}", "RoyalBit Asimov Init".bold().green());
     if asimov {
         println!("{}", "  ASIMOV MODE - The Three Laws".bold().cyan());
     }
@@ -807,7 +807,7 @@ fn cmd_init(
 }
 
 fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
-    println!("{}", "Asimov Protocol Documentation Linter".bold().green());
+    println!("{}", "RoyalBit Asimov Documentation Linter".bold().green());
     println!();
 
     // Collect files to check

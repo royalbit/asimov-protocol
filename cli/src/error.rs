@@ -1,8 +1,8 @@
-//! Error types for the Asimov Protocol validator
+//! Error types for the RoyalBit Asimov validator
 
 use thiserror::Error;
 
-/// Result type for Asimov Protocol operations
+/// Result type for RoyalBit Asimov operations
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// Errors that can occur during validation

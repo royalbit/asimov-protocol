@@ -4,8 +4,8 @@ pub const WARMUP_SCHEMA: &str = r#"
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/royalbit/asimov/schemas/warmup.json",
-  "title": "Asimov Protocol - warmup.yaml",
-  "description": "Session bootstrap file for the Asimov Protocol",
+  "title": "RoyalBit Asimov - warmup.yaml",
+  "description": "Session bootstrap file for the RoyalBit Asimov",
   "type": "object",
   "required": ["identity"],
   "properties": {

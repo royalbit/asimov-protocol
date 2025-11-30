@@ -1,6 +1,6 @@
-# Asimov Protocol Goals
+# RoyalBit Asimov Goals
 
-Core values and strategic direction for the Asimov Protocol.
+Core values and strategic direction for the RoyalBit Asimov.
 
 ## Core Values (Priority Order)
 
@@ -50,7 +50,7 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - `CLAUDE.md` memory hierarchy
 - Auto-compact at 95% capacity
 
-**Asimov Protocol's unique value:**
+**RoyalBit Asimov's unique value:**
 - Ethics Protocol (ethics.yaml)
 - Green Protocol (green.yaml)
 - Anti-Sycophancy Protocol (sycophancy.yaml)

@@ -126,7 +126,7 @@ Use them for what they're good at:
 - **Copilot**: Autocomplete, inline suggestions, small completions
 - **Claude Code**: Autonomous multi-hour coding sessions
 
-Different tools for different jobs. The Asimov Protocol is specifically designed for **autonomous development**, which currently only Claude Code supports.
+Different tools for different jobs. The RoyalBit Asimov is specifically designed for **autonomous development**, which currently only Claude Code supports.
 
 ### Q: Is this vendor lock-in?
 
@@ -163,7 +163,7 @@ The protocol is designed so that IF alternatives emerge, migration is easy (it's
 
 ## The Bottom Line
 
-**The Asimov Protocol has two layers:**
+**The RoyalBit Asimov has two layers:**
 
 1. **Protocol Files** (warmup.yaml, sprint.yaml, roadmap.yaml)
    - Universal
@@ -233,4 +233,4 @@ If all six steps work, you have ASIMOV MODE compatibility.
 
 *Last updated: 2025-11-27*
 
-*This document is intentionally blunt. The Asimov Protocol's value is in honest assessment of what's possible, not in marketing fiction about vendor-neutral futures that aren't coming.*
+*This document is intentionally blunt. The RoyalBit Asimov's value is in honest assessment of what's possible, not in marketing fiction about vendor-neutral futures that aren't coming.*

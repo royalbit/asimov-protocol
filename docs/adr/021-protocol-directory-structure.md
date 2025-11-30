@@ -12,7 +12,7 @@ Accepted
 
 ### The Problem
 
-The Asimov Protocol currently stores 7 YAML files in the repository root:
+The RoyalBit Asimov currently stores 7 YAML files in the repository root:
 
 ```
 /
@@ -44,7 +44,7 @@ This creates several issues:
 | Claude Code | `.claude/` | Hidden directory |
 | VS Code | `.vscode/` | Hidden directory |
 | Git | `.git/` | Hidden directory |
-| Asimov Protocol | `/` (root) | No namespace |
+| RoyalBit Asimov | `/` (root) | No namespace |
 
 We're the outlier.
 
@@ -99,7 +99,7 @@ The `asimov` CLI will:
 
 1. **Convention**: Matches `.github/`, `.claude/`, `.vscode/`
 2. **Clean root**: Only user-facing files visible by default
-3. **Namespace**: Clear "this is Asimov Protocol" grouping
+3. **Namespace**: Clear "this is RoyalBit Asimov" grouping
 4. **Discoverability**: Developers know to look for dotfiles
 
 ### Why Not `protocol/` (Visible)?

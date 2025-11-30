@@ -1,4 +1,4 @@
-# Asimov Protocol Examples
+# RoyalBit Asimov Examples
 
 Real-world configurations for different project types.
 

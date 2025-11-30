@@ -2,7 +2,7 @@
 
 pub const CHECKPOINT_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Asimov Protocol Checkpoint",
+  "title": "RoyalBit Asimov Checkpoint",
   "description": "Schema for .claude_checkpoint.yaml - Session state for self-healing",
   "type": "object",
   "required": ["milestone"],

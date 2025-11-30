@@ -57,7 +57,7 @@ alias: "claude --dangerously-skip-permissions --model opus"
 ```
 Time     Commit   Description
 ──────── ──────── ─────────────────────────────────────────
-18:54    82cde57  feat: Add full Asimov Protocol (516+ lines)
+18:54    82cde57  feat: Add full RoyalBit Asimov (516+ lines)
 19:11    a847b07  feat: Add self-healing protocol
 19:20    cf097ed  docs: Add comprehensive self-healing docs
 19:24    ce274b1  docs: Add ADR-002

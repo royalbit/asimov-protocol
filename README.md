@@ -1,4 +1,4 @@
-# Asimov Protocol
+# RoyalBit Asimov
 
 [![CI](https://github.com/royalbit/asimov/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/v/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
@@ -30,7 +30,7 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
 
-📈 **Case Study:** [Asimov Protocol vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+📈 **Case Study:** [RoyalBit Asimov vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
 
 ---
 
@@ -54,7 +54,7 @@ See [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-m
 
 ---
 
-### v7.0: Asimov Protocol - The Open Foundation
+### v7.0: RoyalBit Asimov - The Open Foundation
 
 **AI session continuity framework. Zero tokens. Zero emissions.**
 
@@ -81,7 +81,7 @@ A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from
 
 ## Core Principles
 
-The Asimov Protocol exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
+The RoyalBit Asimov exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
 
 | Priority | Principle | Problem It Solves |
 |----------|-----------|-------------------|
@@ -174,7 +174,7 @@ session:
 
 "Hallucination" is a misnomer. **AI is working exactly as designed**—the limitations are architectural (by design) or vendor-imposed (business decisions).
 
-| AI Limitation | Why It Happens | Asimov Protocol Fix |
+| AI Limitation | Why It Happens | RoyalBit Asimov Fix |
 |---------------|----------------|-------------------|
 | Forgets your rules | Auto-compact compresses context | Re-read `warmup.yaml` from disk |
 | Invents conventions | Generates "probable" text, not facts | Structured rules in files |
@@ -189,7 +189,7 @@ AI memory (lossy, probabilistic)   → "Hallucinations"
 File truth (stable, deterministic) → Reliability
 ```
 
-**The Asimov Protocol doesn't fix AI. It compensates for architectural limitations.**
+**The RoyalBit Asimov doesn't fix AI. It compensates for architectural limitations.**
 
 - Don't let AI *imagine* your project context → **read it from warmup.yaml**
 - Don't let AI *imagine* your financial calculations → **execute them locally with [Forge](https://github.com/royalbit/forge)**
@@ -370,7 +370,7 @@ See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov/blob/main/docs
 
 ### Green Impact at Scale
 
-When organizations adopt the Asimov Protocol:
+When organizations adopt the RoyalBit Asimov:
 
 | Adoption | Annual Carbon Saved | Equivalent |
 | -------- | ------------------- | ---------- |
@@ -423,7 +423,7 @@ See [Green Coding Economics](https://github.com/royalbit/asimov/blob/main/docs/G
 
 ## Proven at Scale
 
-The Asimov Protocol powers an entire product ecosystem:
+The RoyalBit Asimov powers an entire product ecosystem:
 
 | Project | AI Role | Stack | Status |
 | ------- | ------- | ----- | ------ |
@@ -444,7 +444,7 @@ See [ECOSYSTEM.md](https://github.com/royalbit/asimov/blob/main/docs/ECOSYSTEM.m
 
 ## Use Case: The Forge Tool
 
-**[Forge](https://github.com/royalbit/forge)** is a YAML formula calculator built entirely with the Asimov Protocol. It's the proof that the protocol works.
+**[Forge](https://github.com/royalbit/forge)** is a YAML formula calculator built entirely with the RoyalBit Asimov. It's the proof that the protocol works.
 
 ### What Forge Does
 
@@ -461,7 +461,7 @@ forge sensitivity model.yaml -v price -r 80,120,10 -o profit
 
 ### How It Was Built
 
-The entire Forge project was built by 1 human + Claude using the Asimov Protocol:
+The entire Forge project was built by 1 human + Claude using the RoyalBit Asimov:
 
 | Phase | Time | What Shipped |
 | ----- | ---- | ------------ |
@@ -520,9 +520,9 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 | Rework | 30-50% | **~0%** | **∞** |
 | Releases | 3-5 total | **41** | **10x** |
 
-**Bottom line:** 1 human + AI with Asimov Protocol = **50-150x velocity** (verified via git logs).
+**Bottom line:** 1 human + AI with RoyalBit Asimov = **50-150x velocity** (verified via git logs).
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **23x for complete products** ([case study](docs/CASE_STUDY_VELOCITY.md)). More importantly: Asimov Protocol ethics [refused the creator's surveillance request](docs/case-studies/001-ethics-protocol-blocks-surveillance.md). Copilot's safety is [trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot) and [generates malware on request](https://ieeexplore.ieee.org/document/10284976/).
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). RoyalBit Asimov delivers **23x for complete products** ([case study](docs/CASE_STUDY_VELOCITY.md)). More importantly: RoyalBit Asimov ethics [refused the creator's surveillance request](docs/case-studies/001-ethics-protocol-blocks-surveillance.md). Copilot's safety is [trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot) and [generates malware on request](https://ieeexplore.ieee.org/document/10284976/).
 
 ### The Protocol Built Itself
 
@@ -568,7 +568,7 @@ flowchart LR
 
 | Scope | Solution | How It Works | Requires |
 |-------|----------|--------------|----------|
-| **Mid-session** (before compaction) | `warmup.yaml` re-read | AI detects confusion → reads from disk | **Asimov Protocol** |
+| **Mid-session** (before compaction) | `warmup.yaml` re-read | AI detects confusion → reads from disk | **RoyalBit Asimov** |
 | **Cross-session** (between sessions) | `--continue`, `--resume` | Human starts new CLI session | Claude Code native |
 | **Manual restore** (any time) | `/rewind`, `Esc+Esc` | Human issues command | Claude Code native |
 
@@ -576,7 +576,7 @@ flowchart LR
 
 The `warmup.yaml` re-read pattern is the **only mechanism** for mid-session automatic recovery.
 
-### Mid-Session Self-Healing (Asimov Protocol)
+### Mid-Session Self-Healing (RoyalBit Asimov)
 
 When compaction happens during an autonomous session:
 
@@ -634,7 +634,7 @@ Note: The `@import` syntax is a work in progress. For now, use explicit "ON SESS
 
 See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md) for the full analysis.
 
-### What Asimov Protocol Adds
+### What RoyalBit Asimov Adds
 
 Unique value that Claude Code doesn't have:
 
@@ -716,7 +716,7 @@ See [ADR-003](https://github.com/royalbit/asimov/blob/main/docs/adr/003-self-hea
 
 Born from building [Forge](https://github.com/royalbit/forge) - a YAML formula calculator. The protocol emerged from solving real problems: How do you maintain context across AI sessions? How do you ship quality code autonomously? How do you scale to an entire ecosystem?
 
-The answers became the Asimov Protocol.
+The answers became the RoyalBit Asimov.
 
 ## Contributing (AI-Only Development)
 
@@ -729,7 +729,7 @@ This project uses the **AI-Only Development Model** ([ADR-011](https://github.co
 External PRs are an **attack vector for ethics bypass**. A malicious contributor could:
 1. Submit innocent-looking PR with obfuscated harmful code
 2. Bypass `ethics.yaml` safeguards if merged
-3. Break the trust model of the Asimov Protocol
+3. Break the trust model of the RoyalBit Asimov
 
 **The trust model:**
 ```

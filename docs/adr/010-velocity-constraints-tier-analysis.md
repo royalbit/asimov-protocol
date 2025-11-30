@@ -27,7 +27,7 @@ The Forge project demonstrates **50-150x velocity** is achievable:
 
 This is **proven data** from git logs, not a projection. Published on [crates.io](https://crates.io/crates/royalbit-forge) with 646+ downloads.
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **50-150x**.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). RoyalBit Asimov delivers **50-150x**.
 
 ### Bootstrapping Proof
 
@@ -89,7 +89,7 @@ Test system: Intel i7 (20 cores), 32GB RAM, NVMe SSD
 
 ### Velocity is Proven: 50-150x
 
-The Asimov Protocol delivers **50-150x velocity**. This is documented, auditable, and reproducible via git logs.
+The RoyalBit Asimov delivers **50-150x velocity**. This is documented, auditable, and reproducible via git logs.
 
 ### Context Window Optimization
 
@@ -129,7 +129,7 @@ The real optimization is **subscription tier** and **context window size**.
 
 ### Velocity Proof
 - [Forge Project](https://github.com/royalbit/forge) - 18K LOC, 226 tests, 41 releases
-- [Asimov Protocol](https://github.com/royalbit/asimov) - 17K LOC, 10 releases (self-hosted)
+- [RoyalBit Asimov](https://github.com/royalbit/asimov) - 17K LOC, 10 releases (self-hosted)
 - [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge) - Published, 646+ downloads
 - [crates.io/royalbit-asimov](https://crates.io/crates/royalbit-asimov) - Published
 

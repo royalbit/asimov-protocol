@@ -339,14 +339,14 @@ See [ADR-012](docs/adr/012-hardcoded-green-coding.md) for full rationale.
 
 ### Fixed: Complete Documentation Rebrand
 
-Comprehensive update of all documentation to use Asimov Protocol branding.
+Comprehensive update of all documentation to use RoyalBit Asimov branding.
 
 #### Changes
 
 - **Rename**: `docs/SKYNET_MODE.md` → `docs/ASIMOV_MODE.md`
 - **Update**: CLAUDE.md, sycophancy.yaml, ethics.yaml, green.yaml
 - **Update**: CONTRIBUTING.md, close-external-prs.yml workflow
-- **Update**: All docs/ files - replace Forge Protocol → Asimov Protocol
+- **Update**: All docs/ files - replace Forge Protocol → RoyalBit Asimov
 - **Update**: All `--skynet` flags → `--asimov` in documentation
 - **Update**: All `forge-protocol` commands → `asimov`
 - **Preserve**: Historical references in README.md and ADR-020 (intentional)
@@ -369,23 +369,23 @@ Bug fixes to complete the v5.0.0 rebrand.
 - **Fix e2e tests**: Update binary name from `forge-protocol` to `asimov`
 - **Fix CI workflow**: Update binary check to `asimov`
 - **Fix pre-commit hook**: Update to use `asimov` binary
-- **Fix hooks**: Rebrand session-start.sh and pre-compact.sh to Asimov Protocol
+- **Fix hooks**: Rebrand session-start.sh and pre-compact.sh to RoyalBit Asimov
 - **Fix green.yaml**: Update remaining Forge Protocol references
 - **Fix markdownlint**: Update config comment
 
 ## [5.0.0] - 2025-11-29
 
-### BREAKING: Full Rebrand - Forge Protocol → Asimov Protocol
+### BREAKING: Full Rebrand - Forge Protocol → RoyalBit Asimov
 
 **The Three Laws of Robotics, encoded in YAML. The Open Foundation.**
 
-Major breaking release: complete rebrand from "Forge Protocol" to "Asimov Protocol".
+Major breaking release: complete rebrand from "Forge Protocol" to "RoyalBit Asimov".
 
 #### What Changed
 
 | Old | New |
 |-----|-----|
-| Forge Protocol | Asimov Protocol |
+| Forge Protocol | RoyalBit Asimov |
 | forge-protocol (crate) | asimov (crate) |
 | forge-protocol (binary) | asimov (binary) |
 

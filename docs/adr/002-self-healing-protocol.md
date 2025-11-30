@@ -163,7 +163,7 @@ Separation provides defense in depth. If one mechanism fails, others remain.
 
 This ADR applies to:
 
-1. **All Asimov Protocol projects** - Must include self_healing section
+1. **All RoyalBit Asimov projects** - Must include self_healing section
 2. **asimov init** - Templates include self-healing by default
 3. **Documentation** - ASIMOV_MODE.md, component docs, README
 

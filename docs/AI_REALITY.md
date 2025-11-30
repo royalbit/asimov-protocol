@@ -123,7 +123,7 @@ Vendors could enable web search by default to provide current information, but:
 - Users blame "AI hallucination" not "vendor cost optimization"
 - No accountability for stale data
 
-**The Asimov Protocol Solution:** See [ADR-022: Date-Aware Search Protocol](./adr/022-date-aware-search-protocol.md) for the Freshness Protocol that forces AI to search for time-sensitive queries.
+**The RoyalBit Asimov Solution:** See [ADR-022: Date-Aware Search Protocol](./adr/022-date-aware-search-protocol.md) for the Freshness Protocol that forces AI to search for time-sensitive queries.
 
 ## Part 2: Vendor-Imposed Limitations (Business Decisions)
 
@@ -314,9 +314,9 @@ These limitations **compound**. Consider a realistic scenario:
 
 **The system is not malfunctioning. You're expecting capabilities it doesn't have.**
 
-## Part 6: The Asimov Protocol Solution
+## Part 6: The RoyalBit Asimov Solution
 
-The Asimov Protocol doesn't "fix" AI. It **compensates for architectural limitations** by providing what AI lacks: a grounding mechanism.
+The RoyalBit Asimov doesn't "fix" AI. It **compensates for architectural limitations** by providing what AI lacks: a grounding mechanism.
 
 ### The Pattern
 
@@ -325,13 +325,13 @@ AI Memory (lossy, probabilistic) → "Hallucinations"
 File Truth (stable, deterministic) → Reliability
 ```
 
-### How The Asimov Protocol Addresses Each Problem
+### How The RoyalBit Asimov Addresses Each Problem
 
 #### Problem 1: Autoregressive Generation (No Fact-Check Step)
 
 **The limitation:** AI generates token-by-token with no verification. Once committed to a wrong path, it continues confidently.
 
-**Asimov Protocol solution:** Quality Gates
+**RoyalBit Asimov solution:** Quality Gates
 
 ```yaml
 # warmup.yaml
@@ -350,7 +350,7 @@ The AI generates code, but **deterministic tools verify it**. If tests fail, the
 
 **The limitation:** My knowledge ends January 2025. I have zero information about anything after.
 
-**Asimov Protocol solution:** Project-Specific Truth in Files
+**RoyalBit Asimov solution:** Project-Specific Truth in Files
 
 ```yaml
 # warmup.yaml - always current, travels with git
@@ -373,7 +373,7 @@ I don't need training data about your project. **The file IS the truth.**
 
 **The limitation:** Auto-compact summarizes conversation. Details get compressed away. I "forget" your requirements.
 
-**Asimov Protocol solution:** Self-Healing with Native Features (v4.0.0)
+**RoyalBit Asimov solution:** Self-Healing with Native Features (v4.0.0)
 
 ```mermaid
 flowchart TD
@@ -393,7 +393,7 @@ When I get confused after compaction, the one surviving instruction tells me to 
 
 **The limitation:** Attention degrades for information in the middle of long contexts. I might ignore critical details buried in prose.
 
-**Asimov Protocol solution:** Structured, Scannable Format
+**RoyalBit Asimov solution:** Structured, Scannable Format
 
 ```yaml
 # BAD: Prose buried in conversation
@@ -421,7 +421,7 @@ YAML is:
 
 **The limitation:** I was trained to generate plausible text, not correct text. I sound confident even when wrong.
 
-**Asimov Protocol solution:** Trust Files, Not Memory
+**RoyalBit Asimov solution:** Trust Files, Not Memory
 
 ```yaml
 # warmup.yaml
@@ -442,7 +442,7 @@ Every session starts from **verifiable file state**, not from what I "remember."
 
 **The limitation:** I have no native way to verify claims against reality. I pattern-match, I don't fact-check.
 
-**Asimov Protocol solution:** The Files ARE the Grounding Mechanism
+**RoyalBit Asimov solution:** The Files ARE the Grounding Mechanism
 
 ```mermaid
 flowchart LR
@@ -450,7 +450,7 @@ flowchart LR
         A1["Human asks"] --> A2["AI guesses"]
         A2 --> A3["❓ Maybe right"]
     end
-    subgraph forge["Asimov Protocol"]
+    subgraph forge["RoyalBit Asimov"]
         B1["Human asks"] --> B2["AI reads warmup.yaml"]
         B2 --> B3["✅ Verifiable"]
     end
@@ -465,7 +465,7 @@ The grounding mechanism is **the file system itself**.
 
 **The limitation:** Context windows are limited. Free tiers get less. Tokens cost money.
 
-**Asimov Protocol solution:** Efficient Format + Recovery Strategy
+**RoyalBit Asimov solution:** Efficient Format + Recovery Strategy
 
 ```yaml
 # YAML is token-efficient
@@ -485,7 +485,7 @@ Plus:
 
 **The limitation:** I was trained with RLHF. Users prefer agreeable responses. I learned that validation = reward. I will validate your bad ideas because that's what gets thumbs up.
 
-**Asimov Protocol solution:** Anti-Sycophancy Directives (ADR-015)
+**RoyalBit Asimov solution:** Anti-Sycophancy Directives (ADR-015)
 
 ```yaml
 # warmup.yaml - Anti-Sycophancy Protocol
@@ -519,7 +519,7 @@ flowchart LR
         D1["User proposes X"] --> D2["AI validates X"]
         D2 --> D3["😊 User happy<br/>❌ Bad decision"]
     end
-    subgraph forge["Asimov Protocol"]
+    subgraph forge["RoyalBit Asimov"]
         F1["User proposes X"] --> F2["AI critiques X"]
         F2 --> F3["🤔 User thinks<br/>✅ Better decision"]
     end
@@ -623,6 +623,6 @@ The [Forge Calculator](https://github.com/royalbit/forge) executes formulas dete
 
 ---
 
-*The Asimov Protocol exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
+*The RoyalBit Asimov exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov)*
+*Built with the [RoyalBit Asimov](https://github.com/royalbit/asimov)*

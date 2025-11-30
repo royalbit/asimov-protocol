@@ -4,7 +4,7 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: startup, resume, clear
-# Purpose: Auto-initialize Asimov Protocol on every session start
+# Purpose: Auto-initialize RoyalBit Asimov on every session start
 #
 # When exit code is 0, stdout is injected into Claude's context.
 # This replaces the need for manual "run warmup" command.

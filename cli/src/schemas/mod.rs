@@ -1,4 +1,4 @@
-//! JSON Schema definitions for Asimov Protocol files
+//! JSON Schema definitions for RoyalBit Asimov files
 //!
 //! Schemas are embedded as string constants and compiled at runtime.
 

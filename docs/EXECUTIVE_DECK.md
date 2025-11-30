@@ -278,7 +278,7 @@ flowchart LR
 
 | Item | Cost |
 |------|------|
-| Asimov Protocol license | **$0** (MIT open source) |
+| RoyalBit Asimov license | **$0** (MIT open source) |
 | CLI tool | **$0** (free) |
 | Training (per developer) | **2 hours** |
 | Pilot program (10 devs, 1 month) | **Internal time only** |

@@ -1,6 +1,6 @@
 # Use Cases: What You Can Build
 
-The Asimov Protocol isn't just for coding faster. It's a methodology for autonomous, ethical, sustainable development across multiple domains.
+The RoyalBit Asimov isn't just for coding faster. It's a methodology for autonomous, ethical, sustainable development across multiple domains.
 
 ## Proven Use Cases
 
@@ -245,7 +245,7 @@ asimov validate --ethics-check
 
 **Verify it yourself**: [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-### Asimov Protocol (Bootstrapped)
+### RoyalBit Asimov (Bootstrapped)
 
 | Metric | Value |
 |--------|-------|
@@ -285,4 +285,4 @@ If the protocol displaces your job, it also enables your next chapter:
 
 ---
 
-*Built with the [Asimov Protocol](https://github.com/royalbit/asimov)*
+*Built with the [RoyalBit Asimov](https://github.com/royalbit/asimov)*

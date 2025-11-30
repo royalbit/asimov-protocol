@@ -63,7 +63,7 @@ Available after recovery: ~82K tokens for work
 | Session history accumulation | HIGH | If checkpoint appends instead of replaces |
 | No pruning discipline | HIGH | Checkpoint grows over multi-hour sessions |
 
-### Current Protocol File Sizes (Asimov Protocol itself)
+### Current Protocol File Sizes (RoyalBit Asimov itself)
 
 | File | Lines | Est. Tokens | % of 200K |
 |------|-------|-------------|-----------|

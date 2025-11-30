@@ -1,6 +1,6 @@
-//! Asimov Protocol CLI - Validator for vendor-neutral AI session continuity
+//! RoyalBit Asimov CLI - Validator for vendor-neutral AI session continuity
 //!
-//! This crate provides validation for Asimov Protocol files:
+//! This crate provides validation for RoyalBit Asimov files:
 //! - `warmup.yaml` - Session bootstrap
 //! - `sprint.yaml` - Active work tracking
 //! - `roadmap.yaml` - Milestone planning

@@ -8,7 +8,7 @@
 
 ### The Naming Problem
 
-This project began as "Asimov Protocol" with "ASIMOV MODE" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
+This project began as "RoyalBit Asimov" with "ASIMOV MODE" - a tongue-in-cheek reference to the Terminator franchise's genocidal AI. The name was meant to be ironic: we were building autonomous AI with safeguards.
 
 But irony doesn't scale. The name communicated the opposite of our values:
 

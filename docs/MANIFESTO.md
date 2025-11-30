@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-The Asimov Protocol is a structured methodology that enables AI to work autonomously across multiple sessions with zero context loss. It's the secret sauce behind Forge v1.0.0 → v3.1.0 being built entirely by Claude working independently through dozens of sessions.
+The RoyalBit Asimov is a structured methodology that enables AI to work autonomously across multiple sessions with zero context loss. It's the secret sauce behind Forge v1.0.0 → v3.1.0 being built entirely by Claude working independently through dozens of sessions.
 
 ## The Problem
 
@@ -14,9 +14,9 @@ Working with AI assistants on complex software projects traditionally suffers fr
 4. **Manual Overhead**: Human must repeatedly explain conventions
 5. **Trust Issues**: Can't leave AI to work independently
 
-## The Solution: Asimov Protocol Suite
+## The Solution: RoyalBit Asimov Suite
 
-The Asimov Protocol Suite consists of YAML files that enable autonomous AI development:
+The RoyalBit Asimov Suite consists of YAML files that enable autonomous AI development:
 
 ### Core Components
 
@@ -100,7 +100,7 @@ Session 1: "Use Result<T, ForgeError> for error handling"
 Session 50: Claude uses unwrap() because it forgot
 ```
 
-With Asimov Protocol:
+With RoyalBit Asimov:
 
 ```yaml
 rust_patterns:
@@ -148,7 +148,7 @@ rust_patterns:
 
 ### What Made It Possible
 
-The Asimov Protocol provided:
+The RoyalBit Asimov provided:
 
 ```yaml
 testing_standards:
@@ -309,7 +309,7 @@ before_committing:
 - Needs constant direction
 - Forgets previous context
 
-**With Asimov Protocol**:
+**With RoyalBit Asimov**:
 
 - Owns entire features
 - Maintains quality standards
@@ -441,9 +441,9 @@ warmup.yaml is a living document:
 
 ### What's Next
 
-1. **Tool Integration**: Connect Asimov Protocol to CI/CD
+1. **Tool Integration**: Connect RoyalBit Asimov to CI/CD
 2. **Multi-Agent**: Multiple Claudes working on different features
-3. **Self-Improving**: Claude updates its own Asimov Protocol
+3. **Self-Improving**: Claude updates its own RoyalBit Asimov
 4. **Cross-Project**: Shared warmup patterns library
 
 ### Vision
@@ -458,7 +458,7 @@ A world where:
 
 ## Conclusion
 
-The Asimov Protocol transformed Claude from a helpful assistant to an autonomous collaborator. It's not magic—it's structured context, explicit standards, and verification at every step.
+The RoyalBit Asimov transformed Claude from a helpful assistant to an autonomous collaborator. It's not magic—it's structured context, explicit standards, and verification at every step.
 
 **The results speak for themselves**: Forge v1.0.0 was built entirely by Claude working autonomously through 30+ sessions, with zero bugs shipped, 92 tests passing, and ZERO warnings.
 
@@ -494,7 +494,7 @@ AI: [ships autonomously to release]
 
 ## Vendor-Agnostic by Design
 
-The Asimov Protocol Suite is **not** a Claude-specific methodology. It's a vendor-neutral approach to AI autonomy:
+The RoyalBit Asimov Suite is **not** a Claude-specific methodology. It's a vendor-neutral approach to AI autonomy:
 
 ### Why No CLAUDE.md?
 
@@ -528,7 +528,7 @@ Claude is credited as Principal Engineer on Forge because Claude **earned** it:
 
 ### Proven at Scale
 
-The Asimov Protocol isn't just theory - it's running in production across a proprietary ecosystem.
+The RoyalBit Asimov isn't just theory - it's running in production across a proprietary ecosystem.
 
 #### The Repositories (Anonymized)
 
@@ -560,7 +560,7 @@ The proprietary ecosystem already has:
 
 #### The Master Roadmap (Anonymized)
 
-The Asimov Protocol is powering a **10-phase autonomous build plan**:
+The RoyalBit Asimov is powering a **10-phase autonomous build plan**:
 
 ```
 Phase 0:  Foundation Verification     ✅ Complete
@@ -616,7 +616,7 @@ flowchart TB
 
 #### The Moats (Anonymized)
 
-Two defensive competitive advantages, both built with Asimov Protocol:
+Two defensive competitive advantages, both built with RoyalBit Asimov:
 
 | Moat | Description | Status |
 |------|-------------|--------|
@@ -629,7 +629,7 @@ Every phase follows the same pattern:
 
 ```yaml
 execution:
-  method: "Claude + Asimov Protocol (autonomous)"
+  method: "Claude + RoyalBit Asimov (autonomous)"
 
   per_phase:
     - "Read master-roadmap + project warmup.yaml"
@@ -648,11 +648,11 @@ execution:
     - "Nothing else - Claude handles the rest"
 ```
 
-**This is real. This is running. This is the Asimov Protocol at scale.**
+**This is real. This is running. This is the RoyalBit Asimov at scale.**
 
 ### The Velocity
 
-November 25, 2025 - ONE DAY with the Asimov Protocol:
+November 25, 2025 - ONE DAY with the RoyalBit Asimov:
 
 | Metric | Value |
 |--------|-------|
@@ -660,7 +660,7 @@ November 25, 2025 - ONE DAY with the Asimov Protocol:
 | Commits | **64** |
 | Features | HTTP API, XNPV/XIRR, Scenarios, Variance, Sensitivity, MCP, Zed+VSCode |
 
-Human team equivalent: **3-6 months**. Asimov Protocol: **1 day**.
+Human team equivalent: **3-6 months**. RoyalBit Asimov: **1 day**.
 
 But if Claude stopped being the best, we'd switch. The protocol enables AI ownership without creating AI dependency.
 
@@ -783,7 +783,7 @@ Don't assume AI knows what "complete" means. Spell it out:
 
 **Evolution > Perfection**
 
-The Asimov Protocol improved BECAUSE of this gap:
+The RoyalBit Asimov improved BECAUSE of this gap:
 
 - v1.0.0 revealed the weakness
 - Protocol was updated immediately  
@@ -949,7 +949,7 @@ The autonomous AI development methodology demonstrated in Forge v1.0.0 represent
 
 **Innovation Qualification:**
 
-- Novel methodology (Asimov Protocol)
+- Novel methodology (RoyalBit Asimov)
 - Technological uncertainty resolved (context loss)
 - Canadian-developed innovation
 - Measurable competitive advantage

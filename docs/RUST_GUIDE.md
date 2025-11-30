@@ -1,6 +1,6 @@
 # Rust Development Guide
 
-Standards for autonomous Rust development in Asimov Protocol projects.
+Standards for autonomous Rust development in RoyalBit Asimov projects.
 
 ## FOSS Research (Mandatory)
 

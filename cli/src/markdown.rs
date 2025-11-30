@@ -1,4 +1,4 @@
-//! Markdown linting for Asimov Protocol projects
+//! Markdown linting for RoyalBit Asimov projects
 //!
 //! Checks for common markdown issues, especially the code block closer bug
 //! where blocks are closed with ```lang instead of just ```
