@@ -172,6 +172,11 @@ Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human revi
 
 Everyone implements the first half of Asimov's First Law. **We implemented both.**
 
+### Anti-Tampering: 3 Layers
+1. **Hardcoded binary** — 33 red flags compiled in Rust
+2. **2-Cosigner rule** — YAML changes need 2 human signatures
+3. **Auto-validation** — Runs on every commit
+
 *Ethics through architecture, not policy.*
 
 ---
