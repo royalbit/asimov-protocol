@@ -1,4 +1,4 @@
-//! Markdown linting for Forge Protocol projects
+//! Markdown linting for Asimov Protocol projects
 //!
 //! Checks for common markdown issues, especially the code block closer bug
 //! where blocks are closed with ```lang instead of just ```

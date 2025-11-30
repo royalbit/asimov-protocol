@@ -1,6 +1,6 @@
-//! Forge Protocol CLI - Validator for vendor-neutral AI session continuity
+//! Asimov Protocol CLI - Validator for vendor-neutral AI session continuity
 //!
-//! This crate provides validation for Forge Protocol files:
+//! This crate provides validation for Asimov Protocol files:
 //! - `warmup.yaml` - Session bootstrap
 //! - `sprint.yaml` - Active work tracking
 //! - `roadmap.yaml` - Milestone planning
@@ -14,7 +14,7 @@
 //! # Example
 //!
 //! ```no_run
-//! use forge_protocol::{validate_file, validate_directory};
+//! use asimov_mode::{validate_file, validate_directory};
 //! use std::path::Path;
 //!
 //! // Validate a single file

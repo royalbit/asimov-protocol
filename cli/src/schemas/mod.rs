@@ -1,4 +1,4 @@
-//! JSON Schema definitions for Forge Protocol files
+//! JSON Schema definitions for Asimov Protocol files
 //!
 //! Schemas are embedded as string constants and compiled at runtime.
 

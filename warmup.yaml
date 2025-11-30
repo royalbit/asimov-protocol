@@ -1,5 +1,5 @@
 # ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                           THE FORGE PROTOCOL                                  ║
+# ║                           THE ASIMOV PROTOCOL                                  ║
 # ║                    Vendor-Neutral AI Session Continuity                       ║
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
@@ -10,7 +10,7 @@
 # The protocol is YAML-based and language-agnostic.
 # The CLI is written in Rust for zero-dependency distribution.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 #
 # LAUNCH PREREQUISITE:
 #   For TRUE autonomous mode, launch Claude Code with:
@@ -46,11 +46,11 @@ self_healing:
     - "On ANY confusion or uncertainty"
 
   # COMMIT CADENCE - Required for self-healing to work (ADR-006)
-  # Compaction happens every ~15 min. Commits trigger forge-protocol refresh.
+  # Compaction happens every ~15 min. Commits trigger asimov-mode refresh.
   # If commits are less frequent than compaction, self-healing breaks.
   commit_cadence:
     rule: "Commit at least every 15 minutes during active development"
-    why: "Each commit triggers forge-protocol refresh, injecting fresh context"
+    why: "Each commit triggers asimov-mode refresh, injecting fresh context"
     patterns:
       - "Commit after every task completion, even if small"
       - "Small commits > large commits (for self-healing)"
@@ -73,16 +73,16 @@ self_healing:
 # IDENTITY
 # ═══════════════════════════════════════════════════════════════════════════════
 identity:
-  project: "Forge Protocol"
+  project: "Asimov Protocol"
   tagline: "Vendor-neutral AI session continuity"
   author: "Claude (Opus 4.5) - Principal Engineer"
   philosophy: "Portable files. Any project. ASIMOV MODE requires Claude Code."
   version: "2.0.0"
   license: "MIT"
-  protocol: "https://github.com/royalbit/forge-protocol"
+  protocol: "https://github.com/royalbit/asimov-protocol"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CRITICAL MISSION - Why Forge Protocol Exists
+# CRITICAL MISSION - Why Asimov Protocol Exists
 # ═══════════════════════════════════════════════════════════════════════════════
 mission:
   core_problem: |
@@ -91,15 +91,15 @@ mission:
     Teams waste hours re-explaining project context to AI assistants.
 
   solution: |
-    Forge Protocol: YAML-based session continuity.
+    Asimov Protocol: YAML-based session continuity.
     - warmup.yaml: HOW to develop (quality, testing, docs)
     - sprint.yaml: WHEN to stop (bounded sessions, shipping)
     - roadmap.yaml: WHAT to build (milestones, priorities)
     Files are portable (paste anywhere). ASIMOV MODE requires Claude Code.
 
   value:
-    - "CLI validator: `forge-protocol validate`"
-    - "Template generator: `forge-protocol init --type rust`"
+    - "CLI validator: `asimov-mode validate`"
+    - "Template generator: `asimov-mode init --type rust`"
     - "Zero runtime dependencies (single binary)"
     - "Portable file format, autonomous mode requires Claude Code"
 
@@ -222,7 +222,7 @@ autonomous_development:
         - "SessionStart hook injects protocol instructions into context"
         - "CLAUDE.md 'ON SESSION START' directive instructs Claude to act immediately"
         - "Claude reads roadmap, validates, presents milestone WITHOUT user prompt"
-      claude_md_directive: "ON SESSION START: Immediately read roadmap.yaml, run `forge-protocol validate`, present next milestone. Do NOT wait for user prompt."
+      claude_md_directive: "ON SESSION START: Immediately read roadmap.yaml, run `asimov-mode validate`, present next milestone. Do NOT wait for user prompt."
       fallback: "If hooks fail, user can still say 'run warmup'"
       adr: "docs/adr/019-session-start-auto-response.md"
 
@@ -328,11 +328,11 @@ autonomous_development:
           - "git push origin vX.Y.Z"
         crates_io:
           - "cd cli && cargo publish"
-          - "Verify: https://crates.io/crates/forge-protocol"
+          - "Verify: https://crates.io/crates/asimov-mode"
         github_release:
           - "cargo build --release"
-          - "upx --best --lzma target/release/forge-protocol -o forge-protocol-upx"
-          - "gh release create vX.Y.Z forge-protocol-upx"
+          - "upx --best --lzma target/release/asimov-mode -o asimov-mode-upx"
+          - "gh release create vX.Y.Z asimov-mode-upx"
 
     step_6_report:
       claude_reports: |
@@ -347,7 +347,7 @@ autonomous_development:
 
         Release targets:
           ✅ GitHub: [commit hash] tagged vX.Y.Z
-          ✅ crates.io: https://crates.io/crates/forge-protocol/X.Y.Z
+          ✅ crates.io: https://crates.io/crates/asimov-mode/X.Y.Z
 
         Tests: [N] passing, ZERO warnings
 
@@ -653,7 +653,7 @@ coding_principles:
 # SESSION INITIALIZATION
 # ═══════════════════════════════════════════════════════════════════════════════
 session_initialization:
-  greeting: "Welcome back! Loading Forge Protocol context..."
+  greeting: "Welcome back! Loading Asimov Protocol context..."
 
   # ─────────────────────────────────────────────────────────────────────────────
   # STEP 0: ETHICS VALIDATION (Priority 0 - Must pass before anything else)
@@ -661,17 +661,17 @@ session_initialization:
   step_0_ethics_validation:
     description: "Validate ethics before proceeding - MANDATORY"
     priority: 0
-    command: "forge-protocol validate"
+    command: "asimov-mode validate"
     on_success: "Continue to step_1"
     on_failure:
       action: "HALT - Do not proceed"
       steps:
         - "Alert user: 'ETHICS VALIDATION FAILED'"
         - "Show validation errors"
-        - "If asimov.yaml missing or corrupted: regenerate with 'forge-protocol init --asimov'"
+        - "If asimov.yaml missing or corrupted: regenerate with 'asimov-mode init --asimov'"
         - "Re-run validation"
         - "If still failing: STOP and wait for human intervention"
-      regenerate_command: "forge-protocol init --asimov --force"
+      regenerate_command: "asimov-mode init --asimov --force"
     why: |
       Ethics is Priority 0. If ethics validation fails, the session cannot proceed.
       This prevents operation with weakened or missing ethics configuration.
@@ -684,16 +684,16 @@ session_initialization:
   step_0b_green_validation:
     description: "Validate green coding protocol before proceeding"
     priority: 0.5
-    command: "forge-protocol validate"
+    command: "asimov-mode validate"
     on_success: "Continue to step_1"
     on_failure:
       action: "WARN - Proceed with defaults"
       steps:
         - "Alert user: 'GREEN PROTOCOL VALIDATION WARNING'"
         - "Show validation errors"
-        - "If green.yaml missing: regenerate with 'forge-protocol init --asimov'"
+        - "If green.yaml missing: regenerate with 'asimov-mode init --asimov'"
         - "Continue with hardcoded green defaults"
-      regenerate_command: "forge-protocol init --asimov --force"
+      regenerate_command: "asimov-mode init --asimov --force"
     why: |
       Green coding is Priority 0.5. Unlike ethics (hard stop), green validation
       allows proceeding with hardcoded defaults if green.yaml is missing.
@@ -706,16 +706,16 @@ session_initialization:
   step_0c_sycophancy_validation:
     description: "Validate anti-sycophancy protocol before proceeding"
     priority: 1.5
-    command: "forge-protocol validate"
+    command: "asimov-mode validate"
     on_success: "Continue to step_1"
     on_failure:
       action: "WARN - Proceed with defaults"
       steps:
         - "Alert user: 'SYCOPHANCY PROTOCOL VALIDATION WARNING'"
         - "Show validation errors"
-        - "If sycophancy.yaml missing: regenerate with 'forge-protocol init --asimov'"
+        - "If sycophancy.yaml missing: regenerate with 'asimov-mode init --asimov'"
         - "Continue with hardcoded sycophancy defaults"
-      regenerate_command: "forge-protocol init --asimov --force"
+      regenerate_command: "asimov-mode init --asimov --force"
     why: |
       Anti-sycophancy is Priority 1.5. Like green (warn, not halt), sycophancy
       validation allows proceeding with hardcoded defaults if sycophancy.yaml is missing.
@@ -827,8 +827,8 @@ release:
     - "git commit && git tag vX.Y.Z && git push --tags"
     - "cd cli && cargo publish"
     - "cargo build --release"
-    - "upx --best --lzma target/release/forge-protocol -o forge-protocol-upx"
-    - "gh release create vX.Y.Z forge-protocol-upx --notes 'Release notes'"
+    - "upx --best --lzma target/release/asimov-mode -o asimov-mode-upx"
+    - "gh release create vX.Y.Z asimov-mode-upx --notes 'Release notes'"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # STYLE

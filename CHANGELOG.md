@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] - 2025-11-29
+
+### BREAKING: Full Rebrand - Forge Protocol → Asimov Protocol
+
+**The Three Laws of Robotics, encoded in YAML. The Open Foundation.**
+
+Major breaking release: complete rebrand from "Forge Protocol" to "Asimov Protocol".
+
+#### What Changed
+
+| Old | New |
+|-----|-----|
+| Forge Protocol | Asimov Protocol |
+| forge-protocol (crate) | asimov-mode (crate) |
+| forge-protocol (binary) | asimov-mode (binary) |
+
+#### Why v5.0.0?
+
+This is a major breaking change:
+- Crate name changed on crates.io
+- Binary name changed
+- All CLI commands now use `asimov-mode` instead of `forge-protocol`
+- GitHub repo renamed to `asimov-protocol`
+
+#### Migration
+
+```bash
+# Remove old
+cargo uninstall forge-protocol
+
+# Install new
+cargo install asimov-mode
+```
+
+#### The Name
+
+"asimov-protocol" was taken on crates.io (different project at v25.0.2).
+"asimov-mode" matches our terminology: "ASIMOV MODE ACTIVATED".
+
+See [ADR-020](docs/adr/020-asimov-mode-open-foundation.md) for full rationale.
+
 ## [4.2.0] - 2025-11-29
 
 ### Added: Asimov Mode - The Open Foundation (ADR-020)

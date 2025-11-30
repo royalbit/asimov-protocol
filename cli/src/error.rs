@@ -1,8 +1,8 @@
-//! Error types for the Forge Protocol validator
+//! Error types for the Asimov Protocol validator
 
 use thiserror::Error;
 
-/// Result type for Forge Protocol operations
+/// Result type for Asimov Protocol operations
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// Errors that can occur during validation

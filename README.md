@@ -1,9 +1,9 @@
-# Forge Protocol
+# Asimov Protocol
 
-[![CI](https://github.com/royalbit/forge-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/forge-protocol/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
-[![Downloads](https://img.shields.io/crates/d/forge-protocol.svg)](https://crates.io/crates/forge-protocol)
-[![License](https://img.shields.io/crates/l/forge-protocol.svg)](https://github.com/royalbit/forge-protocol/blob/main/LICENSE)
+[![CI](https://github.com/royalbit/asimov-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov-protocol/actions/workflows/ci.yml)
+[![Crates.io](https://img.shields.io/crates/v/asimov-mode.svg)](https://crates.io/crates/asimov-mode)
+[![Downloads](https://img.shields.io/crates/d/asimov-mode.svg)](https://crates.io/crates/asimov-mode)
+[![License](https://img.shields.io/crates/l/asimov-mode.svg)](https://github.com/royalbit/asimov-protocol/blob/main/LICENSE)
 
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
 
@@ -75,7 +75,7 @@ A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from
 
 ## Core Principles
 
-The Forge Protocol exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
+The Asimov Protocol exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
 
 | Priority | Principle | Problem It Solves |
 |----------|-----------|-------------------|
@@ -143,7 +143,7 @@ session:
 
 "Hallucination" is a misnomer. **AI is working exactly as designed**—the limitations are architectural (by design) or vendor-imposed (business decisions).
 
-| AI Limitation | Why It Happens | Forge Protocol Fix |
+| AI Limitation | Why It Happens | Asimov Protocol Fix |
 |---------------|----------------|-------------------|
 | Forgets your rules | Auto-compact compresses context | Re-read `warmup.yaml` from disk |
 | Invents conventions | Generates "probable" text, not facts | Structured rules in files |
@@ -158,26 +158,26 @@ AI memory (lossy, probabilistic)   → "Hallucinations"
 File truth (stable, deterministic) → Reliability
 ```
 
-**The Forge Protocol doesn't fix AI. It compensates for architectural limitations.**
+**The Asimov Protocol doesn't fix AI. It compensates for architectural limitations.**
 
 - Don't let AI *imagine* your project context → **read it from warmup.yaml**
 - Don't let AI *imagine* your financial calculations → **execute them locally with [Forge](https://github.com/royalbit/forge)**
 
-📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/forge-protocol/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
+📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
 
 ## CLI Validator
 
-Install from [crates.io](https://crates.io/crates/forge-protocol):
+Install from [crates.io](https://crates.io/crates/asimov-mode):
 
 ```bash
-cargo install forge-protocol
+cargo install asimov-mode
 ```
 
 Or build from source (smaller binary with UPX compression):
 
 ```bash
-git clone https://github.com/royalbit/forge-protocol
-cd forge-protocol
+git clone https://github.com/royalbit/asimov-protocol
+cd asimov-protocol
 make install-system    # Install to /usr/local/bin (1.3MB compressed)
 # OR
 make install-user      # Install to ~/.local/bin
@@ -186,31 +186,31 @@ make install-user      # Install to ~/.local/bin
 Validate your protocol files:
 
 ```bash
-forge-protocol validate              # Validate all files in current directory
-forge-protocol validate warmup.yaml  # Validate specific file
+asimov-mode validate              # Validate all files in current directory
+asimov-mode validate warmup.yaml  # Validate specific file
 ```
 
 Generate templates:
 
 ```bash
-forge-protocol init                  # Generate warmup.yaml (generic)
-forge-protocol init --type rust      # Generate Rust-specific template
-forge-protocol init --full           # Generate all three protocol files
-forge-protocol init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
+asimov-mode init                  # Generate warmup.yaml (generic)
+asimov-mode init --type rust      # Generate Rust-specific template
+asimov-mode init --full           # Generate all three protocol files
+asimov-mode init --asimov         # Full ASIMOV MODE setup (Three Laws + hooks)
 ```
 
 Lint documentation:
 
 ```bash
-forge-protocol lint-docs             # Check all markdown files
-forge-protocol lint-docs --fix       # Auto-fix code block issues
+asimov-mode lint-docs             # Check all markdown files
+asimov-mode lint-docs --fix       # Auto-fix code block issues
 ```
 
 Refresh protocol context (for git hooks):
 
 ```bash
-forge-protocol refresh               # Output protocol reminder (compact-resistant)
-forge-protocol refresh --verbose     # Include quality gates from warmup.yaml
+asimov-mode refresh               # Output protocol reminder (compact-resistant)
+asimov-mode refresh --verbose     # Include quality gates from warmup.yaml
 ```
 
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
@@ -259,7 +259,7 @@ These aren't missing features. They're **different products for different use ca
 
 **Is this vendor lock-in?** Yes, for ASIMOV MODE. The files are portable. The magic isn't.
 
-See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
+See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
 
 ## Green Coding & ESG Impact
 
@@ -296,7 +296,7 @@ See [VENDOR_IMPLEMENTATION.md](https://github.com/royalbit/forge-protocol/blob/m
 
 ### Green Impact at Scale
 
-When organizations adopt the Forge Protocol:
+When organizations adopt the Asimov Protocol:
 
 | Adoption | Annual Carbon Saved | Equivalent |
 | -------- | ------------------- | ---------- |
@@ -324,15 +324,15 @@ When organizations adopt the Forge Protocol:
 
 ```bash
 # Install once (1.3MB)
-cargo install forge-protocol
+cargo install asimov-mode
 
 # Validate forever ($0, ~0.002g CO₂ per run)
-forge-protocol validate
+asimov-mode validate
 ```
 
 *Ship fast. Ship small. Ship green.*
 
-See [Green Coding Economics](https://github.com/royalbit/forge-protocol/blob/main/docs/GREEN_CODING.md) for the full analysis.
+See [Green Coding Economics](https://github.com/royalbit/asimov-protocol/blob/main/docs/GREEN_CODING.md) for the full analysis.
 
 ## Protocol Suite
 
@@ -345,7 +345,7 @@ See [Green Coding Economics](https://github.com/royalbit/forge-protocol/blob/mai
 
 ## Proven at Scale
 
-The Forge Protocol powers an entire product ecosystem:
+The Asimov Protocol powers an entire product ecosystem:
 
 | Project | AI Role | Stack | Status |
 | ------- | ------- | ----- | ------ |
@@ -362,11 +362,11 @@ The Forge Protocol powers an entire product ecosystem:
 - 1,000+ line master roadmap
 - Comprehensive test suites across ecosystem
 
-See [ECOSYSTEM.md](https://github.com/royalbit/forge-protocol/blob/main/docs/ECOSYSTEM.md) for the full story.
+See [ECOSYSTEM.md](https://github.com/royalbit/asimov-protocol/blob/main/docs/ECOSYSTEM.md) for the full story.
 
 ## Use Case: The Forge Tool
 
-**[Forge](https://github.com/royalbit/forge)** is a YAML formula calculator built entirely with the Forge Protocol. It's the proof that the protocol works.
+**[Forge](https://github.com/royalbit/forge)** is a YAML formula calculator built entirely with the Asimov Protocol. It's the proof that the protocol works.
 
 ### What Forge Does
 
@@ -383,7 +383,7 @@ forge sensitivity model.yaml -v price -r 80,120,10 -o profit
 
 ### How It Was Built
 
-The entire Forge project was built by 1 human + Claude using the Forge Protocol:
+The entire Forge project was built by 1 human + Claude using the Asimov Protocol:
 
 | Phase | Time | What Shipped |
 | ----- | ---- | ------------ |
@@ -442,18 +442,18 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 | Rework | 30-50% | **~0%** | **∞** |
 | Releases | 3-5 total | **41** | **10x** |
 
-**Bottom line:** 1 human + AI with Forge Protocol = **50-150x velocity** (verified via git logs).
+**Bottom line:** 1 human + AI with Asimov Protocol = **50-150x velocity** (verified via git logs).
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Forge Protocol delivers **50-150x**. That's not comparable.
+**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). Asimov Protocol delivers **50-150x**. That's not comparable.
 
 ### The Protocol Built Itself
 
-The ultimate proof: forge-protocol was built using forge-protocol.
+The ultimate proof: asimov-protocol was built using asimov-protocol.
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [forge-protocol](https://github.com/royalbit/forge-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/forge-protocol) |
+| [asimov-protocol](https://github.com/royalbit/asimov-protocol) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/asimov-mode) |
 | **Total** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases. Verify it yourself.**
@@ -490,7 +490,7 @@ flowchart LR
 
 | Scope | Solution | How It Works | Requires |
 |-------|----------|--------------|----------|
-| **Mid-session** (before compaction) | `warmup.yaml` re-read | AI detects confusion → reads from disk | **Forge Protocol** |
+| **Mid-session** (before compaction) | `warmup.yaml` re-read | AI detects confusion → reads from disk | **Asimov Protocol** |
 | **Cross-session** (between sessions) | `--continue`, `--resume` | Human starts new CLI session | Claude Code native |
 | **Manual restore** (any time) | `/rewind`, `Esc+Esc` | Human issues command | Claude Code native |
 
@@ -498,7 +498,7 @@ flowchart LR
 
 The `warmup.yaml` re-read pattern is the **only mechanism** for mid-session automatic recovery.
 
-### Mid-Session Self-Healing (Forge Protocol)
+### Mid-Session Self-Healing (Asimov Protocol)
 
 When compaction happens during an autonomous session:
 
@@ -556,7 +556,7 @@ Note: The `@import` syntax is a work in progress. For now, use explicit "ON SESS
 
 See [ADR-009](docs/adr/009-claude-code-native-integration.md) and [ADR-013](docs/adr/013-self-healing-not-replaced.md) for the full analysis.
 
-### What Forge Protocol Adds
+### What Asimov Protocol Adds
 
 Unique value that Claude Code doesn't have:
 
@@ -565,9 +565,9 @@ Unique value that Claude Code doesn't have:
 | **The Three Laws** | `asimov.yaml`, `human_veto`, red flags |
 | **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns |
 | **Green Coding** | Zero tokens, ESG metrics |
-| **Schema Validation** | `forge-protocol validate` |
+| **Schema Validation** | `asimov-mode validate` |
 
-See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/main/docs/components/4-SELF_HEALING.md) for details.
+See [Component 4: Self-Healing](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/4-SELF_HEALING.md) for details.
 
 ## Documentation
 
@@ -578,26 +578,26 @@ See [Component 4: Self-Healing](https://github.com/royalbit/forge-protocol/blob/
 
 ### ASIMOV MODE
 - **[ASIMOV MODE Overview](docs/SKYNET_MODE.md)** - The complete autonomous AI development system (note: file to be renamed)
-- [Setup Guide](https://github.com/royalbit/forge-protocol/blob/main/docs/SETUP.md) - Get started with one command
+- [Setup Guide](https://github.com/royalbit/asimov-protocol/blob/main/docs/SETUP.md) - Get started with one command
 
 ### The Five Components
-1. [Protocol Files](https://github.com/royalbit/forge-protocol/blob/main/docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
-2. [Sprint Autonomy](https://github.com/royalbit/forge-protocol/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
-3. [Quality Gates](https://github.com/royalbit/forge-protocol/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
-4. [Self-Healing](https://github.com/royalbit/forge-protocol/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
-5. [Release Discipline](https://github.com/royalbit/forge-protocol/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
+1. [Protocol Files](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/1-PROTOCOL_FILES.md) - warmup.yaml, sprint.yaml, roadmap.yaml
+2. [Sprint Autonomy](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
+3. [Quality Gates](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
+4. [Self-Healing](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
+5. [Release Discipline](https://github.com/royalbit/asimov-protocol/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
 
 ### Reference
-- [Full Specification](https://github.com/royalbit/forge-protocol/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
-- [AI Reality](https://github.com/royalbit/forge-protocol/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
-- [Vendor Implementation](https://github.com/royalbit/forge-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
-- [Presentation](https://github.com/royalbit/forge-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
+- [Full Specification](https://github.com/royalbit/asimov-protocol/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
+- [AI Reality](https://github.com/royalbit/asimov-protocol/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
+- [Vendor Implementation](https://github.com/royalbit/asimov-protocol/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
+- [Presentation](https://github.com/royalbit/asimov-protocol/blob/main/docs/PRESENTATION.md) - Marp slide deck
 
 ### Architecture Decisions
-- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
-- [ADR-001: Green Coding By Default](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/001-green-coding-by-default.md)
-- [ADR-002: Self-Healing Protocol](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/002-self-healing-protocol.md)
-- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
+- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
+- [ADR-001: Green Coding By Default](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/001-green-coding-by-default.md)
+- [ADR-002: Self-Healing Protocol](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/002-self-healing-protocol.md)
+- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
 
 ## Case Study: Protocol v2.0 (This Session)
 
@@ -631,13 +631,13 @@ Claude: [rewrites spec, updates 9 projects, ships v2.0.0]
 
 **One session. One human. One milestone. Shipped.**
 
-See [ADR-003](https://github.com/royalbit/forge-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
+See [ADR-003](https://github.com/royalbit/asimov-protocol/blob/main/docs/adr/003-self-healing-real-compaction-data.md) for the research findings.
 
 ## Origin
 
 Born from building [Forge](https://github.com/royalbit/forge) - a YAML formula calculator. The protocol emerged from solving real problems: How do you maintain context across AI sessions? How do you ship quality code autonomously? How do you scale to an entire ecosystem?
 
-The answers became the Forge Protocol.
+The answers became the Asimov Protocol.
 
 ## Contributing (AI-Only Development)
 
@@ -650,7 +650,7 @@ This project uses the **AI-Only Development Model** ([ADR-011](docs/adr/011-ai-o
 External PRs are an **attack vector for ethics bypass**. A malicious contributor could:
 1. Submit innocent-looking PR with obfuscated harmful code
 2. Bypass `ethics.yaml` safeguards if merged
-3. Break the trust model of the Forge Protocol
+3. Break the trust model of the Asimov Protocol
 
 **The trust model:**
 ```
@@ -663,8 +663,8 @@ PRs require human code review, but humans reviewing AI-generated code is not the
 
 | Method | Description |
 |--------|-------------|
-| **[Issues](https://github.com/royalbit/forge-protocol/issues)** | Report bugs, request features |
-| **[Discussions](https://github.com/royalbit/forge-protocol/discussions)** | Ask questions, share ideas |
+| **[Issues](https://github.com/royalbit/asimov-protocol/issues)** | Report bugs, request features |
+| **[Discussions](https://github.com/royalbit/asimov-protocol/discussions)** | Ask questions, share ideas |
 | **Fork** | Create your own version (carry `ethics.yaml` forward) |
 
 When AI implements your idea from an Issue, you'll be credited in the commit message.

@@ -1,4 +1,4 @@
-//! Forge Protocol CLI - Validator for vendor-neutral AI session continuity
+//! Asimov Protocol CLI - The Three Laws of Robotics, encoded in YAML
 
 use asimov_mode::{
     asimov_template, banned_phrases, check_ethics_status, check_markdown_file,
@@ -17,26 +17,26 @@ use std::process::ExitCode;
 #[derive(Parser)]
 #[command(name = "asimov-mode")]
 #[command(about = "Green coding CLI for AI development - zero tokens, zero emissions")]
-#[command(long_about = "Forge Protocol CLI - Ethical AI Development
+#[command(long_about = "Asimov Protocol CLI - The Three Laws of Robotics
 
-Validates protocol files against the Forge Protocol specification:
+Validates protocol files against the Asimov Protocol specification:
   - asimov.yaml  - The Three Laws (required in ASIMOV MODE)
   - warmup.yaml  - Session bootstrap (required)
   - sprint.yaml  - Active work tracking (optional)
   - roadmap.yaml - Milestone planning (optional)
 
 EXAMPLES:
-  forge-protocol validate                    # Validate all protocol files in cwd
-  forge-protocol validate warmup.yaml        # Validate specific file
-  forge-protocol init                        # Generate starter warmup.yaml (generic)
-  forge-protocol init --type rust            # Generate Rust-specific warmup.yaml
-  forge-protocol init --type python          # Generate Python-specific warmup.yaml
-  forge-protocol init --type node            # Generate Node.js-specific warmup.yaml
-  forge-protocol init --type go              # Generate Go-specific warmup.yaml
-  forge-protocol init --type flutter         # Generate Flutter-specific warmup.yaml
-  forge-protocol init --type docs            # Generate docs/architecture warmup.yaml
-  forge-protocol init --full                 # Generate all protocol files
-  forge-protocol init --asimov               # Full ASIMOV MODE setup
+  asimov-mode validate                    # Validate all protocol files in cwd
+  asimov-mode validate warmup.yaml        # Validate specific file
+  asimov-mode init                        # Generate starter warmup.yaml (generic)
+  asimov-mode init --type rust            # Generate Rust-specific warmup.yaml
+  asimov-mode init --type python          # Generate Python-specific warmup.yaml
+  asimov-mode init --type node            # Generate Node.js-specific warmup.yaml
+  asimov-mode init --type go              # Generate Go-specific warmup.yaml
+  asimov-mode init --type flutter         # Generate Flutter-specific warmup.yaml
+  asimov-mode init --type docs            # Generate docs/architecture warmup.yaml
+  asimov-mode init --full                 # Generate all protocol files
+  asimov-mode init --asimov               # Full ASIMOV MODE setup
 
 TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
 
@@ -58,10 +58,10 @@ GREEN CODING - Why This Matters:
   - Carbon reduction: 99.6% vs cloud AI
   - ESG compliance: Supports corporate sustainability goals
 
-Every project initialized with forge-protocol is a green-coding project.
+Every project initialized with asimov-mode is a green-coding project.
 Zero tokens. Zero emissions. Ship fast.
 
-Docs: https://github.com/royalbit/forge-protocol")]
+Docs: https://github.com/royalbit/asimov-protocol")]
 #[command(version)]
 struct Cli {
     #[command(subcommand)]
@@ -296,7 +296,7 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
 }
 
 fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
-    println!("{}", "Forge Protocol Validator".bold().green());
+    println!("{}", "Asimov Protocol Validator".bold().green());
     println!();
 
     // Show hardcoded ethics status
@@ -486,7 +486,7 @@ fn cmd_init(
     // --asimov implies --full
     let full = full || asimov;
 
-    println!("{}", "Forge Protocol Init".bold().green());
+    println!("{}", "Asimov Protocol Init".bold().green());
     if asimov {
         println!("{}", "  ASIMOV MODE - The Three Laws".bold().cyan());
     }
@@ -710,7 +710,7 @@ fn cmd_init(
             println!("  4. Start: run warmup → punch it");
         }
     } else {
-        println!("  2. Run: forge-protocol validate");
+        println!("  2. Run: asimov-mode validate");
     }
     println!();
 
@@ -718,7 +718,7 @@ fn cmd_init(
 }
 
 fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
-    println!("{}", "Forge Protocol Documentation Linter".bold().green());
+    println!("{}", "Asimov Protocol Documentation Linter".bold().green());
     println!();
 
     // Collect files to check

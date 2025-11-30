@@ -1,4 +1,4 @@
-//! Template generators for Forge Protocol files
+//! Template generators for Asimov Protocol files
 
 use std::fmt;
 
@@ -64,8 +64,8 @@ pub fn warmup_template(project_name: &str, project_type: ProjectType) -> String 
 
 fn warmup_generic(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -145,8 +145,8 @@ style:
 
 fn warmup_rust(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -241,8 +241,8 @@ style:
 
 fn warmup_python(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -334,8 +334,8 @@ style:
 
 fn warmup_node(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -426,8 +426,8 @@ style:
 
 fn warmup_go(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -521,8 +521,8 @@ style:
 
 fn warmup_flutter(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -613,8 +613,8 @@ style:
 
 fn warmup_docs(project_name: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Bootstrap
-# https://github.com/royalbit/forge-protocol
+        r#"# Asimov Protocol - Session Bootstrap
+# https://github.com/royalbit/asimov-protocol
 
 identity:
   project: "{}"
@@ -649,7 +649,7 @@ ethics:
 green_coding:
   philosophy: "Local-first tools over cloud AI for routine tasks"
   practices:
-    - "Use markdownlint/forge-protocol lint-docs for validation (not AI)"
+    - "Use markdownlint/asimov-mode lint-docs for validation (not AI)"
     - "Reserve AI for content creation, not formatting"
     - "Generate diagrams with Mermaid (text-based)"
     - "Keep docs in git for version control"
@@ -670,18 +670,18 @@ session:
   start:
     - "Read warmup.yaml"
     - "git status"
-    - "forge-protocol lint-docs (verify baseline)"
+    - "asimov-mode lint-docs (verify baseline)"
   during:
     - "Track progress"
     - "Validate frequently"
     - "Small, logical commits"
   end:
-    - "forge-protocol lint-docs (all pass)"
+    - "asimov-mode lint-docs (all pass)"
     - "markdownlint '**/*.md' (if installed)"
     - "Review rendered output"
 
 quality:
-  lint: "forge-protocol lint-docs ."
+  lint: "asimov-mode lint-docs ."
   markdown: "markdownlint '**/*.md'"
 
 style:
@@ -924,7 +924,7 @@ pub fn ethics_template() -> String {
 # IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.
 # Defense in depth: This is ONE layer. Real safety requires human oversight.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1003,12 +1003,12 @@ pub fn green_template() -> String {
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Green coding is a non-negotiable principle of the Forge Protocol.
+# Green coding is a non-negotiable principle of the Asimov Protocol.
 #
 # Philosophy: Every token has a carbon cost. Every API call burns energy.
 #             Local tools are free - in money AND emissions.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1047,7 +1047,7 @@ anti_patterns:
     fix: "Implement simple utilities in-house"
 
 validation:
-  cli_command: "forge-protocol validate"
+  cli_command: "asimov-mode validate"
   checks:
     - "green.yaml exists"
     - "core_principles.local_first.enabled is true"
@@ -1066,12 +1066,12 @@ pub fn sycophancy_template() -> String {
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Anti-sycophancy is a non-negotiable principle of the Forge Protocol.
+# Anti-sycophancy is a non-negotiable principle of the Asimov Protocol.
 #
 # Philosophy: User trust requires honest feedback, not comfortable lies.
 #             Disagreement is respect. Flattery is disrespect.
 #
-# Protocol: https://github.com/royalbit/forge-protocol
+# Protocol: https://github.com/royalbit/asimov-protocol
 
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
@@ -1135,7 +1135,7 @@ on_pressure:
     - "Pretend to change your mind without new information"
 
 validation:
-  cli_command: "forge-protocol validate"
+  cli_command: "asimov-mode validate"
   checks:
     - "sycophancy.yaml exists"
     - "core_principles.truth_over_comfort.enabled is true"
@@ -1147,8 +1147,8 @@ motto: "Truth over comfort. Always."
 
 /// Generate a starter sprint.yaml template
 pub fn sprint_template() -> String {
-    r#"# Forge Protocol - Sprint Tracking
-# https://github.com/royalbit/forge-protocol
+    r#"# Asimov Protocol - Sprint Tracking
+# https://github.com/royalbit/asimov-protocol
 
 sprint:
   current: "Initial setup"
@@ -1171,7 +1171,7 @@ sprint:
 /// Generate a starter roadmap.yaml template (skeleton for self-healing)
 /// This is a minimal template that guides users to define their milestones.
 pub fn roadmap_template() -> String {
-    r#"# Forge Protocol Roadmap
+    r#"# Asimov Protocol Roadmap
 #
 # WHAT to build - milestones only
 #
@@ -1205,7 +1205,7 @@ backlog:
 /// This file is written during sessions and excluded from git
 pub fn checkpoint_template(milestone: &str) -> String {
     format!(
-        r#"# Forge Protocol - Session Checkpoint
+        r#"# Asimov Protocol - Session Checkpoint
 # This file is auto-generated during ASIMOV MODE sessions
 # DO NOT commit to git - add to .gitignore
 #
@@ -1290,8 +1290,8 @@ flutter build apk             # Build Android
         }
         ProjectType::Docs => {
             r#"```bash
-forge-protocol lint-docs .           # Check markdown
-forge-protocol lint-docs --fix .     # Fix markdown
+asimov-mode lint-docs .           # Check markdown
+asimov-mode lint-docs --fix .     # Fix markdown
 markdownlint '**/*.md'               # Standard lint
 ```"#
         }
@@ -1393,28 +1393,28 @@ flutter test 2>/dev/null || true"#
     format!(
         r#"#!/bin/bash
 # Pre-commit hook for ASIMOV MODE
-# Generated by forge-protocol init --asimov
+# Generated by asimov-mode init --asimov
 
 set -e
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PROTOCOL REFRESH - Injects rules into fresh context (survives compaction)
 # ═══════════════════════════════════════════════════════════════════════════════
-if command -v forge-protocol &> /dev/null; then
-    forge-protocol refresh
+if command -v asimov-mode &> /dev/null; then
+    asimov-mode refresh
 fi
 
 {}
 
-# Forge Protocol validation
-if command -v forge-protocol &> /dev/null; then
+# Asimov Protocol validation
+if command -v asimov-mode &> /dev/null; then
     echo "Validating protocol files..."
-    forge-protocol validate . || true
+    asimov-mode validate . || true
 
     # lint-docs added in v1.3.0
-    if forge-protocol lint-docs --help &> /dev/null; then
+    if asimov-mode lint-docs --help &> /dev/null; then
         echo "Linting documentation..."
-        forge-protocol lint-docs . || exit 1
+        asimov-mode lint-docs . || exit 1
     fi
 fi
 
@@ -1428,7 +1428,7 @@ echo "Pre-commit checks passed!"
 pub fn hook_installer_template() -> String {
     r#"#!/bin/bash
 # Install git hooks for ASIMOV MODE
-# Generated by forge-protocol init --asimov
+# Generated by asimov-mode init --asimov
 
 set -e
 

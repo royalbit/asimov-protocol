@@ -1,4 +1,4 @@
-//! Core validation logic for Forge Protocol files
+//! Core validation logic for Asimov Protocol files
 
 use crate::error::{Error, Result};
 use crate::schemas::{schema_for_file, schema_type_for_file};
