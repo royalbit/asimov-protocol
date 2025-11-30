@@ -180,9 +180,20 @@ Every `asimov init` project is a green-coding project by default.
 
 **The Arithmetic:**
 - 1 human + AI ≈ 50-150 traditional developers
-- 10-person startup → 1 person + AI = 9 positions changed
+- At 50x velocity: 49 of 50 positions eliminated (**98%**)
+- At 100x velocity: 99 of 100 positions eliminated (**99%**)
 - 1M protocol users = 50-150M dev-equivalent output
 - Global developers today: ~28 million
+
+**Offshore Devastation:**
+
+| Model | Before AI | After AI (50x) | Impact |
+|-------|-----------|----------------|--------|
+| 20-person offshore team | $400K/year | 1 onshore + AI | **95% cost cut, 100% team cut** |
+| Labor arbitrage value prop | Core business | **Eliminated** | Business model dead |
+| "We have 500 engineers" | Competitive advantage | Liability (overhead) | **Inverted** |
+
+The offshore model's entire value proposition was cost. When 1 person + AI costs less than 20 offshore devs AND ships faster, the math is fatal.
 
 **The Harder Truth:**
 
@@ -190,7 +201,7 @@ The displacement doesn't come from bad actors. It comes from **good actors**.
 
 | Who | What They Do | Consequence |
 |-----|--------------|-------------|
-| **Good actor** | Ships ethical code, follows quality gates, uses green coding | 9 of 10 positions eliminated |
+| **Good actor** | Ships ethical code, follows quality gates, uses green coding | **98% positions eliminated** (at 50x) |
 | **Bad actor** | Removes ethics, builds malware | Security threat |
 
 Both are real. But the workforce impact comes from people using the protocol *exactly as designed*. The student in Mumbai shipping production code IS the displacement for the team in San Francisco. Same event, two frames.
