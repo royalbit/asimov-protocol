@@ -4,9 +4,9 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.0"
+  version: "7.0.1"
   status: released
-  summary: "RoyalBit Namespace (royalbit-asimov crate, asimov binary)"
+  summary: "GitHub repo renamed to royalbit/asimov"
   goal: CONSISTENCY
 
 next:

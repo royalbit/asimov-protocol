@@ -1,12 +1,12 @@
 [package]
 name = "royalbit-asimov"
-version = "7.0.0"
+version = "7.0.1"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "The Three Laws of Robotics, encoded in YAML. Transparent ethics for AI autonomy."
-repository = "https://github.com/royalbit/asimov-protocol"
-homepage = "https://github.com/royalbit/asimov-protocol"
-documentation = "https://github.com/royalbit/asimov-protocol#readme"
+repository = "https://github.com/royalbit/asimov"
+homepage = "https://github.com/royalbit/asimov"
+documentation = "https://github.com/royalbit/asimov#readme"
 license = "MIT"
 keywords = ["ai", "ethics", "asimov", "automation", "cli"]
 categories = ["command-line-utilities", "development-tools"]
