@@ -1,0 +1,26 @@
+# Asimov Protocol Roadmap
+#
+# WHAT to build - milestones only
+#
+# See: docs/PROTOCOL_GOALS.md for core values
+# See: CHANGELOG.md for release history
+# See: docs/adr/ for detailed rationale
+
+current:
+  version: "0.1.0"
+  status: planned
+  summary: "Your first milestone"
+  goal: "CORE_VALUE"
+  deliverables:
+    - "[ ] Define milestone scope"
+    - "[ ] Define success criteria"
+    - "[ ] Ship in 4 hours or less"
+
+next:
+  - version: "0.2.0"
+    summary: "Your next milestone"
+    goal: "CORE_VALUE"
+
+backlog:
+  - "Future idea one"
+  - "Future idea two"

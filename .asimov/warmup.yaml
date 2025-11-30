@@ -6,7 +6,7 @@ identity:
   project: "Asimov Protocol"
   tagline: "Vendor-neutral AI session continuity"
   type: "rust"
-  version: "7.0.5"
+  version: "7.0.6"
   repo: "https://github.com/royalbit/asimov"
   license: "MIT"
 

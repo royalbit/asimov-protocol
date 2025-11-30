@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "7.0.5"
+version = "7.0.6"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "The Three Laws of Robotics, encoded in YAML. Transparent ethics for AI autonomy."

@@ -1,0 +1,17 @@
+# Asimov Protocol - Sprint Tracking
+# https://github.com/royalbit/asimov
+
+sprint:
+  current: "Initial setup"
+  started: "2025-01-01"
+  status: in_progress
+
+  tasks:
+    - "[ ] Task one"
+    - "[ ] Task two"
+    - "[ ] Task three"
+
+  blockers: []
+
+  notes: |
+    Add any relevant context here.

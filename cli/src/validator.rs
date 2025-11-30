@@ -399,52 +399,16 @@ pub fn check_ethics_structure(content: &str) -> Vec<String> {
     errors
 }
 
-/// Structure validation for warmup.yaml (v3.2.0 Anti-Hallucination)
-/// Validates that self_healing.on_confusion exists for recovery
-pub fn check_warmup_structure(content: &str) -> (Vec<String>, Vec<String>) {
+/// Structure validation for warmup.yaml (v7.0.6)
+/// Note: self_healing is now validated in sprint.yaml, not warmup.yaml
+/// warmup.yaml contains only project-specific configuration
+pub fn check_warmup_structure(_content: &str) -> (Vec<String>, Vec<String>) {
     let errors = Vec::new();
-    let mut warnings = Vec::new();
+    let warnings = Vec::new();
 
-    // Parse YAML to check structure
-    let yaml: serde_yaml::Value = match serde_yaml::from_str(content) {
-        Ok(v) => v,
-        Err(_) => return (errors, warnings), // YAML parsing errors handled elsewhere
-    };
-
-    // Check for self_healing section
-    let has_self_healing = yaml.get("self_healing").is_some();
-    let has_on_confusion = yaml
-        .get("self_healing")
-        .and_then(|sh| sh.get("on_confusion"))
-        .is_some();
-
-    if !has_self_healing {
-        warnings.push(
-            "warmup.yaml missing 'self_healing' section. Recommended for context recovery."
-                .to_string(),
-        );
-    } else if !has_on_confusion {
-        warnings.push(
-            "warmup.yaml self_healing missing 'on_confusion'. Recommended for AI recovery guidance."
-                .to_string(),
-        );
-    }
-
-    // Check position of on_confusion (should be in first ~100 lines for quick access)
-    let on_confusion_line = content
-        .lines()
-        .enumerate()
-        .find(|(_, line)| line.trim().starts_with("on_confusion:"))
-        .map(|(i, _)| i + 1);
-
-    if let Some(line) = on_confusion_line {
-        if line > 100 {
-            warnings.push(format!(
-                "warmup.yaml 'on_confusion' at line {} - consider moving earlier for faster context recovery.",
-                line
-            ));
-        }
-    }
+    // v7.0.6: self_healing moved to sprint.yaml
+    // warmup.yaml now contains only project-specific config:
+    // - identity, mission, environment, quality, files
 
     (errors, warnings)
 }
@@ -965,73 +929,39 @@ red_flags:
         );
     }
 
-    // ========== Warmup Structure Validation Tests (v3.2.0) ==========
+    // ========== Warmup Structure Validation Tests (v7.0.6) ==========
 
     #[test]
-    fn test_warmup_structure_with_self_healing() {
+    fn test_warmup_structure_no_self_healing_required() {
+        // v7.0.6: self_healing moved to sprint.yaml, warmup.yaml is project config only
         let content = r#"
 identity:
   project: Test
-self_healing:
-  on_confusion: "Re-read warmup.yaml"
+  tagline: "Test project"
+quality:
+  test: "cargo test"
+"#;
+        let (errors, warnings) = check_warmup_structure(content);
+        assert!(errors.is_empty());
+        assert!(
+            warnings.is_empty(),
+            "Should not warn - self_healing is now in sprint.yaml"
+        );
+    }
+
+    #[test]
+    fn test_warmup_structure_no_warnings_for_any_content() {
+        // v7.0.6: warmup.yaml validation is minimal - just project config
+        let content = r#"
+identity:
+  project: Test
+mission:
+  problem: "Test problem"
+  solution: "Test solution"
 "#;
         let (errors, warnings) = check_warmup_structure(content);
         assert!(errors.is_empty());
         assert!(warnings.is_empty());
-    }
-
-    #[test]
-    fn test_warmup_structure_missing_self_healing() {
-        let content = r#"
-identity:
-  project: Test
-"#;
-        let (errors, warnings) = check_warmup_structure(content);
-        assert!(errors.is_empty());
-        assert!(
-            warnings.iter().any(|w| w.contains("self_healing")),
-            "Should warn about missing self_healing: {:?}",
-            warnings
-        );
-    }
-
-    #[test]
-    fn test_warmup_structure_missing_on_confusion() {
-        let content = r#"
-identity:
-  project: Test
-self_healing:
-  checkpoint: true
-"#;
-        let (errors, warnings) = check_warmup_structure(content);
-        assert!(errors.is_empty());
-        assert!(
-            warnings.iter().any(|w| w.contains("on_confusion")),
-            "Should warn about missing on_confusion: {:?}",
-            warnings
-        );
-    }
-
-    #[test]
-    fn test_warmup_structure_on_confusion_late_position() {
-        // Generate content with on_confusion after line 100
-        let mut lines: Vec<String> = Vec::new();
-        lines.push("identity:".to_string());
-        lines.push("  project: Test".to_string());
-        for i in 0..100 {
-            lines.push(format!("  field_{}: value", i));
-        }
-        lines.push("self_healing:".to_string());
-        lines.push("  on_confusion: 'too late'".to_string());
-
-        let content = lines.join("\n");
-        let (errors, warnings) = check_warmup_structure(&content);
-        assert!(errors.is_empty());
-        assert!(
-            warnings.iter().any(|w| w.contains("line")),
-            "Should warn about late on_confusion position: {:?}",
-            warnings
-        );
     }
 
     // ========== Auto-Regeneration Tests (v4.1.5) ==========
