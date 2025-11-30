@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.1] - 2025-11-30
+
+### Fixed: Complete Rebrand Cleanup
+
+- **Remove**: `--skynet` CLI flag (was hidden deprecated alias)
+- **Fix**: Repository URLs in docs (asimov-mode → asimov-protocol)
+- **Fix**: ADR documentation (--skynet → --asimov references)
+- **Fix**: Pre-commit hook now uses asimov-mode
+
 ## [5.1.0] - 2025-11-30
 
 ### Added: Hardcoded Green Coding Metrics (ADR-012)

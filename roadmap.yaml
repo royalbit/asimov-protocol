@@ -8,7 +8,7 @@
 # See: docs/adr/ for detailed rationale
 
 current:
-  version: "5.1.0"
+  version: "5.1.1"
   status: released
   summary: "Hardcoded Green Coding Metrics"
   goal: GREEN_CODING
