@@ -178,12 +178,25 @@ Every `asimov init` project is a green-coding project by default.
 
 50-150x velocity changes the math. This is uncomfortable but true:
 
+**It's Not Just Developers:**
+
+| Role | Traditional Team | With Protocol | Impact |
+|------|------------------|---------------|--------|
+| **Developers** | 50 engineers | 1 human + AI | **98% eliminated** |
+| **Financial Analysts** (quant) | 5 quants | 1 human + Forge | **80% eliminated** |
+| **System Architects** | 3 architects | 1 human + AI | **67% eliminated** |
+| **Business Planners** | 4 analysts | 1 human + AI | **75% eliminated** |
+| **Technical Writers** | 3 writers | 1 human + AI | **67% eliminated** |
+| **Project Managers** | 2 PMs | YAML roadmaps | **50% eliminated** |
+
+**Proof:** A proprietary fintech startup has 120K+ lines across 4 repositories - 89K lines of business/architecture documentation, 15K lines of production code, 193 tests - built by 1 human + AI. Traditional estimate: 8-12 person team for 6+ months.
+
 **The Arithmetic:**
-- 1 human + AI ≈ 50-150 traditional developers
+- 1 human + AI ≈ 50-150 traditional knowledge workers (not just developers)
 - At 50x velocity: 49 of 50 positions eliminated (**98%**)
 - At 100x velocity: 99 of 100 positions eliminated (**99%**)
-- 1M protocol users = 50-150M dev-equivalent output
-- Global developers today: ~28 million
+- 1M protocol users = 50-150M worker-equivalent output
+- This affects: developers, analysts, architects, writers, planners, consultants
 
 **Offshore Devastation:**
 
@@ -192,8 +205,9 @@ Every `asimov init` project is a green-coding project by default.
 | 20-person offshore team | $400K/year | 1 onshore + AI | **95% cost cut, 100% team cut** |
 | Labor arbitrage value prop | Core business | **Eliminated** | Business model dead |
 | "We have 500 engineers" | Competitive advantage | Liability (overhead) | **Inverted** |
+| Consulting firm (50 analysts) | $5M/year billable | 1-2 partners + AI | **96% headcount cut** |
 
-The offshore model's entire value proposition was cost. When 1 person + AI costs less than 20 offshore devs AND ships faster, the math is fatal.
+The offshore model's entire value proposition was cost. When 1 person + AI costs less than 20 offshore workers AND ships faster, the math is fatal. **This applies to every knowledge worker category, not just developers.**
 
 **The Harder Truth:**
 

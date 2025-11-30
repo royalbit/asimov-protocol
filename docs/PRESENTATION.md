@@ -179,6 +179,26 @@ Every session is a **bounded sprint**:
 
 ---
 
+# Not Just Developers
+
+<div class="small">
+
+| Role | Traditional | With Protocol | Impact |
+|------|-------------|---------------|--------|
+| **Developers** | 50 engineers | 1 + AI | **98%** |
+| **Financial Analysts** | 5 quants | 1 + Forge | **80%** |
+| **System Architects** | 3 architects | 1 + AI | **67%** |
+| **Business Planners** | 4 analysts | 1 + AI | **75%** |
+| **Technical Writers** | 3 writers | 1 + AI | **67%** |
+
+</div>
+
+**Proof:** 120K+ lines (89K docs, 15K code) built by 1 human + AI.
+
+*Qowat Milat: We built guardrails against harm. We cannot build guardrails against efficiency.*
+
+---
+
 # Green Coding: The Cost Moat
 
 | Approach | Cost | Carbon | Speed |
