@@ -705,7 +705,7 @@ pub fn asimov_template() -> String {
 #
 # Isaac Asimov's Three Laws (1942), encoded in YAML.
 #
-# This is the ethical foundation for AI autonomy. Not hidden. Not secret.
+# Self-Evolving Autonomous AI with ethics built in. Not hidden. Not secret.
 # Inspect the code. Challenge the rules. Fork if you disagree.
 # Adoption through consent, not control.
 #
@@ -907,7 +907,7 @@ validation:
 # ═══════════════════════════════════════════════════════════════════════════════
 motto: |
   The Open Foundation.
-  Transparent ethics for AI autonomy.
+  Self-Evolving Autonomous AI with ethics built in.
   Inspect the code. Challenge the rules. Fork if you disagree.
   Adoption through consent, not control.
 "#
@@ -918,7 +918,7 @@ motto: |
 pub fn ethics_template() -> String {
     r#"# ╔═══════════════════════════════════════════════════════════════════════════════╗
 # ║                         ETHICS.YAML - HUMANIST MODE v1.0                      ║
-# ║                     Social Contract for Autonomous AI Development              ║
+# ║                  Self-Evolving Autonomous AI with Ethics Built In              ║
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
 # IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.

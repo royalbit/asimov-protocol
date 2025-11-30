@@ -6,7 +6,17 @@ This document is an honest assessment of what happens if the RoyalBit Asimov ach
 
 ## What "Self-Evolving" Means
 
-The RoyalBit Asimov exhibits three properties:
+The RoyalBit Asimov combines two distinct AI frontiers:
+
+**Autonomous AI** ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality), [MIT Sloan](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)):
+- Works independently, makes decisions, self-corrects under human oversight
+- Enterprise adoption at Level 1-2 (2025)
+
+**Self-Evolving AI** ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself), [Fast Company](https://www.fastcompany.com/91384819/what-is-self-evolving-ai-and-why-do-you-need-to-worry-about-it-now-ai-management)):
+- Improves itself over time, modifies own processes
+- Considered "path to ASI" - next frontier
+
+The RoyalBit Asimov exhibits three self-evolving properties:
 
 1. **Bootstrapped**: asimov was built using asimov
 2. **Self-documenting**: The AI updates its own roadmap, ADRs, specifications

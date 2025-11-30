@@ -37,12 +37,12 @@ style: |
 ---
 
 # **ROYALBIT ASIMOV**
-## The Three Laws of Robotics, in Source Code
+## Creates Self-Evolving Autonomous AI Projects
 
 > *"A robot may not injure a human being or, through inaction, allow a human being to come to harm."*
 > — **Isaac Asimov**, 1942
 
-**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we created ethics for autonomous AI
+**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects
 
 ---
 
@@ -97,21 +97,25 @@ third_law:   # Self-preserve (within limits)
 
 ---
 
-# ROYALBIT ASIMOV: Five Components
+# ROYALBIT ASIMOV: Creates Self-Evolving AI
 
 <div class="small">
+
+| Capability | Definition | Industry Status |
+|------------|------------|-----------------|
+| **AUTONOMOUS** | Works independently, self-corrects | Enterprise Level 1-2 (2025) |
+| **SELF-EVOLVING** | Improves itself via bootstrapping | Next frontier (arXiv: "path to ASI") |
+| **ETHICS** | Three Laws hardcoded | What makes it safe |
 
 | # | Component | Purpose |
 |---|-----------|---------|
 | 1 | **Protocol Files** | YAML files define HOW/WHAT/WHEN |
 | 2 | **Sprint Autonomy** | 4hr max, ONE milestone, MUST ship |
 | 3 | **Quality Gates** | Tests pass + ZERO warnings |
-| 4 | **Self-Healing** | Re-read rules after compaction (v2.1: hook refresh) |
+| 4 | **Self-Healing** | Re-read rules after compaction |
 | 5 | **Release Discipline** | Ship to GitHub + Registry every session |
 
 </div>
-
-**All five = bounded 4hr sessions that actually ship**
 
 ---
 
@@ -319,3 +323,17 @@ asimov validate
 </div>
 
 *This presentation: 16 slides. The old one: 51. Done > Perfect.*
+
+---
+
+# References
+
+<div class="small">
+
+**Self-Evolving & Autonomous AI:**
+- [AWS: Rise of Autonomous Agents](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/)
+- [arXiv: Survey of Self-Evolving Agents](https://arxiv.org/abs/2507.21046) — "Three Laws of Self-Evolving AI"
+- [MIT Sloan: Emerging Agentic Enterprise](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)
+- [Science: AI Evolving All By Itself](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself)
+
+</div>

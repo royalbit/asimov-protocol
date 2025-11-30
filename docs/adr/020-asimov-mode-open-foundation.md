@@ -14,7 +14,7 @@ But irony doesn't scale. The name communicated the opposite of our values:
 
 | What We Built | What "Skynet" Communicates |
 |---------------|---------------------------|
-| Ethical AI autonomy | AI that destroys humanity |
+| Self-Evolving Autonomous AI with ethics | AI that destroys humanity |
 | Human veto at all times | AI that overrides humans |
 | Transparent, open source | Secretive military project |
 | The Three Laws | No laws, pure destruction |
@@ -210,6 +210,6 @@ The Foundation parallel works, but only if inverted:
 ## The Motto
 
 > **"The Open Foundation"**
-> Transparent ethics for AI autonomy.
+> Creates Self-Evolving Autonomous AI projects with ethics built in.
 > Inspect the code. Challenge the rules. Fork if you disagree.
 > Adoption through consent, not control.

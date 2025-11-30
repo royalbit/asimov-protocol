@@ -47,7 +47,7 @@ RoyalBit Asimov (--asimov): Full autonomous session setup with The Three Laws
   - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
   - .gitignore update (exclude checkpoint file)
 
-The Open Foundation: Transparent ethics for AI autonomy.
+The Open Foundation: Creates Self-Evolving Autonomous AI projects with ethics built in.
 Inspect the code. Challenge the rules. Fork if you disagree.
 Adoption through consent, not control.
 

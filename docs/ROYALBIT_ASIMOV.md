@@ -5,7 +5,21 @@
 
 ## What is ROYALBIT ASIMOV?
 
-ROYALBIT ASIMOV is a **complete autonomous AI development system** that enables bounded 4-hour sprints with consistent quality and shipping discipline. Self-healing enables multiple consecutive sessions without human intervention.
+**RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.**
+
+Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI with:
+- The Three Laws (asimov.yaml)
+- Ethics hardcoded (ethics.yaml)
+- Green coding (green.yaml)
+- Sprint autonomy (4hr max, quality gates)
+- Self-healing (survives context compaction)
+
+The methodology propagates through the ecosystem. Each child project operates independently after creation.
+
+**Two frontiers combined:**
+- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality) - Enterprise Level 1-2, 2025)
+- **Self-Evolving AI**: Improves itself over time via bootstrapping ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself) - next frontier toward ASI)
+- **Ethics**: The Three Laws hardcoded - what makes it safe
 
 It's not just one thing—it's five components working together:
 
