@@ -159,7 +159,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 **Conclusion:** No existing tool addresses the combination of:
 1. Self-healing from context compaction
-2. Bounded session autonomy (4hr max, 1 milestone)
+2. Bounded session autonomy (4hr max, keep shipping)
 3. Protocol-level ethics enforcement
 4. Anti-sycophancy directives
 5. Green coding principles

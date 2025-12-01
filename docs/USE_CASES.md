@@ -58,7 +58,7 @@ take_rate:
 |-------------|---------------|
 | Human decides everything | AI executes, human reviews at gates |
 | Constant context switching | 4hr focused sessions |
-| Scope creep is constant | 1 milestone, then STOP |
+| Scope creep is constant | Stay on roadmap, no tangents |
 | Burnout from endless work | Sustainable bounded sessions |
 
 **How it works**:
@@ -186,8 +186,8 @@ If ethics.yaml is removed, that's a choice. The community will notice.
 
 The protocol enforces:
 - 4-hour maximum sessions
-- 1 milestone per session
-- Mandatory STOP phase
+- Keep shipping until done or stopped (ADR-028)
+- Stop conditions: 4h, roadmap empty, blocked, human stop
 - Done > Perfect
 
 This is a feature, not a bug. Unbounded sessions = burnout + scope creep.

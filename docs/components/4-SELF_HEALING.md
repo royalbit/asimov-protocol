@@ -63,7 +63,7 @@ Must survive summarization. Single critical instruction:
 
 ON CONFUSION → re-read warmup.yaml + .claude_checkpoint.yaml
 
-Rules: 4hr max, 1 milestone, tests pass, ship.
+Rules: 4hr max, keep shipping, tests pass.
 ```
 
 ### 2. warmup.yaml (Full Rules)
@@ -79,7 +79,7 @@ self_healing:
     - "On ANY confusion"
 
   on_confusion: "STOP → re-read warmup.yaml"
-  core_rules: "4hr max, 1 milestone, tests pass, ship it"
+  core_rules: "4hr max, keep shipping, tests pass"
 ```
 
 ### 3. .claude_checkpoint.yaml (Session State)

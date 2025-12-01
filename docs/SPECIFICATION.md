@@ -51,7 +51,7 @@ RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead
 | **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
 | **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
 | **Freshness Protocol** | `freshness.yaml`, date-aware search, stale data prevention | NO |
-| **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns | NO |
+| **Sprint Autonomy** | 4hr max, keep shipping, anti-patterns | NO |
 | **Schema Validation** | `asimov validate` | NO |
 
 ### CLAUDE.md Integration
@@ -66,7 +66,7 @@ The new CLAUDE.md template uses Claude Code's native `@import` syntax:
 @green.yaml
 @sycophancy.yaml
 
-Rules: 4hr max, 1 milestone, tests pass, ship.
+Rules: 4hr max, keep shipping, tests pass.
 ```
 
 This imports the full protocol files into Claude's memory hierarchy automatically.
@@ -83,7 +83,7 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 | **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
-| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates (ROYALBIT ASIMOV) |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | 4hr max, keep shipping, quality gates (ROYALBIT ASIMOV) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
 ### The Three Hallucinations
@@ -123,7 +123,7 @@ flowchart TB
         subgraph row1[" "]
             direction LR
             P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
-            S["**SPRINT AUTONOMY**<br/>4hr max<br/>1 milestone<br/>Then STOP"]
+            S["**SPRINT AUTONOMY**<br/>4hr max<br/>keep shipping<br/>until done"]
             Q["**QUALITY GATES**<br/>Tests pass<br/>Zero warns<br/>Then commit"]
         end
         subgraph row2[" "]
@@ -570,7 +570,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 @ethics.yaml
 @green.yaml
 
-Rules: 4hr max, 1 milestone, tests pass, ship.
+Rules: 4hr max, keep shipping, tests pass.
 
 ON SESSION START: Immediately read roadmap.yaml, run `asimov validate`, present next milestone. Do NOT wait for user prompt.
 ```
@@ -697,7 +697,7 @@ self_healing:
   on_confusion: "Re-read warmup.yaml immediately"
 
   # Core rules that must survive (one line)
-  core_rules: "4hr max, 1 milestone, tests pass, ship it"
+  core_rules: "4hr max, keep shipping, tests pass"
 ```
 
 #### autonomous_development (required for ASIMOV)
@@ -1030,7 +1030,7 @@ IMMEDIATE ACTIONS REQUIRED:
 
 CORE RULES (non-negotiable):
 - 4 hour MAX session duration
-- 1 milestone per session
+- Keep shipping until done or stopped (ADR-028)
 - Tests MUST pass before release
 - ZERO warnings policy
 ```
@@ -1171,7 +1171,7 @@ These features are NOT replaced by Claude Code native functionality:
 | Feature | Description | Why Active |
 |---------|-------------|------------|
 | **Self-Healing** | warmup.yaml re-read on confusion | Claude Code has no automatic mid-session recovery |
-| **Sprint Autonomy** | 4hr max, 1 milestone, quality gates | Claude Code has no bounded session enforcement |
+| **Sprint Autonomy** | 4hr max, keep shipping, quality gates | Claude Code has no bounded session enforcement |
 | **Ethics Protocol** | ethics.yaml, human_veto, red flags | Claude Code has no ethics framework |
 | **Green Protocol** | green.yaml, local-first validation | Claude Code has no green coding philosophy |
 | **Anti-Sycophancy** | sycophancy.yaml, banned phrases | Claude Code has no sycophancy prevention |

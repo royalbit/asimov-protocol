@@ -1312,7 +1312,7 @@ markdownlint '**/*.md'               # Standard lint
 
 ## Core Rules
 
-- 4hr MAX session, 1 milestone, NO scope creep
+- 4hr MAX session, keep shipping, NO scope creep
 - Tests pass + ZERO warnings → then commit
 - Done > Perfect. Ship it.
 

@@ -293,12 +293,11 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     );
     println!();
     println!(
-        "{}: {} | {} | {} | {}",
+        "{}: {} | {} | {}",
         "RULES".bold(),
         "4hr max".white(),
-        "1 milestone".white(),
         "tests pass".white(),
-        "ship it".green()
+        "keep shipping".green()
     );
 
     // If verbose, try to read and display quality gates from warmup.yaml

@@ -640,7 +640,7 @@ claude --resume <id>     # Resume specific session
 ```markdown
 # Project Name
 
-Rules: 4hr max, 1 milestone, tests pass, ship.
+Rules: 4hr max, keep shipping, tests pass.
 
 ON SESSION START: Read warmup.yaml and asimov.yaml.
 ```
@@ -666,7 +666,7 @@ Unique value that Claude Code doesn't have:
 | Feature | Description |
 |---------|-------------|
 | **The Three Laws** | `asimov.yaml`, `human_veto`, red flags |
-| **Sprint Autonomy** | 4hr max, 1 milestone, anti-patterns |
+| **Sprint Autonomy** | 4hr max, keep shipping, anti-patterns |
 | **Green Coding** | Zero tokens, ESG metrics |
 | **Schema Validation** | `asimov validate` |
 
