@@ -716,11 +716,11 @@ autonomous_development:
     - "ship it"
     - "run"
 
-  # Boundaries
+  # Boundaries (ADR-028: Continuous Shipping)
   boundaries:
     max_duration: "4 hours"
-    max_milestones: 1
-    scope_creep: "reject - note for next session"
+    max_milestones: unlimited  # Keep shipping until done or stopped
+    scope_creep: "reject - stay on roadmap"
 
   # Anti-patterns to reject
   anti_patterns:
@@ -755,10 +755,10 @@ sprint:
   started: "2025-01-15"
   status: in_progress  # planned | in_progress | blocked | done
 
-  # Boundaries (required for ASIMOV)
+  # Boundaries (ADR-028: Continuous Shipping)
   boundaries:
     max_duration: "4 hours"
-    max_milestones: 1
+    max_milestones: unlimited  # Keep shipping until done or stopped
 
   tasks:
     - "[x] Task completed"

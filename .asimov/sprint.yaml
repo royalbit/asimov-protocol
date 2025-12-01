@@ -4,11 +4,13 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # CORE RULES (Non-negotiable)
 # ═══════════════════════════════════════════════════════════════════════════════
+# ADR-028: Continuous Shipping - milestones complete in minutes, not hours
+# ═══════════════════════════════════════════════════════════════════════════════
 rules:
   max_hours: 4
-  max_milestones: 1
+  max_milestones: unlimited  # ADR-028: Keep shipping until done or stopped
   must_ship: true
-  mantra: "Done is better than perfect. Ship it."
+  mantra: "Keep shipping until done or stopped."
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # CURRENT: v7.0.0 - CRATE RENAME
@@ -77,35 +79,38 @@ older_sprints:
       - "Deprecated cross-session features for native alternatives"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# SESSION PHASES
+# SESSION PHASES (ADR-028: Continuous Shipping)
 # ═══════════════════════════════════════════════════════════════════════════════
 phases:
-  1_define:
-    duration: "5-10 min"
+  1_warmup:
+    duration: "2-5 min"
     actions:
-      - "State ONE milestone"
-      - "Define 'done'"
-      - "Set time budget (max 4h)"
+      - "Read roadmap.yaml"
+      - "Run asimov validate"
+      - "Present next milestone(s)"
+      - "User says 'go'"
 
-  2_execute:
-    duration: "2-4 hours"
-    rules:
-      - "NO scope creep ('Let me also...')"
-      - "NO tangents ('While I'm here...')"
-      - "NO gold plating ('This would be better if...')"
-    checkpoint: "Every 2 hours - Am I still on track?"
+  2_continuous_execute:
+    duration: "until done or 4h"
+    loop:
+      - "Execute milestone"
+      - "Tests pass, zero warnings"
+      - "Commit and push"
+      - "Update roadmap.yaml"
+      - "Next milestone (if available)"
+    stop_when:
+      - "4 hour ceiling reached"
+      - "Roadmap exhausted"
+      - "Blocked by external dependency"
+      - "Human says stop"
 
-  3_ship:
-    duration: "15-30 min"
+  3_session_end:
+    duration: "2-5 min"
     checklist:
-      - "cargo test (all pass)"
-      - "cargo clippy (zero warnings)"
-      - "Update CHANGELOG.md"
-      - "Commit, tag, push"
-      - "cargo publish (if releasing)"
-
-  4_stop:
-    rule: "MANDATORY stop - no 'just one more thing'"
+      - "All milestones committed"
+      - "CHANGELOG.md updated"
+      - "roadmap.yaml current"
+      - "Final validation passes"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ANTI-PATTERNS
@@ -117,14 +122,21 @@ anti_patterns:
   over_engineering: "Build what's needed NOW, not hypothetical futures"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# AI AUTHORITY
+# AI AUTHORITY (ADR-028: Continuous Shipping)
 # ═══════════════════════════════════════════════════════════════════════════════
 authority:
-  principle: "Make decisions. Don't ask. Ship."
+  principle: "Make decisions. Don't ask. Keep shipping."
   can_release_when:
     - "All tests pass"
     - "Zero warnings"
-    - "Within milestone scope"
+  stop_when:
+    - "4 hour ceiling reached"
+    - "Roadmap exhausted"
+    - "Blocked by external dependency"
+    - "Human says stop"
+  never_stop_for:
+    - "Completed a milestone"  # Keep going!
+    - "Arbitrary time checkpoints"
   ask_human_only:
     - "Blocked by external dependency"
     - "Fundamental requirement ambiguity"

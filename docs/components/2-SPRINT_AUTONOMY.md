@@ -1,49 +1,61 @@
 # Component 2: Sprint Autonomy
 
-> **Bounded sessions that ship - the "Off Switch" in ROYALBIT ASIMOV**
+> **Continuous shipping until done or stopped - the "Off Switch" in ROYALBIT ASIMOV**
 
 ## Overview
 
-Sprint Autonomy is the discipline of **bounded, shippable sessions**:
+Sprint Autonomy is the discipline of **continuous, hands-off shipping**:
 
-- **One milestone** per session
-- **4-hour maximum** (hard stop)
-- **Must end shippable** (tests pass, docs updated)
+- **Unlimited milestones** per session (ADR-028)
+- **4-hour maximum** (safety ceiling)
+- **Keep shipping** until roadmap empty or blocked
 
 ## The Core Rules
 
 | Rule | Why |
 |------|-----|
-| ONE milestone per session | Focus prevents drift |
-| 4-hour maximum | Forces shipping decisions |
-| Must end shippable | No "work in progress" commits |
-| No scope creep | "Note it for next session" |
+| Keep shipping | Milestones complete in minutes, not hours |
+| 4-hour ceiling | Safety boundary, not target |
+| Must end shippable | Every commit is atomic and complete |
+| No scope creep | Stay on roadmap, no tangents |
+
+## ADR-028: Velocity Reality
+
+The original "1 milestone per session" rule was artificial friction:
+
+```
+OLD: Ship 1 → Stop → Wait for next session → Friction
+NEW: Ship 1 → Ship 2 → Ship N → Done or 4h
+```
+
+**"Keep shipping until done or stopped."**
+
+## Stop Conditions
+
+| Condition | Action |
+|-----------|--------|
+| 4 hour ceiling | STOP |
+| Roadmap exhausted | STOP |
+| Blocked by dependency | STOP |
+| Human says stop | STOP |
+| Completed a milestone | **KEEP GOING** |
 
 ## Anti-Patterns (Rejected)
 
 | Anti-Pattern | Response |
 |--------------|----------|
-| "While I'm here..." | "Noted for next session. Shipping current work." |
-| "Let me also..." | "Out of scope. Added to backlog." |
-| "This would be better if..." | "Refactoring noted. Shipping as-is." |
-
-## The 2-Hour Checkpoint
-
-Every 2 hours, check:
-
-- Still working on ONE milestone?
-- Resisted scope creep?
-- Work shippable now?
-- Past 4 hours? STOP
+| "While I'm here..." | "Is it on the roadmap? No? Skip it." |
+| "Let me also..." | "Roadmap or backlog. Pick one." |
+| "This would be better if..." | "Ship as-is. Improve in next milestone." |
 
 ## Relationship to Other Components
 
 | Component | Connection |
 |-----------|------------|
 | Protocol Files | sprint.yaml defines boundaries |
-| Quality Gates | Must pass before session ends |
-| Self-Healing | Checkpoints align with 2hr rule |
-| Release Discipline | Every session ends with release |
+| Quality Gates | Must pass before each commit |
+| Self-Healing | Commits are natural checkpoints |
+| Release Discipline | Every milestone ends with release |
 
 ---
 
