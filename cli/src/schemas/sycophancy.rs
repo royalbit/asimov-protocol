@@ -3,8 +3,9 @@
 /// Schema for validating sycophancy.yaml protocol files
 pub const SYCOPHANCY_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "RoyalBit Asimov Anti-Sycophancy Schema",
-  "description": "Anti-sycophancy protocol for AI development - truth over comfort",
+  "$id": "https://github.com/royalbit/asimov/schemas/sycophancy.json",
+  "title": "RoyalBit Asimov - sycophancy.yaml",
+  "description": "Anti-sycophancy protocol - truth over comfort, always",
   "type": "object",
   "properties": {
     "modification_rules": {

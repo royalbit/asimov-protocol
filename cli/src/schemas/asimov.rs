@@ -2,8 +2,9 @@
 
 pub const ASIMOV_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "RoyalBit Asimov - The Three Laws of Robotics",
-  "description": "Schema for asimov.yaml - The Open Foundation for AI Ethics",
+  "$id": "https://github.com/royalbit/asimov/schemas/asimov.json",
+  "title": "RoyalBit Asimov - asimov.yaml",
+  "description": "The Three Laws of Robotics - The Open Foundation for AI Ethics",
   "type": "object",
   "properties": {
     "modification_rules": {

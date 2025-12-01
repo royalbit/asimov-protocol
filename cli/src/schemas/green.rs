@@ -3,8 +3,9 @@
 /// Schema for validating green.yaml protocol files
 pub const GREEN_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "RoyalBit Asimov Green Coding Schema",
-  "description": "Sustainability protocol for AI development",
+  "$id": "https://github.com/royalbit/asimov/schemas/green.json",
+  "title": "RoyalBit Asimov - green.yaml",
+  "description": "Sustainability protocol - ship fast, ship small, ship green",
   "type": "object",
   "properties": {
     "modification_rules": {

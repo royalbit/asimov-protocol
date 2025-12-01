@@ -4,16 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.2.0"
+  version: "7.3.0"
   status: released
-  summary: "JSON Schema export for editors (asimov schema command)"
-  goal: DX_QUALITY
+  summary: "Schema Standardization (audit + align)"
+  goal: ANTI_HALLUCINATION
 
 next:
-
-  - version: "7.3.0"
-    summary: "Schema Standardization (audit + align)"
-    goal: ANTI_HALLUCINATION
 
   - version: "7.4.0"
     summary: "MCP Server Mode - Expose validation as MCP tools"

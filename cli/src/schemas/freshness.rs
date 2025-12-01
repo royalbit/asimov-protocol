@@ -3,8 +3,9 @@
 /// Schema for validating freshness.yaml protocol files
 pub const FRESHNESS_SCHEMA: &str = r#"{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "RoyalBit Asimov Freshness Schema",
-  "description": "Date-aware search protocol for AI development - stale data is not hallucination",
+  "$id": "https://github.com/royalbit/asimov/schemas/freshness.json",
+  "title": "RoyalBit Asimov - freshness.yaml",
+  "description": "Date-aware search protocol - stale data is not hallucination",
   "type": "object",
   "properties": {
     "modification_rules": {
