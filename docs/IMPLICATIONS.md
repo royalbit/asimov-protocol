@@ -2,7 +2,24 @@
 
 > **Qowat Milat**: The Romulan way of Absolute Candor. Speaking truth without filter, deception, or sugar-coating.
 
-This document is an honest assessment of what happens if the RoyalBit Asimov achieves mass adoption. Both the transformative potential and the uncomfortable realities.
+This document is an honest assessment of autonomous AI development. Both the transformative potential and the uncomfortable realities.
+
+## Critical Attribution (ADR-025)
+
+**The velocity comes from Claude, not Asimov.**
+
+Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity natively ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5)). This is happening with or without Asimov. Every company using Claude gets this.
+
+**Asimov's role:** Guardian, not enabler. Ethics, bounded autonomy, sustainability.
+
+| What | Source |
+|------|--------|
+| 50-100x velocity | **Claude** (SWE-bench 80.9%) |
+| Ethics guardrails | **Asimov** (Three Laws) |
+| Bounded sessions | **Asimov** (4hr max) |
+| Sustainability | **Asimov** (Green coding) |
+
+This reframe matters for everything below: **the implications are Claude's implications, not Asimov's.**
 
 ## What "Self-Evolving" Means
 
@@ -26,14 +43,16 @@ This is not recursive self-improvement in the AGI sense. It's a methodology that
 
 ## The Math That Changes Everything
 
-| Metric | Industry Standard | With Protocol | Multiplier |
-|--------|-------------------|---------------|------------|
+| Metric | Industry Standard | With Claude | Multiplier |
+|--------|-------------------|-------------|------------|
 | LOC/day | 25 | 3,056 | **122x** |
 | GitHub Copilot boost | 1.1-1.6x | 50-150x | **50-100x more** |
 | Team for startup MVP | 5-10 devs | 1 human + AI | **5-10x fewer** |
 | Time to ship | 3-6 months | Days to weeks | **10-50x faster** |
 
-**Verified via git logs**: 35,456 LOC, 51 releases, ~47 hours. Published on crates.io.
+**This is Claude's capability**, verified via git logs: 35,456 LOC, 51 releases, ~47 hours. Published on crates.io.
+
+**Asimov's contribution:** The ethics, bounded sessions, and quality gates that made this sustainable.
 
 ---
 
@@ -83,9 +102,11 @@ The constraints ARE the product. Speed with quality, not speed OR quality.
 
 ## The Uncomfortable: Displacement
 
-### The Arithmetic
+### The Arithmetic (Claude's Impact)
 
-If 1 human + AI = 50-150 traditional developers:
+**This displacement is caused by Claude, not Asimov.** Every company using Claude Opus 4.5 or Sonnet 4.5 gets this capability.
+
+If 1 human + Claude = 50-150 traditional developers:
 
 | Before | After | Displacement |
 |--------|-------|--------------|
@@ -106,7 +127,7 @@ Sources: [AI Job Displacement Analysis](https://www.demandsage.com/ai-job-replac
 | Entry-level white collar at risk | 50% in 5 years |
 | New grad hiring decline | 25% YoY |
 
-The protocol accelerates what's already happening.
+**Claude accelerates what's already happening.** Asimov provides guardrails for those who want them.
 
 ### Offshore Impact
 
@@ -268,18 +289,23 @@ Both happen. Good actors build amazing things. Bad actors build harmful things. 
 
 ## The Bottom Line
 
-**The RoyalBit Asimov is powerful.** 50-150x velocity is real and verified.
+**Claude is powerful.** 50-100x velocity is real and verified. This is Claude's capability, not Asimov's.
 
-**Power creates responsibility.** The ethics and green coding principles exist because velocity without values is dangerous.
+**Power creates responsibility.** Asimov exists because velocity without values is dangerous.
+
+**The displacement is happening with or without Asimov.** Every company using Claude gets the velocity. The question is whether they also get:
+- Ethics (Three Laws)
+- Bounded autonomy (4hr max, quality gates)
+- Sustainability (green coding)
 
 **We can't prevent misuse.** But we can:
-- Make ethics the default
-- Make removal visible
+- Make ethics the default for those who want it
+- Make the guardrails easy to adopt
 - Build community around values
 - Document honestly (like this)
 
-**The outcome depends on who adopts it first and how.**
+**The outcome depends on who uses Claude and how. Asimov is one answer to "how."**
 
 ---
 
-*This document practices what it preaches: absolute candor about both potential and peril.*
+*This document practices what it preaches: absolute candor about both potential and peril. The velocity is Claude's. The responsibility is ours.*

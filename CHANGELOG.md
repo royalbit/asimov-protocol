@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.9] - 2025-12-01
+
+### Changed: Claude Attribution Principle (ADR-025, ADR-026)
+
+**CRITICAL NARRATIVE SHIFT:** The velocity (50-100x) comes from Claude, not Asimov.
+
+- **ADR-025**: Claude Attribution Principle - velocity is Claude's, Asimov = guardrails
+- **ADR-026**: Claude Code Requirement - why Claude Code (not MCP IDEs) is required
+- **README.md**: Reframed - "Claude provides velocity. Asimov provides guardrails."
+- **VALUE_PROPOSITION.md**: New three pillars (Ethics > Bounded Autonomy > Sustainability)
+- **IMPLICATIONS.md**: Reframed - Claude's implications, Asimov's guardrails
+- **PRESS_KIT.md**: Accurate attribution to Claude
+
+**The Complete Stack:**
+| Layer | Provides |
+|-------|----------|
+| Claude Opus 4.5 / Sonnet 4.5 | 50-100x velocity (SWE-bench 80.9%) |
+| Claude Code | 200k thinking tokens (6x Anthropic threshold) |
+| Asimov Protocol | Ethics, bounded autonomy, sustainability |
+
+**Why Claude Code specifically?** MCP IDEs (Cursor, Windsurf) cap thinking at 30k-48k or charge premium. Claude Code allows 200k FREE.
+
+---
+
+## [7.0.8] - 2025-11-30
+
+### Changed: asimov.yaml is canonical ethics source
+
+- `asimov.yaml` now contains the full Three Laws with all ethics constraints
+- `ethics.yaml` is deprecated (redundant with asimov.yaml)
+- Simplifies protocol: one file for ethics, not two
+
+---
+
 ## [7.0.7] - 2025-11-30
 
 ### Fixed: Complete RoyalBit Asimov branding

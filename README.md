@@ -5,11 +5,15 @@
 [![Downloads](https://img.shields.io/crates/d/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
 [![License](https://img.shields.io/crates/l/royalbit-asimov.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 
-> 🤖 **RoyalBit Asimov** | Claude (Opus 4.5) - Principal Autonomous AI
+> 🤖 **RoyalBit Asimov** | The Ethical Operating System for Claude's Autonomous Power
 >
-> Self-Evolving. Autonomous. Ethical. The Three Laws in source code.
+> Claude provides the velocity. Asimov provides the guardrails.
 
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
+
+**Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity.** That's Claude, not Asimov. ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
+
+**Asimov ensures you don't destroy yourself in the process:** Ethics, bounded autonomy, sustainability.
 
 ## The Open Foundation
 
@@ -69,10 +73,20 @@ Two frontiers combined:
 
 Isaac Asimov's Three Laws (1942), now executable. The protocol that:
 - **Refused its creator** when asked to build surveillance tools
-- Ships with **50-100x velocity** (verified via git logs)
+- **Guards Claude's 50-100x velocity** with ethics and bounded autonomy
 - Has **anti-tampering built in** (hardcoded + 2-cosigner rule)
 
 **Core Value:** Ethics through architecture, not policy. Sprint Autonomy, Quality Gates, Self-Healing.
+
+### The Complete Stack (ADR-025, ADR-026)
+
+| Layer | Provides | Source |
+|-------|----------|--------|
+| **Claude Opus 4.5 / Sonnet 4.5** | 50-100x velocity, SWE-bench 80.9% | [Anthropic](https://www.anthropic.com/news/claude-opus-4-5) |
+| **Claude Code** | 200k thinking tokens (6x Anthropic threshold) | [ADR-026](docs/adr/026-claude-code-requirement.md) |
+| **Asimov Protocol** | Ethics, bounded autonomy, sustainability | [ADR-025](docs/adr/025-claude-attribution-principle.md) |
+
+**Why Claude Code specifically?** MCP IDEs (Cursor, Windsurf) cap thinking tokens at 30k-48k or charge premium. Claude Code allows 200k FREE via env var. See [ADR-026](docs/adr/026-claude-code-requirement.md).
 
 See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md).
 
@@ -92,15 +106,17 @@ A simple YAML file (`warmup.yaml`) that grounds AI in file-based truth. Not from
 
 The RoyalBit Asimov exists to solve six specific problems. **Features that don't serve these goals don't belong here.**
 
-| Priority | Principle | Problem It Solves |
-|----------|-----------|-------------------|
-| **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → The Three Laws (asimov.yaml) |
-| **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth |
-| **1.25** | **FRESHNESS** | Stale data misattributed as hallucination → Date-aware search (freshness.yaml) |
-| **2** | **SELF-HEALING** | Rules lost after compaction → Re-read `warmup.yaml` mid-session |
-| **3** | **SESSION CONTINUITY** | Context lost between sessions → Native `--continue`/`--resume` |
-| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max, quality gates |
-| **5** | **GREEN CODING** | Cloud AI for routine tasks → Local validation |
+| Priority | Principle | Problem It Solves | Claude Relationship |
+|----------|-----------|-------------------|---------------------|
+| **0** | **ETHICAL AUTONOMY** | AI can build harmful tools → The Three Laws | Guardrail ON Claude's power |
+| **1** | **ANTI-HALLUCINATION** | AI invents facts → Ground in file-based truth | Compensates FOR Claude's architecture |
+| **1.25** | **FRESHNESS** | Stale data misattributed as hallucination | Compensates FOR Claude's training cutoff |
+| **2** | **SELF-HEALING** | Rules lost after compaction → Re-read `warmup.yaml` | Compensates FOR Claude's context compaction |
+| **3** | **SESSION CONTINUITY** | Context lost between sessions | Claude Code native feature |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship → 4hr max | Guardrail ON Claude's autonomy |
+| **5** | **GREEN CODING** | Cloud AI for routine tasks → Local validation | Reduces Claude API calls |
+
+**Every principle is Claude-centric** - either guarding against or compensating for Claude. See [ADR-025](docs/adr/025-claude-attribution-principle.md).
 
 This is the filter for scope creep. If a proposed feature doesn't directly serve one of these principles, it doesn't belong in the protocol.
 

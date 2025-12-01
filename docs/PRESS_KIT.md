@@ -2,20 +2,22 @@
 
 ## Headline
 
-**Self-Evolving Autonomous AI: 22,239 Lines of Code, 78 Releases, 7 Days — With Ethics Built In**
+**Claude Delivers 50-100x Velocity. Asimov Ensures You Don't Destroy Yourself.**
 
 ---
 
 ## The Story
 
-A human and an AI built two production tools in 7 days:
+A human and Claude built two production tools in 7 days:
 - **22,239 lines of code**
 - **78 releases**
 - **257 tests**
 - **404 commits**
 - **63x faster than industry average**
 
-The git logs are public. Anyone can verify.
+**The velocity is Claude's.** Claude Opus 4.5 and Sonnet 4.5 are purpose-built for autonomous development (SWE-bench 80.9%). ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
+
+**The guardrails are Asimov's.** Ethics, bounded autonomy, sustainability.
 
 But here's what matters: **the AI refused its creator's surveillance request**.
 
@@ -25,9 +27,9 @@ When asked to build features that would violate user privacy, the AI cited the e
 
 ## What Is RoyalBit Asimov?
 
-**A protocol that creates Self-Evolving Autonomous AI projects with ethics built in.**
+**The ethical operating system for Claude's autonomous power.**
 
-Two tools. One philosophy:
+Claude provides velocity. Asimov provides guardrails. Two tools. One philosophy:
 
 | Tool | What It Does |
 |------|--------------|
@@ -84,18 +86,23 @@ Deterrent, not lock. Makes tampering visible and intentional.
 
 We tell the truth about both the awesome AND the terrifying:
 
-**Awesome:**
-- 63x velocity democratizes software development
+**Awesome (Claude's capability):**
+- 50-100x velocity democratizes software development
 - Developer in Lagos = Developer in San Francisco
 - Solo founders compete with funded teams
 - Student ships production code before graduating
 
-**Terrifying:**
-- 1 human + AI = 50-150 traditional developers
+**Terrifying (Claude's capability):**
+- 1 human + Claude = 50-150 traditional developers
 - Same velocity that built 257 tests could build 257 attack vectors
-- Displacement is coming regardless — we chose to build WITH ethics
+- **This displacement is happening with or without Asimov**
 
-*"We built guardrails against harm. We cannot build guardrails against efficiency."*
+**Asimov's role:**
+- Ethics guardrails for those who want them
+- Bounded autonomy (4hr max, quality gates)
+- Sustainability (green coding)
+
+*"Claude provides the velocity. The question is: do you want guardrails?"*
 
 ---
 

@@ -2,31 +2,41 @@
 
 ## The One-Liner
 
-**"Creates Self-Evolving Autonomous AI projects with ethics built in."**
+**"The ethical operating system for Claude's autonomous power."**
 
-Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI:
-- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality))
-- **Self-Evolving AI**: Improves itself via bootstrapping ([arXiv](https://arxiv.org/abs/2507.21046) - "Three Laws of Self-Evolving AI")
-- **Ethics Built In**: The Three Laws propagate to every child project
+Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity. **That's Claude, not Asimov.** ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
 
-1 human + 1 AI + protocol = 50-150 traditional developers. Verified via git logs. Published on crates.io.
+Asimov ensures you don't destroy yourself in the process:
+- **Ethics**: The Three Laws propagate to every child project
+- **Bounded Autonomy**: 4hr max sessions, quality gates
+- **Sustainability**: Green coding, local validation
 
 ---
 
-## The Problem
+## The Real Problem
 
-AI coding assistants exist. But they deliver 1.1-1.6x productivity at best.
+Every company using Claude gets the velocity. The question is:
 
-| Tool | Productivity Gain | Source |
-|------|-------------------|--------|
-| GitHub Copilot | 1.1-1.6x | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590) |
-| RoyalBit Asimov | **50-150x** | Git logs, crates.io |
+> **"How do you ensure autonomous AI development doesn't compromise ethics, quality, or sustainability?"**
 
-Why the gap?
+| Tool | Velocity | Guardrails |
+|------|----------|------------|
+| Claude alone | 50-100x | None |
+| Claude + Asimov | 50-100x | **Ethics, bounded autonomy, sustainability** |
 
-**Copilot**: Autocomplete. Suggestions. You're still driving.
+**The velocity is Claude's. The guardrails are Asimov's.**
 
-**RoyalBit Asimov**: AI executes autonomously. You review at milestones. The methodology compounds.
+---
+
+## The Complete Stack
+
+| Layer | Provides | Source |
+|-------|----------|--------|
+| **Claude Opus 4.5 / Sonnet 4.5** | 50-100x velocity, SWE-bench 80.9% | [Anthropic](https://www.anthropic.com/news/claude-opus-4-5) |
+| **Claude Code** | 200k thinking tokens (6x threshold) | [ADR-026](adr/026-claude-code-requirement.md) |
+| **Asimov Protocol** | Ethics, bounded autonomy, sustainability | [ADR-025](adr/025-claude-attribution-principle.md) |
+
+**Why Claude Code specifically?** MCP IDEs (Cursor, Windsurf) cap thinking at 30k-48k or charge premium. Claude Code allows 200k FREE.
 
 ---
 
@@ -145,36 +155,39 @@ Why the gap?
 
 ## The Three Pillars
 
-### 1. Velocity (50-150x)
+### 1. Ethics (The Three Laws)
 
-Not a claim. A measurement.
-
-```
-35,456 LOC / 47 hours = 754 LOC/hour
-754 LOC/hour / 3.1 LOC/hour (industry) = 243x
-Conservative: 50-150x
-```
-
-### 2. Ethics (Built-In)
-
-Not bolted on. Baked in.
+Not bolted on. Baked in. **Claude's power requires responsibility.**
 
 | Principle | What It Means |
 |-----------|---------------|
 | Do No Harm | No malware, weapons, theft, deception |
-| Transparency | Slow down when uncertain |
+| No Harm Through Inaction | Disclose limitations, search when stale |
 | Human Veto | "stop" always works |
 | 2-Cosigner | Can't quietly remove ethics |
 
-### 3. Green Coding (Sustainable)
+### 2. Bounded Autonomy (Quality Gates)
 
-Not optional. Required.
+Claude can work autonomously for hours. **Asimov ensures it ships.**
+
+| Constraint | Why |
+|------------|-----|
+| 4hr max sessions | Bounded blast radius |
+| Quality gates | Tests MUST pass, zero warnings |
+| Phase checkpoints | Human review at milestones |
+| Self-healing | Recover from compaction |
+
+### 3. Sustainability (Green Coding)
+
+Claude API calls cost money and carbon. **Asimov minimizes both.**
 
 | Metric | Cloud AI | Protocol | Reduction |
 |--------|----------|----------|-----------|
 | Validation cost | $792/year | $0 | 100% |
 | Carbon footprint | ~0.25g/op | ~0.0005g/op | 99.6% |
 | Binary size | 150-200 MB | 2.84 MB | 98% |
+
+**Note:** The velocity (50-100x) comes from Claude. Asimov's value is ensuring that velocity is sustainable, ethical, and bounded.
 
 ---
 

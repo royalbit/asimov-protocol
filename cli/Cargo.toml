@@ -1,9 +1,9 @@
 [package]
 name = "royalbit-asimov"
-version = "7.0.8"
+version = "7.0.9"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
-description = "RoyalBit Asimov - Creates Self-Evolving Autonomous AI projects with ethics built in. The Three Laws of Robotics, encoded in YAML."
+description = "RoyalBit Asimov - The ethical operating system for Claude's autonomous power. Claude provides velocity, Asimov provides guardrails."
 repository = "https://github.com/royalbit/asimov"
 homepage = "https://github.com/royalbit/asimov"
 documentation = "https://github.com/royalbit/asimov#readme"

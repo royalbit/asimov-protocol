@@ -4,10 +4,10 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.8"
+  version: "7.0.9"
   status: released
-  summary: "asimov.yaml is canonical ethics source (replaces ethics.yaml)"
-  goal: SIMPLIFICATION
+  summary: "Claude Attribution - velocity comes from Claude, Asimov = guardrails"
+  goal: NARRATIVE_TRUTH
 
 next:
   - version: "7.1.0"
@@ -25,3 +25,22 @@ next:
 backlog:
   - "MCP Server Mode: Expose validation as MCP tools"
   - "VS Code Extension: Syntax highlighting, validation"
+  - "migrations.yaml: Functional Equivalence Protocol for migration projects (test parity, contract testing, shadow mode, behavioral snapshots)"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BACKLOG NOTES (not validated)
+# ═══════════════════════════════════════════════════════════════════════════════
+# migrations.yaml details:
+#   For migration projects (language migrations, framework upgrades, rewrites),
+#   ensure the new code functions identically to the original.
+#
+#   Potential approaches:
+#   - Test parity: Same test suite passes on old and new
+#   - Contract testing: Define input/output contracts, verify both satisfy
+#   - Property-based testing: Generate inputs, compare outputs
+#   - Shadow mode: Run both in parallel, diff results
+#   - Behavioral snapshots: Capture old behavior, assert new matches
+#   - API contract verification: OpenAPI/gRPC schema compatibility
+#   - Database migration validation: Data integrity checks
+#
+#   Key principle: "Migration complete" = "functionally equivalent" not just "compiles"
