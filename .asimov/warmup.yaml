@@ -17,7 +17,7 @@ identity:
   project: "RoyalBit Asimov"
   tagline: "Creates Self-Evolving Autonomous AI projects with ethics built in"
   type: "rust"
-  version: "7.0.7"
+  version: "7.0.8"
   repo: "https://github.com/royalbit/asimov"
   license: "MIT"
 
