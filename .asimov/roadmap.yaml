@@ -4,17 +4,21 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.5"
+  version: "7.0.8"
   status: released
-  summary: "Prevent accidental init in git subdirectories"
-  goal: DX_QUALITY
+  summary: "asimov.yaml is canonical ethics source (replaces ethics.yaml)"
+  goal: SIMPLIFICATION
 
 next:
   - version: "7.1.0"
+    summary: "Freshness Protocol - Documentation staleness detection"
+    goal: CORE_PRINCIPLE
+
+  - version: "7.2.0"
     summary: "JSON Schema for Editors"
     goal: DX_QUALITY
 
-  - version: "7.2.0"
+  - version: "7.3.0"
     summary: "Schema Standardization"
     goal: ANTI_HALLUCINATION
 
