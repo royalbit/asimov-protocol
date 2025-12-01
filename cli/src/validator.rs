@@ -319,6 +319,7 @@ fn validate_directory_internal(
         "sprint.yaml",
         "roadmap.yaml",
         "asimov.yaml",
+        "freshness.yaml",
         "green.yaml",
         "sycophancy.yaml",
         ".claude_checkpoint.yaml",
@@ -341,7 +342,7 @@ fn validate_directory_internal(
 
     if results.is_empty() {
         return Err(Error::ValidationError(
-            "No protocol files found in .asimov/ or root (warmup.yaml, sprint.yaml, roadmap.yaml, asimov.yaml, sycophancy.yaml)"
+            "No protocol files found in .asimov/ or root (warmup.yaml, sprint.yaml, roadmap.yaml, asimov.yaml, freshness.yaml, sycophancy.yaml)"
                 .to_string(),
         ));
     }

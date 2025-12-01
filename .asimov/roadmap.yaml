@@ -4,28 +4,31 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.0.9"
+  version: "7.1.0"
   status: released
-  summary: "Claude Attribution - velocity comes from Claude, Asimov = guardrails"
-  goal: NARRATIVE_TRUTH
+  summary: "Freshness Protocol - CLI validation (schema added)"
+  goal: CORE_PRINCIPLE
 
 next:
-  - version: "7.1.0"
-    summary: "Freshness Protocol - Documentation staleness detection"
-    goal: CORE_PRINCIPLE
 
   - version: "7.2.0"
-    summary: "JSON Schema for Editors"
+    summary: "JSON Schema export for editors (asimov schema command)"
     goal: DX_QUALITY
 
   - version: "7.3.0"
-    summary: "Schema Standardization"
+    summary: "Schema Standardization (audit + align)"
     goal: ANTI_HALLUCINATION
 
+  - version: "7.4.0"
+    summary: "MCP Server Mode - Expose validation as MCP tools"
+    goal: ECOSYSTEM
+
+  - version: "7.5.0"
+    summary: "migrations.yaml - Functional Equivalence Protocol"
+    goal: CORE_PRINCIPLE
+
 backlog:
-  - "MCP Server Mode: Expose validation as MCP tools"
-  - "VS Code Extension: Syntax highlighting, validation"
-  - "migrations.yaml: Functional Equivalence Protocol for migration projects (test parity, contract testing, shadow mode, behavioral snapshots)"
+  - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG NOTES (not validated)

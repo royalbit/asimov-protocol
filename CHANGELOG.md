@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.1.0] - 2025-12-01
+
+### Added: Freshness Protocol CLI Validation
+
+- **freshness.yaml** now validated by `asimov validate` (7 files instead of 6)
+- Added `FRESHNESS_SCHEMA` for JSON schema validation
+- AI knowledge cutoff awareness is a First Law issue (ADR-022, ADR-023)
+
+**Why this matters:** Stale data ≠ hallucination. Different problem, different solution.
+The Freshness Protocol makes AI's temporal limitations explicit.
+
+---
+
 ## [7.0.9] - 2025-12-01
 
 ### Changed: Claude Attribution Principle (ADR-025, ADR-026)
