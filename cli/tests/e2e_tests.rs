@@ -955,3 +955,138 @@ fn e2e_validate_repo_protocol_files() {
         "Repo protocol files should be valid, stdout: {stdout}, stderr: {stderr}"
     );
 }
+
+// ========== Schema Command Tests ==========
+
+#[test]
+fn e2e_schema_help_shows_options() {
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("--help")
+        .output()
+        .expect("Failed to execute");
+
+    assert!(output.status.success(), "Schema help should succeed");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(stdout.contains("warmup"), "Should list warmup schema");
+    assert!(stdout.contains("sprint"), "Should list sprint schema");
+    assert!(stdout.contains("asimov"), "Should list asimov schema");
+    assert!(stdout.contains("--output"), "Should show output option");
+}
+
+#[test]
+fn e2e_schema_single_to_stdout() {
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("warmup")
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Schema warmup should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    assert!(stdout.contains("$schema"), "Should contain JSON schema");
+    assert!(
+        stdout.contains("identity"),
+        "Should contain warmup properties"
+    );
+}
+
+#[test]
+fn e2e_schema_all_to_directory() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("all")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Schema all should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Check all schema files were created
+    assert!(
+        temp_dir.path().join("warmup.schema.json").exists(),
+        "warmup.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("sprint.schema.json").exists(),
+        "sprint.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("roadmap.schema.json").exists(),
+        "roadmap.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("asimov.schema.json").exists(),
+        "asimov.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("freshness.schema.json").exists(),
+        "freshness.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("green.schema.json").exists(),
+        "green.schema.json should exist"
+    );
+    assert!(
+        temp_dir.path().join("sycophancy.schema.json").exists(),
+        "sycophancy.schema.json should exist"
+    );
+}
+
+#[test]
+fn e2e_schema_invalid_name() {
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("invalid_schema")
+        .output()
+        .expect("Failed to execute");
+
+    assert!(!output.status.success(), "Invalid schema name should fail");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    let combined = format!("{stdout}{stderr}");
+
+    assert!(
+        combined.contains("Unknown schema"),
+        "Should report unknown schema, got: {combined}"
+    );
+}
+
+#[test]
+fn e2e_schema_output_is_valid_json() {
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("asimov")
+        .output()
+        .expect("Failed to execute");
+
+    assert!(output.status.success(), "Schema asimov should succeed");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Verify it's valid JSON by parsing
+    let parsed: Result<serde_json::Value, _> = serde_json::from_str(&stdout);
+    assert!(parsed.is_ok(), "Output should be valid JSON");
+
+    let json = parsed.unwrap();
+    assert!(json.get("$schema").is_some(), "Should have $schema field");
+    assert!(json.get("title").is_some(), "Should have title field");
+    assert!(json.get("properties").is_some(), "Should have properties");
+}

@@ -4,16 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.1.0"
+  version: "7.2.0"
   status: released
-  summary: "Freshness Protocol - CLI validation (schema added)"
-  goal: CORE_PRINCIPLE
+  summary: "JSON Schema export for editors (asimov schema command)"
+  goal: DX_QUALITY
 
 next:
-
-  - version: "7.2.0"
-    summary: "JSON Schema export for editors (asimov schema command)"
-    goal: DX_QUALITY
 
   - version: "7.3.0"
     summary: "Schema Standardization (audit + align)"
