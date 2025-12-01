@@ -68,3 +68,9 @@ pub use validator::{
     validate_directory_with_options, validate_directory_with_regeneration, validate_file,
     FileSizeLimits, RegenerationInfo, ValidationResult, PROTOCOL_DIR,
 };
+
+// Schema exports for editor integration (v7.2.0)
+pub use schemas::{
+    ASIMOV_SCHEMA, FRESHNESS_SCHEMA, GREEN_SCHEMA, ROADMAP_SCHEMA, SPRINT_SCHEMA,
+    SYCOPHANCY_SCHEMA, WARMUP_SCHEMA,
+};

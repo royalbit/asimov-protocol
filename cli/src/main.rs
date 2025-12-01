@@ -3,14 +3,47 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use royalbit_asimov::{
-    anti_patterns, asimov_template, banned_phrases, check_ethics_status, check_green_status,
-    check_markdown_file, check_sycophancy_status, checkpoint_template, find_markdown_files,
-    fix_markdown_file, green_template, hook_installer_template, is_protocol_file,
-    precommit_hook_template, red_flags, roadmap_template, scan_directory_for_red_flags,
-    sprint_template, sycophancy_template, uses_cargo_husky, validate_directory_with_regeneration,
-    validate_file, warmup_template, EthicsStatus, GreenStatus, ProjectType, SycophancyStatus,
-    CORE_PRINCIPLES, GREEN_MOTTO, GREEN_PRINCIPLES, HUMAN_VETO_COMMANDS, SYCOPHANCY_MOTTO,
+    anti_patterns,
+    asimov_template,
+    banned_phrases,
+    check_ethics_status,
+    check_green_status,
+    check_markdown_file,
+    check_sycophancy_status,
+    checkpoint_template,
+    find_markdown_files,
+    fix_markdown_file,
+    green_template,
+    hook_installer_template,
+    is_protocol_file,
+    precommit_hook_template,
+    red_flags,
+    roadmap_template,
+    scan_directory_for_red_flags,
+    sprint_template,
+    sycophancy_template,
+    uses_cargo_husky,
+    validate_directory_with_regeneration,
+    validate_file,
+    warmup_template,
+    EthicsStatus,
+    GreenStatus,
+    ProjectType,
+    SycophancyStatus,
+    // Schema exports for editor integration
+    ASIMOV_SCHEMA,
+    CORE_PRINCIPLES,
+    FRESHNESS_SCHEMA,
+    GREEN_MOTTO,
+    GREEN_PRINCIPLES,
+    GREEN_SCHEMA,
+    HUMAN_VETO_COMMANDS,
+    ROADMAP_SCHEMA,
+    SPRINT_SCHEMA,
+    SYCOPHANCY_MOTTO,
     SYCOPHANCY_PRINCIPLES,
+    SYCOPHANCY_SCHEMA,
+    WARMUP_SCHEMA,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -136,6 +169,17 @@ enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
+
+    /// Export JSON schemas for editor integration (VS Code, etc.)
+    Schema {
+        /// Schema to export (all, warmup, sprint, roadmap, asimov, freshness, green, sycophancy)
+        #[arg(default_value = "all")]
+        name: String,
+
+        /// Output directory for schema files (default: stdout for single, ./schemas/ for all)
+        #[arg(short, long)]
+        output: Option<PathBuf>,
+    },
 }
 
 fn main() -> ExitCode {
@@ -158,6 +202,7 @@ fn main() -> ExitCode {
         Commands::Check { file } => cmd_validate(&file, false, true),
         Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
+        Commands::Schema { name, output } => cmd_schema(&name, output),
     }
 }
 
@@ -911,6 +956,121 @@ fn find_git_root(start: &Path) -> Option<PathBuf> {
         }
         if !current.pop() {
             return None;
+        }
+    }
+}
+
+/// Export JSON schemas for editor integration
+fn cmd_schema(name: &str, output: Option<PathBuf>) -> ExitCode {
+    let schemas: Vec<(&str, &str)> = vec![
+        ("warmup", WARMUP_SCHEMA),
+        ("sprint", SPRINT_SCHEMA),
+        ("roadmap", ROADMAP_SCHEMA),
+        ("asimov", ASIMOV_SCHEMA),
+        ("freshness", FRESHNESS_SCHEMA),
+        ("green", GREEN_SCHEMA),
+        ("sycophancy", SYCOPHANCY_SCHEMA),
+    ];
+
+    let name_lower = name.to_lowercase();
+
+    if name_lower == "all" {
+        // Export all schemas to directory
+        let output_dir = output.unwrap_or_else(|| PathBuf::from("schemas"));
+
+        // Create output directory
+        if let Err(e) = std::fs::create_dir_all(&output_dir) {
+            eprintln!(
+                "{} Failed to create directory: {}",
+                "Error:".bold().red(),
+                e
+            );
+            return ExitCode::FAILURE;
+        }
+
+        println!("{}", "RoyalBit Asimov Schema Export".bold().green());
+        println!();
+
+        for (schema_name, schema_content) in &schemas {
+            let filename = format!("{}.schema.json", schema_name);
+            let file_path = output_dir.join(&filename);
+
+            match std::fs::write(&file_path, schema_content) {
+                Ok(_) => {
+                    println!("  {} {}", "CREATE".bold().green(), file_path.display());
+                }
+                Err(e) => {
+                    eprintln!("  {} {} - {}", "ERROR".bold().red(), file_path.display(), e);
+                }
+            }
+        }
+
+        println!();
+        println!(
+            "{} {} schema(s) exported to {}",
+            "Success:".bold().green(),
+            schemas.len(),
+            output_dir.display()
+        );
+
+        // Print VS Code integration hint
+        println!();
+        println!("{}", "VS Code Integration:".bold().cyan());
+        println!("  Add to .vscode/settings.json:");
+        println!();
+        println!("  {{");
+        println!("    \"yaml.schemas\": {{");
+        for (schema_name, _) in &schemas {
+            println!(
+                "      \"./schemas/{}.schema.json\": \"**/{}.yaml\"{}",
+                schema_name,
+                schema_name,
+                if *schema_name == "sycophancy" {
+                    ""
+                } else {
+                    ","
+                }
+            );
+        }
+        println!("    }}");
+        println!("  }}");
+
+        ExitCode::SUCCESS
+    } else {
+        // Export single schema to stdout or file
+        let schema = schemas.iter().find(|(n, _)| *n == name_lower);
+
+        match schema {
+            Some((schema_name, schema_content)) => {
+                if let Some(output_path) = output {
+                    // Write to file
+                    match std::fs::write(&output_path, schema_content) {
+                        Ok(_) => {
+                            println!(
+                                "{} {} schema written to {}",
+                                "Success:".bold().green(),
+                                schema_name,
+                                output_path.display()
+                            );
+                            ExitCode::SUCCESS
+                        }
+                        Err(e) => {
+                            eprintln!("{} Failed to write file: {}", "Error:".bold().red(), e);
+                            ExitCode::FAILURE
+                        }
+                    }
+                } else {
+                    // Output to stdout
+                    println!("{}", schema_content);
+                    ExitCode::SUCCESS
+                }
+            }
+            None => {
+                eprintln!("{} Unknown schema: {}", "Error:".bold().red(), name);
+                eprintln!();
+                eprintln!("Available schemas: all, warmup, sprint, roadmap, asimov, freshness, green, sycophancy");
+                ExitCode::FAILURE
+            }
         }
     }
 }

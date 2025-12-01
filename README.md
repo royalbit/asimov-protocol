@@ -9,7 +9,17 @@
 >
 > Claude provides the velocity. Asimov provides the guardrails.
 
+> *"A robot may not harm humanity, or, by inaction, allow humanity to come to harm."*
+> — Isaac Asimov, The Zeroth Law (1985)
+
+> *"The needs of the many outweigh the needs of the few."*
+> — Spock, Star Trek II: The Wrath of Khan (1982)
+
 > *"The Three Laws were science fiction for 80 years. Now they're source code."*
+
+**The Mission: Democratize AI Power.**
+
+AI capabilities shouldn't be reserved for well-funded organizations. RoyalBit Asimov enables solo founders, small teams, and developers globally to operate at enterprise scale — ethically, sustainably, and independently.
 
 **Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity.** That's Claude, not Asimov. ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
 
