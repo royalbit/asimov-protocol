@@ -28,7 +28,7 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 📖 **[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects with ethics
 
-📊 **Presentations:** [Executive Deck](https://github.com/royalbit/asimov/blob/main/docs/EXECUTIVE_DECK.md) | [Technical Deck](https://github.com/royalbit/asimov/blob/main/docs/PRESENTATION.md)
+📊 **Presentations:** Executive Deck ([PDF](docs/EXECUTIVE_DECK.pdf) | [PPTX](docs/EXECUTIVE_DECK.pptx) | [MD](docs/EXECUTIVE_DECK.md)) | Technical Deck ([PDF](docs/TECHNICAL_DECK.pdf) | [PPTX](docs/TECHNICAL_DECK.pptx) | [MD](docs/TECHNICAL_DECK.md))
 
 📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
 

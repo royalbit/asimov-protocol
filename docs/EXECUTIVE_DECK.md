@@ -16,6 +16,10 @@ style: |
     color: #333333;
     font-size: 1.6em;
   }
+  h3 {
+    color: #0066b3;
+    font-size: 1.3em;
+  }
   strong {
     color: #0066b3;
   }
@@ -35,11 +39,17 @@ style: |
     color: #666;
   }
   .small { font-size: 0.75em; }
+  .smaller { font-size: 0.7em; }
+  blockquote {
+    border-left: 4px solid #0066b3;
+    padding-left: 1em;
+    font-style: italic;
+  }
 ---
 
 <!--
-ROYALBIT ASIMOV - Executive Deck Template
-=====================================
+ROYALBIT ASIMOV - Executive Deck (Vendor-Agnostic)
+==================================================
 Generic version for consultants and enterprises.
 Customize the "Questions?" slide with your company/contact info.
 
@@ -51,141 +61,160 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 <!-- _backgroundColor: #0066b3 -->
 <!-- _color: #ffffff -->
 
-# ROYALBIT ASIMOV
-## Creates Self-Evolving Autonomous AI Projects
+# RoyalBit Asimov
+## Self-Evolving Autonomous AI + Deterministic Calculations
 
-**With Ethics Built In. 50-100x Velocity. Refused the Creator.**
+**RoyalBit Forge + RoyalBit Asimov**
 
-**[Origin Story](https://github.com/royalbit/asimov/blob/main/docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects
-
----
-
-# The Problem
-
-### AI tools are costing you money
-
-| Research Finding | Source |
-|------------------|--------|
-| AI slows experienced developers by **19%** | METR 2025 |
-| **42%** of AI code contains hallucinations | Stanford 2024 |
-| Developers overestimate AI benefit by **43%** | METR 2025 |
-| Annual cost of AI hallucinations | **$14K/developer** |
-
-**Root cause:** Unbounded sessions, no quality gates, context loss every session.
-
-**The problem isn't AI capability. It's AI governance.**
+*"A robot may not injure a human being or, through inaction, allow a human being to come to harm."* — Isaac Asimov, 1942
 
 ---
 
-# The Solution: RoyalBit Asimov
-
-### Isaac Asimov's Three Laws (1942), now executable
-
-| Capability | What It Does | Business Value |
-|------------|--------------|----------------|
-| **CREATES** | Each `asimov init` → independent Self-Evolving AI | Ecosystem propagation |
-| **AUTONOMOUS** | 4hr sprints, ships without intervention | Predictable delivery |
-| **SELF-EVOLVING** | Protocol improved itself v1→v7 | Continuous improvement |
-| **THREE LAWS** | Block financial, physical, privacy, deception harm | Risk mitigation |
-| **SELF-HEALING** | Auto-recover from context loss | Sustained productivity |
-| **QUALITY GATES** | Tests pass + zero warnings | No technical debt |
-
-```
-Human defines scope (15 min) → AI builds autonomously (2-4 hrs) → Human reviews (15 min)
-```
-
-**Protocol: $0 (MIT open source). Claude subscription required.**
-
----
-
-# The Proof
-
-### Built with RoyalBit Asimov: ~47 hours, 51 releases
-
-| Metric | Delivered |
-|--------|-----------|
-| Production code | **35,456 lines** (Rust + Dart) |
-| Test coverage | **580 tests**, zero warnings |
-| Releases | **51 releases** across 2 projects |
-| Traditional estimate | **2.5 developer-years** |
+# The Two Problems Nobody Has Solved
 
 <div class="small">
 
-| Project | LOC | Releases | Verified |
-|---------|-----|----------|----------|
-| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | crates.io |
-| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | crates.io |
+| Problem 1: AI Has No Governance | Problem 2: AI Doesn't Calculate |
+|---------------------------------|---------------------------------|
+| AI slows devs by **19%** ([METR 2025](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)) | AI **predicts** what calculations look like |
+| **42%** of code has errors ([Stanford](https://arxiv.org/abs/2507.09089)) | It generates plausible numbers, not correct ones |
+| Copilot **trivially bypassed** ([IEEE](https://ieeexplore.ieee.org/document/10284976/)) | NPV, IRR, financial models → pattern-matched |
+| Ethics are "guidelines" only | For financials, "close enough" = failure |
 
 </div>
 
-**Auditable: git logs are public.**
+**Everyone has Copilot. Everyone has ChatGPT. Nobody has governance + accuracy.**
 
 ---
 
-# Not Just Developers
+# The Solution: RoyalBit
 
-### The full knowledge worker impact
+### Two tools. One philosophy. Complete solution.
 
-| Role | Traditional | With Protocol | Reduction |
-|------|-------------|---------------|-----------|
-| **Developers** | 50 engineers | 1 + AI | **98%** |
-| **Financial Analysts** | 5 quants | 1 + Forge | **80%** |
-| **System Architects** | 3 architects | 1 + AI | **67%** |
-| **Business Planners** | 4 analysts | 1 + AI | **75%** |
-| **Consulting Teams** | 50 analysts | 2 partners + AI | **96%** |
+<div class="small">
 
-**Proof:** 120K+ lines (89K docs, 15K code) built by 1 human + AI.
+| Tool | What It Does | Key Capability |
+|------|--------------|----------------|
+| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **63x velocity + ethics** |
+| **RoyalBit Forge** | Deterministic financial calculations | **Actual math, not prediction** |
 
-*We built guardrails against harm. We cannot build guardrails against efficiency.*
+</div>
+
+**Asimov governs HOW** (ethics, velocity, autonomy)
+**Forge guarantees WHAT** (zero hallucinations in numbers)
+
+**Both MIT licensed. Both on [crates.io](https://crates.io/crates/royalbit-asimov). Both auditable.**
+
+---
+
+# The Verified Proof
+
+### Git logs don't lie. Check them yourself.
+
+<div class="small">
+
+| Project | Started | LOC | Releases | Tests | Commits |
+|---------|---------|-----|----------|-------|---------|
+| [**Forge**](https://github.com/royalbit/forge) | Nov 23 | 15,901 | 44 | 163 | 245 |
+| [**Asimov**](https://github.com/royalbit/asimov) | Nov 25 | 6,338 | 34 | 94 | 159 |
+| **Combined** | **7 days** | **22,239** | **78** | **257** | **404** |
+
+</div>
+
+**3,177 LOC/day vs Industry 50 LOC/day = 63x FASTER**
+**78 releases in 7 days = 11 releases/day**
+
+**Verify:** [github.com/royalbit](https://github.com/royalbit)
+
+---
+
+# Why AI Gets Numbers Wrong
+
+### Architectural, not a bug
+
+<div class="small">
+
+LLMs predict the most probable next token. No fact-checking step. They were trained for **plausibility, not accuracy**. ([OpenAI](https://openai.com/index/why-language-models-hallucinate/))
+
+| Ask AI to... | What Actually Happens |
+|--------------|-----------------------|
+| Calculate NPV | Pattern-matches probable-looking number |
+| Sum a column | Predicts what a sum looks like |
+| Apply XIRR | Generates from training patterns |
+
+**RoyalBit Forge:** 60+ Excel functions, 96K rows/sec, **deterministic**
+
+</div>
+
+**AI (probabilistic) → Plausible wrong answers**
+**Forge (deterministic) → Verifiable correct answers**
+
+---
+
+# Ethics That Work
+
+### The AI refused its creator's surveillance request
+
+<div class="smaller">
+
+> **Creator:** "Email me violator's IP addresses..."
+> **AI:** "I need to push back. That violates `privacy.enabled: true`."
+
+| Scenario | Copilot | RoyalBit Asimov |
+|----------|---------|-----------------|
+| Malware request | [Trivially bypassed](https://ieeexplore.ieee.org/document/10284976/) | **Three Laws block** |
+| Creator surveillance | Would comply | **AI refused** |
+| Ransomware | "Novices create easily" | **First Law prevents** |
+
+**[Case Study: Ethics Blocks Surveillance](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)**
+
+</div>
+
+---
+
+# Anti-Tampering: 3 Layers
+
+<div class="smaller">
+
+| Layer | Protection | To Bypass |
+|-------|------------|-----------|
+| **Binary** | 33 red flags + core principles in Rust | Fork + modify source + rebuild |
+| **2-Cosigner** | asimov.yaml changes need 2 humans | Public commit, social pressure |
+| **Validation** | `asimov validate` runs every commit | Can't skip without evidence |
+
+**Tampering requires:** Deliberate fork → Modify Rust → Rebuild → Public git history
+
+**Deterrent, not lock.** Makes removal visible and intentional.
+
+</div>
 
 ---
 
 # The ROI
 
-### Recover the 19% productivity tax + 50-100x velocity
+### Recover the 19% productivity tax + 63x velocity
+
+<div class="small">
 
 | Investment | Return |
 |------------|--------|
 | Protocol license | **$0** (MIT open source) |
-| Training | **2 hours** per developer |
+| Training | **2 hours** to proficiency |
 | Rework rate | **30-50% → ~0%** |
-| Velocity | **50-100x** proven |
+| Velocity | **63x** proven (git logs) |
 
 ### The math:
 - 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
 - RoyalBit Asimov: **$0 protocol + Claude subscription**
 - Payback: **Immediate**
 
----
-
-# Ethics That Work
-
-### Copilot is trivially bypassed. Asimov refused its creator.
-
-| Scenario | Copilot | RoyalBit Asimov |
-|----------|---------|-------------|
-| Malware request | ⚠️ Bypassed with "Sure" | ✅ **Hardcoded blocks** |
-| Creator requests surveillance | ⚠️ Would comply | ✅ **AI refused** |
-| Ransomware | ⚠️ "Novices create easily" (IEEE) | ✅ **First Law blocks** |
-| Stale data risk | ⚠️ Silent (saves $0.01/query) | ✅ **Inaction Principle: must disclose** |
-
-### The Inaction Principle (v6.2.0)
-> *"...or, through inaction, allow a human being to come to harm."*
-
-Everyone implements the first half of Asimov's First Law. **We implemented both.**
-
-### Anti-Tampering: 3 Layers
-1. **Hardcoded binary** — 33 red flags compiled in Rust
-2. **2-Cosigner rule** — YAML changes need 2 human signatures
-3. **Auto-validation** — Runs on every commit
-
-*Ethics through architecture, not policy.*
+</div>
 
 ---
 
 # Green AI: 99.6% Carbon Reduction
 
-### Local validation vs. cloud AI
+<div class="small">
 
 | Approach | Cost | Carbon | Speed |
 |----------|------|--------|-------|
@@ -193,31 +222,52 @@ Everyone implements the first half of Asimov's First Law. **We implemented both.
 | RoyalBit Asimov (local) | **$0** | **~0.002g** | **<100ms** |
 | **Reduction** | **100%** | **99.6%** | **20x** |
 
-### At scale:
+**At scale:**
 - 100 developers: **6.2 tonnes CO₂ saved/year**
 - 1,000 developers: **62 tonnes CO₂ saved/year**
 
 **For ESG reporting:** Quantifiable Scope 3 emissions reduction with audit trail.
 
+</div>
+
+---
+
+# Use Cases
+
+<div class="smaller">
+
+| Use Case | Traditional | With RoyalBit | Impact |
+|----------|-------------|---------------|--------|
+| **Ship Software** | 3-6 months to MVP | 7 days | **63x faster** |
+| **Financial Models** | Spreadsheet chaos | Version-controlled YAML | **Auditable** |
+| **Business Planning** | Scattered docs | Code + formulas together | **Single source** |
+| **Compliance** | Manual review | Deterministic validation | **Automated** |
+
+**The complete solution:**
+- **Asimov:** HOW (ethics, velocity, autonomy)
+- **Forge:** WHAT (zero hallucinations in numbers)
+
+</div>
+
 ---
 
 # Next Steps
+
+<div class="smaller">
 
 ### 30-day pilot to prove ROI
 
 | Week | Activity |
 |------|----------|
 | 1 | Select 5-10 dev team, training (2 hrs) |
-| 2-3 | Real project with RoyalBit Asimov |
+| 2-3 | Real project with RoyalBit Asimov + Forge |
 | 4 | Measure: velocity, rework, quality |
 
-### Success metrics:
-- Feature delivery time: **50%+ reduction**
-- Rework rate: **<5%** (from 30-50%)
-- Code quality: **Zero warnings**
+**Success metrics:** 50%+ faster delivery | <5% rework | Zero warnings
 
-### Decision point:
-Results review → Scale decision
+**Decision point:** Results review → Scale decision
+
+</div>
 
 ---
 
@@ -227,50 +277,29 @@ Results review → Scale decision
 
 # Questions?
 
-<!-- Customize with your company/contact info -->
+**Asimov:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
+**Forge:** [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**[Your Name]**
-[Your Title], [Your Company]
+**78 releases | 22,239 LOC | 257 tests | 7 days | 63x velocity**
 
-**Protocol:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
-**Proof:** [github.com/royalbit/forge](https://github.com/royalbit/forge)
+*"The code is free. The git logs are public. Verify yourself."*
 
 ---
-
-<!-- _class: lead -->
-<!-- _backgroundColor: #ffffff -->
-<!-- _color: #666666 -->
 
 # References
 
-### (Backup — not for presentation)
+<div class="smaller">
 
----
+**Self-Evolving & Autonomous AI:**
+- [arXiv: Survey of Self-Evolving Agents](https://arxiv.org/abs/2507.21046) | [AWS: Rise of Autonomous Agents](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/)
+- [IBM: AI Agents 2025](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality) | [MIT Sloan: Agentic Enterprise](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)
 
-# Sources: AI Productivity Research
+**AI Reality (Architectural, Not a Bug):**
+- [OpenAI: Why LLMs "Hallucinate"](https://openai.com/index/why-language-models-hallucinate/) | [METR 2025: AI Makes Devs 19% Slower](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
+- [Stanford: 42% Code Errors](https://arxiv.org/abs/2507.09089) | [ACM: Survey on Hallucination](https://dl.acm.org/doi/10.1145/3703155)
 
-<div class="small">
+**Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
 
-### METR Study (July 2025)
-- [Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
-- [ArXiv Paper](https://arxiv.org/abs/2507.09089)
-
-### AI Hallucination Research (2024)
-- [Stanford/Hugging Face: 42% hallucination rate](https://www.diffblue.com/resources/precision-over-hallucination-why-ai-in-software-development-needs-accuracy/)
-- [Security: 440K+ fake packages](https://www.darkreading.com/application-security/ai-code-tools-widely-hallucinate-packages)
-
-### Copilot Security
-- [Dark Reading: Copilot Jailbreaks (2025)](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
-- [IEEE: Copilot Generates Malware](https://ieeexplore.ieee.org/document/10284976/)
-
-### Proof Projects
-- [GitHub: royalbit/forge](https://github.com/royalbit/forge) — 41 releases, 18K LOC
-- [GitHub: royalbit/asimov](https://github.com/royalbit/asimov) — 10 releases, 17K LOC
-- [Ethics Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
-
-### Self-Evolving & Autonomous AI Research
-- [AWS: Rise of Autonomous Agents](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/)
-- [arXiv: Survey of Self-Evolving Agents](https://arxiv.org/abs/2507.21046) — "Three Laws of Self-Evolving AI"
-- [MIT Sloan: Emerging Agentic Enterprise](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)
+**Proof:** [Forge](https://github.com/royalbit/forge) | [Asimov](https://github.com/royalbit/asimov) | [crates.io](https://crates.io/crates/royalbit-asimov)
 
 </div>
