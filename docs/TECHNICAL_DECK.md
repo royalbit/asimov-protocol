@@ -336,53 +336,54 @@ Deterministic. Auditable. No spreadsheet chaos.
 
 ---
 
-<!-- _backgroundColor: #8B0000 -->
+<!-- _backgroundColor: #1a4a1a -->
 <!-- _color: #ffffff -->
 
-# The Terrifying Part
+# The Zeroth Law
 
-## Qowat Milat: Absolute Candor
+## Democratization is Moral Obligation
 
 ---
 
-# The Displacement Math
+# The Liberation Math
 
 <div class="smaller">
 
 **1 human + AI = 50-150 traditional developers**
 
-| Before | After | Displacement |
-|--------|-------|--------------|
-| 10-person startup | 1 person + AI | **9 positions gone** |
-| 50-person dev team | 5 people + AI | **45 positions gone** |
-| 1M protocol users | Each = 50-150 devs | **50-150M dev-equivalent** |
+| Before | After | Liberation |
+|--------|-------|------------|
+| Need $500K+ team | 1 person + AI | **Capital barrier removed** |
+| Need corporate backing | Build independently | **Dependency eliminated** |
+| Need to be in tech hub | Build from anywhere | **Geography irrelevant** |
 
-**Global developers:** ~28M | **1M users:** 2-5x global workforce output
+**Global accessibility:** Dev in Lagos = Dev in SF = Dev in Mumbai
 
-*The protocol doesn't choose sides. It multiplies capability.*
+*The Zeroth Law: Democratize AI power before it becomes unreachable.*
 
 </div>
 
 ---
 
-# Already Happening
+# Who Gains Access
 
 <div class="small">
 
-| Metric | 2024-2025 Data | Source |
-|--------|----------------|--------|
-| Tech jobs lost to AI (H1 2025) | **77,999** | DemandSage |
-| Employer intent to reduce | **41% by 2030** | St. Louis Fed |
-| Entry-level at risk | **50% in 5 years** | Industry surveys |
-| India engineering salaries | **Down 40%** | Connext Global |
-| Indian IT giants layoffs | **60,000+ jobs** | TCS, Infosys, Wipro |
+| Who Gains | What They Gain | Result |
+|-----------|----------------|--------|
+| Solo founder anywhere | Same capability as $500K team | **Competes without capital** |
+| Student in Mumbai | Production skills before graduating | **Ships real software** |
+| Developer in Lagos | Enterprise-scale output | **Location irrelevant** |
+| Bootstrapper globally | Outships funded startups | **Meritocracy restored** |
 
-**At 63x velocity:**
-1 human + AI at $220/hr = 50 offshore devs at $30/hr ($1,500/hr)
+**The economics:**
+- MIT License = $0 barrier
+- Local-first = No cloud dependency
+- 1 human + AI = 50-person team capability
 
 </div>
 
-*Offshore becomes uncompetitive against AI-augmented local developers*
+*The needs of the many outweigh the needs of the few.*
 
 ---
 
@@ -406,21 +407,23 @@ Deterministic. Auditable. No spreadsheet chaos.
 
 ---
 
-# The Reframe
+# The Zeroth Law Compliance
 
 <div class="smaller">
 
-**Same power, different perspective**
+**Moral obligation under the Zeroth Law**
 
-| Displacement Frame | Democratization Frame |
-|--------------------|----------------------|
-| "50 devs lose jobs" | "50 people who couldn't build, now can" |
-| "Offshore is dead" | "Dev in Lagos = dev in SF" |
-| "Entry-level eliminated" | "Student ships production before graduating" |
+| Action | Zeroth Law Analysis |
+|--------|---------------------|
+| Democratize AI power | **Prevents harm** - enables the many |
+| Keep AI concentrated | **Causes harm** - through inaction |
+| MIT license, $0 barrier | **Prevents harm** - removes gatekeeping |
+| Local-first, no dependency | **Prevents harm** - enables independence |
 
-**The outcome depends on who adopts it first and how.**
+**The question:** "What would happen if we DIDN'T democratize?"
+**Answer:** The few accelerate. The many are left behind. That's the harm.
 
-*We built guardrails against harm. We cannot build guardrails against efficiency.*
+*Asimov prevents it.*
 
 </div>
 
@@ -570,13 +573,13 @@ forge calculate model.yaml
 
 **License:** MIT — Use it, fork it, verify it
 
-**Qowat Milat:** This deck tells the truth — both the awesome and the terrifying.
+**Qowat Milat:** This deck tells the truth — the power AND the responsibility.
 
 **The Circular Proof:** Forge birthed Asimov → Asimov builds Forge → Both production
 
 </div>
 
-*"We built guardrails against harm. We cannot build guardrails against efficiency."*
+*"The needs of the many outweigh the needs of the few." — The Zeroth Law*
 
 ---
 
@@ -592,7 +595,7 @@ forge calculate model.yaml
 - [OpenAI: Why LLMs "Hallucinate"](https://openai.com/index/why-language-models-hallucinate/) | [METR 2025: AI Makes Devs 19% Slower](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
 - [Stanford: 42% Code Errors](https://arxiv.org/abs/2507.09089) | [ACM: Survey on Hallucination](https://dl.acm.org/doi/10.1145/3703155)
 
-**Displacement:** [DemandSage](https://www.demandsage.com/ai-job-replacement-stats/) | [Connext Global: India](https://connextglobal.com/outsourcing-to-india-2025-talent-market-shift/)
+**Democratization:** [MIT License](https://opensource.org/licenses/MIT) | [crates.io](https://crates.io/crates/royalbit-asimov)
 
 **Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study: Surveillance Blocked](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
 

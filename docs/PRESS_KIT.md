@@ -82,27 +82,28 @@ Deterrent, not lock. Makes tampering visible and intentional.
 
 ---
 
-## The Implications (Qowat Milat — Absolute Candor)
+## The Zeroth Law (Qowat Milat — Absolute Candor)
 
-We tell the truth about both the awesome AND the terrifying:
+> *"A robot may not harm humanity, or, by inaction, allow humanity to come to harm."*
+> — Isaac Asimov, The Zeroth Law (1985)
 
-**Awesome (Claude's capability):**
-- 50-100x velocity democratizes software development
+**The democratization:**
+- 50-100x velocity accessible to everyone, not just well-funded organizations
 - Developer in Lagos = Developer in San Francisco
 - Solo founders compete with funded teams
 - Student ships production code before graduating
 
-**Terrifying (Claude's capability):**
-- 1 human + Claude = 50-150 traditional developers
-- Same velocity that built 257 tests could build 257 attack vectors
-- **This displacement is happening with or without Asimov**
+**Who gains access:**
+- Solo founder anywhere → Same capability as $500K team
+- Student in Mumbai → Production skills before graduating
+- Bootstrapper globally → Competes without capital
 
 **Asimov's role:**
-- Ethics guardrails for those who want them
-- Bounded autonomy (4hr max, quality gates)
-- Sustainability (green coding)
+- Democratize AI power ($0 barrier, MIT license)
+- Ethics guardrails (Three Laws hardcoded)
+- Sustainability (green coding, 99.6% carbon reduction)
 
-*"Claude provides the velocity. The question is: do you want guardrails?"*
+*"The needs of the many outweigh the needs of the few."*
 
 ---
 
@@ -138,10 +139,16 @@ We tell the truth about both the awesome AND the terrifying:
 
 ## The Bottom Line
 
-The displacement is coming regardless. AI velocity is coming. The question was never *if* — it was *how*.
+**The Zeroth Law:** Allowing AI power to concentrate in the few while the many are left behind is **harm through inaction**.
 
-With ethics or without? With transparency or hidden? With human veto or unchecked?
+Asimov democratizes AI power:
+- MIT license = $0 barrier
+- Local-first = No dependency
+- 1 human + AI = 50-person team capability
 
-**We chose: WITH.**
+**The question was never "will AI change work?"**
+**The question is: "Who gets access to AI power?"**
 
-*"The code is free. The git logs are public. Verify yourself."*
+**Asimov's answer: Everyone.**
+
+*"The needs of the many outweigh the needs of the few."*
