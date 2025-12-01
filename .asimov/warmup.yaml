@@ -1,6 +1,17 @@
 # RoyalBit Asimov - Project Configuration
-# Protocol rules are in: asimov.yaml, ethics.yaml, green.yaml, sprint.yaml
-# This file contains ONLY project-specific configuration.
+# https://github.com/royalbit/asimov
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROTOCOL FILES (load these at session start)
+# ═══════════════════════════════════════════════════════════════════════════════
+protocols:
+  required:
+    - ".asimov/asimov.yaml"      # Three Laws of Robotics (ethics foundation)
+    - ".asimov/green.yaml"       # Sustainability (local-first tools)
+    - ".asimov/sycophancy.yaml"  # Anti-sycophancy (truth over comfort)
+  tracking:
+    - ".asimov/roadmap.yaml"     # Version milestones
+    - ".asimov/sprint.yaml"      # Current sprint status
 
 identity:
   project: "RoyalBit Asimov"

@@ -262,8 +262,8 @@ fn validate_directory_internal(
     regenerate: bool,
 ) -> Result<(Vec<ValidationResult>, RegenerationInfo)> {
     use crate::templates::{
-        ethics_template, green_template, roadmap_template, sprint_template, sycophancy_template,
-        warmup_template, ProjectType,
+        green_template, roadmap_template, sprint_template, sycophancy_template, warmup_template,
+        ProjectType,
     };
 
     // Resolve protocol directory (.asimov/ or root for backwards compatibility)
@@ -274,15 +274,15 @@ fn validate_directory_internal(
 
     // Required protocol files with their templates and warn level
     // (filename, template_fn, is_warn_level)
+    // NOTE: ethics.yaml removed - asimov.yaml is now the canonical ethics source
     #[allow(clippy::type_complexity)]
     let required_files: Vec<(&str, Box<dyn Fn() -> String>, bool)> = vec![
-        ("ethics.yaml", Box::new(ethics_template), true), // WARN - Priority 0
         (
             "warmup.yaml",
             Box::new(|| warmup_template("project", ProjectType::Generic)),
             true,
         ), // WARN
-        ("green.yaml", Box::new(green_template), false),  // INFO - Priority 0.5
+        ("green.yaml", Box::new(green_template), false), // INFO - Priority 0.5
         ("sycophancy.yaml", Box::new(sycophancy_template), true), // WARN - Priority 1.5
         ("sprint.yaml", Box::new(sprint_template), false), // INFO
         ("roadmap.yaml", Box::new(roadmap_template), false), // INFO
@@ -313,11 +313,12 @@ fn validate_directory_internal(
     let protocol_dir = resolve_protocol_dir(base_dir);
 
     // Look for protocol files (including optional ones)
+    // NOTE: asimov.yaml is the canonical ethics source (replaces ethics.yaml)
     let protocol_files = [
         "warmup.yaml",
         "sprint.yaml",
         "roadmap.yaml",
-        "ethics.yaml",
+        "asimov.yaml",
         "green.yaml",
         "sycophancy.yaml",
         ".claude_checkpoint.yaml",
@@ -340,7 +341,7 @@ fn validate_directory_internal(
 
     if results.is_empty() {
         return Err(Error::ValidationError(
-            "No protocol files found in .asimov/ or root (warmup.yaml, sprint.yaml, roadmap.yaml, ethics.yaml, sycophancy.yaml)"
+            "No protocol files found in .asimov/ or root (warmup.yaml, sprint.yaml, roadmap.yaml, asimov.yaml, sycophancy.yaml)"
                 .to_string(),
         ));
     }
@@ -987,11 +988,8 @@ mission:
         let (results, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
 
         // Should have regenerated all required files
+        // NOTE: ethics.yaml is no longer regenerated - asimov.yaml is the canonical source
         assert!(!info.is_empty(), "Should have regenerated files");
-        assert!(
-            info.regenerated.iter().any(|(f, _)| f == "ethics.yaml"),
-            "Should regenerate ethics.yaml"
-        );
         assert!(
             info.regenerated.iter().any(|(f, _)| f == "warmup.yaml"),
             "Should regenerate warmup.yaml"

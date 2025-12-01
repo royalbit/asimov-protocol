@@ -343,7 +343,7 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
     let ethics_status = check_ethics_status(dir);
     let ethics_display = match ethics_status {
         EthicsStatus::Hardcoded => "HARDCODED (core principles enforced)".bright_cyan(),
-        EthicsStatus::Extended => "EXTENDED (core + ethics.yaml)".bright_green(),
+        EthicsStatus::Extended => "EXTENDED (core + asimov.yaml)".bright_green(),
     };
     println!("  {} Ethics: {}", "✓".green(), ethics_display);
 

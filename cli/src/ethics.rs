@@ -283,17 +283,17 @@ impl std::fmt::Display for EthicsStatus {
     }
 }
 
-/// Check if ethics.yaml exists and return appropriate status
-/// Checks .asimov/ first, then falls back to root for backwards compatibility
+/// Check if asimov.yaml exists and return appropriate status
+/// asimov.yaml is the canonical ethics source (replaces ethics.yaml)
 pub fn check_ethics_status(dir: &Path) -> EthicsStatus {
-    // Check .asimov/ first (v6.0.0+)
-    let asimov_path = dir.join(".asimov").join("ethics.yaml");
+    // Check .asimov/asimov.yaml (v7.0.0+)
+    let asimov_path = dir.join(".asimov").join("asimov.yaml");
     if asimov_path.exists() {
         return EthicsStatus::Extended;
     }
     // Fall back to root for backwards compatibility
-    let ethics_path = dir.join("ethics.yaml");
-    if ethics_path.exists() {
+    let root_asimov_path = dir.join("asimov.yaml");
+    if root_asimov_path.exists() {
         EthicsStatus::Extended
     } else {
         EthicsStatus::Hardcoded
@@ -459,7 +459,8 @@ fn init_keylogger() {
     #[test]
     fn test_ethics_status_extended() {
         let temp_dir = TempDir::new().unwrap();
-        std::fs::write(temp_dir.path().join("ethics.yaml"), "test: true").unwrap();
+        // asimov.yaml is now the canonical ethics source
+        std::fs::write(temp_dir.path().join("asimov.yaml"), "test: true").unwrap();
 
         let status = check_ethics_status(temp_dir.path());
         assert_eq!(status, EthicsStatus::Extended);
