@@ -5,6 +5,7 @@
 mod asimov;
 mod checkpoint;
 mod ethics;
+mod freshness;
 mod green;
 mod roadmap;
 mod sprint;
@@ -14,6 +15,7 @@ mod warmup;
 pub use asimov::ASIMOV_SCHEMA;
 pub use checkpoint::CHECKPOINT_SCHEMA;
 pub use ethics::ETHICS_SCHEMA;
+pub use freshness::FRESHNESS_SCHEMA;
 pub use green::GREEN_SCHEMA;
 pub use roadmap::ROADMAP_SCHEMA;
 pub use sprint::SPRINT_SCHEMA;
@@ -33,6 +35,8 @@ pub fn schema_for_file(filename: &str) -> Option<&'static str> {
         Some(ASIMOV_SCHEMA)
     } else if name.contains("ethics") {
         Some(ETHICS_SCHEMA)
+    } else if name.contains("freshness") {
+        Some(FRESHNESS_SCHEMA)
     } else if name.contains("green") {
         Some(GREEN_SCHEMA)
     } else if name.contains("sycophancy") {
@@ -57,6 +61,8 @@ pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
         Some("asimov")
     } else if name.contains("ethics") {
         Some("ethics")
+    } else if name.contains("freshness") {
+        Some("freshness")
     } else if name.contains("green") {
         Some("green")
     } else if name.contains("sycophancy") {
