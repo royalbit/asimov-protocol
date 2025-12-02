@@ -7,6 +7,7 @@ use royalbit_asimov::{
     asimov_template,
     banned_phrases,
     check_ethics_status,
+    check_for_update,
     check_green_status,
     check_markdown_file,
     check_semantic,
@@ -19,6 +20,7 @@ use royalbit_asimov::{
     hook_installer_template,
     is_protocol_file,
     load_deprecated_patterns,
+    perform_update,
     precommit_hook_template,
     red_flags,
     roadmap_template,
@@ -191,6 +193,13 @@ enum Commands {
         #[arg(short, long)]
         output: Option<PathBuf>,
     },
+
+    /// Check for updates and optionally self-update the binary
+    Update {
+        /// Only check for updates, don't install
+        #[arg(long)]
+        check: bool,
+    },
 }
 
 fn main() -> ExitCode {
@@ -218,6 +227,78 @@ fn main() -> ExitCode {
         } => cmd_lint_docs(&path, fix, semantic),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
         Commands::Schema { name, output } => cmd_schema(&name, output),
+        Commands::Update { check } => cmd_update(check),
+    }
+}
+
+fn cmd_update(check_only: bool) -> ExitCode {
+    println!("{}", "RoyalBit Asimov Update".bold().green());
+    println!();
+
+    println!("  Checking for updates...");
+
+    match check_for_update() {
+        Ok(version_info) => {
+            println!("  Current version: {}", version_info.current.bright_blue());
+            println!("  Latest version:  {}", version_info.latest.bright_blue());
+            println!();
+
+            if version_info.update_available {
+                println!("  {} New version available!", "UPDATE".bold().yellow());
+
+                if check_only {
+                    println!();
+                    println!("  Run {} to install the update.", "asimov update".bold());
+                    return ExitCode::SUCCESS;
+                }
+
+                if let Some(download_url) = version_info.download_url {
+                    println!();
+                    match perform_update(&download_url) {
+                        Ok(()) => {
+                            println!();
+                            println!(
+                                "{} Updated to version {}",
+                                "Success:".bold().green(),
+                                version_info.latest
+                            );
+                            println!();
+                            println!("  Run {} to verify.", "asimov --version".bold());
+                            ExitCode::SUCCESS
+                        }
+                        Err(e) => {
+                            eprintln!();
+                            eprintln!("{} {}", "Error:".bold().red(), e);
+                            eprintln!();
+                            eprintln!("  You can manually update:");
+                            eprintln!("    curl -L {} | tar xz", download_url);
+                            eprintln!("    sudo mv asimov /usr/local/bin/");
+                            ExitCode::FAILURE
+                        }
+                    }
+                } else {
+                    eprintln!();
+                    eprintln!(
+                        "{} No binary available for this platform",
+                        "Error:".bold().red()
+                    );
+                    eprintln!("  Visit https://github.com/royalbit/asimov/releases/latest");
+                    ExitCode::FAILURE
+                }
+            } else {
+                println!(
+                    "  {} You're running the latest version!",
+                    "OK".bold().green()
+                );
+                ExitCode::SUCCESS
+            }
+        }
+        Err(e) => {
+            eprintln!("{} {}", "Error:".bold().red(), e);
+            eprintln!();
+            eprintln!("  Check manually: https://github.com/royalbit/asimov/releases/latest");
+            ExitCode::FAILURE
+        }
     }
 }
 

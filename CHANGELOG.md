@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.8.0] - 2025-12-01
+
+### Added: Auto-Update Feature (`asimov update`)
+
+**The needs of the many: users stay current without manual intervention.**
+
+- `asimov update` - Check for new version and self-update binary
+- `asimov update --check` - Just check, don't install
+- Version comparison against GitHub Releases API
+- Auto-download correct platform binary (Linux, macOS ARM/Intel, Windows)
+- Graceful fallback with manual update instructions
+
+```bash
+asimov update         # Check and install
+asimov update --check # Just check
+```
+
+---
+
 ## [7.7.0] - 2025-12-01
 
 ### Added: Multi-Platform Binary Releases (GitHub Actions)

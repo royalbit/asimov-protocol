@@ -4,13 +4,13 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.7.0"
+  version: "7.8.0"
   status: released
-  summary: "Multi-Platform Binary Releases (GitHub Actions)"
+  summary: "Auto-Update Feature (asimov update)"
   goal: GREEN_CODING
 
 next:
-  - version: "7.8.0"
+  - version: "7.9.0"
     summary: "Warmup Command (asimov warmup)"
     goal: GREEN_CODING
     features:
@@ -19,16 +19,6 @@ next:
       - "Run validation internally and show status"
       - "Pretty-print ready-to-go session prompt"
       - "Automates the manual warmup phase from sprint.yaml"
-
-  - version: "7.9.0"
-    summary: "Auto-Update Feature (asimov update)"
-    goal: GREEN_CODING
-    features:
-      - "asimov update - Check for new version and self-update binary"
-      - "asimov update --check - Just check, don't update"
-      - "Version comparison against GitHub Releases API"
-      - "Download correct platform binary automatically"
-      - "The needs of the many: users stay current without manual intervention"
 
 backlog:
   - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"

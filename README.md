@@ -347,6 +347,13 @@ asimov refresh               # Output protocol reminder (compact-resistant)
 asimov refresh --verbose     # Include quality gates from warmup.yaml
 ```
 
+Self-update (v7.8.0+):
+
+```bash
+asimov update                # Check and install updates
+asimov update --check        # Just check, don't install
+```
+
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
 
 ## Why YAML?

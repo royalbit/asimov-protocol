@@ -36,6 +36,7 @@ pub mod schemas;
 pub mod semantic;
 pub mod sycophancy;
 pub mod templates;
+pub mod update;
 pub mod validator;
 
 // Re-export main types
@@ -79,3 +80,6 @@ pub use schemas::{
     ASIMOV_SCHEMA, FRESHNESS_SCHEMA, GREEN_SCHEMA, MIGRATIONS_SCHEMA, ROADMAP_SCHEMA,
     SPRINT_SCHEMA, SYCOPHANCY_SCHEMA, WARMUP_SCHEMA,
 };
+
+// Update exports for self-update functionality (v7.8.0)
+pub use update::{check_for_update, perform_update, VersionCheck, CURRENT_VERSION};
