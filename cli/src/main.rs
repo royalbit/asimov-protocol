@@ -23,6 +23,7 @@ use royalbit_asimov::{
     perform_update,
     precommit_hook_template,
     red_flags,
+    resolve_protocol_dir,
     roadmap_template,
     scan_directory_for_red_flags,
     sprint_template,
@@ -200,6 +201,9 @@ enum Commands {
         #[arg(long)]
         check: bool,
     },
+
+    /// Session warmup - display current/next milestone and validate
+    Warmup,
 }
 
 fn main() -> ExitCode {
@@ -228,6 +232,7 @@ fn main() -> ExitCode {
         Commands::Refresh { verbose } => cmd_refresh(verbose),
         Commands::Schema { name, output } => cmd_schema(&name, output),
         Commands::Update { check } => cmd_update(check),
+        Commands::Warmup => cmd_warmup(),
     }
 }
 
@@ -300,6 +305,198 @@ fn cmd_update(check_only: bool) -> ExitCode {
             ExitCode::FAILURE
         }
     }
+}
+
+fn cmd_warmup() -> ExitCode {
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!(
+        "{}",
+        "🔥 ROYALBIT ASIMOV - SESSION WARMUP".bold().bright_cyan()
+    );
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    // Check for updates (one network call per session)
+    if let Ok(version_info) = check_for_update() {
+        if version_info.update_available {
+            println!(
+                "{}  Update available: {} → {} (run: {})",
+                "⚠️".yellow(),
+                version_info.current.dimmed(),
+                version_info.latest.bright_green(),
+                "asimov update".bold()
+            );
+            println!();
+        }
+    }
+
+    // Read and parse roadmap.yaml
+    let roadmap_path = resolve_protocol_dir(Path::new(".")).join("roadmap.yaml");
+    let roadmap_content = match std::fs::read_to_string(&roadmap_path) {
+        Ok(content) => content,
+        Err(_) => {
+            eprintln!(
+                "{} roadmap.yaml not found. Run {} first.",
+                "Error:".bold().red(),
+                "asimov init --full".bold()
+            );
+            return ExitCode::FAILURE;
+        }
+    };
+
+    let roadmap: serde_yaml::Value = match serde_yaml::from_str(&roadmap_content) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!(
+                "{} Failed to parse roadmap.yaml: {}",
+                "Error:".bold().red(),
+                e
+            );
+            return ExitCode::FAILURE;
+        }
+    };
+
+    // Extract current version info
+    println!("{}", "CURRENT VERSION".bold());
+    if let Some(current) = roadmap.get("current") {
+        let version = current
+            .get("version")
+            .and_then(|v| v.as_str())
+            .unwrap_or("unknown");
+        let summary = current
+            .get("summary")
+            .and_then(|v| v.as_str())
+            .unwrap_or("");
+        let status = current
+            .get("status")
+            .and_then(|v| v.as_str())
+            .unwrap_or("unknown");
+
+        let status_display = match status {
+            "released" => format!("{} {}", "✓".green(), "released".green()),
+            "in_progress" => format!("{} {}", "→".yellow(), "in progress".yellow()),
+            _ => format!("  {}", status),
+        };
+
+        println!("  v{} - {}", version.bright_blue(), summary);
+        println!("  Status: {}", status_display);
+    }
+    println!();
+
+    // Extract next milestone(s)
+    println!("{}", "NEXT MILESTONE".bold());
+    if let Some(next) = roadmap.get("next") {
+        if let Some(next_list) = next.as_sequence() {
+            if let Some(first_next) = next_list.first() {
+                let version = first_next
+                    .get("version")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("unknown");
+                let summary = first_next
+                    .get("summary")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                let goal = first_next
+                    .get("goal")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+
+                println!("  v{} - {}", version.bright_yellow(), summary);
+                if !goal.is_empty() {
+                    println!("  Goal: {}", goal.dimmed());
+                }
+
+                // Print features
+                if let Some(features) = first_next.get("features") {
+                    if let Some(feature_list) = features.as_sequence() {
+                        println!();
+                        println!("  {}:", "Features".dimmed());
+                        for feature in feature_list {
+                            if let Some(f) = feature.as_str() {
+                                println!("  {} {}", "•".bright_cyan(), f);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        println!("  {} No upcoming milestones in roadmap", "✓".green());
+    }
+    println!();
+
+    // Run validation
+    println!("{}", "VALIDATION".bold());
+    let dir = Path::new(".");
+    let ethics_status = check_ethics_status(dir);
+    let sycophancy_status = check_sycophancy_status(dir);
+    let green_status = check_green_status(dir);
+
+    let ethics_display = match ethics_status {
+        EthicsStatus::Hardcoded => "HARDCODED".bright_cyan(),
+        EthicsStatus::Extended => "EXTENDED (core + asimov.yaml)".bright_green(),
+    };
+    let sycophancy_display = match sycophancy_status {
+        SycophancyStatus::Hardcoded => "HARDCODED".bright_cyan(),
+        SycophancyStatus::Extended => "EXTENDED (core + sycophancy.yaml)".bright_green(),
+    };
+    let green_display = match green_status {
+        GreenStatus::Hardcoded => "HARDCODED".bright_cyan(),
+        GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
+    };
+
+    println!("  {} Ethics: {}", "✓".green(), ethics_display);
+    println!("  {} Anti-Sycophancy: {}", "✓".green(), sycophancy_display);
+    println!("  {} Green Coding: {}", "✓".green(), green_display);
+
+    // Validate protocol files
+    match validate_directory_with_regeneration(dir, true) {
+        Ok((results, _)) => {
+            let valid_count = results.iter().filter(|r| r.is_valid).count();
+            let total = results.len();
+            if valid_count == total {
+                println!("  {} {} protocol file(s) valid", "✓".green(), total);
+            } else {
+                println!(
+                    "  {} {}/{} protocol file(s) valid",
+                    "⚠".yellow(),
+                    valid_count,
+                    total
+                );
+            }
+        }
+        Err(e) => {
+            println!("  {} Validation error: {}", "✗".red(), e);
+        }
+    }
+
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!(
+        "{}",
+        "Ready to execute. Say \"go\" to start autonomous execution.".bold()
+    );
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    ExitCode::SUCCESS
 }
 
 fn cmd_refresh(verbose: bool) -> ExitCode {

@@ -4,22 +4,13 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.8.0"
+  version: "7.9.0"
   status: released
-  summary: "Auto-Update Feature (asimov update)"
+  summary: "Warmup Command (asimov warmup)"
   goal: GREEN_CODING
 
-next:
-  - version: "7.9.0"
-    summary: "Warmup Command (asimov warmup)"
-    goal: GREEN_CODING
-    features:
-      - "asimov warmup - Display session start prompt with current/next milestone"
-      - "Read roadmap.yaml and present current version + next milestone"
-      - "Run validation internally and show status"
-      - "Auto-check for updates (one network call per session, not per command)"
-      - "Pretty-print ready-to-go session prompt"
-      - "Automates the manual warmup phase from sprint.yaml"
+# Roadmap exhausted - no upcoming milestones
+next: []
 
 backlog:
   - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
