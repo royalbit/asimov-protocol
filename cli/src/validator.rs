@@ -1066,11 +1066,8 @@ current:
 
         // v8.0.0: Only roadmap.yaml is regenerated (protocols are hardcoded in binary)
         for (filename, is_warn) in &info.regenerated {
-            match filename.as_str() {
-                "roadmap.yaml" => {
-                    assert!(!*is_warn, "{} should have INFO level", filename);
-                }
-                _ => {}
+            if filename.as_str() == "roadmap.yaml" {
+                assert!(!*is_warn, "{} should have INFO level", filename);
             }
         }
     }
