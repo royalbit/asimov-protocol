@@ -39,3 +39,13 @@ release:
     strip = true
     panic = "abort"
   compression: "UPX --best --lzma (optional)"
+
+# v8.8.0: Standard deliverables for coding projects (ADR-034)
+deliverables_template:
+  - "[ ] Unit tests pass"
+  - "[ ] E2E tests pass (if applicable)"
+  - "[ ] cargo clippy -- -D warnings (zero warnings)"
+  - "[ ] Update README if needed"
+  - "[ ] Update --help if CLI"
+  - "[ ] Commit and push"
+  - "[ ] GitHub release (if applicable)"

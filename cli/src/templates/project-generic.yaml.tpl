@@ -26,3 +26,10 @@ patterns:
   - "Follow project conventions"
   - "Keep code readable"
   - "Document public APIs"
+
+# v8.8.0: Standard deliverables for generic projects (ADR-034)
+deliverables_template:
+  - "[ ] Content complete"
+  - "[ ] Reviewed/validated"
+  - "[ ] Update README if needed"
+  - "[ ] Commit and push"

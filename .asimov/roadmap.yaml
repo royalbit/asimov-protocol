@@ -4,45 +4,28 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.7.0"
+  version: "8.8.0"
   status: released
-  summary: "asimov replay - Replay a session from git history"
-  goal: Observability
+  summary: "Launcher mode + Project-type deliverables"
+  goal: DevEx
+  adr: "ADR-033, ADR-034"
   deliverables:
-    - "[x] Add replay subcommand"
-    - "[x] Show commits for today (default), yesterday, or custom range"
-    - "[x] Show files changed, insertions, deletions"
-    - "[x] Show velocity metrics"
-    - "[x] Support -n, --yesterday, --since, -v options"
-    - "[x] Tests pass (147 tests)"
-    - "[x] Commit and push"
-    - "[x] GitHub release: v8.7.0"
-    - "[x] Installed to ~/bin"
+    # Launcher mode (ADR-033)
+    - "[x] asimov (no args) launches Claude Code"
+    - "[x] Use opus settings: MAX_THINKING_TOKENS=200000, --dangerously-skip-permissions, --model opus"
+    - "[x] Auto-prompt: 'run asimov warmup'"
+    - "[x] Detect inside/outside Claude Code"
+    - "[x] Error if claude not in PATH"
+    # Project-type deliverables (ADR-034)
+    - "[x] Add deliverables_template to coding templates (rust, python, node, go, flutter)"
+    - "[x] Non-coding templates (docs, generic) get simpler checklist"
+    # Standard (this is a coding project)
+    - "[x] Unit tests pass (147 tests)"
+    - "[x] Update README"
+    - "[x] Commit, push, release"
+    - "[x] Install to ~/bin"
 
-next:
-  - version: "8.8.0"
-    summary: "Launcher mode + Project-type deliverables"
-    goal: DevEx
-    adr: "ADR-033, ADR-034"
-    deliverables:
-      # Launcher mode (ADR-033)
-      - "[ ] asimov (no args) launches Claude Code"
-      - "[ ] Use opus settings: MAX_THINKING_TOKENS=200000, --dangerously-skip-permissions, --model opus"
-      - "[ ] Auto-prompt: 'run asimov warmup'"
-      - "[ ] Detect inside/outside Claude Code"
-      - "[ ] Error if claude not in PATH"
-      # Project-type deliverables (ADR-034)
-      - "[ ] Add .asimov/project.yaml schema"
-      - "[ ] Add deliverables_template to coding templates (rust, python, node, go, flutter)"
-      - "[ ] Non-coding templates (docs, generic) get simpler checklist"
-      - "[ ] Update asimov init to generate project.yaml"
-      # Standard (this is a coding project)
-      - "[ ] Unit tests"
-      - "[ ] E2E tests"
-      - "[ ] Update README"
-      - "[ ] Update --help"
-      - "[ ] Commit, push, release"
-      - "[ ] Install to ~/bin"
+next: []
 
 backlog:
   - "v9.0.0: Zig port (post Zig 1.0 release)"

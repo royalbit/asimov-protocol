@@ -99,7 +99,7 @@ Docs: https://github.com/royalbit/asimov")]
 #[command(version)]
 struct Cli {
     #[command(subcommand)]
-    command: Commands,
+    command: Option<Commands>,
 }
 
 #[derive(Subcommand)]
@@ -222,35 +222,37 @@ fn main() -> ExitCode {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Validate {
+        // v8.8.0: No subcommand = launch Claude Code (ADR-033)
+        None => cmd_launch(),
+        Some(Commands::Validate {
             path,
             ethics_scan,
             no_regenerate,
-        } => cmd_validate(&path, ethics_scan, !no_regenerate),
-        Commands::Init {
+        }) => cmd_validate(&path, ethics_scan, !no_regenerate),
+        Some(Commands::Init {
             name,
             project_type,
             output,
             force,
-        } => cmd_init(name, &project_type, &output, force),
-        Commands::Check { file } => cmd_validate(&file, false, true),
-        Commands::LintDocs {
+        }) => cmd_init(name, &project_type, &output, force),
+        Some(Commands::Check { file }) => cmd_validate(&file, false, true),
+        Some(Commands::LintDocs {
             path,
             fix,
             semantic,
-        } => cmd_lint_docs(&path, fix, semantic),
-        Commands::Refresh { verbose } => cmd_refresh(verbose),
-        Commands::Schema { name, output } => cmd_schema(&name, output),
-        Commands::Update { check } => cmd_update(check),
-        Commands::Warmup => cmd_warmup(),
-        Commands::Stats => cmd_stats(),
-        Commands::Doctor => cmd_doctor(),
-        Commands::Replay {
+        }) => cmd_lint_docs(&path, fix, semantic),
+        Some(Commands::Refresh { verbose }) => cmd_refresh(verbose),
+        Some(Commands::Schema { name, output }) => cmd_schema(&name, output),
+        Some(Commands::Update { check }) => cmd_update(check),
+        Some(Commands::Warmup) => cmd_warmup(),
+        Some(Commands::Stats) => cmd_stats(),
+        Some(Commands::Doctor) => cmd_doctor(),
+        Some(Commands::Replay {
             commits,
             yesterday,
             since,
             verbose,
-        } => cmd_replay(commits, yesterday, since, verbose),
+        }) => cmd_replay(commits, yesterday, since, verbose),
     }
 }
 
@@ -585,6 +587,88 @@ fn cmd_warmup() -> ExitCode {
     println!();
 
     ExitCode::SUCCESS
+}
+
+/// v8.8.0: Launch Claude Code with opus settings (ADR-033)
+/// When `asimov` is run with no arguments, this launches Claude Code
+fn cmd_launch() -> ExitCode {
+    use std::os::unix::process::CommandExt;
+
+    // Check if claude is in PATH
+    let claude_path = std::process::Command::new("which")
+        .arg("claude")
+        .output()
+        .ok()
+        .filter(|o| o.status.success())
+        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string());
+
+    if claude_path.is_none() {
+        println!();
+        println!("{} Claude Code not found in PATH", "✗".red());
+        println!();
+        println!("Install Claude Code:");
+        println!("  https://claude.ai/download");
+        println!();
+        println!("Or run a subcommand directly:");
+        println!("  asimov warmup    # Inside Claude Code");
+        println!("  asimov doctor    # Diagnose issues");
+        println!("  asimov --help    # Show all commands");
+        println!();
+        return ExitCode::FAILURE;
+    }
+
+    // Check if we're already inside Claude Code
+    // Claude Code sets CLAUDE_CODE_ENTRY or similar env vars
+    let inside_claude = std::env::var("CLAUDE_CODE").is_ok()
+        || std::env::var("CLAUDE_SESSION_ID").is_ok()
+        || std::env::var("ANTHROPIC_API_KEY").is_ok(); // Heuristic: likely in Claude env
+
+    if inside_claude {
+        // Already inside Claude Code - just run warmup
+        println!();
+        println!("{} Already inside Claude Code - running warmup", "ℹ".blue());
+        println!();
+        return cmd_warmup();
+    }
+
+    // Launch Claude Code with opus settings
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!(
+        "{}",
+        "🚀 ROYALBIT ASIMOV - LAUNCHING CLAUDE CODE"
+            .bold()
+            .bright_cyan()
+    );
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+    println!("  {} MAX_THINKING_TOKENS=200000", "✓".green());
+    println!("  {} --dangerously-skip-permissions", "✓".green());
+    println!("  {} --model opus", "✓".green());
+    println!("  {} Auto-warmup on start", "✓".green());
+    println!();
+
+    // Build the command
+    // Equivalent to: MAX_THINKING_TOKENS=200000 claude --dangerously-skip-permissions --model opus "run asimov warmup"
+    let err = std::process::Command::new("claude")
+        .env("MAX_THINKING_TOKENS", "200000")
+        .arg("--dangerously-skip-permissions")
+        .arg("--model")
+        .arg("opus")
+        .arg("run asimov warmup")
+        .exec(); // exec replaces current process (Unix only)
+
+    // If we get here, exec failed
+    println!("{} Failed to launch Claude Code: {}", "✗".red(), err);
+    ExitCode::FAILURE
 }
 
 /// v8.5.0: Show session statistics
