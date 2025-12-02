@@ -36,3 +36,12 @@ patterns:
 environment:
   manager: "uv or pip-tools for fast installs"
   python_version: "3.11+"
+
+# v8.8.0: Standard deliverables for coding projects (ADR-034)
+deliverables_template:
+  - "[ ] Unit tests pass (pytest)"
+  - "[ ] E2E tests pass (if applicable)"
+  - "[ ] ruff check . (zero warnings)"
+  - "[ ] Update README if needed"
+  - "[ ] Commit and push"
+  - "[ ] GitHub release (if applicable)"

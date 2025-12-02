@@ -41,3 +41,10 @@ adr_format:
     ## Context
     ## Decision
     ## Consequences
+
+# v8.8.0: Standard deliverables for documentation projects (ADR-034)
+deliverables_template:
+  - "[ ] Content complete"
+  - "[ ] asimov lint-docs . (passes)"
+  - "[ ] Reviewed/proofread"
+  - "[ ] Commit and push"

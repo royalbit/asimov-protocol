@@ -339,7 +339,15 @@ asimov lint-docs             # Check all markdown files
 asimov lint-docs --fix       # Auto-fix code block issues
 ```
 
-Session warmup (start of session):
+Start a session (v8.8.0+):
+
+```bash
+asimov                       # Launch Claude Code with opus settings + auto-warmup
+```
+
+Equivalent to: `MAX_THINKING_TOKENS=200000 claude --dangerously-skip-permissions --model opus "run asimov warmup"`
+
+Session warmup (inside Claude Code):
 
 ```bash
 asimov warmup                # Show milestone, validate, ensure hooks

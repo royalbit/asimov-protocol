@@ -37,3 +37,12 @@ patterns:
 environment:
   package_manager: "pnpm for efficient installs"
   node_version: "20+"
+
+# v8.8.0: Standard deliverables for coding projects (ADR-034)
+deliverables_template:
+  - "[ ] Unit tests pass (npm test)"
+  - "[ ] E2E tests pass (if applicable)"
+  - "[ ] npm run lint (zero warnings)"
+  - "[ ] Update README if needed"
+  - "[ ] Commit and push"
+  - "[ ] GitHub release (if applicable)"

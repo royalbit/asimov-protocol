@@ -41,3 +41,12 @@ patterns:
 platform:
   cupertino_first: "CupertinoPageScaffold, CupertinoNavigationBar, CupertinoButton"
   material_fallback: "Only when Cupertino unavailable"
+
+# v8.8.0: Standard deliverables for coding projects (ADR-034)
+deliverables_template:
+  - "[ ] Unit tests pass (flutter test)"
+  - "[ ] E2E tests pass (if applicable)"
+  - "[ ] dart analyze lib/ (zero warnings)"
+  - "[ ] Update README if needed"
+  - "[ ] Commit and push"
+  - "[ ] GitHub release (if applicable)"

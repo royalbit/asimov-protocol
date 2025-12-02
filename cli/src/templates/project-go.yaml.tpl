@@ -37,3 +37,12 @@ patterns:
 release:
   static_binary: "CGO_ENABLED=0 go build"
   compression: "UPX --best --lzma (optional)"
+
+# v8.8.0: Standard deliverables for coding projects (ADR-034)
+deliverables_template:
+  - "[ ] Unit tests pass (go test ./...)"
+  - "[ ] E2E tests pass (if applicable)"
+  - "[ ] golangci-lint run (zero warnings)"
+  - "[ ] Update README if needed"
+  - "[ ] Commit and push"
+  - "[ ] GitHub release (if applicable)"
