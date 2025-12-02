@@ -12,15 +12,19 @@ current:
 next:
 
   - version: "7.4.0"
-    summary: "MCP Server Mode - Expose validation as MCP tools"
-    goal: ECOSYSTEM
-
-  - version: "7.5.0"
     summary: "migrations.yaml - Functional Equivalence Protocol"
     goal: CORE_PRINCIPLE
 
 backlog:
   - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# KILLED (not building)
+# ═══════════════════════════════════════════════════════════════════════════════
+# MCP Server Mode - KILLED (ADR-029)
+#   Reason: MCP interfaces cap at 30k-128k tokens. Asimov requires 200k.
+#   Green coding: Don't build what won't work.
+#   See: docs/adr/029-mcp-server-mode-killed.md
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # BACKLOG NOTES (not validated)
