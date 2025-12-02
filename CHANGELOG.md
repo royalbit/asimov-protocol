@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.9.0] - 2025-12-01
+
+### Added: Warmup Command (`asimov warmup`)
+
+**Session start automation - one command to rule them all.**
+
+- `asimov warmup` - Display session start prompt with current/next milestone
+- Reads roadmap.yaml and presents current version + next milestone
+- Runs validation internally and shows status
+- Auto-checks for updates (one network call per session, not per command)
+- Pretty-prints ready-to-go session prompt
+
+```bash
+asimov warmup
+```
+
+Output:
+```
+══════════════════════════════════════════════════════════════════════════════
+🔥 ROYALBIT ASIMOV - SESSION WARMUP
+══════════════════════════════════════════════════════════════════════════════
+
+CURRENT VERSION
+  v7.9.0 - Warmup Command (asimov warmup)
+  Status: ✓ released
+
+NEXT MILESTONE
+  v8.0.0 - ...
+
+VALIDATION
+  ✓ Ethics: EXTENDED (core + asimov.yaml)
+  ✓ Anti-Sycophancy: EXTENDED (core + sycophancy.yaml)
+  ✓ Green Coding: EXTENDED (core + green.yaml)
+  ✓ 7 protocol file(s) valid
+
+══════════════════════════════════════════════════════════════════════════════
+Ready to execute. Say "go" to start autonomous execution.
+══════════════════════════════════════════════════════════════════════════════
+```
+
+**Green coding:** Automates the manual warmup phase from sprint.yaml. No more copy-pasting commands at session start.
+
+---
+
 ## [7.8.0] - 2025-12-01
 
 ### Added: Auto-Update Feature (`asimov update`)
