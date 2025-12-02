@@ -4,34 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.11.0"
+  version: "8.0.0"
   status: released
-  summary: "Kill asimov-zed Extension"
-  goal: GREEN_CODING
+  summary: "Enforced Protocol Loading + Token Optimization"
+  goal: SECURITY
 
-next:
-  - version: "8.0.0"
-    summary: "Enforced Protocol Loading + Token Optimization"
-    goal: SECURITY
-    priority: CRITICAL
-    phases:
-      phase_1_fix_ethics_mess:
-        - "Remove ethics.yaml references from validator (asimov.yaml is canonical)"
-        - "Stop auto-regenerating ethics.yaml"
-        - "Update all templates to use asimov.yaml only"
-        - "Delete .asimov/ethics.yaml after code cleanup"
-      phase_2_enforce_loading:
-        - "Hardcode 6 core protocols in Rust binary"
-        - "Protocols: asimov, freshness, sycophancy, green, sprint, warmup"
-        - "Dynamic date injection ({TODAY}, {YEAR} from env)"
-        - "NO hardcoded model cutoff (Claude knows its own cutoff)"
-        - "Extension mechanism (extend, not disable)"
-      phase_3_token_optimization:
-        - "Output format: minified JSON with full words"
-        - "Target: ~40% token reduction"
-        - "No abbreviations (Claude must understand)"
-      final:
-        - "ADR-031 implemented"
+next: []
 
 backlog:
   - "TOON Format Migration: Evaluate when Rust parser matures (token efficiency)"

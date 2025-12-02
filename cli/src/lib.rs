@@ -32,6 +32,7 @@ pub mod error;
 pub mod ethics;
 pub mod green;
 pub mod markdown;
+pub mod protocols;
 pub mod schemas;
 pub mod semantic;
 pub mod sycophancy;
@@ -84,3 +85,8 @@ pub use schemas::{
 
 // Update exports for self-update functionality (v7.8.0)
 pub use update::{check_for_update, perform_update, VersionCheck, CURRENT_VERSION};
+
+// Protocol exports for enforced loading (v8.0.0 - ADR-031)
+pub use protocols::{
+    compile_protocols, inject_dates, to_minified_json, to_pretty_json, CompiledProtocols,
+};

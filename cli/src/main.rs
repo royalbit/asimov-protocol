@@ -28,6 +28,7 @@ use royalbit_asimov::{
     scan_directory_for_red_flags,
     sprint_template,
     sycophancy_template,
+    to_minified_json,
     uses_cargo_husky,
     validate_directory_with_regeneration,
     validate_file,
@@ -479,7 +480,18 @@ fn cmd_warmup() -> ExitCode {
         }
     }
 
+    // Output compiled protocols for context injection (ADR-031)
     println!();
+    println!("{}", "PROTOCOLS (ENFORCED)".bold());
+    println!(
+        "  {} Protocols compiled from binary (cannot be bypassed)",
+        "✓".green()
+    );
+    println!();
+    println!("{}", "Context injection:".dimmed());
+    println!("{}", to_minified_json());
+    println!();
+
     println!(
         "{}",
         "══════════════════════════════════════════════════════════════════════════════"

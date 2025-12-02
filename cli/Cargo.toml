@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "7.10.0"
+version = "8.0.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Autonomous AI <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "RoyalBit Asimov - The ethical operating system for Claude's autonomous power. Claude provides velocity, Asimov provides guardrails."
@@ -39,6 +39,9 @@ walkdir = "2.5"
 
 # Regex (for semantic linting)
 regex = "1.10"
+
+# Date/time (for protocol date injection - ADR-031)
+chrono = "0.4"
 
 [dev-dependencies]
 # Testing
