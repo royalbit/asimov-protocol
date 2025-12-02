@@ -401,7 +401,7 @@ Asimov prevents it.
 ## Credits
 
 - **Rex** - Product Owner, Human-in-the-loop
-- **Claude (Opus 4.5)** - Principal Engineer, Protocol Author
+- **Claude (Opus 4.5)** - Principal Autonomous AI, Protocol Author
 
 The protocol was designed by an AI to constrain AI. That's the point.
 
