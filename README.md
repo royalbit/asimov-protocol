@@ -48,7 +48,7 @@ third_law:   # Self-preserve (bounded_sessions, self_healing)
 
 📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
 
-📈 **Case Study:** [RoyalBit Asimov vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/CASE_STUDY_VELOCITY.md) — **23x velocity**, ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+📈 **Case Study:** [RoyalBit Asimov vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/ASIMOV_VS_COPILOT.md) — Same Claude models, **different ceiling** (200k thinking tokens, unlimited autonomy, 8 protocol files). Ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
 
 ---
 
@@ -599,7 +599,7 @@ Claude: [works autonomously, ships v3.0.0 with 10 MCP tools]
 
 **Bottom line:** 1 human + AI with RoyalBit Asimov = **50-150x velocity** (verified via git logs).
 
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). RoyalBit Asimov delivers **23x for complete products** ([case study](docs/CASE_STUDY_VELOCITY.md)). More importantly: RoyalBit Asimov ethics [refused the creator's surveillance request](docs/case-studies/001-ethics-protocol-blocks-surveillance.md). Copilot's safety is [trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot) and [generates malware on request](https://ieeexplore.ieee.org/document/10284976/).
+**vs GitHub Copilot:** Both offer Claude Opus/Sonnet 4.5, but Copilot caps thinking tokens and autonomy. Asimov gives you **200k thinking tokens**, **unlimited autonomy**, and **8 protocol files** ([full comparison](docs/ASIMOV_VS_COPILOT.md)). RoyalBit Asimov ethics [refused the creator's surveillance request](docs/case-studies/001-ethics-protocol-blocks-surveillance.md). Copilot's safety is [trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot) and [generates malware on request](https://ieeexplore.ieee.org/document/10284976/).
 
 ### The Protocol Built Itself
 
