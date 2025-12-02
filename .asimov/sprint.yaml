@@ -3,8 +3,8 @@
 
 # ACTIVE SPRINT
 sprint:
-  current: "v7.11.0 - Kill asimov-zed Extension"
-  status: in_progress
+  current: "Roadmap exhausted"
+  status: done
 
 # CORE RULES (ADR-028)
 rules:

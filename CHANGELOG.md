@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.11.0] - 2025-12-02
+
+### Removed: asimov-zed Extension (ADR-030)
+
+**Green Coding: Don't maintain what provides no value.**
+
+The asimov-zed Zed extension solved a problem that doesn't exist. Protocol files are AI-authored, not manually edited - syntax highlighting serves no purpose.
+
+- **ADR-030** documenting the decision
+- Removed "Editor Extensions" section from README.md
+- Updated ECOSYSTEM.md to remove asimov-zed references
+- Delete `asimov-zed` repository (local + gitolite origin) - manual step
+
+**forge-zed remains** - users DO manually edit Forge formula files.
+
+See [ADR-030](docs/adr/030-asimov-zed-extension-killed.md) for full rationale.
+
+---
+
+## [7.10.0] - 2025-12-02
+
+### Added: Asimov Zed Extension + Repo Cleanup
+
+- asimov-zed extension for Zed editor (later killed in v7.11.0)
+- Repository cleanup and documentation fixes
+
+---
+
 ## [7.9.0] - 2025-12-01
 
 ### Added: Warmup Command (`asimov warmup`)

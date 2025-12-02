@@ -4,20 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.10.0"
+  version: "7.11.0"
   status: released
-  summary: "Asimov Zed Extension + Repo Cleanup"
+  summary: "Kill asimov-zed Extension"
   goal: GREEN_CODING
 
-next:
-  - version: "7.11.0"
-    summary: "Kill asimov-zed Extension"
-    goal: GREEN_CODING
-    tasks:
-      - "Delete asimov-zed repo (local + gitolite origin)"
-      - "Remove Editor Extensions from README.md"
-      - "Update ECOSYSTEM.md"
-      - "ADR-030 documenting decision"
+next: []
 
 backlog:
   - "TOON Format Migration: Evaluate when Rust parser matures (token efficiency)"
