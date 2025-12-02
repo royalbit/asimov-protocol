@@ -4,29 +4,40 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.9.0"
+  version: "7.8.0"
   status: released
-  summary: "Warmup Command (asimov warmup)"
+  summary: "Auto-Update Feature (asimov update)"
   goal: GREEN_CODING
 
-# Roadmap exhausted - no upcoming milestones
-next: []
+next:
+  - version: "7.9.0"
+    summary: "Warmup Command (asimov warmup)"
+    goal: GREEN_CODING
+    features:
+      - "asimov warmup - Display session start prompt with current/next milestone"
+      - "Read roadmap.yaml and present current version + next milestone"
+      - "Run validation internally and show status"
+      - "Auto-check for updates (one network call per session)"
+
+  - version: "7.10.0"
+    summary: "Sprint Auto-Archive (sprint → CHANGELOG)"
+    goal: GREEN_CODING
+    features:
+      - "Auto-move completed sprint tasks to CHANGELOG.md on release"
+      - "Keep sprint.yaml lean (current sprint only)"
+      - "Reduce token overhead from sprint history"
 
 backlog:
   - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
   - "TOON Format Migration: Evaluate when Rust parser exists and ecosystem matures (token efficiency for LLMs)"
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # KILLED (not building)
-# ═══════════════════════════════════════════════════════════════════════════════
 # MCP Server Mode - KILLED (ADR-029)
 #   Reason: MCP interfaces cap at 30k-128k tokens. Asimov requires 200k.
 #   Green coding: Don't build what won't work.
 #   See: docs/adr/029-mcp-server-mode-killed.md
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# BACKLOG NOTES (not validated)
-# ═══════════════════════════════════════════════════════════════════════════════
+# BACKLOG NOTES
 # migrations.yaml details:
 #   For migration projects (language migrations, framework upgrades, rewrites),
 #   ensure the new code functions identically to the original.
