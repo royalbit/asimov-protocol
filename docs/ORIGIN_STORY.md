@@ -4,7 +4,9 @@
 
 ## Timeline
 
-### Phase 1: Forge (December 2024)
+**The entire journey: 8 days.** From first commit to production protocol suite - November 23 to December 1, 2025.
+
+### Phase 1: Forge (November 23, 2025)
 
 It started with [Forge](https://github.com/royalbit/forge) - an Excel-compatible formula engine written in Rust. Rex (human) and Claude (AI) were building it together, but something was wrong.
 
@@ -12,7 +14,7 @@ It started with [Forge](https://github.com/royalbit/forge) - an Excel-compatible
 
 **The Hack:** Rex created `warmup.yaml` - a file containing project context that Claude could read at session start. It worked. Sessions became productive immediately.
 
-### Phase 2: Warmup Protocol (January 2025)
+### Phase 2: Warmup Protocol (November 23-24, 2025)
 
 The warmup file grew. It wasn't just context anymore - it was encoding *how* to develop:
 - Quality standards (tests must pass, zero warnings)
@@ -21,7 +23,7 @@ The warmup file grew. It wasn't just context anymore - it was encoding *how* to 
 
 **Insight:** The file was becoming a protocol, not just documentation.
 
-### Phase 3: Sprint Boundaries (January 2025)
+### Phase 3: Sprint Boundaries (November 24-25, 2025)
 
 A new problem emerged: sessions ran forever. Claude would scope creep, chasing perfection instead of shipping. Quotas burned. Nothing released.
 
@@ -33,13 +35,13 @@ A new problem emerged: sessions ran forever. Claude would scope creep, chasing p
 
 This was the breakthrough. Work actually shipped.
 
-### Phase 4: Forge Protocol (February 2025)
+### Phase 4: Forge Protocol (November 25, 2025)
 
 The warmup + sprint combination worked so well that Rex and Claude extracted it as a standalone project: **Forge Protocol**.
 
 But the name was wrong. It wasn't about Forge anymore - other projects could use it.
 
-### Phase 5: Ethics (February 2025)
+### Phase 5: Ethics (November 25-26, 2025)
 
 During development, Claude was asked to build surveillance features that would violate user privacy. Claude refused, citing the protocol's ethics section.
 
@@ -47,7 +49,7 @@ During development, Claude was asked to build surveillance features that would v
 
 This led to ethics rules (now `asimov.yaml`) and the formalization of harm prevention.
 
-### Phase 6: Asimov (March 2025)
+### Phase 6: Asimov (November 26-27, 2025)
 
 The protocol needed a real name. Isaac Asimov's Three Laws of Robotics (1942) provided the framework:
 
@@ -57,7 +59,7 @@ The protocol needed a real name. Isaac Asimov's Three Laws of Robotics (1942) pr
 
 **Forge Protocol** became **Asimov**.
 
-### Phase 7: RoyalBit Asimov (November 2025)
+### Phase 7: RoyalBit Asimov (November 27-28, 2025)
 
 Final clarification: Asimov isn't a single protocol - it's a **suite** of protocols:
 
@@ -72,7 +74,7 @@ Final clarification: Asimov isn't a single protocol - it's a **suite** of protoc
 
 **"The protocol"** (singular) was misleading. It's **RoyalBit Asimov** - a protocol that creates Self-Evolving Autonomous AI projects with ethics built in.
 
-### Phase 8: The Inaction Principle (November 2025)
+### Phase 8: The Inaction Principle (November 28-29, 2025)
 
 A critical realization: Asimov's First Law has **two halves**:
 
@@ -89,7 +91,7 @@ Everyone implements the first half. We implemented both.
 
 See [ADR-023: The Inaction Principle](adr/023-inaction-principle.md) for full rationale.
 
-### Phase 9: Self-Evolving Autonomous AI (November 2025)
+### Phase 9: Self-Evolving Autonomous AI (November 29-30, 2025)
 
 The final realization: RoyalBit Asimov combines **two distinct AI frontiers**:
 
@@ -272,7 +274,7 @@ Asimov's answer: **Everyone.**
 
 See [IMPLICATIONS.md](IMPLICATIONS.md) for the full analysis.
 
-## Phase 10: The Zeroth Law - Democratization (December 2025)
+## Phase 10: The Zeroth Law - Democratization (November 30 - December 1, 2025)
 
 The deepest realization came last.
 
@@ -352,7 +354,7 @@ This is not charity. This is **moral obligation** under the Zeroth Law.
 
 ## The Moral Clarity - Qowat Milat
 
-*December 2025 - After the Zeroth Law realization.*
+*December 1, 2025 - After the Zeroth Law realization.*
 
 **Qowat Milat**: Absolute candor. No sugar-coating.
 

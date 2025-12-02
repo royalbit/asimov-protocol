@@ -73,7 +73,7 @@ style: |
 
 | Tool | What It Does | Key Capability |
 |------|--------------|----------------|
-| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **63x velocity + ethics** |
+| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **56x velocity + ethics** |
 | **RoyalBit Forge** | Deterministic financial calculations | **Actual math, not prediction** |
 
 </div>
@@ -98,13 +98,13 @@ Together = What no one else has
 |---------|---------|-----|----------|-------|---------|
 | **Forge** | Nov 23 | 15,901 | 44 | 163 | 245 |
 | **Asimov** | Nov 25 | 6,338 | 34 | 94 | 159 |
-| **Combined** | **7 days** | **22,239** | **78** | **257** | **404** |
+| **Combined** | **8 days** | **22,239** | **78** | **257** | **404** |
 
 </div>
 
 ```
-3,177 LOC/day vs Industry 50 LOC/day = 63x FASTER
-78 releases in 7 days = 11 releases/day
+2,780 LOC/day vs Industry 50 LOC/day = 56x FASTER
+78 releases in 8 days = ~10 releases/day
 Peak: 80 commits in ONE DAY (Nov 25)
 ```
 
@@ -273,15 +273,15 @@ third_law:   # Self-preserve (within limits)
 
 ---
 
-# Use Case: Ship Software 63x Faster
+# Use Case: Ship Software 56x Faster
 
 <div class="smaller">
 
 | Metric | Traditional | With RoyalBit | Multiplier |
 |--------|-------------|---------------|------------|
-| LOC/day | 25-50 | 3,177 | **63-127x** |
-| Time to 22K LOC | 3-6 months | 7 days | **13-26x** |
-| Releases | 3-5 per project | 78 in 7 days | **15x** |
+| LOC/day | 25-50 | 2,780 | **56-111x** |
+| Time to 22K LOC | 3-6 months | 8 days | **11-23x** |
+| Releases | 3-5 per project | 78 in 8 days | **15x** |
 | Test coverage | Often skipped | 257 tests | **Built-in** |
 
 **What this enables:**
@@ -398,7 +398,7 @@ Deterministic. Auditable. No spreadsheet chaos.
 
 | Tool | Good Faith | Bad Faith |
 |------|------------|-----------|
-| 63x velocity | Ships SaaS faster | **Ships malware faster** |
+| 56x velocity | Ships SaaS faster | **Ships malware faster** |
 | Deterministic math | Accurate financials | **Accurate fraud models** |
 
 *We cannot prevent determined bad actors. We raise the bar.*
@@ -551,9 +551,9 @@ forge calculate model.yaml
 
 | Verified (Nov 2025) | Value |
 |---------------------|-------|
-| Releases | 78 in 7 days |
+| Releases | 78 in 8 days |
 | LOC / Tests / Commits | 22,239 / 257 / 404 |
-| Velocity | 63x vs senior developer |
+| Velocity | 56x vs senior developer |
 | Registry | Both on crates.io |
 
 **Complete Solution:** Asimov (ethics, velocity) + Forge (deterministic math)

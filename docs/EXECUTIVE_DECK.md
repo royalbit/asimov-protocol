@@ -95,7 +95,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 | Tool | What It Does | Key Capability |
 |------|--------------|----------------|
-| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **63x velocity + ethics** |
+| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **56x velocity + ethics** |
 | **RoyalBit Forge** | Deterministic financial calculations | **Actual math, not prediction** |
 
 </div>
@@ -117,12 +117,12 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 |---------|---------|-----|----------|-------|---------|
 | [**Forge**](https://github.com/royalbit/forge) | Nov 23 | 15,901 | 44 | 163 | 245 |
 | [**Asimov**](https://github.com/royalbit/asimov) | Nov 25 | 6,338 | 34 | 94 | 159 |
-| **Combined** | **7 days** | **22,239** | **78** | **257** | **404** |
+| **Combined** | **8 days** | **22,239** | **78** | **257** | **404** |
 
 </div>
 
-**3,177 LOC/day vs Industry 50 LOC/day = 63x FASTER**
-**78 releases in 7 days = 11 releases/day**
+**2,780 LOC/day vs Industry 50 LOC/day = 56x FASTER**
+**78 releases in 8 days = ~10 releases/day**
 
 **Verify:** [github.com/royalbit](https://github.com/royalbit)
 
@@ -192,7 +192,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 # The ROI
 
-### Recover the 19% productivity tax + 63x velocity
+### Recover the 19% productivity tax + 56x velocity
 
 <div class="small">
 
@@ -201,7 +201,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 | Protocol license | **$0** (MIT open source) |
 | Training | **2 hours** to proficiency |
 | Rework rate | **30-50% → ~0%** |
-| Velocity | **63x** proven (git logs) |
+| Velocity | **56x** proven (git logs) |
 
 ### The math:
 - 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
@@ -238,7 +238,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 | Use Case | Traditional | With RoyalBit | Impact |
 |----------|-------------|---------------|--------|
-| **Ship Software** | 3-6 months to MVP | 7 days | **63x faster** |
+| **Ship Software** | 3-6 months to MVP | 8 days | **56x faster** |
 | **Financial Models** | Spreadsheet chaos | Version-controlled YAML | **Auditable** |
 | **Business Planning** | Scattered docs | Code + formulas together | **Single source** |
 | **Compliance** | Manual review | Deterministic validation | **Automated** |
@@ -280,7 +280,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 **Asimov:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 **Forge:** [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
-**78 releases | 22,239 LOC | 257 tests | 7 days | 63x velocity**
+**78 releases | 22,239 LOC | 257 tests | 8 days | 56x velocity**
 
 *"The code is free. The git logs are public. Verify yourself."*
 
