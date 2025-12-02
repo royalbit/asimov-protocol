@@ -346,12 +346,14 @@ asimov refresh               # Output protocol reminder (compact-resistant)
 asimov refresh --verbose     # Include quality gates from warmup.yaml
 ```
 
-Self-update (v7.8.0+):
+Self-update (v8.4.0+):
 
 ```bash
-asimov update                # Check and install updates
+asimov update                # Check, verify checksum, and install updates
 asimov update --check        # Just check, don't install
 ```
+
+**Platforms:** Linux x86_64, Linux ARM64, macOS (Intel/ARM), Windows x86_64
 
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
 

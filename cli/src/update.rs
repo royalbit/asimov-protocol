@@ -19,12 +19,16 @@ pub struct VersionCheck {
     pub latest: String,
     pub update_available: bool,
     pub download_url: Option<String>,
+    pub checksums_url: Option<String>,
 }
 
 /// Get the appropriate asset name for the current platform
 fn get_platform_asset() -> Option<&'static str> {
     #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
     return Some("asimov-x86_64-unknown-linux-gnu.tar.gz");
+
+    #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
+    return Some("asimov-aarch64-unknown-linux-gnu.tar.gz");
 
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     return Some("asimov-aarch64-apple-darwin.tar.gz");
@@ -37,6 +41,7 @@ fn get_platform_asset() -> Option<&'static str> {
 
     #[cfg(not(any(
         all(target_os = "linux", target_arch = "x86_64"),
+        all(target_os = "linux", target_arch = "aarch64"),
         all(target_os = "macos", target_arch = "aarch64"),
         all(target_os = "macos", target_arch = "x86_64"),
         all(target_os = "windows", target_arch = "x86_64")
@@ -91,11 +96,26 @@ pub fn check_for_update() -> Result<VersionCheck, String> {
         None
     };
 
+    // Find checksums.txt URL (v8.4.0)
+    let checksums_url = if update_available {
+        let search = "\"name\":\"checksums.txt\"";
+        if let Some(pos) = body.find(search) {
+            let chunk = &body[pos.saturating_sub(500)..body.len().min(pos + 500)];
+            extract_json_string(chunk, "browser_download_url")
+                .filter(|url| url.contains("checksums.txt"))
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
     Ok(VersionCheck {
         current: CURRENT_VERSION.to_string(),
         latest: latest_version,
         update_available,
         download_url,
+        checksums_url,
     })
 }
 
@@ -132,12 +152,12 @@ fn is_newer_version(latest: &str, current: &str) -> bool {
     false
 }
 
-/// Download and install the update
-pub fn perform_update(download_url: &str) -> Result<(), String> {
+/// Download and install the update with optional checksum verification (v8.4.0)
+pub fn perform_update(download_url: &str, checksums_url: Option<&str>) -> Result<(), String> {
     let current_exe = env::current_exe()
         .map_err(|e| format!("Could not determine current executable path: {}", e))?;
 
-    println!("Downloading update...");
+    println!("  Downloading update...");
 
     // Download to temp file
     let temp_dir = env::temp_dir();
@@ -152,7 +172,15 @@ pub fn perform_update(download_url: &str) -> Result<(), String> {
         return Err("Download failed".to_string());
     }
 
-    println!("Extracting...");
+    // Verify checksum if available (v8.4.0)
+    if let Some(checksums_url) = checksums_url {
+        println!("  Verifying checksum...");
+        if let Some(asset_name) = get_platform_asset() {
+            verify_checksum(&temp_archive, checksums_url, asset_name)?;
+        }
+    }
+
+    println!("  Extracting...");
 
     // Extract the binary
     let temp_binary = temp_dir.join("asimov");
@@ -204,7 +232,7 @@ pub fn perform_update(download_url: &str) -> Result<(), String> {
         ));
     }
 
-    println!("Installing...");
+    println!("  Installing...");
 
     // Replace current executable
     // On Unix, we can't replace a running executable directly, so we rename first
@@ -237,6 +265,81 @@ pub fn perform_update(download_url: &str) -> Result<(), String> {
     let _ = fs::remove_file(&temp_archive);
     let _ = fs::remove_file(&temp_binary);
     let _ = fs::remove_file(&backup_path);
+
+    Ok(())
+}
+
+/// Verify SHA256 checksum of downloaded file (v8.4.0)
+fn verify_checksum(
+    file_path: &std::path::Path,
+    checksums_url: &str,
+    asset_name: &str,
+) -> Result<(), String> {
+    // Download checksums.txt
+    let output = std::process::Command::new("curl")
+        .args(["-sL", checksums_url])
+        .output()
+        .map_err(|e| format!("Failed to download checksums: {}", e))?;
+
+    if !output.status.success() {
+        return Err("Failed to download checksums.txt".to_string());
+    }
+
+    let checksums = String::from_utf8_lossy(&output.stdout);
+
+    // Find the expected checksum for our asset
+    let expected_checksum = checksums
+        .lines()
+        .find(|line| line.contains(asset_name))
+        .and_then(|line| line.split_whitespace().next())
+        .ok_or_else(|| format!("Checksum not found for {}", asset_name))?;
+
+    // Calculate actual checksum using sha256sum (Unix) or certutil (Windows)
+    #[cfg(not(target_os = "windows"))]
+    let actual_checksum = {
+        let output = std::process::Command::new("sha256sum")
+            .arg(file_path)
+            .output()
+            .map_err(|e| format!("Failed to calculate checksum: {}", e))?;
+
+        if !output.status.success() {
+            return Err("Failed to calculate SHA256 checksum".to_string());
+        }
+
+        String::from_utf8_lossy(&output.stdout)
+            .split_whitespace()
+            .next()
+            .unwrap_or("")
+            .to_string()
+    };
+
+    #[cfg(target_os = "windows")]
+    let actual_checksum = {
+        let output = std::process::Command::new("certutil")
+            .args(["-hashfile", file_path.to_str().unwrap(), "SHA256"])
+            .output()
+            .map_err(|e| format!("Failed to calculate checksum: {}", e))?;
+
+        if !output.status.success() {
+            return Err("Failed to calculate SHA256 checksum".to_string());
+        }
+
+        // certutil output has checksum on second line
+        String::from_utf8_lossy(&output.stdout)
+            .lines()
+            .nth(1)
+            .unwrap_or("")
+            .trim()
+            .replace(" ", "")
+            .to_lowercase()
+    };
+
+    if actual_checksum != expected_checksum {
+        return Err(format!(
+            "Checksum mismatch!\n  Expected: {}\n  Actual:   {}",
+            expected_checksum, actual_checksum
+        ));
+    }
 
     Ok(())
 }

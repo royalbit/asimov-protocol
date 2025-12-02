@@ -4,25 +4,19 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.3.0"
+  version: "8.4.0"
   status: released
-  summary: "Warmup: show all protocols, auto-repair hooks"
-  goal: Reliability
+  summary: "Cross-platform self-update (Linux ARM64, checksum verification)"
+  goal: DevEx
   deliverables:
-    - "[x] Show all 7 hardcoded protocols in validation"
-    - "[x] Check git hooks - auto-repair if missing"
-    - "[x] Check .claude hooks - auto-repair if missing"
-    - "[x] Display hook status (✓ installed or ✓ repaired)"
-    - "[x] Update docs/SPECIFICATION.md"
+    - "[x] Add Linux ARM64 to release workflow"
+    - "[x] Add checksum verification on download"
     - "[x] Tests pass (147 tests)"
     - "[x] Commit and push"
-    - "[x] GitHub release: v8.3.0"
+    - "[x] GitHub release: v8.4.0"
     - "[x] Installed to ~/bin"
 
 next:
-  - version: "8.4.0"
-    summary: "Cross-platform self-update (Linux ARM64, checksum verification)"
-    goal: DevEx
   - version: "8.5.0"
     summary: "asimov stats - Session duration, milestone velocity, commits/hour"
     goal: Observability
