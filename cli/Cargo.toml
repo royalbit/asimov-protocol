@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "7.4.0"
+version = "7.5.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "RoyalBit Asimov - The ethical operating system for Claude's autonomous power. Claude provides velocity, Asimov provides guardrails."
@@ -36,6 +36,9 @@ colored = "2.1"
 
 # Directory traversal (for lint-docs)
 walkdir = "2.5"
+
+# Regex (for semantic linting)
+regex = "1.10"
 
 [dev-dependencies]
 # Testing

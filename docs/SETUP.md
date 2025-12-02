@@ -25,8 +25,7 @@ project/
 │   ├── warmup.yaml       # Protocol rules (HOW)
 │   ├── sprint.yaml       # Session boundaries (WHEN)
 │   ├── roadmap.yaml      # Milestones (WHAT)
-│   ├── asimov.yaml       # The Three Laws
-│   ├── ethics.yaml       # Ethics configuration
+│   ├── asimov.yaml       # The Three Laws (canonical ethics)
 │   ├── green.yaml        # Green coding principles
 │   └── sycophancy.yaml   # Anti-sycophancy rules
 ├── CLAUDE.md             # Self-healing trigger (@.asimov/warmup.yaml)

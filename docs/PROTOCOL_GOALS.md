@@ -8,13 +8,13 @@ Every feature must serve one of these goals. Features that don't serve these goa
 
 | Priority | Goal | Problem | Solution |
 |----------|------|---------|----------|
-| **0** | ETHICAL_AUTONOMY | AI can build harmful tools | Humanist Mode safeguards (ethics.yaml) |
+| **0** | ETHICAL_AUTONOMY | AI can build harmful tools | Three Laws safeguards (asimov.yaml) |
 | **0.5** | GREEN_CODING | Cloud AI tokens for routine validation | Local CLI validation (green.yaml) |
 | **1** | ANTI-HALLUCINATION | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
 | **1.5** | ANTI-SYCOPHANCY | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (sycophancy.yaml) |
 | **2** | SELF-HEALING | Rules lost after context compaction | Re-read from disk on confusion |
 | **3** | SESSION_CONTINUITY | Context lost between sessions | Claude Code native (--continue/--resume) |
-| **4** | AUTONOMOUS_DEVELOPMENT | Unbounded sessions never ship | 4hr max, 1 milestone, quality gates |
+| **4** | AUTONOMOUS_DEVELOPMENT | Unbounded sessions never ship | 4hr max, keep shipping, quality gates |
 
 ### The Two Hallucinations
 
@@ -51,10 +51,10 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - Auto-compact at 95% capacity
 
 **RoyalBit Asimov's unique value:**
-- Ethics Protocol (ethics.yaml)
+- Ethics Protocol (asimov.yaml - Three Laws)
 - Green Protocol (green.yaml)
 - Anti-Sycophancy Protocol (sycophancy.yaml)
-- Sprint Autonomy (4hr max, 1 milestone)
+- Sprint Autonomy (4hr max, keep shipping)
 - Mid-session self-healing (warmup.yaml re-read)
 - Schema Validation (`asimov validate`)
 

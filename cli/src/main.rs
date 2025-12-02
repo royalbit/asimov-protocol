@@ -9,13 +9,16 @@ use royalbit_asimov::{
     check_ethics_status,
     check_green_status,
     check_markdown_file,
+    check_semantic,
     check_sycophancy_status,
     checkpoint_template,
     find_markdown_files,
     fix_markdown_file,
+    get_cargo_version,
     green_template,
     hook_installer_template,
     is_protocol_file,
+    load_deprecated_patterns,
     precommit_hook_template,
     red_flags,
     roadmap_template,
@@ -26,9 +29,12 @@ use royalbit_asimov::{
     validate_directory_with_regeneration,
     validate_file,
     warmup_template,
+    DeprecatedPattern,
     EthicsStatus,
     GreenStatus,
     ProjectType,
+    SemanticConfig,
+    Severity,
     SycophancyStatus,
     // Schema exports for editor integration
     ASIMOV_SCHEMA,
@@ -162,6 +168,10 @@ enum Commands {
         /// Auto-fix issues (repairs broken code block closers)
         #[arg(long)]
         fix: bool,
+
+        /// Enable semantic checks (version consistency, deprecated patterns, cross-references)
+        #[arg(long)]
+        semantic: bool,
     },
 
     /// Refresh protocol context (for git hooks - injects rules into fresh context)
@@ -201,7 +211,11 @@ fn main() -> ExitCode {
             force,
         } => cmd_init(name, &project_type, full, asimov, &output, force),
         Commands::Check { file } => cmd_validate(&file, false, true),
-        Commands::LintDocs { path, fix } => cmd_lint_docs(&path, fix),
+        Commands::LintDocs {
+            path,
+            fix,
+            semantic,
+        } => cmd_lint_docs(&path, fix, semantic),
         Commands::Refresh { verbose } => cmd_refresh(verbose),
         Commands::Schema { name, output } => cmd_schema(&name, output),
     }
@@ -854,7 +868,7 @@ fn cmd_init(
     ExitCode::SUCCESS
 }
 
-fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
+fn cmd_lint_docs(path: &Path, fix: bool, semantic: bool) -> ExitCode {
     println!("{}", "RoyalBit Asimov Documentation Linter".bold().green());
     println!();
 
@@ -874,9 +888,10 @@ fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
     println!();
 
     let mut total_errors = 0;
-    let mut files_with_errors = 0;
+    let mut _files_with_errors = 0;
     let mut files_fixed = 0;
 
+    // Markdown syntax checks
     for file in &files {
         if fix {
             // Fix mode
@@ -896,7 +911,7 @@ fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
             match check_markdown_file(file) {
                 Ok(result) => {
                     if !result.is_ok() {
-                        files_with_errors += 1;
+                        _files_with_errors += 1;
                         for error in &result.errors {
                             println!(
                                 "  {}:{} {}",
@@ -910,6 +925,82 @@ fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
                 }
                 Err(e) => {
                     eprintln!("  {} {} - {}", "ERROR".bold().red(), file.display(), e);
+                }
+            }
+        }
+    }
+
+    // Semantic checks (--semantic flag)
+    let mut semantic_errors = 0;
+    let mut semantic_warnings = 0;
+
+    if semantic && !fix {
+        println!();
+        println!("{}", "Semantic Checks".bold().cyan());
+        println!();
+
+        // Build semantic config
+        let dir = if path.is_file() {
+            path.parent().unwrap_or(Path::new("."))
+        } else {
+            path
+        };
+
+        // Load deprecated patterns from config or use defaults
+        let mut deprecated_patterns = load_deprecated_patterns(dir);
+
+        // Add built-in deprecated patterns if no config file exists
+        if deprecated_patterns.is_empty() {
+            deprecated_patterns = get_builtin_deprecated_patterns();
+        }
+
+        let config = SemanticConfig {
+            expected_version: get_cargo_version(dir),
+            deprecated_patterns,
+            check_help: true,
+        };
+
+        let result = check_semantic(dir, &config);
+
+        // Report results
+        if result.issues.is_empty() {
+            println!(
+                "  {} No semantic issues found ({} files, {} version refs)",
+                "✓".green(),
+                result.files_checked,
+                result.version_refs_found
+            );
+        } else {
+            for issue in &result.issues {
+                let severity_str = match issue.severity {
+                    Severity::Error => {
+                        semantic_errors += 1;
+                        "ERROR".bold().red()
+                    }
+                    Severity::Warning => {
+                        semantic_warnings += 1;
+                        "WARN".bold().yellow()
+                    }
+                };
+
+                let line_str = issue.line.map(|l| format!(":{}", l)).unwrap_or_default();
+
+                println!(
+                    "  {} [{}] {}{}",
+                    severity_str,
+                    issue.category.to_string().dimmed(),
+                    issue.file.display().to_string().bright_blue(),
+                    line_str.yellow()
+                );
+                println!("       {}", issue.message);
+
+                if let Some(ref ctx) = issue.context {
+                    let truncated = if ctx.len() > 80 {
+                        format!("{}...", &ctx[..77])
+                    } else {
+                        ctx.clone()
+                    };
+                    println!("       {}", truncated.dimmed());
                 }
             }
         }
@@ -932,20 +1023,37 @@ fn cmd_lint_docs(path: &Path, fix: bool) -> ExitCode {
             );
         }
         ExitCode::SUCCESS
-    } else if total_errors > 0 {
-        println!(
-            "{} {} error(s) in {} file(s)",
-            "Error:".bold().red(),
-            total_errors,
-            files_with_errors
-        );
-        println!();
-        println!("  Run with {} to auto-fix", "--fix".bold());
+    } else if total_errors > 0 || semantic_errors > 0 {
+        let mut msg = format!("{} error(s)", total_errors + semantic_errors);
+        if semantic_warnings > 0 {
+            msg.push_str(&format!(", {} warning(s)", semantic_warnings));
+        }
+        println!("{} {}", "Error:".bold().red(), msg);
+        if total_errors > 0 {
+            println!();
+            println!("  Run with {} to auto-fix markdown issues", "--fix".bold());
+        }
         ExitCode::FAILURE
+    } else if semantic_warnings > 0 {
+        println!(
+            "{} {} file(s) OK, {} semantic warning(s)",
+            "Warning:".bold().yellow(),
+            files.len(),
+            semantic_warnings
+        );
+        ExitCode::SUCCESS
     } else {
         println!("{} {} file(s) OK", "Success:".bold().green(), files.len());
         ExitCode::SUCCESS
     }
+}
+
+/// Built-in deprecated patterns (used when no config file exists)
+fn get_builtin_deprecated_patterns() -> Vec<DeprecatedPattern> {
+    vec![
+        // These are examples - actual patterns would be project-specific
+        // The real power comes from user-defined patterns in .asimov/deprecated.yaml
+    ]
 }
 
 /// Find the git repository root by looking for .git directory

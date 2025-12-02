@@ -1,0 +1,24 @@
+# RoyalBit Asimov - Deprecated Patterns Configuration
+#
+# This file defines patterns that should be flagged as deprecated.
+# Used by: asimov lint-docs --semantic
+#
+# Format:
+#   deprecated:
+#     - pattern: "old term"
+#       replacement: "new term"
+#       reason: "why it changed"
+
+deprecated:
+  # Example patterns (customize for your project):
+  # - pattern: "ethics.yaml"
+  #   replacement: "asimov.yaml"
+  #   reason: "deprecated in v7.0.8, asimov.yaml is canonical"
+  #
+  # - pattern: "1 milestone per session"
+  #   replacement: "keep shipping"
+  #   reason: "ADR-028 changed to continuous shipping"
+  #
+  # - pattern: "MCP Server Mode"
+  #   replacement: null
+  #   reason: "killed in ADR-029 due to token limits"

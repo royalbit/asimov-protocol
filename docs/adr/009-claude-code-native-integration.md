@@ -67,9 +67,9 @@ Research conducted on 2025-11-28 revealed that Claude Code 2.0 (released Novembe
 
 Features Claude Code does NOT have natively:
 
-1. **Ethics Protocol (Humanist Mode)** - `ethics.yaml`
+1. **Ethics Protocol (Three Laws)** - `asimov.yaml`
    - `human_veto` command
-   - `core_principles` (do_no_harm)
+   - `first_law.do_no_harm`
    - Red flag detection
    - Session limits
 
@@ -80,7 +80,7 @@ Features Claude Code does NOT have natively:
 
 3. **Sprint Autonomy** - Bounded sessions
    - 4hr maximum session duration
-   - 1 milestone per session
+   - Keep shipping (ADR-028)
    - Anti-patterns rejection
    - "Done is better than perfect"
 
@@ -125,13 +125,12 @@ Building these would waste effort duplicating Claude Code's native features.
    - Sprint autonomy rules
    - Schema validation
 
-### Future: MCP Server Mode
+### ~~Future: MCP Server Mode~~ (KILLED)
 
-v4.1.0+ consideration:
-- RoyalBit Asimov as MCP server
-- Provide ethics/sprint context via MCP
-- Works with Claude, OpenAI, Google (all adopted MCP)
-- TRUE vendor neutrality (not just file format)
+> **KILLED in v7.4.0** - See [ADR-029](029-mcp-server-mode-killed.md)
+>
+> MCP interfaces cap thinking tokens at 30k-128k. Asimov requires 200k.
+> Green coding principle: Don't build what won't work.
 
 ## Consequences
 
@@ -172,11 +171,10 @@ v4.1.0+ consideration:
 - [ ] Update CLAUDE.md template
 - [ ] Add `asimov migrate` command for v3→v4
 
-### Phase 3: MCP Integration (v4.1.0+)
+### ~~Phase 3: MCP Integration~~ (KILLED)
 
-- [ ] Research MCP server implementation
-- [ ] Design ethics/sprint context as MCP resources
-- [ ] Prototype MCP server mode
+> MCP Server Mode was killed in v7.4.0 due to token limitations.
+> See [ADR-029](029-mcp-server-mode-killed.md).
 
 ## References
 

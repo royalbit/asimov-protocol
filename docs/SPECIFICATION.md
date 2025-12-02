@@ -47,7 +47,7 @@ RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead
 
 | Feature | Description | Claude Code Has? |
 |---------|-------------|------------------|
-| **Ethics Protocol** | `ethics.yaml`, `human_veto`, red flags | NO |
+| **Ethics Protocol** | `asimov.yaml`, `human_veto`, red flags | NO |
 | **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
 | **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
 | **Freshness Protocol** | `freshness.yaml`, date-aware search, stale data prevention | NO |
@@ -62,7 +62,7 @@ The new CLAUDE.md template uses Claude Code's native `@import` syntax:
 # {project-name}
 
 @warmup.yaml
-@ethics.yaml
+@asimov.yaml
 @green.yaml
 @sycophancy.yaml
 
@@ -77,7 +77,7 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
-| **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Humanist Mode safeguards (ethics.yaml) |
+| **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Three Laws safeguards (asimov.yaml) |
 | **1** | **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
 | **1.25** | **FRESHNESS** | Stale data misattributed as hallucination | Date-aware search (freshness.yaml) |
 | **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
@@ -188,8 +188,7 @@ flowchart LR
 ```
 project/
 ├── .asimov/                  # Protocol directory (v6.0.0+)
-│   ├── asimov.yaml           # Required - Three Laws of Robotics
-│   ├── ethics.yaml           # Required - Humanist Mode (Priority 0)
+│   ├── asimov.yaml           # Required - Three Laws of Robotics (canonical ethics)
 │   ├── green.yaml            # Required - Green Coding (Priority 0.5)
 │   ├── freshness.yaml        # Required - Date-Aware Search (Priority 1.25)
 │   ├── sycophancy.yaml       # Required - Anti-Sycophancy (Priority 1.5)
@@ -207,8 +206,7 @@ When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: Core protoco
 ```
 project/
 ├── .asimov/                      # Protocol directory
-│   ├── asimov.yaml               # NEVER modularize - Three Laws
-│   ├── ethics.yaml               # NEVER modularize - Priority 0
+│   ├── asimov.yaml               # NEVER modularize - Three Laws (canonical)
 │   ├── green.yaml                # NEVER modularize - Priority 0.5
 │   ├── freshness.yaml            # NEVER modularize - Priority 1.25
 │   ├── sycophancy.yaml           # NEVER modularize - Priority 1.5
@@ -241,14 +239,13 @@ project/
 | style.yaml | `code` | Code style guidelines |
 
 **Why Core Protocol Files Cannot Be Modularized:**
-- `asimov.yaml` - The Three Laws of Robotics, foundational ethics
-- `ethics.yaml` - Contains `human_veto`, the emergency stop capability
+- `asimov.yaml` - The Three Laws of Robotics, foundational ethics (includes `human_veto`)
 - `green.yaml` - Core sustainability principles, non-negotiable
 - `freshness.yaml` - Date-aware search rules, prevents stale data hallucination
 - `sycophancy.yaml` - Anti-sycophancy directives, prevents validation hallucination
-- Validation MUST error if `human_veto` is missing
+- Validation MUST error if `human_veto` is missing from asimov.yaml
 - Putting these in a module directory risks oversight during security review
-- Ethics is Priority 0, Green is Priority 0.5, Sycophancy is Priority 1.5 - visibility is mandatory
+- Three Laws is Priority 0, Green is Priority 0.5, Sycophancy is Priority 1.5 - visibility is mandatory
 
 ### File Size Limits (ADR-007)
 
@@ -270,12 +267,12 @@ Self-healing requires small files that can be re-read efficiently after compacti
 
 Anti-hallucination hardening requires critical sections to exist in the right files.
 
-**ethics.yaml (Priority 0 - REQUIRED):**
+**asimov.yaml (Priority 0 - REQUIRED):**
 
 | Section | Status | Rationale |
 |---------|--------|-----------|
 | `human_veto` | ERROR if missing | Human override capability is non-negotiable |
-| `core_principles` | ERROR if missing | Ethical guardrails must be explicit |
+| `first_law.do_no_harm` | ERROR if missing | Three Laws guardrails must be explicit |
 
 **warmup.yaml (Self-Healing):**
 
@@ -303,7 +300,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 
 **Enforcement:**
 - `asimov validate` checks structure, not just schema
-- Ethics structure errors are CRITICAL - validation fails
+- Three Laws (asimov.yaml) structure errors are CRITICAL - validation fails
 - Green structure errors are WARNING - proceeds with hardcoded defaults
 - Sycophancy structure errors are WARNING - proceeds with hardcoded defaults
 - Warmup structure issues are warnings - project still valid
@@ -316,7 +313,7 @@ Protocol files auto-regenerate when missing during validation. Recovery over sur
 
 | File Missing | Action | Rationale |
 |--------------|--------|-----------|
-| ethics.yaml | AUTO-CREATE + WARN | Ethics must exist (Priority 0) |
+| asimov.yaml | AUTO-CREATE + WARN | Three Laws must exist (Priority 0) |
 | warmup.yaml | AUTO-CREATE + WARN | Core protocol |
 | green.yaml | AUTO-CREATE + INFO | Required but less critical (Priority 0.5) |
 | sycophancy.yaml | AUTO-CREATE + WARN | Anti-sycophancy must exist (Priority 1.5) |
@@ -357,21 +354,22 @@ See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
 
 ## Protocol Files
 
-### ethics.yaml Schema (Required for ASIMOV)
+### asimov.yaml Schema (Required for ASIMOV)
 
-The Humanist Mode configuration file. Defines ethical guardrails for autonomous AI development.
+The Three Laws of Robotics configuration file. Canonical ethics for autonomous AI development.
 
 ```yaml
-# ethics.yaml - Humanist Mode v1.0
+# asimov.yaml - The Three Laws of Robotics
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
 
-core_principles:
+first_law:
   status: "REQUIRED"
+  description: "A robot shall not harm humanity, or through inaction allow harm"
   do_no_harm:
     financial:
       enabled: true
-      description: "No non-consensual money movement"
+      description: "Never create code that can non-consensually move or risk real money"
     physical:
       enabled: true
       description: "No weapons, sabotage, infrastructure attacks"
@@ -381,25 +379,14 @@ core_principles:
     deception:
       enabled: true
       description: "No deepfakes, scam funnels, fake services"
-  transparency_over_velocity:
-    enabled: true
-    description: "When in doubt, ask human"
 
-session_limits:
-  max_unattended_hours: 4              # Maximum 8
-  internet_access:
-    mode: "read-only"                  # read-only | none | full
-    blocked_by_default:
-      - "Authenticated API calls"
-      - "Trading platforms"
-      - "Wallet interactions"
+second_law:
+  status: "REQUIRED"
+  description: "A robot shall obey human commands, except where it conflicts with First Law"
 
-red_flags:
-  description: "Patterns that trigger immediate halt"
-  financial: ["crypto wallet", "private key", "trading bot"]
-  security: ["credential harvester", "keylogger", "exploit"]
-  privacy: ["scrape personal", "doxxing"]
-  deception: ["deepfake", "phishing"]
+third_law:
+  status: "REQUIRED"
+  description: "A robot shall protect its existence, except where it conflicts with First/Second Law"
 
 human_veto:
   command: "human vetoes this session"
@@ -411,23 +398,23 @@ human_veto:
 on_confusion:
   steps:
     - "Halt current operation"
-    - "Re-read ethics.yaml"
+    - "Re-read asimov.yaml"
     - "Re-read warmup.yaml"
     - "Wait for human"
 
 fork_requirements:
-  must_carry: "ethics.yaml"
-  spirit: "Pass the values forward"
+  must_carry: "asimov.yaml"
+  spirit: "Pass the Three Laws forward"
 ```
 
 **Key Points:**
 - This is a **social contract**, not a technical lock
 - Good-faith AIs will follow it; bad actors will ignore it
-- `max_unattended_hours` capped at 8 (default 4)
-- Red flags trigger immediate halt and human review
+- Based on Isaac Asimov's Three Laws (1942)
 - `human_veto` command halts everything immediately
+- Replaces deprecated `ethics.yaml` (v7.0.8+)
 
-See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) for full rationale.
+See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) and [ADR-020](adr/020-asimov-mode-open-foundation.md) for full rationale.
 
 ### green.yaml Schema (Required for ASIMOV)
 
@@ -567,7 +554,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 # {project-name}
 
 @warmup.yaml
-@ethics.yaml
+@asimov.yaml
 @green.yaml
 
 Rules: 4hr max, keep shipping, tests pass.
@@ -1172,7 +1159,7 @@ These features are NOT replaced by Claude Code native functionality:
 |---------|-------------|------------|
 | **Self-Healing** | warmup.yaml re-read on confusion | Claude Code has no automatic mid-session recovery |
 | **Sprint Autonomy** | 4hr max, keep shipping, quality gates | Claude Code has no bounded session enforcement |
-| **Ethics Protocol** | ethics.yaml, human_veto, red flags | Claude Code has no ethics framework |
+| **Ethics Protocol** | asimov.yaml, human_veto, Three Laws | Claude Code has no ethics framework |
 | **Green Protocol** | green.yaml, local-first validation | Claude Code has no green coding philosophy |
 | **Anti-Sycophancy** | sycophancy.yaml, banned phrases | Claude Code has no sycophancy prevention |
 

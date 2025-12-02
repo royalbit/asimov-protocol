@@ -4,10 +4,10 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.4.0"
+  version: "7.5.0"
   status: released
-  summary: "migrations.yaml - Functional Equivalence Protocol"
-  goal: CORE_PRINCIPLE
+  summary: "asimov lint-docs --semantic - Cross-Consistency Checker"
+  goal: GREEN_CODING
 
 next: []
 # Roadmap empty - Asimov is feature-complete
@@ -15,6 +15,7 @@ next: []
 
 backlog:
   - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
+  - "TOON Format Migration: Evaluate when Rust parser exists and ecosystem matures (token efficiency for LLMs)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # KILLED (not building)

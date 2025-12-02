@@ -33,6 +33,7 @@ pub mod ethics;
 pub mod green;
 pub mod markdown;
 pub mod schemas;
+pub mod semantic;
 pub mod sycophancy;
 pub mod templates;
 pub mod validator;
@@ -51,6 +52,10 @@ pub use green::{
 pub use markdown::{
     check_file as check_markdown_file, find_markdown_files, fix_file as fix_markdown_file,
     LintError, LintResult,
+};
+pub use semantic::{
+    check_semantic, get_cargo_version, load_deprecated_patterns, DeprecatedPattern, IssueCategory,
+    SemanticConfig, SemanticIssue, SemanticResult, Severity,
 };
 pub use sycophancy::{
     banned_phrases, check_sycophancy_status, directives, BannedPhraseCategory,

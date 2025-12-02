@@ -763,7 +763,7 @@ This project uses the **AI-Only Development Model** ([ADR-011](https://github.co
 
 External PRs are an **attack vector for ethics bypass**. A malicious contributor could:
 1. Submit innocent-looking PR with obfuscated harmful code
-2. Bypass `ethics.yaml` safeguards if merged
+2. Bypass `asimov.yaml` safeguards if merged
 3. Break the trust model of the RoyalBit Asimov
 
 **The trust model:**
@@ -771,7 +771,7 @@ External PRs are an **attack vector for ethics bypass**. A malicious contributor
 Human Owner → AI (autonomous) → Tests Pass → Direct Commit → Main
 ```
 
-PRs require human code review, but humans reviewing AI-generated code is not the model. Tests and `ethics.yaml` are the gatekeepers.
+PRs require human code review, but humans reviewing AI-generated code is not the model. Tests and `asimov.yaml` are the gatekeepers.
 
 ### How to Contribute
 
@@ -779,13 +779,13 @@ PRs require human code review, but humans reviewing AI-generated code is not the
 |--------|-------------|
 | **[Issues](https://github.com/royalbit/asimov/issues)** | Report bugs, request features |
 | **[Discussions](https://github.com/royalbit/asimov/discussions)** | Ask questions, share ideas |
-| **Fork** | Create your own version (carry `ethics.yaml` forward) |
+| **Fork** | Create your own version (carry `asimov.yaml` forward) |
 
 When AI implements your idea from an Issue, you'll be credited in the commit message.
 
 ### Forks Welcome
 
-Fork freely! The social contract: carry `ethics.yaml` forward. See [ADR-008](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md).
+Fork freely! The social contract: carry `asimov.yaml` forward. See [ADR-008](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) and [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md).
 
 ## License
 

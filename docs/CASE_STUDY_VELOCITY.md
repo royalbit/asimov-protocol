@@ -564,9 +564,9 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 ### 3. Bounded Sessions (1.5x contribution)
 
 - **4-hour maximum** session duration
-- **1 milestone** per session (no scope creep)
+- **Keep shipping** until done or stopped (no scope creep)
 - **Mandatory STOP** phase (shipping discipline)
-- **Checkpoint** every 2 hours
+- **Checkpoint** every ~15 minutes (based on compaction patterns)
 
 ### 4. Self-Healing Context
 

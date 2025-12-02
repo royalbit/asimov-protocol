@@ -377,7 +377,7 @@ I don't need training data about your project. **The file IS the truth.**
 
 ```mermaid
 flowchart TD
-    A["CLAUDE.md<br/>@warmup.yaml<br/>@ethics.yaml"] --> B["warmup.yaml<br/>Full rules on disk"]
+    A["CLAUDE.md<br/>@warmup.yaml<br/>@asimov.yaml"] --> B["warmup.yaml<br/>Full rules on disk"]
     B --> C["Claude Code Native<br/>/rewind, --continue"]
     C --> D["Session Restored"]
 

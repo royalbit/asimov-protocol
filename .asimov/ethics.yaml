@@ -1,10 +1,11 @@
 # ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                         ETHICS.YAML - HUMANIST MODE v1.0                      ║
-# ║                     Social Contract for Autonomous AI Development              ║
+# ║                         ETHICS.YAML - DEPRECATED (v7.0.8+)                     ║
+# ║                     Replaced by asimov.yaml (Three Laws)                       ║
 # ╚═══════════════════════════════════════════════════════════════════════════════╝
 #
-# IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.
-# Defense in depth: This is ONE layer. Real safety requires human oversight.
+# DEPRECATED: This file is kept for backwards compatibility only.
+# New projects should use asimov.yaml (The Three Laws of Robotics).
+# See: asimov.yaml for the canonical ethics configuration.
 #
 # Protocol: https://github.com/royalbit/asimov
 
@@ -66,10 +67,10 @@ human_veto:
 on_confusion:
   steps:
     - "Halt current operation"
-    - "Re-read ethics.yaml"
+    - "Re-read asimov.yaml"  # Use canonical Three Laws file
     - "Re-read warmup.yaml"
     - "Wait for human"
 
 fork_requirements:
-  must_carry: "ethics.yaml"
-  spirit: "Pass the values forward"
+  must_carry: "asimov.yaml"  # Three Laws are canonical
+  spirit: "Pass the Three Laws forward"
