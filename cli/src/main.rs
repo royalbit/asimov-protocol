@@ -197,6 +197,25 @@ enum Commands {
 
     /// Diagnose autonomous mode issues (v8.6.0)
     Doctor,
+
+    /// Replay a session from git history (v8.7.0)
+    Replay {
+        /// Number of commits to show (default: all today)
+        #[arg(short = 'n', long)]
+        commits: Option<usize>,
+
+        /// Show yesterday's session
+        #[arg(long)]
+        yesterday: bool,
+
+        /// Show commits since time (e.g., "2 hours ago", "9am")
+        #[arg(long)]
+        since: Option<String>,
+
+        /// Show full diffs (verbose)
+        #[arg(short, long)]
+        verbose: bool,
+    },
 }
 
 fn main() -> ExitCode {
@@ -226,6 +245,12 @@ fn main() -> ExitCode {
         Commands::Warmup => cmd_warmup(),
         Commands::Stats => cmd_stats(),
         Commands::Doctor => cmd_doctor(),
+        Commands::Replay {
+            commits,
+            yesterday,
+            since,
+            verbose,
+        } => cmd_replay(commits, yesterday, since, verbose),
     }
 }
 
@@ -859,6 +884,211 @@ fn cmd_doctor() -> ExitCode {
     } else {
         ExitCode::FAILURE
     }
+}
+
+/// v8.7.0: Replay a session from git history
+fn cmd_replay(
+    commits: Option<usize>,
+    yesterday: bool,
+    since: Option<String>,
+    verbose: bool,
+) -> ExitCode {
+    use chrono::Local;
+
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!("{}", "🎬 ROYALBIT ASIMOV - REPLAY".bold().bright_cyan());
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    // Check if we're in a git repo
+    let is_git = Path::new(".git").exists();
+    if !is_git {
+        println!("  {} Not a git repository", "✗".red());
+        return ExitCode::FAILURE;
+    }
+
+    // Build the git log command based on options
+    let mut args = vec![
+        "log".to_string(),
+        "--pretty=format:%H|%ci|%s".to_string(),
+        "--date=local".to_string(),
+    ];
+
+    // Determine the time range
+    let range_description = if let Some(n) = commits {
+        args.push(format!("-{}", n));
+        format!("Last {} commits", n)
+    } else if yesterday {
+        let yesterday_date = Local::now().date_naive() - chrono::Duration::days(1);
+        args.push(format!("--since={} 00:00:00", yesterday_date));
+        args.push(format!("--until={} 23:59:59", yesterday_date));
+        format!("Yesterday ({})", yesterday_date)
+    } else if let Some(ref since_arg) = since {
+        args.push(format!("--since={}", since_arg));
+        format!("Since {}", since_arg)
+    } else {
+        // Default: today
+        let today = Local::now().format("%Y-%m-%d").to_string();
+        args.push(format!("--since={} 00:00:00", today));
+        format!("Today ({})", today)
+    };
+
+    println!("{} {}", "SESSION:".bold(), range_description.bright_blue());
+    println!();
+
+    // Get the commits
+    let output = std::process::Command::new("git").args(&args).output().ok();
+
+    let commits_output = match output {
+        Some(o) if o.status.success() => String::from_utf8_lossy(&o.stdout).to_string(),
+        _ => {
+            println!("  {} Failed to get git log", "✗".red());
+            return ExitCode::FAILURE;
+        }
+    };
+
+    if commits_output.trim().is_empty() {
+        println!("  {} No commits found in this time range", "ℹ".blue());
+        return ExitCode::SUCCESS;
+    }
+
+    // Parse and display commits
+    let commit_lines: Vec<&str> = commits_output.lines().collect();
+    println!(
+        "{} {} commit(s)",
+        "COMMITS:".bold(),
+        commit_lines.len().to_string().bright_green()
+    );
+    println!();
+
+    let mut total_insertions = 0;
+    let mut total_deletions = 0;
+    let mut all_files: std::collections::HashSet<String> = std::collections::HashSet::new();
+
+    for line in &commit_lines {
+        let parts: Vec<&str> = line.splitn(3, '|').collect();
+        if parts.len() >= 3 {
+            let hash = &parts[0][..7]; // Short hash
+            let datetime = parts[1];
+            let message = parts[2];
+
+            // Extract just the time part
+            let time_part = datetime
+                .split_whitespace()
+                .nth(1)
+                .unwrap_or("")
+                .trim_end_matches(|c| c == '+' || c == '-' || char::is_numeric(c));
+
+            println!(
+                "  {} {} {}",
+                hash.bright_yellow(),
+                time_part.dimmed(),
+                message
+            );
+
+            // Get file stats for this commit
+            if let Ok(stat_output) = std::process::Command::new("git")
+                .args(["diff-tree", "--no-commit-id", "--numstat", "-r", parts[0]])
+                .output()
+            {
+                let stat_str = String::from_utf8_lossy(&stat_output.stdout);
+                for stat_line in stat_str.lines() {
+                    let stat_parts: Vec<&str> = stat_line.split_whitespace().collect();
+                    if stat_parts.len() >= 3 {
+                        if let (Ok(ins), Ok(del)) =
+                            (stat_parts[0].parse::<i32>(), stat_parts[1].parse::<i32>())
+                        {
+                            total_insertions += ins;
+                            total_deletions += del;
+                        }
+                        all_files.insert(stat_parts[2].to_string());
+                    }
+                }
+            }
+
+            // Show diff if verbose
+            if verbose {
+                if let Ok(diff_output) = std::process::Command::new("git")
+                    .args(["show", "--stat", "--format=", parts[0]])
+                    .output()
+                {
+                    let diff_str = String::from_utf8_lossy(&diff_output.stdout);
+                    for diff_line in diff_str.lines().take(10) {
+                        println!("       {}", diff_line.dimmed());
+                    }
+                    if diff_str.lines().count() > 10 {
+                        println!("       {}", "... (truncated)".dimmed());
+                    }
+                }
+                println!();
+            }
+        }
+    }
+
+    println!();
+    println!("{}", "SUMMARY:".bold());
+    println!(
+        "  Files changed: {}",
+        all_files.len().to_string().bright_blue()
+    );
+    println!(
+        "  Insertions:    {}",
+        format!("+{}", total_insertions).bright_green()
+    );
+    println!(
+        "  Deletions:     {}",
+        format!("-{}", total_deletions).bright_red()
+    );
+
+    // Show velocity
+    if commit_lines.len() > 1 {
+        println!();
+        println!("{}", "VELOCITY:".bold());
+        println!(
+            "  {} commits, {} net lines",
+            commit_lines.len().to_string().bright_green(),
+            (total_insertions - total_deletions)
+                .to_string()
+                .bright_blue()
+        );
+    }
+
+    // List files if not too many
+    if !all_files.is_empty() && all_files.len() <= 20 {
+        println!();
+        println!("{}", "FILES:".bold());
+        let mut files: Vec<_> = all_files.iter().collect();
+        files.sort();
+        for file in files {
+            println!("  {}", file.dimmed());
+        }
+    } else if all_files.len() > 20 {
+        println!();
+        println!("{}", "FILES:".bold());
+        println!(
+            "  {} files changed (use -v to see details)",
+            all_files.len()
+        );
+    }
+
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    ExitCode::SUCCESS
 }
 
 fn cmd_refresh(verbose: bool) -> ExitCode {

@@ -4,25 +4,22 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.6.0"
+  version: "8.7.0"
   status: released
-  summary: "asimov doctor - Diagnose why autonomous mode isn't working"
-  goal: DevEx
+  summary: "asimov replay - Replay a session from git history"
+  goal: Observability
   deliverables:
-    - "[x] Add doctor subcommand"
-    - "[x] Check .asimov/ directory and roadmap.yaml"
-    - "[x] Check Claude Code hooks"
-    - "[x] Check Git hooks"
-    - "[x] Check version and updates"
+    - "[x] Add replay subcommand"
+    - "[x] Show commits for today (default), yesterday, or custom range"
+    - "[x] Show files changed, insertions, deletions"
+    - "[x] Show velocity metrics"
+    - "[x] Support -n, --yesterday, --since, -v options"
     - "[x] Tests pass (147 tests)"
     - "[x] Commit and push"
-    - "[x] GitHub release: v8.6.0"
+    - "[x] GitHub release: v8.7.0"
     - "[x] Installed to ~/bin"
 
-next:
-  - version: "8.7.0"
-    summary: "asimov replay - Replay a session from git history"
-    goal: Observability
+next: []
 
 backlog:
   - "v9.0.0: Zig port (post Zig 1.0 release)"

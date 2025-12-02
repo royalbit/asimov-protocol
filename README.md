@@ -361,6 +361,18 @@ asimov doctor                # Check project setup, hooks, and version
 
 Checks: `.asimov/` directory, `roadmap.yaml`, Claude Code hooks, Git hooks, version and updates.
 
+Replay session history (v8.7.0+):
+
+```bash
+asimov replay                # Replay today's session
+asimov replay --yesterday    # Replay yesterday's session
+asimov replay -n 10          # Replay last 10 commits
+asimov replay --since "2 hours ago"  # Commits since time
+asimov replay -v             # Show file details per commit
+```
+
+Shows: commits, files changed, insertions/deletions, velocity metrics.
+
 **Platforms:** Linux x86_64, Linux ARM64, macOS (Intel/ARM), Windows x86_64
 
 **Binary size:** 1.3MB (UPX compressed) | **Dependencies:** Zero runtime
