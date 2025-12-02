@@ -253,12 +253,13 @@ mod tests {
     #[test]
     fn test_protocol_templates_exist() {
         // These will fail at compile time if templates don't exist
-        assert!(!ASIMOV_PROTOCOL.is_empty());
-        assert!(!FRESHNESS_PROTOCOL.is_empty());
-        assert!(!SYCOPHANCY_PROTOCOL.is_empty());
-        assert!(!GREEN_PROTOCOL.is_empty());
-        assert!(!SPRINT_PROTOCOL.is_empty());
-        assert!(!WARMUP_PROTOCOL.is_empty());
-        assert!(!MIGRATIONS_PROTOCOL.is_empty());
+        // Just verify they have some expected content
+        assert!(ASIMOV_PROTOCOL.contains("harm"));
+        assert!(FRESHNESS_PROTOCOL.contains("TODAY"));
+        assert!(SYCOPHANCY_PROTOCOL.contains("truth"));
+        assert!(GREEN_PROTOCOL.contains("local"));
+        assert!(SPRINT_PROTOCOL.contains("hours"));
+        assert!(WARMUP_PROTOCOL.contains("protocol"));
+        assert!(MIGRATIONS_PROTOCOL.contains("Migration"));
     }
 }
