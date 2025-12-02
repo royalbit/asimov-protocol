@@ -3,8 +3,8 @@
 
 # ACTIVE SPRINT
 sprint:
-  current: "Roadmap exhausted"
-  status: done
+  current: "v8.0.0 - Enforced Protocol Loading"
+  status: in_progress
 
 # CORE RULES (ADR-028)
 rules:

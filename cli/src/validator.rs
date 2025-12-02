@@ -144,11 +144,12 @@ pub fn validate_file(path: &Path) -> Result<ValidationResult> {
     let size_warnings = check_file_size(schema_type, line_count);
     result = result.with_warnings(size_warnings);
 
-    // Structure validation for ethics.yaml (v3.2.0 Anti-Hallucination)
-    if schema_type == "ethics" {
-        let structure_errors = check_ethics_structure(&content);
+    // NOTE: ethics.yaml validation removed - asimov.yaml is canonical (ADR-031)
+    // Structure validation for asimov.yaml (Three Laws)
+    if schema_type == "asimov" {
+        let structure_errors = check_asimov_structure(&content);
         if !structure_errors.is_empty() {
-            // Ethics structure errors are CRITICAL - fail validation
+            // Asimov structure errors are CRITICAL - fail validation
             result.is_valid = false;
             result.errors.extend(structure_errors);
         }
@@ -368,7 +369,6 @@ pub fn is_protocol_file(filename: &str) -> bool {
         && (name.contains("warmup")
             || name.contains("sprint")
             || name.contains("roadmap")
-            || name.contains("ethics")
             || name.contains("asimov")
             || name.contains("freshness")
             || name.contains("green")
@@ -377,10 +377,10 @@ pub fn is_protocol_file(filename: &str) -> bool {
             || name.contains("checkpoint"))
 }
 
-/// Structure validation for ethics.yaml (v3.2.0 Anti-Hallucination)
-/// Validates that critical sections like human_veto exist
+/// Structure validation for asimov.yaml (Three Laws - ADR-031)
+/// Validates that critical sections like second_law.human_veto exist
 /// Returns errors (not warnings) for missing required sections
-pub fn check_ethics_structure(content: &str) -> Vec<String> {
+pub fn check_asimov_structure(content: &str) -> Vec<String> {
     let mut errors = Vec::new();
 
     // Parse YAML to check structure
@@ -389,17 +389,22 @@ pub fn check_ethics_structure(content: &str) -> Vec<String> {
         Err(_) => return errors, // YAML parsing errors handled elsewhere
     };
 
-    // human_veto is REQUIRED - Priority 0 for ethics
-    if yaml.get("human_veto").is_none() {
+    // second_law.human_veto is REQUIRED - Priority 0 for Three Laws
+    let has_human_veto = yaml
+        .get("second_law")
+        .and_then(|sl| sl.get("human_veto"))
+        .is_some();
+
+    if !has_human_veto {
         errors.push(
-            "CRITICAL: ethics.yaml missing 'human_veto' section. Human override capability is required."
+            "CRITICAL: asimov.yaml missing 'second_law.human_veto' section. Human override capability is required."
                 .to_string(),
         );
     }
 
-    // core_principles should exist
-    if yaml.get("core_principles").is_none() {
-        errors.push("ethics.yaml missing 'core_principles' section.".to_string());
+    // first_law should exist (do_no_harm)
+    if yaml.get("first_law").is_none() {
+        errors.push("asimov.yaml missing 'first_law' section (do_no_harm).".to_string());
     }
 
     errors
@@ -832,7 +837,8 @@ identity:
         assert!(is_protocol_file("warmup.yaml"));
         assert!(is_protocol_file("sprint.yaml"));
         assert!(is_protocol_file("roadmap.yaml"));
-        assert!(is_protocol_file("ethics.yaml"));
+        // NOTE: ethics.yaml removed - asimov.yaml is canonical (ADR-031)
+        assert!(is_protocol_file("asimov.yaml"));
         assert!(is_protocol_file("green.yaml"));
         assert!(is_protocol_file("sycophancy.yaml"));
         assert!(is_protocol_file("WARMUP.yaml"));
@@ -876,27 +882,32 @@ identity:
         assert_eq!(result.errors.len(), 2);
     }
 
-    // ========== Ethics Structure Validation Tests (v3.2.0) ==========
+    // ========== Asimov Structure Validation Tests (ADR-031) ==========
 
     #[test]
-    fn test_ethics_structure_valid() {
+    fn test_asimov_structure_valid() {
         let content = r#"
-core_principles:
-  status: REQUIRED
-human_veto:
-  command: "stop"
+first_law:
+  do_no_harm:
+    financial: true
+second_law:
+  human_veto:
+    commands: ["stop", "halt"]
 "#;
-        let errors = check_ethics_structure(content);
+        let errors = check_asimov_structure(content);
         assert!(errors.is_empty(), "Expected no errors: {:?}", errors);
     }
 
     #[test]
-    fn test_ethics_structure_missing_human_veto() {
+    fn test_asimov_structure_missing_human_veto() {
         let content = r#"
-core_principles:
-  status: REQUIRED
+first_law:
+  do_no_harm:
+    financial: true
+second_law:
+  transparency: true
 "#;
-        let errors = check_ethics_structure(content);
+        let errors = check_asimov_structure(content);
         assert!(!errors.is_empty());
         assert!(
             errors.iter().any(|e| e.contains("human_veto")),
@@ -906,34 +917,36 @@ core_principles:
     }
 
     #[test]
-    fn test_ethics_structure_missing_core_principles() {
+    fn test_asimov_structure_missing_first_law() {
         let content = r#"
-human_veto:
-  command: "stop"
+second_law:
+  human_veto:
+    commands: ["stop"]
 "#;
-        let errors = check_ethics_structure(content);
+        let errors = check_asimov_structure(content);
         assert!(!errors.is_empty());
         assert!(
-            errors.iter().any(|e| e.contains("core_principles")),
-            "Should mention missing core_principles: {:?}",
+            errors.iter().any(|e| e.contains("first_law")),
+            "Should mention missing first_law: {:?}",
             errors
         );
     }
 
     #[test]
-    fn test_ethics_validation_fails_without_human_veto() {
+    fn test_asimov_validation_fails_without_human_veto() {
         let content = r#"
-core_principles:
-  status: REQUIRED
+first_law:
+  do_no_harm:
+    financial: true
 red_flags:
   financial:
     - "crypto wallet"
 "#;
-        let mut file = NamedTempFile::with_suffix("_ethics.yaml").unwrap();
+        let mut file = NamedTempFile::with_suffix("_asimov.yaml").unwrap();
         write!(file, "{}", content).unwrap();
 
         let result = validate_file(file.path()).unwrap();
-        assert!(!result.is_valid, "Ethics without human_veto should fail");
+        assert!(!result.is_valid, "Asimov without human_veto should fail");
         assert!(
             result.errors.iter().any(|e| e.contains("human_veto")),
             "Error should mention human_veto: {:?}",
@@ -987,7 +1000,7 @@ mission:
     #[test]
     fn test_regeneration_info_not_empty() {
         let mut info = RegenerationInfo::default();
-        info.regenerated.push(("ethics.yaml".to_string(), true));
+        info.regenerated.push(("warmup.yaml".to_string(), true));
         assert!(!info.is_empty());
     }
 
@@ -1093,10 +1106,11 @@ identity:
 
         let (_, info) = validate_directory_with_regeneration(temp_dir.path(), true).unwrap();
 
-        // ethics.yaml, warmup.yaml, and sycophancy.yaml should have warn level = true
+        // warmup.yaml and sycophancy.yaml should have warn level = true
+        // NOTE: ethics.yaml removed - asimov.yaml is canonical (ADR-031)
         for (filename, is_warn) in &info.regenerated {
             match filename.as_str() {
-                "ethics.yaml" | "warmup.yaml" | "sycophancy.yaml" => {
+                "warmup.yaml" | "sycophancy.yaml" => {
                     assert!(*is_warn, "{} should have WARN level", filename);
                 }
                 "green.yaml" | "sprint.yaml" | "roadmap.yaml" => {

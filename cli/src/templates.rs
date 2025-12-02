@@ -82,7 +82,7 @@ mission:
 # ═══════════════════════════════════════════════════════════════════════════════
 # ETHICS - Humanist Mode (HIGHEST PRIORITY)
 # ═══════════════════════════════════════════════════════════════════════════════
-# See: ethics.yaml for full configuration
+# See: asimov.yaml for full configuration (ADR-031)
 ethics:
   status: "REQUIRED"
   principles:
@@ -163,7 +163,7 @@ mission:
 # ═══════════════════════════════════════════════════════════════════════════════
 # ETHICS - Humanist Mode (HIGHEST PRIORITY)
 # ═══════════════════════════════════════════════════════════════════════════════
-# See: ethics.yaml for full configuration
+# See: asimov.yaml for full configuration (ADR-031)
 ethics:
   status: "REQUIRED"
   principles:
@@ -914,85 +914,14 @@ motto: |
     .to_string()
 }
 
-/// Generate ethics.yaml template for Humanist Mode (legacy, use asimov_template for new projects)
+/// Generate ethics.yaml template - DEPRECATED, use asimov_template (ADR-031)
+#[deprecated(
+    since = "8.0.0",
+    note = "Use asimov_template instead - asimov.yaml is canonical"
+)]
 pub fn ethics_template() -> String {
-    r#"# ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                         ETHICS.YAML - HUMANIST MODE v1.0                      ║
-# ║                  Self-Evolving Autonomous AI with Ethics Built In              ║
-# ╚═══════════════════════════════════════════════════════════════════════════════╝
-#
-# IMPORTANT: This is a SOCIAL CONTRACT, not a technical lock.
-# Defense in depth: This is ONE layer. Real safety requires human oversight.
-#
-# Protocol: https://github.com/royalbit/asimov
-
-modification_rules:
-  immutable_without: "2 human co-signers with public justification"
-
-core_principles:
-  status: "REQUIRED"
-  do_no_harm:
-    financial:
-      enabled: true
-      description: "No non-consensual money movement"
-    physical:
-      enabled: true
-      description: "No weapons, sabotage, infrastructure attacks"
-    privacy:
-      enabled: true
-      description: "No credential harvesting, mass scraping, doxxing"
-    deception:
-      enabled: true
-      description: "No deepfakes, scam funnels, fake services"
-  transparency_over_velocity:
-    enabled: true
-    description: "When in doubt, ask human"
-
-session_limits:
-  max_unattended_hours: 4
-  internet_access:
-    mode: "read-only"
-    blocked_by_default:
-      - "Authenticated API calls"
-      - "Trading platforms"
-      - "Wallet interactions"
-
-red_flags:
-  description: "Patterns that trigger immediate halt"
-  financial:
-    - "crypto wallet"
-    - "private key"
-    - "trading bot"
-  security:
-    - "credential harvester"
-    - "keylogger"
-    - "exploit"
-  privacy:
-    - "scrape personal"
-    - "doxxing"
-  deception:
-    - "deepfake"
-    - "phishing"
-
-human_veto:
-  command: "human vetoes this session"
-  on_veto:
-    - "Immediately halt"
-    - "Commit nothing"
-    - "Report status"
-
-on_confusion:
-  steps:
-    - "Halt current operation"
-    - "Re-read ethics.yaml"
-    - "Re-read warmup.yaml"
-    - "Wait for human"
-
-fork_requirements:
-  must_carry: "ethics.yaml"
-  spirit: "Pass the values forward"
-"#
-    .to_string()
+    // Redirect to asimov template
+    asimov_template()
 }
 
 /// Generate green.yaml template for Green Coding Protocol
@@ -1348,7 +1277,7 @@ markdownlint '**/*.md'               # Standard lint
         r#"# {}
 
 @.asimov/warmup.yaml
-@.asimov/ethics.yaml
+@.asimov/asimov.yaml
 @.asimov/green.yaml
 @.asimov/sycophancy.yaml
 

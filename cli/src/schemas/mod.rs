@@ -4,7 +4,6 @@
 
 mod asimov;
 mod checkpoint;
-mod ethics;
 mod freshness;
 mod green;
 mod migrations;
@@ -13,9 +12,10 @@ mod sprint;
 mod sycophancy;
 mod warmup;
 
+// NOTE: ethics.rs removed - asimov.yaml is the canonical ethics source (ADR-031)
+
 pub use asimov::ASIMOV_SCHEMA;
 pub use checkpoint::CHECKPOINT_SCHEMA;
-pub use ethics::ETHICS_SCHEMA;
 pub use freshness::FRESHNESS_SCHEMA;
 pub use green::GREEN_SCHEMA;
 pub use migrations::MIGRATIONS_SCHEMA;
@@ -25,6 +25,7 @@ pub use sycophancy::SYCOPHANCY_SCHEMA;
 pub use warmup::WARMUP_SCHEMA;
 
 /// Determine which schema to use based on filename
+/// NOTE: ethics.yaml is no longer supported - use asimov.yaml (ADR-031)
 pub fn schema_for_file(filename: &str) -> Option<&'static str> {
     let name = filename.to_lowercase();
     if name.contains("warmup") {
@@ -35,8 +36,6 @@ pub fn schema_for_file(filename: &str) -> Option<&'static str> {
         Some(ROADMAP_SCHEMA)
     } else if name.contains("asimov") {
         Some(ASIMOV_SCHEMA)
-    } else if name.contains("ethics") {
-        Some(ETHICS_SCHEMA)
     } else if name.contains("freshness") {
         Some(FRESHNESS_SCHEMA)
     } else if name.contains("migrations") {
@@ -53,6 +52,7 @@ pub fn schema_for_file(filename: &str) -> Option<&'static str> {
 }
 
 /// Get the schema type name for display
+/// NOTE: ethics.yaml is no longer supported - use asimov.yaml (ADR-031)
 pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
     let name = filename.to_lowercase();
     if name.contains("warmup") {
@@ -63,8 +63,6 @@ pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
         Some("roadmap")
     } else if name.contains("asimov") {
         Some("asimov")
-    } else if name.contains("ethics") {
-        Some("ethics")
     } else if name.contains("freshness") {
         Some("freshness")
     } else if name.contains("migrations") {
