@@ -117,7 +117,20 @@ asimov init --type docs --asimov
 
 ## Post-Setup Steps
 
-### 1. Install Hooks
+### 1. Install Asimov CLI (Required for Hooks)
+
+The pre-commit hooks use asimov for protocol validation and documentation linting.
+
+```bash
+cargo install royalbit-asimov
+```
+
+**Verify installation:**
+```bash
+asimov --version
+```
+
+### 2. Install Hooks
 
 **Rust (cargo-husky):**
 ```bash
@@ -133,7 +146,7 @@ cargo test
 ./.hooks/install.sh
 ```
 
-### 2. Edit Protocol Files
+### 3. Edit Protocol Files
 
 ```bash
 # Edit with your project details
@@ -141,13 +154,13 @@ $EDITOR .asimov/warmup.yaml
 $EDITOR .asimov/roadmap.yaml
 ```
 
-### 3. Validate
+### 4. Validate
 
 ```bash
 asimov validate
 ```
 
-### 4. Launch ROYALBIT ASIMOV
+### 5. Launch ROYALBIT ASIMOV
 
 ```bash
 # Terminal 1: Launch Claude Code

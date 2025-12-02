@@ -1411,11 +1411,14 @@ if command -v asimov &> /dev/null; then
     echo "Validating protocol files..."
     asimov validate . || true
 
-    # lint-docs added in v1.3.0
-    if asimov lint-docs --help &> /dev/null; then
-        echo "Linting documentation..."
-        asimov lint-docs . || exit 1
-    fi
+    echo "Linting documentation..."
+    asimov lint-docs . || exit 1
+else
+    echo ""
+    echo "⚠️  asimov CLI not installed - skipping protocol validation"
+    echo "   Install with: cargo install royalbit-asimov"
+    echo "   Then re-run your commit to validate protocol files."
+    echo ""
 fi
 
 echo "Pre-commit checks passed!"
