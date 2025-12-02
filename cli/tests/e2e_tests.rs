@@ -362,12 +362,11 @@ fn e2e_init_creates_roadmap() {
 }
 
 #[test]
-fn e2e_init_full_creates_roadmap() {
+fn e2e_init_creates_roadmap_and_project() {
     let temp_dir = TempDir::new().unwrap();
 
     let output = Command::new(binary_path())
         .arg("init")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -378,10 +377,10 @@ fn e2e_init_full_creates_roadmap() {
 
     assert!(
         output.status.success(),
-        "Init --full should succeed, stdout: {stdout}, stderr: {stderr}"
+        "Init should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // v8.0.0: Only roadmap.yaml is created (--full is ignored, protocols are hardcoded)
+    // v8.2.0: Only roadmap.yaml + project.yaml created (protocols are hardcoded in binary)
     let asimov_dir = temp_dir.path().join(".asimov");
     assert!(
         asimov_dir.join("roadmap.yaml").exists(),
@@ -497,7 +496,11 @@ fn e2e_init_skips_existing_without_force() {
     assert!(output.status.success(), "Init should succeed (with skip)");
 
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("SKIP"), "Should skip existing file");
+    // v8.2.0: roadmap.yaml shows KEEP (project data preserved)
+    assert!(
+        stdout.contains("KEEP") || stdout.contains("SKIP"),
+        "Should skip/keep existing file, got: {stdout}"
+    );
 
     // Original content should be preserved
     let content = fs::read_to_string(&roadmap_path).unwrap();
@@ -736,7 +739,6 @@ fn e2e_init_python_generated_files_pass_validation() {
         .arg("init")
         .arg("--type")
         .arg("python")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -767,7 +769,6 @@ fn e2e_init_node_generated_files_pass_validation() {
         .arg("init")
         .arg("--type")
         .arg("node")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -798,7 +799,6 @@ fn e2e_init_go_generated_files_pass_validation() {
         .arg("init")
         .arg("--type")
         .arg("go")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -830,7 +830,6 @@ fn e2e_init_generated_files_pass_validation() {
     // Generate all files
     let init_output = Command::new(binary_path())
         .arg("init")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -863,7 +862,6 @@ fn e2e_init_rust_generated_files_pass_validation() {
         .arg("init")
         .arg("--type")
         .arg("rust")
-        .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
         .output()

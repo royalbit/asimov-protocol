@@ -20,6 +20,20 @@ current:
     - "[x] GitHub release: v8.2.0"
     - "[x] Installed to ~/bin"
 
-next: []
+next:
+  - version: "8.3.0"
+    status: in_progress
+    summary: "Warmup: show all protocols, auto-repair hooks"
+    goal: Reliability
+    deliverables:
+      - "[x] Show all 7 hardcoded protocols in validation"
+      - "[x] Check git hooks - auto-repair if missing"
+      - "[x] Check .claude hooks - auto-repair if missing"
+      - "[x] Display hook status (✓ installed or ✓ repaired)"
+      - "[x] Update docs/SPECIFICATION.md"
+      - "[x] Tests pass"
+      - "[ ] Commit and push"
+      - "[ ] GitHub release: v8.3.0"
+      - "[ ] Installed to ~/bin"
 
 backlog: []

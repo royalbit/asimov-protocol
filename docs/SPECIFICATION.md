@@ -1083,8 +1083,31 @@ asimov refresh                 # Output protocol reminder
 asimov refresh --verbose       # Include quality gates
 
 # Load session protocols
-asimov warmup                  # Display all hardcoded protocols
+asimov warmup                  # Display all hardcoded protocols + auto-repair hooks
 ```
+
+### Warmup Output (v8.3.0)
+
+`asimov warmup` displays comprehensive status and auto-repairs missing hooks:
+
+```
+PROTOCOLS
+  ✓ Asimov (Ethics): HARDCODED
+  ✓ Freshness: HARDCODED
+  ✓ Sycophancy: HARDCODED
+  ✓ Green: HARDCODED
+  ✓ Sprint: HARDCODED
+  ✓ Warmup: HARDCODED
+  ✓ Migrations: HARDCODED
+
+HOOKS
+  ✓ .claude/settings.json: installed
+  ✓ .claude/hooks/session-start.sh: installed
+  ✓ .claude/hooks/pre-compact.sh: installed
+  ✓ .git/hooks/pre-commit: installed
+```
+
+**Auto-repair**: If any hook is missing, warmup automatically recreates it and shows `REPAIRED` status. This ensures hooks are always in place for autonomous mode sessions.
 
 ### Full Setup (v8.2.0)
 

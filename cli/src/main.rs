@@ -377,7 +377,7 @@ fn cmd_warmup() -> ExitCode {
             eprintln!(
                 "{} roadmap.yaml not found. Run {} first.",
                 "Error:".bold().red(),
-                "asimov init --full".bold()
+                "asimov init".bold()
             );
             return ExitCode::FAILURE;
         }
@@ -464,8 +464,8 @@ fn cmd_warmup() -> ExitCode {
     }
     println!();
 
-    // Run validation
-    println!("{}", "VALIDATION".bold());
+    // Run validation - show all 7 hardcoded protocols (v8.3.0)
+    println!("{}", "PROTOCOLS".bold());
     let dir = Path::new(".");
     let ethics_status = check_ethics_status(dir);
     let sycophancy_status = check_sycophancy_status(dir);
@@ -484,20 +484,29 @@ fn cmd_warmup() -> ExitCode {
         GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
     };
 
-    println!("  {} Ethics: {}", "✓".green(), ethics_display);
-    println!("  {} Anti-Sycophancy: {}", "✓".green(), sycophancy_display);
-    println!("  {} Green Coding: {}", "✓".green(), green_display);
+    // All 7 protocols (ADR-031: compiled into binary)
+    println!("  {} Asimov (Ethics): {}", "✓".green(), ethics_display);
+    println!("  {} Freshness: {}", "✓".green(), "HARDCODED".bright_cyan());
+    println!("  {} Sycophancy: {}", "✓".green(), sycophancy_display);
+    println!("  {} Green: {}", "✓".green(), green_display);
+    println!("  {} Sprint: {}", "✓".green(), "HARDCODED".bright_cyan());
+    println!("  {} Warmup: {}", "✓".green(), "HARDCODED".bright_cyan());
+    println!(
+        "  {} Migrations: {}",
+        "✓".green(),
+        "HARDCODED".bright_cyan()
+    );
 
-    // Validate protocol files
+    // Validate protocol files (roadmap.yaml)
     match validate_directory_with_regeneration(dir, true) {
         Ok((results, _)) => {
             let valid_count = results.iter().filter(|r| r.is_valid).count();
             let total = results.len();
-            if valid_count == total {
-                println!("  {} {} protocol file(s) valid", "✓".green(), total);
-            } else {
+            if valid_count == total && total > 0 {
+                println!("  {} {} data file(s) valid", "✓".green(), total);
+            } else if total > 0 {
                 println!(
-                    "  {} {}/{} protocol file(s) valid",
+                    "  {} {}/{} data file(s) valid",
                     "⚠".yellow(),
                     valid_count,
                     total
@@ -508,6 +517,11 @@ fn cmd_warmup() -> ExitCode {
             println!("  {} Validation error: {}", "✗".red(), e);
         }
     }
+
+    // v8.3.0: Check and auto-repair hooks
+    println!();
+    println!("{}", "HOOKS".bold());
+    ensure_hooks(dir);
 
     // Output compiled protocols for context injection (ADR-031)
     println!();
@@ -892,6 +906,118 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
             );
         }
         ExitCode::SUCCESS
+    }
+}
+
+/// v8.3.0: Ensure hooks exist, auto-repair if missing
+/// Called by warmup to guarantee hooks are always in place for autonomous mode
+fn ensure_hooks(dir: &Path) {
+    // Track status for each hook
+    let mut claude_settings_status = "installed";
+    let mut session_start_status = "installed";
+    let mut pre_compact_status = "installed";
+    let mut git_precommit_status = "installed";
+
+    // 1. Check .claude/settings.json
+    let claude_dir = dir.join(".claude");
+    let settings_path = claude_dir.join("settings.json");
+    if !settings_path.exists() {
+        let _ = std::fs::create_dir_all(&claude_dir);
+        if std::fs::write(&settings_path, claude_settings_json()).is_ok() {
+            claude_settings_status = "repaired";
+        }
+    }
+
+    // 2. Check .claude/hooks/session-start.sh
+    let hooks_dir = claude_dir.join("hooks");
+    let session_start_path = hooks_dir.join("session-start.sh");
+    if !session_start_path.exists() {
+        let _ = std::fs::create_dir_all(&hooks_dir);
+        if std::fs::write(&session_start_path, claude_session_start_hook()).is_ok() {
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                if let Ok(metadata) = std::fs::metadata(&session_start_path) {
+                    let mut perms = metadata.permissions();
+                    perms.set_mode(0o755);
+                    let _ = std::fs::set_permissions(&session_start_path, perms);
+                }
+            }
+            session_start_status = "repaired";
+        }
+    }
+
+    // 3. Check .claude/hooks/pre-compact.sh
+    let pre_compact_path = hooks_dir.join("pre-compact.sh");
+    if !pre_compact_path.exists() {
+        let _ = std::fs::create_dir_all(&hooks_dir);
+        if std::fs::write(&pre_compact_path, claude_pre_compact_hook()).is_ok() {
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                if let Ok(metadata) = std::fs::metadata(&pre_compact_path) {
+                    let mut perms = metadata.permissions();
+                    perms.set_mode(0o755);
+                    let _ = std::fs::set_permissions(&pre_compact_path, perms);
+                }
+            }
+            pre_compact_status = "repaired";
+        }
+    }
+
+    // 4. Check .git/hooks/pre-commit (only if .git exists)
+    let git_dir = dir.join(".git");
+    let git_hook_exists = git_dir.exists();
+    if git_hook_exists {
+        let git_hooks_dir = git_dir.join("hooks");
+        let precommit_path = git_hooks_dir.join("pre-commit");
+        if !precommit_path.exists() {
+            let _ = std::fs::create_dir_all(&git_hooks_dir);
+            if std::fs::write(&precommit_path, git_precommit_hook()).is_ok() {
+                #[cfg(unix)]
+                {
+                    use std::os::unix::fs::PermissionsExt;
+                    if let Ok(metadata) = std::fs::metadata(&precommit_path) {
+                        let mut perms = metadata.permissions();
+                        perms.set_mode(0o755);
+                        let _ = std::fs::set_permissions(&precommit_path, perms);
+                    }
+                }
+                git_precommit_status = "repaired";
+            }
+        }
+    }
+
+    // Display status
+    let format_status = |status: &str| -> colored::ColoredString {
+        if status == "repaired" {
+            "REPAIRED".bright_yellow()
+        } else {
+            "installed".green()
+        }
+    };
+
+    println!(
+        "  {} .claude/settings.json: {}",
+        "✓".green(),
+        format_status(claude_settings_status)
+    );
+    println!(
+        "  {} .claude/hooks/session-start.sh: {}",
+        "✓".green(),
+        format_status(session_start_status)
+    );
+    println!(
+        "  {} .claude/hooks/pre-compact.sh: {}",
+        "✓".green(),
+        format_status(pre_compact_status)
+    );
+    if git_hook_exists {
+        println!(
+            "  {} .git/hooks/pre-commit: {}",
+            "✓".green(),
+            format_status(git_precommit_status)
+        );
     }
 }
 
