@@ -11,5 +11,4 @@ current:
 
 next: []
 
-backlog:
-  - "TOON Format Migration: Evaluate when Rust parser matures (token efficiency)"
+backlog: []
