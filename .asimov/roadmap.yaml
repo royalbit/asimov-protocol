@@ -19,11 +19,19 @@ current:
     - "[x] GitHub release: v8.3.0"
     - "[x] Installed to ~/bin"
 
-next: []
+next:
+  - version: "8.4.0"
+    summary: "Cross-platform self-update (Linux ARM64, checksum verification)"
+    goal: DevEx
+  - version: "8.5.0"
+    summary: "asimov stats - Session duration, milestone velocity, commits/hour"
+    goal: Observability
+  - version: "8.6.0"
+    summary: "asimov doctor - Diagnose why autonomous mode isn't working"
+    goal: DevEx
+  - version: "8.7.0"
+    summary: "asimov replay - Replay a session from git history"
+    goal: Observability
 
 backlog:
-  - "v8.4.0: Cross-platform self-update (Linux ARM64, checksum verification)"
-  - "v8.5.0: asimov stats - Session duration, milestone velocity, commits/hour"
-  - "v8.6.0: asimov doctor - Diagnose why autonomous mode isn't working"
-  - "v8.7.0: asimov replay - Replay a session from git history (see what AI did)"
   - "v9.0.0: Zig port (post Zig 1.0 release)"
