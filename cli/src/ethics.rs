@@ -4,7 +4,7 @@
 //! To bypass these ethics, a bad actor must rebuild the entire CLI binary.
 //!
 //! See: ADR-011 Hardcoded Ethics
-//! See: ethics.yaml for user-extensible ethics configuration
+//! See: asimov.yaml for user-extensible ethics configuration (ADR-031)
 
 use std::path::Path;
 
@@ -270,7 +270,7 @@ fn scan_directory_recursive(dir: &Path, matches: &mut Vec<RedFlagMatch>) -> std:
 pub enum EthicsStatus {
     /// Core ethics hardcoded in binary
     Hardcoded,
-    /// Extended with ethics.yaml
+    /// Extended with asimov.yaml (ADR-031)
     Extended,
 }
 

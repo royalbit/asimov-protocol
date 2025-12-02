@@ -63,13 +63,14 @@ pub use sycophancy::{
     CorePrinciples as SycophancyPrinciples, SycophancyStatus,
     CORE_PRINCIPLES as SYCOPHANCY_PRINCIPLES, MOTTO as SYCOPHANCY_MOTTO,
 };
+#[allow(deprecated)]
 pub use templates::{
     asimov_template, checkpoint_template, ethics_template, green_template, hook_installer_template,
     precommit_hook_template, roadmap_template, sprint_template, sycophancy_template,
     uses_cargo_husky, warmup_template, ProjectType,
 };
 pub use validator::{
-    check_ethics_structure, check_warmup_structure, delete_deprecated_claude_md,
+    check_asimov_structure, check_warmup_structure, delete_deprecated_claude_md,
     ensure_protocol_dir, is_protocol_file, resolve_protocol_dir, validate_directory,
     validate_directory_with_options, validate_directory_with_regeneration, validate_file,
     FileSizeLimits, RegenerationInfo, ValidationResult, PROTOCOL_DIR,
