@@ -23,6 +23,18 @@ next:
   - version: "8.8.0"
     summary: "asimov (no args) launches Claude Code with warmup"
     goal: DevEx
+    adr: "ADR-033"
+    deliverables:
+      - "[ ] Implement launcher mode (detect inside/outside Claude Code)"
+      - "[ ] Use opus settings: MAX_THINKING_TOKENS=200000, --dangerously-skip-permissions, --model opus"
+      - "[ ] Auto-prompt: 'run asimov warmup'"
+      - "[ ] Error if claude not in PATH"
+      - "[ ] Unit tests"
+      - "[ ] E2E tests"
+      - "[ ] Update README"
+      - "[ ] Update --help"
+      - "[ ] Commit, push, release"
+      - "[ ] Install to ~/bin"
 
 backlog:
   - "v9.0.0: Zig port (post Zig 1.0 release)"
