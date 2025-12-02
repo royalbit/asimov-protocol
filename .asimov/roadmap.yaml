@@ -4,9 +4,9 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.5.0"
+  version: "7.6.0"
   status: released
-  summary: "asimov lint-docs --semantic - Cross-Consistency Checker"
+  summary: "Improved Git Hooks - Clear messaging when asimov not installed"
   goal: GREEN_CODING
 
 next: []
