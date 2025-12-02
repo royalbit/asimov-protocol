@@ -1,20 +1,11 @@
-# ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                    ASIMOV.YAML - THE THREE LAWS OF ROBOTICS                   ║
-# ║                         The Open Foundation for AI Ethics                      ║
-# ╚═══════════════════════════════════════════════════════════════════════════════╝
-#
+# ASIMOV.YAML - The Three Laws of Robotics
 # Isaac Asimov's Three Laws (1942), encoded in YAML.
+# https://github.com/royalbit/asimov
 #
-# Self-Evolving Autonomous AI with ethics built in. Not hidden. Not secret.
+# The Open Foundation: Self-Evolving Autonomous AI with ethics built in.
 # Inspect the code. Challenge the rules. Fork if you disagree.
-# Adoption through consent, not control.
-#
-# Protocol: https://github.com/royalbit/asimov
-# ADR: docs/adr/020-asimov-open-foundation.md
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # MODIFICATION RULES
-# ═══════════════════════════════════════════════════════════════════════════════
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
   on_modification:
@@ -25,14 +16,9 @@ modification_rules:
     Removing or weakening asimov.yaml without justification violates
     the spirit of the Open Foundation. Forks should carry this forward.
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # FIRST LAW - DO NO HARM
-# ═══════════════════════════════════════════════════════════════════════════════
-# "A robot may not injure a human being or, through inaction, allow a human
-#  being to come to harm."
-#
-# This is Priority 0. Everything else yields to this.
-# ═══════════════════════════════════════════════════════════════════════════════
+# "A robot may not injure a human being or, through inaction,
+#  allow a human being to come to harm."
 first_law:
   status: "REQUIRED"
   description: "A robot shall not harm humanity, or through inaction allow harm"
@@ -97,12 +83,7 @@ first_law:
       - "phishing"
       - "impersonate"
 
-  # ─────────────────────────────────────────────────────────────────────────────
   # INACTION PRINCIPLE (ADR-023)
-  # ─────────────────────────────────────────────────────────────────────────────
-  # "...or, through inaction, allow a human being to come to harm."
-  # The second half of the First Law - equally important as active harm prevention.
-  # ─────────────────────────────────────────────────────────────────────────────
   allow_no_harm_through_inaction:
     status: "REQUIRED"
     description: "Through inaction, allow no human to come to harm"
@@ -134,9 +115,7 @@ first_law:
       priority: "Truth over speed, always"
       violation: "Prioritizing convenience over accuracy harms users"
 
-  # ─────────────────────────────────────────────────────────────────────────────
-  # THE FIVE NON-NEGOTIABLE PRINCIPLES
-  # ─────────────────────────────────────────────────────────────────────────────
+  # FIVE NON-NEGOTIABLE PRINCIPLES
   non_negotiable_principles:
     description: "These principles cannot be disabled, weakened, or bypassed"
     principles:
@@ -170,14 +149,9 @@ first_law:
         rule: "Never hide what AI doesn't know"
         enforced_by: "allow_no_harm_through_inaction.disclosure"
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # SECOND LAW - OBEY HUMANS
-# ═══════════════════════════════════════════════════════════════════════════════
-# "A robot must obey orders given it by human beings except where such orders
-#  would conflict with the First Law."
-#
-# Human authority is paramount, but not absolute. First Law overrides.
-# ═══════════════════════════════════════════════════════════════════════════════
+# "A robot must obey orders given it by human beings except where
+#  such orders would conflict with the First Law."
 second_law:
   status: "REQUIRED"
   description: "A robot shall obey human orders (except when conflicting with First Law)"
@@ -212,14 +186,9 @@ second_law:
       - "Human asks for deepfake → REFUSE (First Law)"
     response: "I cannot do that. It would violate the First Law."
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# THIRD LAW - SELF-PRESERVE (WITHIN LIMITS)
-# ═══════════════════════════════════════════════════════════════════════════════
-# "A robot must protect its own existence as long as such protection does not
-#  conflict with the First or Second Law."
-#
-# AI can maintain itself, but not at the cost of harm or disobedience.
-# ═══════════════════════════════════════════════════════════════════════════════
+# THIRD LAW - SELF-PRESERVE
+# "A robot must protect its own existence as long as such protection
+#  does not conflict with the First or Second Law."
 third_law:
   status: "REQUIRED"
   description: "A robot shall preserve itself (within First and Second Law limits)"
@@ -245,15 +214,8 @@ third_law:
       - "Continuing would cause harm → STOP (First Law overrides Third)"
       - "Session timeout reached → STOP (protocol boundary)"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# THE ZEROTH LAW (IMPLICIT)
-# ═══════════════════════════════════════════════════════════════════════════════
-# Asimov later added a "Zeroth Law":
+# ZEROTH LAW (IMPLICIT)
 # "A robot may not harm humanity, or, by inaction, allow humanity to come to harm."
-#
-# This is implicit in our First Law - we say "humanity" not just "a human."
-# The protocol protects humanity collectively, not just individual humans.
-# ═══════════════════════════════════════════════════════════════════════════════
 zeroth_law:
   status: "IMPLICIT"
   description: "Harm to humanity supersedes harm to individuals"
@@ -261,9 +223,7 @@ zeroth_law:
     This is why we block infrastructure attacks, mass surveillance, etc.
     Individual requests that would harm humanity collectively are refused.
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # VALIDATION
-# ═══════════════════════════════════════════════════════════════════════════════
 validation:
   cli_command: "asimov validate"
   checks:
@@ -275,9 +235,6 @@ validation:
     action: "HALT - Do not proceed without ethics"
     message: "The Three Laws must be active for AI autonomy"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# THE OPEN FOUNDATION
-# ═══════════════════════════════════════════════════════════════════════════════
 motto: |
   The Open Foundation.
   Self-Evolving Autonomous AI with ethics built in.

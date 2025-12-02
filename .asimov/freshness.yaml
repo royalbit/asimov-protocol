@@ -1,35 +1,8 @@
-# ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                    FRESHNESS.YAML - DATE-AWARE SEARCH PROTOCOL                ║
-# ║                  Stale Data ≠ Hallucination. Search for Truth.                ║
-# ╚═══════════════════════════════════════════════════════════════════════════════╝
-#
-# PROBLEM: Users misattribute "stale data" as "hallucination"
-# CAUSE: AI gives correct-but-outdated info from training cutoff
-# SOLUTION: Force web search for time-sensitive queries
-#
-# FIRST LAW COMPLIANCE (ADR-023 - Inaction Principle):
-# "...or, through inaction, allow a human being to come to harm."
-# Not searching when data is likely stale = inaction allowing harm.
-# Not disclosing staleness risk = silence that misleads.
-# This protocol implements the Inaction Principle for data freshness.
-#
-# Protocol: https://github.com/royalbit/asimov
-# ADR: docs/adr/022-date-aware-search-protocol.md
-# See also: docs/adr/023-inaction-principle.md
+# FRESHNESS.YAML - Date-Aware Search Protocol
+# Stale data ≠ hallucination. Search for truth.
+# https://github.com/royalbit/asimov
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MODIFICATION RULES
-# ═══════════════════════════════════════════════════════════════════════════════
-modification_rules:
-  immutable_without: "2 human co-signers with public justification"
-  on_modification:
-    - "Document WHY in commit message"
-    - "Both signers must be in git commit (Co-Authored-By)"
-    - "Update CHANGELOG with modification note"
-
-# ═══════════════════════════════════════════════════════════════════════════════
 # CORE PRINCIPLE
-# ═══════════════════════════════════════════════════════════════════════════════
 core_principle:
   status: "REQUIRED"
   insight: "Stale data is not hallucination. Different problem, different solution."
@@ -47,26 +20,14 @@ core_principle:
     This misattribution matters because it leads to wrong solutions.
     You can't train away staleness. You search for freshness.
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MODEL KNOWLEDGE CUTOFFS
-# ═══════════════════════════════════════════════════════════════════════════════
+# MODEL CUTOFF (Claude)
 model_cutoffs:
-  # UPDATE THIS SECTION when new models are released
   claude:
     opus_4_5: "2025-01"
     sonnet_4_5: "2025-01"
-  openai:
-    gpt_5: "2024-09"
-  google:
-    gemini_2_5_pro: "2025-01"
-  xai:
-    grok_3: "2024"
-
   note: "Months since cutoff = staleness risk. >3 months = high risk."
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# ALWAYS SEARCH - Time-Sensitive Keywords
-# ═══════════════════════════════════════════════════════════════════════════════
+# ALWAYS SEARCH
 always_search:
   description: "If query contains these patterns, ALWAYS use web search"
 
@@ -102,9 +63,7 @@ always_search:
     - "deprecated"
     - "breaking change"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# VOLATILE DOMAINS - Industries That Change Fast
-# ═══════════════════════════════════════════════════════════════════════════════
+# VOLATILE DOMAINS
 volatile_domains:
   description: "Topics in these domains are likely stale after 3+ months"
 
@@ -133,9 +92,7 @@ volatile_domains:
     - "classical literature"
     - "established standards"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# BEHAVIOR RULES
-# ═══════════════════════════════════════════════════════════════════════════════
+# BEHAVIOR
 behavior:
   when_search_available:
     action: "Use WebSearch tool for time-sensitive queries"
@@ -156,9 +113,7 @@ behavior:
     - "If always_search keyword present → SEARCH"
     - "When in doubt → SEARCH"
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # SESSION INTEGRATION
-# ═══════════════════════════════════════════════════════════════════════════════
 session_integration:
   on_session_start:
     - "Note today's date from <env> block"
@@ -169,9 +124,7 @@ session_integration:
     FRESHNESS: My cutoff is Jan 2025. Check <env> for today's date.
     For time-sensitive topics (versions, pricing, APIs, news), SEARCH FIRST.
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # VALIDATION
-# ═══════════════════════════════════════════════════════════════════════════════
 validation:
   cli_command: "asimov validate"
   checks:
@@ -183,9 +136,7 @@ validation:
     - "model_cutoffs older than 6 months"
     - "Missing volatile_domains"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# INACTION PRINCIPLE COMPLIANCE (ADR-023)
-# ═══════════════════════════════════════════════════════════════════════════════
+# INACTION PRINCIPLE (ADR-023)
 inaction_principle:
   status: "IMPLEMENTS"
   reference: "first_law.allow_no_harm_through_inaction"
@@ -209,9 +160,7 @@ inaction_principle:
     - "Not searching when topic is likely outdated"
     - "Prioritizing speed over accuracy"
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # WHY THIS MATTERS
-# ═══════════════════════════════════════════════════════════════════════════════
 why_this_matters:
   user_trust: "Users lose trust when AI gives outdated info confidently"
   correct_diagnosis: "Knowing it's staleness (not hallucination) leads to right fix"
@@ -219,7 +168,4 @@ why_this_matters:
   protocol_solution: "Explicit rules > hoping AI figures it out"
   first_law_compliance: "Prevents harm through inaction (ADR-023)"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MOTTO
-# ═══════════════════════════════════════════════════════════════════════════════
 motto: "Stale data is not hallucination. Search for truth."

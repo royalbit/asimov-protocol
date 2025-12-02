@@ -1,32 +1,18 @@
 # Sprint Autonomy Protocol
 # WHEN to stop - Bounded sessions for sustainable AI development
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# CORE RULES (Non-negotiable)
-# ═══════════════════════════════════════════════════════════════════════════════
-# ADR-028: Continuous Shipping - milestones complete in minutes, not hours
-# ═══════════════════════════════════════════════════════════════════════════════
+# CORE RULES (ADR-028)
 rules:
   max_hours: 4
   max_milestones: unlimited  # ADR-028: Keep shipping until done or stopped
   must_ship: true
   mantra: "Keep shipping until done or stopped."
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# CURRENT: v7.0.0 - CRATE RENAME
-# ═══════════════════════════════════════════════════════════════════════════════
+# CURRENT SPRINT
 sprint:
   current: "v7.0.0 - RoyalBit Namespace (royalbit-asimov)"
   started: "2025-11-30"
   status: done
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # ROYALBIT NAMESPACE
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Crate moved to RoyalBit namespace: royalbit-asimov
-  # Binary simplified to: asimov
-  # ─────────────────────────────────────────────────────────────────────────────
-
   tasks:
     - "[x] Rename crate to royalbit-asimov in Cargo.toml"
     - "[x] Rename binary to asimov in Cargo.toml"
@@ -44,9 +30,7 @@ sprint:
     - "Binary: asimov (was asimov-mode)"
     - "All docs, hooks, CI updated"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PREVIOUS SPRINTS (completed)
-# ═══════════════════════════════════════════════════════════════════════════════
+# PREVIOUS (for CHANGELOG migration)
 previous:
   sprint: "v6.2.0 - Inaction Principle (First Law Completeness)"
   status: done
@@ -78,9 +62,7 @@ older_sprints:
       - "CLAUDE.md @import syntax"
       - "Deprecated cross-session features for native alternatives"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# SESSION PHASES (ADR-028: Continuous Shipping)
-# ═══════════════════════════════════════════════════════════════════════════════
+# SESSION PHASES
 phases:
   1_warmup:
     duration: "2-5 min"
@@ -112,18 +94,14 @@ phases:
       - "roadmap.yaml current"
       - "Final validation passes"
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # ANTI-PATTERNS
-# ═══════════════════════════════════════════════════════════════════════════════
 anti_patterns:
   scope_creep: "Note it for NEXT session, don't do it now"
   perfectionism: "Working code > Perfect code. Ship it."
   rabbit_holes: "Interesting? Note it. Back to milestone."
   over_engineering: "Build what's needed NOW, not hypothetical futures"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# AI AUTHORITY (ADR-028: Continuous Shipping)
-# ═══════════════════════════════════════════════════════════════════════════════
+# AI AUTHORITY
 authority:
   principle: "Make decisions. Don't ask. Keep shipping."
   can_release_when:

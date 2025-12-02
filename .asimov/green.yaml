@@ -1,33 +1,8 @@
-# ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║                      GREEN.YAML - SUSTAINABILITY PROTOCOL v1.0                ║
-# ║                    Local-First Tools. Zero Emissions. Ship Green.             ║
-# ╚═══════════════════════════════════════════════════════════════════════════════╝
-#
-# IMPORTANT: This is a CORE PROTOCOL, not optional configuration.
-# Green coding is a non-negotiable principle of the RoyalBit Asimov.
-#
-# Philosophy: Every token has a carbon cost. Every API call burns energy.
-#             Local tools are free - in money AND emissions.
-#
-# Protocol: https://github.com/royalbit/asimov
-# ADR: docs/adr/016-green-coding-protocol.md
+# GREEN.YAML - Sustainability Protocol
+# Local-first tools. Zero emissions. Ship green.
+# https://github.com/royalbit/asimov
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MODIFICATION RULES
-# ═══════════════════════════════════════════════════════════════════════════════
-modification_rules:
-  immutable_without: "2 human co-signers with public justification"
-  on_modification:
-    - "Document WHY in commit message"
-    - "Both signers must be in git commit (Co-Authored-By)"
-    - "Update CHANGELOG with green protocol modification note"
-  warning: |
-    Removing or weakening green.yaml without justification violates
-    the sustainability principles of the RoyalBit Asimov.
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# CORE PRINCIPLES - Non-Negotiable Green Coding Standards
-# ═══════════════════════════════════════════════════════════════════════════════
+# CORE PRINCIPLES
 core_principles:
   status: "REQUIRED"
 
@@ -82,9 +57,7 @@ core_principles:
       - "Prefer compiled languages (less runtime overhead)"
       - "Efficient algorithms over brute force"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# PRACTICES BY LANGUAGE
-# ═══════════════════════════════════════════════════════════════════════════════
+# PRACTICES (Rust)
 practices:
   rust:
     release_profile:
@@ -96,30 +69,7 @@ practices:
     compression: "UPX --best --lzma (4.5MB → 1.3MB = 71% smaller)"
     dependencies: "Zero runtime deps where possible"
 
-  python:
-    packaging: "Use pyinstaller/nuitka for standalone binaries"
-    dependencies: "requirements.txt with pinned versions"
-    virtual_env: "Always use venv to avoid bloat"
-
-  javascript:
-    bundling: "Tree-shake with esbuild/rollup"
-    dependencies: "Audit with npm audit, remove unused"
-    runtime: "Prefer Bun/Deno over Node for efficiency"
-
-  go:
-    build: "CGO_ENABLED=0 for static binaries"
-    strip: "-ldflags '-s -w' for smaller binaries"
-    compression: "UPX for further reduction"
-
-  general:
-    - "Local-first: No API calls for routine tasks"
-    - "Prefer compiled languages or efficient runtimes"
-    - "Minimize dependencies (each dep has carbon cost)"
-    - "Cache aggressively (reduce redundant computation)"
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# GREEN METRICS - What We Measure
-# ═══════════════════════════════════════════════════════════════════════════════
+# METRICS
 metrics:
   per_session:
     - "AI tokens consumed"
@@ -136,9 +86,7 @@ metrics:
     - "Token efficiency trend"
     - "Binary size trend"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# ANTI-PATTERNS - What NOT to Do
-# ═══════════════════════════════════════════════════════════════════════════════
+# ANTI-PATTERNS
 anti_patterns:
   ai_for_validation:
     pattern: "Asking AI to check if code compiles or passes lint"
@@ -165,9 +113,7 @@ anti_patterns:
     problem: "Larger downloads = more bandwidth = more energy"
     fix: "Use release profiles, strip symbols, compress"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# VALIDATION - CLI Integration
-# ═══════════════════════════════════════════════════════════════════════════════
+# VALIDATION
 validation:
   cli_command: "asimov validate"
   checks:
@@ -181,7 +127,4 @@ validation:
     - "Missing practices section"
     - "Missing metrics section"
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MOTTO
-# ═══════════════════════════════════════════════════════════════════════════════
 motto: "Ship fast. Ship small. Ship green."
