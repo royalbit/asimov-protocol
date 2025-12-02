@@ -449,12 +449,12 @@ See [Green Coding Economics](https://github.com/royalbit/asimov/blob/main/docs/G
 | ---------------- | ----------------------------- | -------- | ----- |
 | `asimov.yaml`    | The Three Laws of Robotics    | Yes | v4.2.0 |
 | `warmup.yaml`    | Session bootstrap, quality gates | Yes | v1.0.0 |
-| `ethics.yaml`    | Detailed ethical constraints  | Yes | v3.0.0 |
 | `freshness.yaml` | Date-aware search rules       | Yes | v6.1.0 |
 | `green.yaml`     | Green coding, local-first     | Yes | v4.3.0 |
 | `sycophancy.yaml`| Anti-sycophancy protocol      | Yes | v4.3.0 |
 | `sprint.yaml`    | Active work tracking          | Recommended | v1.0.0 |
 | `roadmap.yaml`   | Milestones & planning         | Optional | v1.0.0 |
+| `migrations.yaml`| Functional equivalence (code migrations) | Optional | v7.4.0 |
 
 ## Proven at Scale
 
