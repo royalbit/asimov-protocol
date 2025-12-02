@@ -21,14 +21,22 @@ current:
 
 next:
   - version: "8.8.0"
-    summary: "asimov (no args) launches Claude Code with warmup"
+    summary: "Launcher mode + Project-type deliverables"
     goal: DevEx
-    adr: "ADR-033"
+    adr: "ADR-033, ADR-034"
     deliverables:
-      - "[ ] Implement launcher mode (detect inside/outside Claude Code)"
+      # Launcher mode (ADR-033)
+      - "[ ] asimov (no args) launches Claude Code"
       - "[ ] Use opus settings: MAX_THINKING_TOKENS=200000, --dangerously-skip-permissions, --model opus"
       - "[ ] Auto-prompt: 'run asimov warmup'"
+      - "[ ] Detect inside/outside Claude Code"
       - "[ ] Error if claude not in PATH"
+      # Project-type deliverables (ADR-034)
+      - "[ ] Add .asimov/project.yaml schema"
+      - "[ ] Add deliverables_template to coding templates (rust, python, node, go, flutter)"
+      - "[ ] Non-coding templates (docs, generic) get simpler checklist"
+      - "[ ] Update asimov init to generate project.yaml"
+      # Standard (this is a coding project)
       - "[ ] Unit tests"
       - "[ ] E2E tests"
       - "[ ] Update README"
