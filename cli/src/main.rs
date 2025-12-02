@@ -285,7 +285,7 @@ fn cmd_update(check_only: bool) -> ExitCode {
 
                 if let Some(download_url) = version_info.download_url {
                     println!();
-                    match perform_update(&download_url) {
+                    match perform_update(&download_url, version_info.checksums_url.as_deref()) {
                         Ok(()) => {
                             println!();
                             println!(
