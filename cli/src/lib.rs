@@ -66,9 +66,23 @@ pub use sycophancy::{
 };
 #[allow(deprecated)]
 pub use templates::{
-    asimov_template, checkpoint_template, ethics_template, green_template, hook_installer_template,
-    precommit_hook_template, roadmap_template, sprint_template, sycophancy_template,
-    uses_cargo_husky, warmup_template, ProjectType,
+    asimov_template,
+    checkpoint_template,
+    // v8.0.0: Hardcoded hook templates
+    claude_pre_compact_hook,
+    claude_session_start_hook,
+    claude_settings_json,
+    ethics_template,
+    git_precommit_hook,
+    green_template,
+    hook_installer_template,
+    precommit_hook_template,
+    roadmap_template,
+    sprint_template,
+    sycophancy_template,
+    uses_cargo_husky,
+    warmup_template,
+    ProjectType,
 };
 pub use validator::{
     check_asimov_structure, check_warmup_structure, delete_deprecated_claude_md,

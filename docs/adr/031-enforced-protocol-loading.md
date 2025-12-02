@@ -1,4 +1,4 @@
-# ADR-031: Enforced Protocol Loading + Dynamic Date Injection
+# ADR-031: Enforced Protocol Loading + Hardcoded Hooks
 
 **Status:** Implemented (v8.0.0)
 **Date:** 2025-12-02
@@ -9,205 +9,163 @@
 
 ### Problem 1: Protocols Are Suggestions
 
-Current architecture:
+Previous architecture:
 ```
 warmup.yaml says: "Read freshness.yaml"
 Claude: *might read it, might not*
 ```
 
-Protocol files are **suggestions**. Users can modify `warmup.yaml` to skip loading protocols. This breaks the trust model.
+Protocol files were **suggestions**. Users could modify or delete them.
 
 ### Problem 2: Hardcoded Dates
 
-Current `freshness.yaml`:
+Previous `freshness.yaml`:
 ```yaml
 always_search:
-  - "2025"  # Hardcoded - will be wrong in 2026
+  - "2025"  # Hardcoded - wrong in 2026
 ```
-
-The protocol hardcodes the year. When 2026 arrives, the protocol is stale.
 
 ### Problem 3: Token Overhead
 
-Loading 7 protocol files as YAML consumes ~2,000 tokens. With context compaction every ~15 minutes, this overhead matters.
-
-### The Root Cause
-
-Protocols are **data files** when they should be **code**.
-
-| Current | Should Be |
-|---------|-----------|
-| YAML files on disk | Rust code in binary |
-| User can edit/skip | User cannot bypass |
-| Static dates | Dynamic from `<env>` |
-| Verbose YAML | Token-optimized output |
+Loading 7 YAML files consumed ~2,000 tokens per session.
 
 ## Decision
 
-### 1. Rust Enforces Core Protocols
+### 1. Protocols Hardcoded in Binary
 
-The `asimov warmup` command will **inject core protocols from Rust code**, not from YAML files.
+**7 protocols** are now compiled into the Rust binary via `include_str!`:
 
 ```rust
-// Core protocols are HARDCODED in the binary
-const ASIMOV_PROTOCOL: &str = include_str!("protocols/asimov.tpl");      // Three Laws
-const FRESHNESS_PROTOCOL: &str = include_str!("protocols/freshness.tpl"); // Search triggers
-const SYCOPHANCY_PROTOCOL: &str = include_str!("protocols/sycophancy.tpl"); // Response style
-const GREEN_PROTOCOL: &str = include_str!("protocols/green.tpl");         // Local-first
-const SPRINT_PROTOCOL: &str = include_str!("protocols/sprint.tpl");       // Session boundaries
-const WARMUP_PROTOCOL: &str = include_str!("protocols/warmup.tpl");       // Session bootstrap
+const ASIMOV_PROTOCOL: &str = include_str!("protocols/asimov.tpl");
+const FRESHNESS_PROTOCOL: &str = include_str!("protocols/freshness.tpl");
+const SYCOPHANCY_PROTOCOL: &str = include_str!("protocols/sycophancy.tpl");
+const GREEN_PROTOCOL: &str = include_str!("protocols/green.tpl");
+const SPRINT_PROTOCOL: &str = include_str!("protocols/sprint.tpl");
+const WARMUP_PROTOCOL: &str = include_str!("protocols/warmup.tpl");
+const MIGRATIONS_PROTOCOL: &str = include_str!("protocols/migrations.tpl");
 ```
 
-User-editable YAML files become **optional overrides**, not the source of truth.
-
-### 2. Dynamic Date Injection (Model-Agnostic)
+### 2. Dynamic Date Injection
 
 ```rust
-fn inject_date(protocol: &str) -> String {
-    let today = chrono::Local::now().format("%Y-%m-%d");
-    let year = chrono::Local::now().format("%Y");
-    protocol.replace("{TODAY}", &today.to_string())
-           .replace("{YEAR}", &year.to_string())
+fn inject_dates(protocol: &str) -> String {
+    protocol.replace("{TODAY}", &get_today())
+            .replace("{YEAR}", &get_year())
 }
 ```
 
-**Important:** We do NOT hardcode the model's cutoff date. Different models have different cutoffs (Opus 4.5: Jan 2025, future Opus 5: unknown). Claude knows its own cutoff.
-
-Output:
-```
-FRESHNESS: You have a training cutoff. Today is 2025-12-02.
-For time-sensitive topics (versions, pricing, APIs, 2025), SEARCH FIRST.
-```
-
-**What we inject:**
-- `{TODAY}` - from env (dynamic)
-- `{YEAR}` - from env (dynamic)
-- Search triggers - static list
-- Reminder to be cutoff-aware - static
-
-**What we DON'T inject:**
-- Specific cutoff date - Claude knows this already
-- Model name - Claude knows this already
+**No hardcoded model cutoff** - Claude knows its own cutoff.
 
 ### 3. Token-Optimized Output
 
-`asimov warmup` outputs a **compiled context blob**, not raw YAML.
-
-**Format:** Minified JSON with full words (no abbreviations - Claude must understand).
+`asimov warmup` outputs minified JSON:
 
 ```json
-{"asimov":{"harm":["financial","physical","privacy","deception"],"veto":["stop","halt","abort"]},"freshness":{"today":"2025-12-02","year":"2025","search":["version","pricing","api","current","latest"]},"sycophancy":{"truth_over_comfort":true,"disagree_openly":true},"green":{"local_first":true},"sprint":{"max_hours":4,"stop_on":["roadmap_exhausted","blocked","human_stop"]},"warmup":{"on_start":["read_protocols","validate","present_milestone"]}}
+{"asimov":{"harm":["financial","physical","privacy","deception"],"veto":["stop","halt","abort","emergency stop"]},"freshness":{"today":"2025-12-02","year":"2025","search":["version","pricing","api","current","latest","release","changelog","documentation"]},"sycophancy":{"truth_over_comfort":true,"disagree_openly":true,"banned":["You're absolutely right","Great question","I completely agree","That's a great point"]},"green":{"local_first":true,"avoid":["unnecessary API calls","cloud when local works","external services for validation"]},"sprint":{"max_hours":4,"stop_on":["roadmap_exhausted","blocked","human_stop","context_limit"]},"warmup":{"on_start":["load_protocols","validate","read_roadmap","present_milestone"]},"migrations":{"principle":"Migration complete = functionally equivalent, not just compiles","strategies":["test_parity","contract_testing","behavioral_snapshots","shadow_mode"],"red_flags":["Skipping tests for speed","Assuming compilation = correctness","Silent behavior changes"]}}
 ```
 
-**Why full words:** Abbreviations like "fin" are ambiguous (finance? finish? Finland?). Claude needs unambiguous terms.
+### 4. File Structure (v8.0.0)
 
-Estimated savings: **~40% token reduction** (2,000 → 1,200 tokens).
+```
+.asimov/
+└── roadmap.yaml     # Project data (only file remaining)
+```
 
-### 4. Loading Hierarchy
+**Deleted by `asimov update`:**
+- asimov.yaml
+- freshness.yaml
+- sycophancy.yaml
+- green.yaml
+- sprint.yaml
+- warmup.yaml
+- migrations.yaml
+- ethics.yaml
+
+### 5. Loading Hierarchy
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  asimov warmup                                              │
 ├─────────────────────────────────────────────────────────────┤
 │  LAYER 1: HARDCODED (Rust binary, non-negotiable)           │
-│    - asimov.yaml (Three Laws)                               │
-│    - freshness.yaml (with dynamic date)                     │
-│    - sycophancy.yaml (response style)                       │
-│    - green.yaml (local-first)                               │
-│    - sprint.yaml (session boundaries)                       │
-│    - warmup.yaml (session bootstrap)                        │
+│    - asimov (Three Laws)                                    │
+│    - freshness (with dynamic date)                          │
+│    - sycophancy (truth over comfort)                        │
+│    - green (local-first)                                    │
+│    - sprint (session boundaries)                            │
+│    - warmup (session bootstrap)                             │
+│    - migrations (functional equivalence)                    │
 ├─────────────────────────────────────────────────────────────┤
-│  LAYER 2: PROJECT DATA (from .asimov/*.yaml, not enforced)  │
+│  LAYER 2: PROJECT DATA (from .asimov/, validated)           │
 │    - roadmap.yaml (what to build)                           │
-│    - changelog.md (what was built)                          │
-├─────────────────────────────────────────────────────────────┤
-│  LAYER 3: OPTIONAL                                          │
-│    - migrations.yaml (if exists)                            │
+│    - .claude_checkpoint.yaml (session state)                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 5. Override Mechanism
+### 6. Hardcoded Hooks
 
-Projects can **extend** but not **disable** core protocols:
+Hooks are also hardcoded in the binary and created/restored automatically:
 
-```yaml
-# .asimov/asimov.yaml - EXTENDS, doesn't replace
-asimov:
-  extend:
-    red_flags:
-      - "custom_pattern"  # Added to core list
-  # Cannot remove core red_flags
-  # Cannot disable first_law
+**Claude Code Hooks (`.claude/`):**
+```
+.claude/
+├── settings.json           # Hook configuration
+└── hooks/
+    ├── session-start.sh    # Triggers on startup/resume/clear
+    └── pre-compact.sh      # Triggers before context compaction
 ```
 
-## Implementation
+**Git Hook (`.git/hooks/`):**
+```
+.git/hooks/
+└── pre-commit              # Runs asimov refresh + validate + lint-docs
+```
 
-### Phase 1: Core Protocol Templates
-- Create `src/protocols/*.tpl` with token-optimized templates
-- Add `{TODAY}`, `{YEAR}`, `{CUTOFF}` placeholders
-- Embed in binary via `include_str!`
+**Key behaviors:**
+- Created by `asimov init` (new projects)
+- Restored by `asimov update` (tamper recovery, force=true)
+- Use `asimov` from `$PATH` (not relative paths)
+- Executable permissions set automatically on Unix
 
-### Phase 2: Dynamic Injection
-- `asimov warmup` resolves placeholders at runtime
-- Output format: minified single-line per protocol
-- Total output < 1000 tokens
+## Implementation Details
 
-### Phase 3: Validation Update
-- `asimov validate` checks extension files, not core
-- Core protocols always pass (they're in the binary)
-- Warn if user tries to weaken core protocols
+### Files Created
+- `cli/src/protocols/mod.rs` - Protocol module with structs and compilation
+- `cli/src/protocols/*.tpl` - 7 protocol templates
+- `cli/src/templates.rs` - Hook templates (`claude_settings_json()`, `claude_session_start_hook()`, `claude_pre_compact_hook()`, `git_precommit_hook()`)
+- `cli/src/main.rs` - `install_hooks()` function
+
+### Hook Installation
+`install_hooks(path, force)` creates:
+1. `.claude/settings.json` - Claude Code hook configuration
+2. `.claude/hooks/session-start.sh` - Session start hook
+3. `.claude/hooks/pre-compact.sh` - Pre-compaction hook
+4. `.git/hooks/pre-commit` - Git pre-commit hook (if `.git` exists)
+
+### Migration
+`asimov update` runs `migrate_v8()` which:
+1. Deletes deprecated YAML files
+2. Calls `install_hooks(., true)` to restore any tampered hooks
+
+### Validator Changes
+- Only validates `roadmap.yaml` and `.claude_checkpoint.yaml`
+- Only regenerates `roadmap.yaml` if missing
 
 ## Consequences
 
 ### Positive
-- **Tamper-proof**: Core protocols cannot be bypassed
+- **Tamper-proof**: Protocols and hooks cannot be bypassed
 - **Always current**: Date injected at runtime
-- **Token efficient**: ~70% reduction
-- **Single source of truth**: Rust binary, not scattered YAML
+- **Token efficient**: ~60% reduction (one JSON blob vs 7 YAML files)
+- **Simpler**: Only `roadmap.yaml` in `.asimov/`
+- **Autonomous-ready**: Hooks use `asimov` from PATH, auto-restored on update
 
 ### Negative
-- **Less flexible**: Users can't customize core protocols
-- **Binary updates**: Protocol changes require new release
-- **Migration**: Existing `.asimov/` files become optional overrides
-
-### Neutral
-- YAML files remain for project-specific config
-- `asimov validate` still validates user files
-- Git history preserved for auditing
-
-## Security Implications
-
-This ADR strengthens security:
-
-| Before | After |
-|--------|-------|
-| Attacker modifies asimov.yaml | Three Laws hardcoded in binary |
-| Fork removes Three Laws | Binary still enforces them |
-| User "forgets" to load freshness | Freshness always injected |
-
-The social contract becomes a **technical contract**.
+- **Less flexible**: Can't customize protocols per-project
+- **Binary updates**: Protocol/hook changes require new release
 
 ## References
 
 - [ADR-011: Hardcoded Ethics](011-hardcoded-ethics.md) - Partial solution, this completes it
 - [ADR-012: Hardcoded Green Coding](012-hardcoded-green-coding.md) - Partial solution
 - [ADR-022: Freshness Protocol](022-date-aware-search-protocol.md) - The protocol being enforced
-- [ADR-020: The Open Foundation](020-asimov-mode-open-foundation.md) - Trust model
-
-## Resolved Questions
-
-1. **Output format**: Minified JSON with full words (not abbreviations)
-   - Custom DSL: Rejected - Claude wasn't trained on it, might misparse
-   - TOON: Rejected - too new (Nov 2025), unproven
-   - Abbreviations: Rejected - ambiguous ("fin" = finance? Finland?)
-
-2. **Template syntax**: Simple `{TODAY}`, `{YEAR}` placeholders
-
-3. **Model cutoff**: NOT hardcoded - Claude knows its own cutoff, we just inject today's date
-
-## Open Questions
-
-1. **Extension validation**: How strict on override attempts?
-2. **Sprint/roadmap format**: Also minified JSON, or keep YAML for readability?
-
-These will be resolved during implementation.

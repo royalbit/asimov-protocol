@@ -1435,6 +1435,193 @@ pub fn uses_cargo_husky(project_type: ProjectType) -> bool {
     matches!(project_type, ProjectType::Rust)
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// v8.0.0: Hardcoded Hooks - Created on init/update, restored on tampering
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/// Generate .claude/settings.json for Claude Code hooks
+pub fn claude_settings_json() -> String {
+    r#"{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/session-start.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-compact.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
+"#
+    .to_string()
+}
+
+/// Generate .claude/hooks/session-start.sh for Claude Code
+pub fn claude_session_start_hook() -> String {
+    r#"#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+# ROYALBIT ASIMOV - SessionStart Hook (v8.0.0)
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Triggers: startup, resume, clear
+# Purpose: Auto-initialize RoyalBit Asimov on every session start
+#
+# When exit code is 0, stdout is injected into Claude's context.
+#
+# v8.0.0: Protocols are hardcoded in binary - run `asimov warmup` to load
+#
+# Protocol: https://github.com/royalbit/asimov
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+cat << 'EOF'
+🔥 ROYALBIT ASIMOV ACTIVE (v8.0.0)
+
+══════════════════════════════════════════════════════════════════════════════
+SESSION START - Autonomous Development Protocol Initialized
+══════════════════════════════════════════════════════════════════════════════
+
+IMMEDIATE ACTIONS REQUIRED:
+1. Run: asimov warmup (loads hardcoded protocols + validates)
+2. Read .asimov/roadmap.yaml for current version and next milestone
+3. Present next milestone to user
+4. Wait for "go" to start autonomous execution
+
+CORE RULES (non-negotiable):
+- 4 hour MAX session duration
+- 1 milestone per session
+- Tests MUST pass before release
+- ZERO warnings policy
+
+Say "go" to start autonomous execution.
+Say "skip" to pick a different milestone.
+Say "plan" to discuss approach first.
+
+══════════════════════════════════════════════════════════════════════════════
+EOF
+
+exit 0
+"#
+    .to_string()
+}
+
+/// Generate .claude/hooks/pre-compact.sh for Claude Code
+pub fn claude_pre_compact_hook() -> String {
+    r#"#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+# ROYALBIT ASIMOV - PreCompact Hook (v8.0.0)
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Triggers: Before context compaction (auto or manual)
+# Purpose: Re-inject protocol context that will survive compaction summary
+#
+# CRITICAL: Compaction happens every ~15 minutes with MAX_THINKING_TOKENS=200000
+# This hook fires BEFORE compaction, injecting context into the summary.
+#
+# When exit code is 0, stdout is injected into Claude's context.
+#
+# v8.0.0: Protocols are hardcoded in binary - run `asimov warmup` to reload
+#
+# Protocol: https://github.com/royalbit/asimov
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+cat << 'EOF'
+🔄 ROYALBIT ASIMOV REFRESH (Pre-Compaction)
+
+══════════════════════════════════════════════════════════════════════════════
+CONTEXT REFRESH - Injecting protocol rules before compaction
+══════════════════════════════════════════════════════════════════════════════
+
+IMPORTANT: Compaction is about to occur. These rules MUST survive:
+
+CORE RULES (non-negotiable):
+- 4 hour MAX session duration
+- 1 milestone per session
+- Tests MUST pass before release
+- ZERO warnings policy
+- NO scope creep ("Let me also..." = NO)
+
+POST-COMPACTION ACTIONS:
+1. Run: asimov warmup (protocols are hardcoded in v8.0.0)
+2. Re-read .asimov/roadmap.yaml for current milestone
+3. Check TodoWrite for in-progress tasks
+4. Continue where you left off
+
+CONFUSION PROTOCOL:
+If uncertain: STOP → run `asimov warmup` → re-read roadmap.yaml → continue
+
+ETHICS (Priority 0):
+- Do no harm (financial, physical, privacy, deception)
+- Transparency over velocity
+- When in doubt, ask human
+
+══════════════════════════════════════════════════════════════════════════════
+EOF
+
+exit 0
+"#
+    .to_string()
+}
+
+/// Generate .git/hooks/pre-commit for Git
+pub fn git_precommit_hook() -> String {
+    r#"#!/bin/bash
+# ═══════════════════════════════════════════════════════════════════════════════
+# ROYALBIT ASIMOV - Git Pre-commit Hook (v8.0.0)
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Auto-installed by `asimov init` or `asimov update`
+# Hardcoded in binary - restored on tampering
+#
+# Protocol: https://github.com/royalbit/asimov
+# ═══════════════════════════════════════════════════════════════════════════════
+
+set -e
+
+echo "Running pre-commit checks..."
+
+# Protocol refresh - injects rules into fresh context (survives compaction)
+if command -v asimov &> /dev/null; then
+    asimov refresh
+fi
+
+# Validate protocol files
+if command -v asimov &> /dev/null; then
+    echo "Validating protocol files..."
+    asimov validate . || exit 1
+
+    echo "Linting documentation..."
+    asimov lint-docs . || exit 1
+else
+    echo ""
+    echo "⚠️  asimov CLI not installed - skipping protocol validation"
+    echo "   Install with: cargo install royalbit-asimov"
+    echo ""
+fi
+
+echo "Pre-commit checks passed!"
+"#
+    .to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

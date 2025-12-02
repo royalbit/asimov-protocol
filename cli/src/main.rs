@@ -4,7 +4,6 @@ use clap::{Parser, Subcommand};
 use colored::Colorize;
 use royalbit_asimov::{
     anti_patterns,
-    asimov_template,
     banned_phrases,
     check_ethics_status,
     check_for_update,
@@ -12,31 +11,27 @@ use royalbit_asimov::{
     check_markdown_file,
     check_semantic,
     check_sycophancy_status,
-    checkpoint_template,
+    // v8.0.0: Hardcoded hook templates
+    claude_pre_compact_hook,
+    claude_session_start_hook,
+    claude_settings_json,
     find_markdown_files,
     fix_markdown_file,
     get_cargo_version,
-    green_template,
-    hook_installer_template,
+    git_precommit_hook,
     is_protocol_file,
     load_deprecated_patterns,
     perform_update,
-    precommit_hook_template,
     red_flags,
     resolve_protocol_dir,
     roadmap_template,
     scan_directory_for_red_flags,
-    sprint_template,
-    sycophancy_template,
     to_minified_json,
-    uses_cargo_husky,
     validate_directory_with_regeneration,
     validate_file,
-    warmup_template,
     DeprecatedPattern,
     EthicsStatus,
     GreenStatus,
-    ProjectType,
     SemanticConfig,
     Severity,
     SycophancyStatus,
@@ -64,32 +59,26 @@ use std::process::ExitCode;
 #[command(about = "Green coding CLI for AI development - zero tokens, zero emissions")]
 #[command(long_about = "RoyalBit Asimov CLI - The Three Laws of Robotics
 
-Validates protocol files against the RoyalBit Asimov specification:
-  - asimov.yaml  - The Three Laws (required)
-  - warmup.yaml  - Session bootstrap (required)
-  - sprint.yaml  - Active work tracking (optional)
-  - roadmap.yaml - Milestone planning (optional)
+v8.0.0: Protocols are HARDCODED in the binary. Cannot be bypassed.
+  - 7 protocols compiled in: asimov, freshness, sycophancy, green, sprint, warmup, migrations
+  - Only roadmap.yaml remains in .asimov/ (project data)
+  - Dynamic date injection ({TODAY}, {YEAR})
+  - Token-optimized JSON output
 
 EXAMPLES:
-  asimov validate                    # Validate all protocol files in cwd
-  asimov validate warmup.yaml        # Validate specific file
-  asimov init                        # Generate starter warmup.yaml (generic)
-  asimov init --type rust            # Generate Rust-specific warmup.yaml
-  asimov init --type python          # Generate Python-specific warmup.yaml
-  asimov init --type node            # Generate Node.js-specific warmup.yaml
-  asimov init --type go              # Generate Go-specific warmup.yaml
-  asimov init --type flutter         # Generate Flutter-specific warmup.yaml
-  asimov init --type docs            # Generate docs/architecture warmup.yaml
-  asimov init --full                 # Generate all protocol files
-  asimov init --asimov               # Full RoyalBit Asimov setup
+  asimov warmup                      # Start session, output compiled protocols
+  asimov validate                    # Validate roadmap.yaml
+  asimov update                      # Update binary + migrate (delete old YAMLs)
+  asimov init --asimov               # Initialize new project
 
-TYPES: generic, rust, python (py), node (js), go (golang), flutter (dart), docs (arch)
-
-RoyalBit Asimov (--asimov): Full autonomous session setup with The Three Laws
-  - asimov.yaml (The Three Laws - required, cannot opt out)
-  - All protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
-  - Pre-commit hooks (.hooks/ or cargo-husky for Rust)
-  - .gitignore update (exclude checkpoint file)
+PROTOCOLS (hardcoded):
+  - asimov     - The Three Laws (do no harm, obey human, self-preserve)
+  - freshness  - Date-aware search (dynamic {TODAY}, {YEAR})
+  - sycophancy - Truth over comfort, no empty validation
+  - green      - Local-first, zero tokens where possible
+  - sprint     - Session boundaries (4hr max, stop conditions)
+  - warmup     - Session bootstrap (load, validate, present)
+  - migrations - Functional equivalence (same inputs = same outputs)
 
 The Open Foundation: Creates Self-Evolving Autonomous AI projects with ethics built in.
 Inspect the code. Challenge the rules. Fork if you disagree.
@@ -98,11 +87,8 @@ Adoption through consent, not control.
 GREEN CODING - Why This Matters:
   - Local validation: $0/file, ~0.002g CO2, <100ms
   - Cloud AI validation: $0.02+/file, ~0.5g CO2, 1-3s
-  - Team savings: $1,000-7,300/year (10-person team)
   - Carbon reduction: 99.6% vs cloud AI
-  - ESG compliance: Supports corporate sustainability goals
 
-Every project initialized with asimov is a green-coding project.
 Zero tokens. Zero emissions. Ship fast.
 
 Docs: https://github.com/royalbit/asimov")]
@@ -238,6 +224,7 @@ fn main() -> ExitCode {
 }
 
 /// Migrate v8.0.0: Delete deprecated protocol YAMLs (now hardcoded in binary)
+/// Also ensures hooks are installed/restored
 fn migrate_v8() {
     let protocol_dir = resolve_protocol_dir(Path::new("."));
     let deprecated_files = [
@@ -270,6 +257,11 @@ fn migrate_v8() {
         }
         println!("  {} roadmap.yaml (project data, kept)", "✓".green());
     }
+
+    // v8.0.0: Also ensure hooks are installed/restored
+    println!();
+    println!("{}", "Ensuring hooks...".bold());
+    install_hooks(Path::new("."), true); // force=true to restore any tampered hooks
 }
 
 fn cmd_update(check_only: bool) -> ExitCode {
@@ -678,7 +670,7 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
     println!(
         "{} → {}",
         "ON CONFUSION".bold().yellow(),
-        "re-read warmup.yaml".white()
+        "run `asimov warmup`".white()
     );
     println!();
     println!(
@@ -689,19 +681,18 @@ fn cmd_refresh(verbose: bool) -> ExitCode {
         "keep shipping".green()
     );
 
-    // If verbose, try to read and display quality gates from warmup.yaml
+    // v8.0.0: If verbose, try to read and display current milestone from roadmap.yaml
     if verbose {
-        if let Ok(content) = std::fs::read_to_string("warmup.yaml") {
+        if let Ok(content) = std::fs::read_to_string(".asimov/roadmap.yaml") {
             if let Ok(yaml) = serde_yaml::from_str::<serde_yaml::Value>(&content) {
-                if let Some(quality) = yaml.get("quality") {
+                if let Some(current) = yaml.get("current") {
                     println!();
-                    println!("{}", "QUALITY GATES:".bold());
-                    if let Some(map) = quality.as_mapping() {
-                        for (key, value) in map {
-                            if let (Some(k), Some(v)) = (key.as_str(), value.as_str()) {
-                                println!("  {}: {}", k.bright_blue(), v.dimmed());
-                            }
-                        }
+                    println!("{}", "CURRENT MILESTONE:".bold());
+                    if let Some(version) = current.get("version").and_then(|v| v.as_str()) {
+                        println!("  {}: {}", "version".bright_blue(), version.dimmed());
+                    }
+                    if let Some(summary) = current.get("summary").and_then(|v| v.as_str()) {
+                        println!("  {}: {}", "summary".bright_blue(), summary.dimmed());
                     }
                 }
             }
@@ -906,16 +897,159 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
     }
 }
 
+/// Install hardcoded hooks (Claude Code + Git pre-commit)
+/// v8.0.0: Hooks are hardcoded in binary and restored on init/update/tampering
+fn install_hooks(output: &Path, force: bool) -> bool {
+    let mut success = true;
+
+    // 1. Create .claude/settings.json
+    let claude_dir = output.join(".claude");
+    if let Err(e) = std::fs::create_dir_all(&claude_dir) {
+        eprintln!(
+            "  {} Failed to create .claude/ - {}",
+            "ERROR".bold().red(),
+            e
+        );
+        return false;
+    }
+
+    let settings_path = claude_dir.join("settings.json");
+    if !settings_path.exists() || force {
+        match std::fs::write(&settings_path, claude_settings_json()) {
+            Ok(_) => println!("  {} .claude/settings.json", "CREATE".bold().green()),
+            Err(e) => {
+                eprintln!("  {} .claude/settings.json - {}", "ERROR".bold().red(), e);
+                success = false;
+            }
+        }
+    } else {
+        println!("  {} .claude/settings.json", "SKIP".yellow());
+    }
+
+    // 2. Create .claude/hooks/ directory and hooks
+    let hooks_dir = claude_dir.join("hooks");
+    if let Err(e) = std::fs::create_dir_all(&hooks_dir) {
+        eprintln!(
+            "  {} Failed to create .claude/hooks/ - {}",
+            "ERROR".bold().red(),
+            e
+        );
+        return false;
+    }
+
+    // session-start.sh
+    let session_start_path = hooks_dir.join("session-start.sh");
+    if !session_start_path.exists() || force {
+        match std::fs::write(&session_start_path, claude_session_start_hook()) {
+            Ok(_) => {
+                // Make executable on Unix
+                #[cfg(unix)]
+                {
+                    use std::os::unix::fs::PermissionsExt;
+                    if let Ok(metadata) = std::fs::metadata(&session_start_path) {
+                        let mut perms = metadata.permissions();
+                        perms.set_mode(0o755);
+                        let _ = std::fs::set_permissions(&session_start_path, perms);
+                    }
+                }
+                println!(
+                    "  {} .claude/hooks/session-start.sh",
+                    "CREATE".bold().green()
+                );
+            }
+            Err(e) => {
+                eprintln!(
+                    "  {} .claude/hooks/session-start.sh - {}",
+                    "ERROR".bold().red(),
+                    e
+                );
+                success = false;
+            }
+        }
+    } else {
+        println!("  {} .claude/hooks/session-start.sh", "SKIP".yellow());
+    }
+
+    // pre-compact.sh
+    let pre_compact_path = hooks_dir.join("pre-compact.sh");
+    if !pre_compact_path.exists() || force {
+        match std::fs::write(&pre_compact_path, claude_pre_compact_hook()) {
+            Ok(_) => {
+                #[cfg(unix)]
+                {
+                    use std::os::unix::fs::PermissionsExt;
+                    if let Ok(metadata) = std::fs::metadata(&pre_compact_path) {
+                        let mut perms = metadata.permissions();
+                        perms.set_mode(0o755);
+                        let _ = std::fs::set_permissions(&pre_compact_path, perms);
+                    }
+                }
+                println!("  {} .claude/hooks/pre-compact.sh", "CREATE".bold().green());
+            }
+            Err(e) => {
+                eprintln!(
+                    "  {} .claude/hooks/pre-compact.sh - {}",
+                    "ERROR".bold().red(),
+                    e
+                );
+                success = false;
+            }
+        }
+    } else {
+        println!("  {} .claude/hooks/pre-compact.sh", "SKIP".yellow());
+    }
+
+    // 3. Create .git/hooks/pre-commit (only if .git exists)
+    let git_dir = output.join(".git");
+    if git_dir.exists() {
+        let git_hooks_dir = git_dir.join("hooks");
+        if let Err(e) = std::fs::create_dir_all(&git_hooks_dir) {
+            eprintln!(
+                "  {} Failed to create .git/hooks/ - {}",
+                "ERROR".bold().red(),
+                e
+            );
+            return false;
+        }
+
+        let precommit_path = git_hooks_dir.join("pre-commit");
+        if !precommit_path.exists() || force {
+            match std::fs::write(&precommit_path, git_precommit_hook()) {
+                Ok(_) => {
+                    #[cfg(unix)]
+                    {
+                        use std::os::unix::fs::PermissionsExt;
+                        if let Ok(metadata) = std::fs::metadata(&precommit_path) {
+                            let mut perms = metadata.permissions();
+                            perms.set_mode(0o755);
+                            let _ = std::fs::set_permissions(&precommit_path, perms);
+                        }
+                    }
+                    println!("  {} .git/hooks/pre-commit", "CREATE".bold().green());
+                }
+                Err(e) => {
+                    eprintln!("  {} .git/hooks/pre-commit - {}", "ERROR".bold().red(), e);
+                    success = false;
+                }
+            }
+        } else {
+            println!("  {} .git/hooks/pre-commit", "SKIP".yellow());
+        }
+    }
+
+    success
+}
+
 fn cmd_init(
-    name: Option<String>,
-    project_type_str: &str,
-    full: bool,
+    _name: Option<String>,
+    _project_type_str: &str,
+    _full: bool,
     asimov: bool,
     output: &Path,
     force: bool,
 ) -> ExitCode {
-    // --asimov implies --full
-    let full = full || asimov;
+    // v8.0.0: --full and --type are ignored (protocols hardcoded in binary)
+    // Only roadmap.yaml is generated
 
     // Check if we're in a git subdirectory with .asimov/ at root (before any output)
     let output_abs = std::fs::canonicalize(output).unwrap_or_else(|_| output.to_path_buf());
@@ -934,66 +1068,36 @@ fn cmd_init(
         }
     }
 
-    println!("{}", "RoyalBit Asimov Init".bold().green());
-    if asimov {
-        println!("{}", "  RoyalBit Asimov - The Three Laws".bold().cyan());
-    }
+    println!("{}", "RoyalBit Asimov Init (v8.0.0)".bold().green());
+    println!("  Protocols are hardcoded in binary (ADR-031)");
+    println!("  Only roadmap.yaml will be created");
     println!();
 
-    // Parse project type
-    let project_type: ProjectType = match project_type_str.parse() {
-        Ok(pt) => pt,
-        Err(e) => {
-            eprintln!("{} {}", "Error:".bold().red(), e);
-            return ExitCode::FAILURE;
-        }
-    };
+    // v8.0.0: Only generate roadmap.yaml (protocols are hardcoded in binary)
+    let files: Vec<(&str, String)> = vec![("roadmap.yaml", roadmap_template())];
 
-    // Determine project name
-    let project_name = name.unwrap_or_else(|| {
-        std::env::current_dir()
-            .ok()
-            .and_then(|p| p.file_name().map(|n| n.to_string_lossy().to_string()))
-            .unwrap_or_else(|| "my-project".to_string())
-    });
-
-    println!("  Project: {}", project_name.bright_blue());
-    println!("  Type: {}", project_type.to_string().bright_yellow());
-    println!();
-
-    // Files to generate
-    let mut files: Vec<(&str, String)> =
-        vec![("warmup.yaml", warmup_template(&project_name, project_type))];
-
-    if full {
-        files.push(("sprint.yaml", sprint_template()));
-        files.push(("roadmap.yaml", roadmap_template()));
-    }
+    // Note: warmup.yaml, sprint.yaml, asimov.yaml, green.yaml, sycophancy.yaml
+    // are no longer generated - they are hardcoded in the binary (ADR-031)
 
     if asimov {
-        files.push(("asimov.yaml", asimov_template()));
-        files.push(("green.yaml", green_template()));
-        files.push(("sycophancy.yaml", sycophancy_template()));
-        // Generate example checkpoint file (will be gitignored)
-        files.push((
-            ".claude_checkpoint.yaml.example",
-            checkpoint_template("Initial milestone"),
-        ));
-
-        // Delete deprecated CLAUDE.md if it exists
-        let claude_md_path = output.join("CLAUDE.md");
-        if claude_md_path.exists() {
-            if let Err(e) = std::fs::remove_file(&claude_md_path) {
-                eprintln!(
-                    "  {} Failed to delete deprecated CLAUDE.md: {}",
-                    "WARN".yellow(),
-                    e
-                );
-            } else {
-                println!(
-                    "  {} Deleted deprecated CLAUDE.md (replaced by SessionStart hooks)",
-                    "CLEANUP".yellow()
-                );
+        // Delete deprecated files if they exist
+        let deprecated_files = [
+            "CLAUDE.md",
+            ".asimov/warmup.yaml",
+            ".asimov/sprint.yaml",
+            ".asimov/asimov.yaml",
+            ".asimov/green.yaml",
+            ".asimov/sycophancy.yaml",
+            ".asimov/freshness.yaml",
+            ".asimov/migrations.yaml",
+            ".asimov/ethics.yaml",
+        ];
+        for filename in &deprecated_files {
+            let path = output.join(filename);
+            if path.exists() {
+                if let Ok(()) = std::fs::remove_file(&path) {
+                    println!("  {} Deleted deprecated {}", "CLEANUP".yellow(), filename);
+                }
             }
         }
     }
@@ -1038,160 +1142,64 @@ fn cmd_init(
         }
     }
 
-    // RoyalBit Asimov: Generate hooks and update .gitignore
-    if asimov {
-        println!();
+    // v8.0.0: Update .gitignore for checkpoint file
+    // Note: Hooks are no longer generated - protocols are hardcoded in binary
+    let gitignore_path = output.join(".gitignore");
+    let checkpoint_entry = ".claude_checkpoint.yaml";
 
-        // For Rust projects, show cargo-husky instructions instead of creating hooks
-        if uses_cargo_husky(project_type) {
-            println!("{}", "  Hooks (Rust/cargo-husky):".dimmed());
-            println!(
-                "    {}",
-                "Add to Cargo.toml [dev-dependencies]:".bright_black()
-            );
-            println!(
-                "    {}",
-                "cargo-husky = { version = \"1\", features = [\"precommit-hook\", \"run-cargo-clippy\", \"run-cargo-fmt\"] }".bright_black()
-            );
-            println!("    {}", "Then run: cargo test".bright_black());
-        } else {
-            // Create .hooks directory and files
-            let hooks_dir = output.join(".hooks");
-            if let Err(e) = std::fs::create_dir_all(&hooks_dir) {
-                eprintln!(
-                    "  {} Failed to create .hooks directory - {}",
-                    "ERROR".bold().red(),
-                    e
-                );
-                return ExitCode::FAILURE;
-            }
-
-            // Pre-commit hook
-            let precommit_path = hooks_dir.join("pre-commit");
-            if !precommit_path.exists() || force {
-                let hook_content = precommit_hook_template(project_type);
-                match std::fs::write(&precommit_path, hook_content) {
-                    Ok(_) => {
-                        // Make executable on Unix
-                        #[cfg(unix)]
-                        {
-                            use std::os::unix::fs::PermissionsExt;
-                            let _ = std::fs::set_permissions(
-                                &precommit_path,
-                                std::fs::Permissions::from_mode(0o755),
-                            );
-                        }
-                        println!("  {} {}", "CREATE".bold().green(), precommit_path.display());
-                    }
-                    Err(e) => {
-                        eprintln!(
-                            "  {} {} - {}",
-                            "ERROR".bold().red(),
-                            precommit_path.display(),
-                            e
-                        );
-                    }
-                }
-            } else {
-                println!(
-                    "  {} {} (use --force to overwrite)",
-                    "SKIP".yellow(),
-                    precommit_path.display()
-                );
-            }
-
-            // Install script
-            let install_path = hooks_dir.join("install.sh");
-            if !install_path.exists() || force {
-                let install_content = hook_installer_template();
-                match std::fs::write(&install_path, install_content) {
-                    Ok(_) => {
-                        #[cfg(unix)]
-                        {
-                            use std::os::unix::fs::PermissionsExt;
-                            let _ = std::fs::set_permissions(
-                                &install_path,
-                                std::fs::Permissions::from_mode(0o755),
-                            );
-                        }
-                        println!("  {} {}", "CREATE".bold().green(), install_path.display());
-                    }
-                    Err(e) => {
-                        eprintln!(
-                            "  {} {} - {}",
-                            "ERROR".bold().red(),
-                            install_path.display(),
-                            e
-                        );
-                    }
-                }
-            }
+    let needs_update = if gitignore_path.exists() {
+        match std::fs::read_to_string(&gitignore_path) {
+            Ok(content) => !content.contains(checkpoint_entry),
+            Err(_) => true,
         }
+    } else {
+        true
+    };
 
-        // Update .gitignore
-        let gitignore_path = output.join(".gitignore");
-        let checkpoint_entry = ".claude_checkpoint.yaml";
-
-        let needs_update = if gitignore_path.exists() {
-            match std::fs::read_to_string(&gitignore_path) {
-                Ok(content) => !content.contains(checkpoint_entry),
-                Err(_) => true,
-            }
+    if needs_update {
+        let mut content = if gitignore_path.exists() {
+            std::fs::read_to_string(&gitignore_path).unwrap_or_default()
         } else {
-            true
+            String::new()
         };
 
-        if needs_update {
-            let mut content = if gitignore_path.exists() {
-                std::fs::read_to_string(&gitignore_path).unwrap_or_default()
-            } else {
-                String::new()
-            };
-
-            if !content.is_empty() && !content.ends_with('\n') {
-                content.push('\n');
-            }
-            content.push_str("\n# RoyalBit Asimov checkpoint (session-specific)\n");
-            content.push_str(checkpoint_entry);
+        if !content.is_empty() && !content.ends_with('\n') {
             content.push('\n');
-
-            match std::fs::write(&gitignore_path, content) {
-                Ok(_) => {
-                    println!(
-                        "  {} .gitignore (added {})",
-                        "UPDATE".bold().green(),
-                        checkpoint_entry
-                    );
-                }
-                Err(e) => {
-                    eprintln!("  {} .gitignore - {}", "ERROR".bold().red(), e);
-                }
-            }
-        } else {
-            println!(
-                "  {} .gitignore (already has {})",
-                "SKIP".yellow(),
-                checkpoint_entry
-            );
         }
+        content.push_str("\n# RoyalBit Asimov checkpoint (session-specific)\n");
+        content.push_str(checkpoint_entry);
+        content.push('\n');
+
+        match std::fs::write(&gitignore_path, content) {
+            Ok(_) => {
+                println!(
+                    "  {} .gitignore (added {})",
+                    "UPDATE".bold().green(),
+                    checkpoint_entry
+                );
+            }
+            Err(e) => {
+                eprintln!("  {} .gitignore - {}", "ERROR".bold().red(), e);
+            }
+        }
+    } else {
+        println!(
+            "  {} .gitignore (already has {})",
+            "SKIP".yellow(),
+            checkpoint_entry
+        );
     }
+
+    // v8.0.0: Install hardcoded hooks (Claude Code + Git pre-commit)
+    println!();
+    println!("{}", "Installing hooks...".bold());
+    install_hooks(output, force);
 
     println!();
     println!("{}", "Next steps:".bold());
-    println!("  1. Edit warmup.yaml with your project details");
-    if asimov {
-        if !uses_cargo_husky(project_type) {
-            println!("  2. Install hooks: ./.hooks/install.sh");
-            println!("  3. Launch: claude --dangerously-skip-permissions");
-            println!("  4. Start: run warmup → punch it");
-        } else {
-            println!("  2. Add cargo-husky to Cargo.toml and run: cargo test");
-            println!("  3. Launch: claude --dangerously-skip-permissions");
-            println!("  4. Start: run warmup → punch it");
-        }
-    } else {
-        println!("  2. Run: asimov validate");
-    }
+    println!("  1. Edit .asimov/roadmap.yaml with your milestones");
+    println!("  2. Run: asimov warmup");
+    println!("  3. Protocols + hooks are loaded automatically from binary");
     println!();
 
     ExitCode::SUCCESS

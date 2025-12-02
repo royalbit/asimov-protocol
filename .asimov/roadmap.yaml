@@ -6,7 +6,7 @@
 current:
   version: "8.0.0"
   status: released
-  summary: "Enforced Protocol Loading + Token Optimization"
+  summary: "Enforced Protocol Loading + Hardcoded Hooks"
   goal: SECURITY
 
 next: []

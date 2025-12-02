@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.0.0] - 2025-12-02
+
+### BREAKING: Enforced Protocol Loading + Hardcoded Hooks (ADR-031)
+
+**Protocols and hooks are now hardcoded in the binary - tamper-proof and always current.**
+
+#### Protocols Hardcoded
+- 7 protocols compiled into binary via `include_str!`:
+  - asimov (Three Laws), freshness, sycophancy, green, sprint, warmup, migrations
+- Dynamic date injection: `{TODAY}` and `{YEAR}` replaced at runtime
+- Token-optimized: ~60% reduction (one JSON blob vs 7 YAML files)
+- Only `roadmap.yaml` remains as project data in `.asimov/`
+
+#### Hooks Hardcoded
+- Claude Code hooks (`.claude/settings.json`, `.claude/hooks/`) created on init/update
+- Git pre-commit hook (`.git/hooks/pre-commit`) created on init/update
+- All hooks restored automatically on `asimov update` (tamper recovery)
+- Hooks use `asimov` from `$PATH` for autonomous operations
+
+#### Migration
+- `asimov update` deletes deprecated YAML files:
+  - asimov.yaml, freshness.yaml, sycophancy.yaml, green.yaml
+  - sprint.yaml, warmup.yaml, migrations.yaml, ethics.yaml
+- `asimov init` now only creates `roadmap.yaml` + hooks
+- `--type` flag is accepted but ignored (protocols are universal)
+
+#### Commands Updated
+- `asimov refresh` now says "run `asimov warmup`" (not "re-read warmup.yaml")
+- `asimov warmup` outputs compiled protocols as minified JSON
+
+See [ADR-031](docs/adr/031-enforced-protocol-loading.md) for full rationale.
+
+---
+
 ## [7.11.0] - 2025-12-02
 
 ### Removed: asimov-zed Extension (ADR-030)

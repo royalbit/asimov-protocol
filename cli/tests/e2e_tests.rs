@@ -335,15 +335,13 @@ fn e2e_check_is_alias_for_validate() {
 // ========== Init Command Tests ==========
 
 #[test]
-fn e2e_init_creates_warmup() {
+fn e2e_init_creates_roadmap() {
     let temp_dir = TempDir::new().unwrap();
 
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--output")
         .arg(temp_dir.path())
-        .arg("--name")
-        .arg("test-project")
         .output()
         .expect("Failed to execute");
 
@@ -355,23 +353,16 @@ fn e2e_init_creates_warmup() {
         "Init should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check warmup.yaml was created in .asimov/ directory (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        warmup_path.exists(),
-        "warmup.yaml should be created in .asimov/"
-    );
-
-    // Check content
-    let content = fs::read_to_string(&warmup_path).unwrap();
-    assert!(
-        content.contains("test-project"),
-        "Should contain project name"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
 #[test]
-fn e2e_init_full_creates_all_files() {
+fn e2e_init_full_creates_roadmap() {
     let temp_dir = TempDir::new().unwrap();
 
     let output = Command::new(binary_path())
@@ -379,8 +370,6 @@ fn e2e_init_full_creates_all_files() {
         .arg("--full")
         .arg("--output")
         .arg(temp_dir.path())
-        .arg("--name")
-        .arg("full-project")
         .output()
         .expect("Failed to execute");
 
@@ -392,16 +381,8 @@ fn e2e_init_full_creates_all_files() {
         "Init --full should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check all files created in .asimov/ directory (v6.0.0+)
+    // v8.0.0: Only roadmap.yaml is created (--full is ignored, protocols are hardcoded)
     let asimov_dir = temp_dir.path().join(".asimov");
-    assert!(
-        asimov_dir.join("warmup.yaml").exists(),
-        "warmup.yaml should exist in .asimov/"
-    );
-    assert!(
-        asimov_dir.join("sprint.yaml").exists(),
-        "sprint.yaml should exist in .asimov/"
-    );
     assert!(
         asimov_dir.join("roadmap.yaml").exists(),
         "roadmap.yaml should exist in .asimov/"
@@ -412,6 +393,7 @@ fn e2e_init_full_creates_all_files() {
 fn e2e_init_type_rust() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -431,18 +413,19 @@ fn e2e_init_type_rust() {
         "Init --type rust should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Rust-specific content in .asimov/ (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
-    assert!(content.contains("cargo"), "Should contain cargo commands");
-    assert!(content.contains("Cargo.toml"), "Should mention Cargo.toml");
-    assert!(content.contains("clippy"), "Should mention clippy");
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
+    assert!(
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
+    );
 }
 
 #[test]
 fn e2e_init_type_generic() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -457,12 +440,11 @@ fn e2e_init_type_generic() {
         "Init --type generic should succeed"
     );
 
-    // Check generic content (no Rust-specific) in .asimov/ (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        !content.contains("cargo"),
-        "Generic should not contain cargo"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -470,6 +452,8 @@ fn e2e_init_type_generic() {
 fn e2e_init_type_invalid() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is ignored (protocols are hardcoded in binary)
+    // Even invalid types succeed - they just create roadmap.yaml
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -479,15 +463,17 @@ fn e2e_init_type_invalid() {
         .output()
         .expect("Failed to execute");
 
-    assert!(!output.status.success(), "Invalid type should fail");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    let combined = format!("{stdout}{stderr}");
-
+    // v8.0.0: Now succeeds because --type is ignored
     assert!(
-        combined.contains("Unknown project type"),
-        "Should report unknown type, got: {combined}"
+        output.status.success(),
+        "Init should succeed (--type is ignored in v8.0.0)"
+    );
+
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
+    assert!(
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -495,11 +481,11 @@ fn e2e_init_type_invalid() {
 fn e2e_init_skips_existing_without_force() {
     let temp_dir = TempDir::new().unwrap();
 
-    // Create existing warmup.yaml in .asimov/ directory (v6.0.0+)
+    // v8.0.0: Create existing roadmap.yaml in .asimov/ directory
     let asimov_dir = temp_dir.path().join(".asimov");
     fs::create_dir_all(&asimov_dir).unwrap();
-    let warmup_path = asimov_dir.join("warmup.yaml");
-    fs::write(&warmup_path, "existing content").unwrap();
+    let roadmap_path = asimov_dir.join("roadmap.yaml");
+    fs::write(&roadmap_path, "existing content").unwrap();
 
     let output = Command::new(binary_path())
         .arg("init")
@@ -514,7 +500,7 @@ fn e2e_init_skips_existing_without_force() {
     assert!(stdout.contains("SKIP"), "Should skip existing file");
 
     // Original content should be preserved
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    let content = fs::read_to_string(&roadmap_path).unwrap();
     assert_eq!(content, "existing content", "Should not overwrite");
 }
 
@@ -522,11 +508,11 @@ fn e2e_init_skips_existing_without_force() {
 fn e2e_init_force_overwrites() {
     let temp_dir = TempDir::new().unwrap();
 
-    // Create existing warmup.yaml in .asimov/ directory (v6.0.0+)
+    // v8.0.0: Create existing roadmap.yaml in .asimov/ directory
     let asimov_dir = temp_dir.path().join(".asimov");
     fs::create_dir_all(&asimov_dir).unwrap();
-    let warmup_path = asimov_dir.join("warmup.yaml");
-    fs::write(&warmup_path, "existing content").unwrap();
+    let roadmap_path = asimov_dir.join("roadmap.yaml");
+    fs::write(&roadmap_path, "existing content").unwrap();
 
     let output = Command::new(binary_path())
         .arg("init")
@@ -540,11 +526,11 @@ fn e2e_init_force_overwrites() {
 
     assert!(output.status.success(), "Init --force should succeed");
 
-    // Content should be overwritten
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    // Content should be overwritten with new roadmap template
+    let content = fs::read_to_string(&roadmap_path).unwrap();
     assert!(
-        content.contains("new-project"),
-        "Should overwrite with new content"
+        content.contains("current:") || content.contains("version:"),
+        "Should overwrite with roadmap template content"
     );
 }
 
@@ -568,6 +554,7 @@ fn e2e_init_help_shows_type_option() {
 fn e2e_init_type_python() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -587,18 +574,11 @@ fn e2e_init_type_python() {
         "Init --type python should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Python-specific content in .asimov/ (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
-    assert!(content.contains("pytest"), "Should contain pytest");
-    assert!(content.contains("ruff"), "Should mention ruff");
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("pyproject.toml"),
-        "Should mention pyproject.toml"
-    );
-    assert!(
-        content.contains("green_coding"),
-        "Should contain green_coding"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -606,6 +586,7 @@ fn e2e_init_type_python() {
 fn e2e_init_type_python_alias() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -620,11 +601,11 @@ fn e2e_init_type_python_alias() {
         "Init --type py (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("pytest"),
-        "py alias should create Python template"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -632,6 +613,7 @@ fn e2e_init_type_python_alias() {
 fn e2e_init_type_node() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -651,19 +633,11 @@ fn e2e_init_type_node() {
         "Init --type node should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Node-specific content in .asimov/ (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
-    assert!(content.contains("npm test"), "Should contain npm test");
-    assert!(content.contains("eslint"), "Should mention eslint");
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("package.json"),
-        "Should mention package.json"
-    );
-    assert!(content.contains("TypeScript"), "Should mention TypeScript");
-    assert!(
-        content.contains("green_coding"),
-        "Should contain green_coding"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -671,6 +645,7 @@ fn e2e_init_type_node() {
 fn e2e_init_type_node_aliases() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     // Test 'js' alias
     let output = Command::new(binary_path())
         .arg("init")
@@ -686,11 +661,11 @@ fn e2e_init_type_node_aliases() {
         "Init --type js (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("npm"),
-        "js alias should create Node template"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -698,6 +673,7 @@ fn e2e_init_type_node_aliases() {
 fn e2e_init_type_go() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -717,23 +693,11 @@ fn e2e_init_type_go() {
         "Init --type go should succeed, stdout: {stdout}, stderr: {stderr}"
     );
 
-    // Check Go-specific content in .asimov/ (v6.0.0+)
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
-    assert!(content.contains("go test"), "Should contain go test");
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("golangci-lint"),
-        "Should mention golangci-lint"
-    );
-    assert!(content.contains("go.mod"), "Should mention go.mod");
-    assert!(content.contains("internal/"), "Should mention internal/");
-    assert!(
-        content.contains("green_coding"),
-        "Should contain green_coding"
-    );
-    assert!(
-        content.contains("CGO_ENABLED"),
-        "Should mention CGO_ENABLED"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
@@ -741,6 +705,7 @@ fn e2e_init_type_go() {
 fn e2e_init_type_go_alias() {
     let temp_dir = TempDir::new().unwrap();
 
+    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -755,11 +720,11 @@ fn e2e_init_type_go_alias() {
         "Init --type golang (alias) should succeed"
     );
 
-    let warmup_path = temp_dir.path().join(".asimov").join("warmup.yaml");
-    let content = fs::read_to_string(&warmup_path).unwrap();
+    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
+    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
     assert!(
-        content.contains("go test"),
-        "golang alias should create Go template"
+        roadmap_path.exists(),
+        "roadmap.yaml should be created in .asimov/"
     );
 }
 
