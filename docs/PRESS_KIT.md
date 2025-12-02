@@ -8,12 +8,12 @@
 
 ## The Story
 
-A human and Claude built two production tools in 7 days:
+A human and Claude built two production tools in 8 days:
 - **22,239 lines of code**
 - **78 releases**
 - **257 tests**
 - **404 commits**
-- **63x faster than industry average**
+- **56x faster than industry average**
 
 **The velocity is Claude's.** Claude Opus 4.5 and Sonnet 4.5 are purpose-built for autonomous development (SWE-bench 80.9%). ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
 
@@ -45,11 +45,11 @@ Both MIT licensed. Both on crates.io. Both auditable.
 | Metric | Value | Verification |
 |--------|-------|--------------|
 | Lines of Code | 22,239 | `git log --stat` |
-| Releases | 78 in 7 days | GitHub releases |
+| Releases | 78 in 8 days | GitHub releases |
 | Tests | 257 passing | `cargo test` |
 | Commits | 404 | `git log --oneline` |
-| Velocity | 3,177 LOC/day | Industry avg: 50 LOC/day |
-| Multiplier | **63x** | Math |
+| Velocity | 2,780 LOC/day | Industry avg: 50 LOC/day |
+| Multiplier | **56x** | Math |
 
 **Verify yourself:** [github.com/royalbit](https://github.com/royalbit)
 
