@@ -363,16 +363,6 @@ asimov update --check        # Just check, don't install
 - Git-friendly (diffable, mergeable)
 - No vendor lock-in for file format
 
-## Editor Extensions
-
-Syntax highlighting for `.asimov/*.yaml` protocol files.
-
-| Editor | Extension | Features |
-|--------|-----------|----------|
-| **Zed** | [asimov-zed](https://github.com/royalbit/asimov-zed) | Three Laws highlighting, protocol sections, anti-patterns |
-
-Install in Zed: `Cmd+Shift+P` → "Extensions" → Search "Asimov"
-
 ## Compatibility (The Hard Truth)
 
 **RoyalBit Asimov works with Claude Code. It will probably never work with other AI tools.**

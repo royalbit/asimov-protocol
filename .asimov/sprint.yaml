@@ -1,6 +1,11 @@
 # Sprint Autonomy Protocol
 # WHEN to stop - Bounded sessions for sustainable AI development
 
+# ACTIVE SPRINT
+sprint:
+  current: "v7.11.0 - Kill asimov-zed Extension"
+  status: in_progress
+
 # CORE RULES (ADR-028)
 rules:
   max_hours: 4

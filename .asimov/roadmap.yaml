@@ -9,7 +9,15 @@ current:
   summary: "Asimov Zed Extension + Repo Cleanup"
   goal: GREEN_CODING
 
-next: []
+next:
+  - version: "7.11.0"
+    summary: "Kill asimov-zed Extension"
+    goal: GREEN_CODING
+    tasks:
+      - "Delete asimov-zed repo (local + gitolite origin)"
+      - "Remove Editor Extensions from README.md"
+      - "Update ECOSYSTEM.md"
+      - "ADR-030 documenting decision"
 
 backlog:
   - "TOON Format Migration: Evaluate when Rust parser matures (token efficiency)"
