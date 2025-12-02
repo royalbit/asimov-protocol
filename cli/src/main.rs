@@ -119,29 +119,25 @@ enum Commands {
         no_regenerate: bool,
     },
 
-    /// Initialize new protocol files
+    /// Initialize or migrate an asimov project (v8.2.0)
+    ///
+    /// Full setup: creates project files, installs hooks, cleans up deprecated files.
+    /// Existing roadmap.yaml is always preserved (project data).
     Init {
         /// Project name (defaults to current directory name)
         #[arg(short, long)]
         name: Option<String>,
 
         /// Project type for language-specific templates (generic, rust, python, node, go, flutter, docs)
-        #[arg(short = 't', long = "type", default_value = "generic")]
+        /// Auto-detected from Cargo.toml, package.json, pubspec.yaml, etc.
+        #[arg(short = 't', long = "type", default_value = "")]
         project_type: String,
-
-        /// Generate all protocol files (warmup.yaml, sprint.yaml, roadmap.yaml)
-        #[arg(long)]
-        full: bool,
-
-        /// Full RoyalBit Asimov setup (protocol files + CLAUDE.md + hooks + .gitignore)
-        #[arg(long)]
-        asimov: bool,
 
         /// Output directory (defaults to current directory)
         #[arg(short, long, default_value = ".")]
         output: PathBuf,
 
-        /// Overwrite existing files
+        /// Overwrite existing files (including roadmap.yaml)
         #[arg(long)]
         force: bool,
     },
@@ -209,11 +205,9 @@ fn main() -> ExitCode {
         Commands::Init {
             name,
             project_type,
-            full,
-            asimov,
             output,
             force,
-        } => cmd_init(name, &project_type, full, asimov, &output, force),
+        } => cmd_init(name, &project_type, &output, force),
         Commands::Check { file } => cmd_validate(&file, false, true),
         Commands::LintDocs {
             path,
@@ -1044,16 +1038,11 @@ fn install_hooks(output: &Path, force: bool) -> bool {
     success
 }
 
-fn cmd_init(
-    name: Option<String>,
-    project_type_str: &str,
-    _full: bool,
-    asimov: bool,
-    output: &Path,
-    force: bool,
-) -> ExitCode {
-    // v8.1.0: Generate roadmap.yaml + project.yaml (ADR-032)
+fn cmd_init(name: Option<String>, project_type_str: &str, output: &Path, force: bool) -> ExitCode {
+    // v8.2.0: Full setup by default - no more --asimov flag
+    // Always: create files + install hooks + cleanup deprecated
     // Protocols are hardcoded in binary (ADR-031)
+    // Project data: roadmap.yaml + project.yaml (ADR-032)
 
     // Check if we're in a git subdirectory with .asimov/ at root (before any output)
     let output_abs = std::fs::canonicalize(output).unwrap_or_else(|_| output.to_path_buf());
@@ -1100,42 +1089,28 @@ fn cmd_init(
             .unwrap_or_else(|| "my-project".to_string())
     });
 
-    println!("{}", "RoyalBit Asimov Init (v8.1.0)".bold().green());
+    println!("{}", "RoyalBit Asimov Init (v8.2.0)".bold().green());
     println!("  Protocols are hardcoded in binary (ADR-031)");
     println!("  Project data: roadmap.yaml + project.yaml (ADR-032)");
     println!();
 
-    // v8.1.0: Generate roadmap.yaml + project.yaml (ADR-032)
-    let files: Vec<(&str, String)> = vec![
-        ("roadmap.yaml", roadmap_template()),
-        (
-            "project.yaml",
-            project_template(&project_name, "Brief project description", project_type),
-        ),
+    // v8.2.0: Always cleanup deprecated files (full setup by default)
+    let deprecated_files = [
+        "CLAUDE.md",
+        ".asimov/warmup.yaml",
+        ".asimov/sprint.yaml",
+        ".asimov/asimov.yaml",
+        ".asimov/green.yaml",
+        ".asimov/sycophancy.yaml",
+        ".asimov/freshness.yaml",
+        ".asimov/migrations.yaml",
+        ".asimov/ethics.yaml",
     ];
-
-    // Note: warmup.yaml, sprint.yaml, asimov.yaml, green.yaml, sycophancy.yaml
-    // are no longer generated - they are hardcoded in the binary (ADR-031)
-
-    if asimov {
-        // Delete deprecated files if they exist
-        let deprecated_files = [
-            "CLAUDE.md",
-            ".asimov/warmup.yaml",
-            ".asimov/sprint.yaml",
-            ".asimov/asimov.yaml",
-            ".asimov/green.yaml",
-            ".asimov/sycophancy.yaml",
-            ".asimov/freshness.yaml",
-            ".asimov/migrations.yaml",
-            ".asimov/ethics.yaml",
-        ];
-        for filename in &deprecated_files {
-            let path = output.join(filename);
-            if path.exists() {
-                if let Ok(()) = std::fs::remove_file(&path) {
-                    println!("  {} Deleted deprecated {}", "CLEANUP".yellow(), filename);
-                }
+    for filename in &deprecated_files {
+        let path = output.join(filename);
+        if path.exists() {
+            if let Ok(()) = std::fs::remove_file(&path) {
+                println!("  {} Deleted deprecated {}", "CLEANUP".yellow(), filename);
             }
         }
     }
@@ -1151,20 +1126,24 @@ fn cmd_init(
         return ExitCode::FAILURE;
     }
 
-    // Write protocol files
-    for (filename, content) in &files {
-        // CLAUDE.md and .claude_checkpoint.yaml.example stay in root, protocol files go to .asimov/
-        let file_path = if filename.ends_with(".md") || filename.starts_with('.') {
-            output.join(filename)
-        } else {
-            asimov_dir.join(filename)
-        };
+    // v8.2.0: Generate roadmap.yaml + project.yaml (ADR-032)
+    let files: Vec<(&str, String)> = vec![
+        ("roadmap.yaml", roadmap_template()),
+        (
+            "project.yaml",
+            project_template(&project_name, "Brief project description", project_type),
+        ),
+    ];
 
-        // v8.1.1 HOTFIX: --asimov preserves roadmap.yaml (project data, not protocol)
-        // This allows safe migration without losing project milestones
-        if *filename == "roadmap.yaml" && file_path.exists() && asimov {
+    // Write project data files
+    for (filename, content) in &files {
+        let file_path = asimov_dir.join(filename);
+
+        // v8.2.0: Always preserve roadmap.yaml unless --force
+        // This is project data, not protocol - never overwrite by default
+        if *filename == "roadmap.yaml" && file_path.exists() && !force {
             println!(
-                "  {} {} (project data preserved)",
+                "  {} {} (project data preserved, use --force to overwrite)",
                 "KEEP".bold().cyan(),
                 filename
             );
@@ -1191,8 +1170,7 @@ fn cmd_init(
         }
     }
 
-    // v8.0.0: Update .gitignore for checkpoint file
-    // Note: Hooks are no longer generated - protocols are hardcoded in binary
+    // Update .gitignore for checkpoint file
     let gitignore_path = output.join(".gitignore");
     let checkpoint_entry = ".claude_checkpoint.yaml";
 
@@ -1239,7 +1217,7 @@ fn cmd_init(
         );
     }
 
-    // v8.0.0: Install hardcoded hooks (Claude Code + Git pre-commit)
+    // v8.2.0: Always install hooks (full setup by default)
     println!();
     println!("{}", "Installing hooks...".bold());
     install_hooks(output, force);

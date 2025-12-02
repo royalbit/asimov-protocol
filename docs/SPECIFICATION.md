@@ -6,7 +6,7 @@ Version 4.1.8
 
 **RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.**
 
-Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI with The Three Laws, ethics, green coding, and sprint autonomy. The methodology propagates through the ecosystem.
+Each project initialized with `asimov init` becomes an **independent** Self-Evolving Autonomous AI with The Three Laws, ethics, green coding, and sprint autonomy. The methodology propagates through the ecosystem.
 
 See [ADR-024](adr/024-creator-protocol-architecture.md) for the full architectural rationale.
 
@@ -1065,11 +1065,10 @@ cargo install royalbit-asimov
 ### Commands
 
 ```bash
-# Generate protocol files
-asimov init                    # Basic warmup.yaml
-asimov init --type rust        # Language-specific
-asimov init --full             # All three files
-asimov init --asimov           # Full ROYALBIT ASIMOV setup
+# Initialize project (v8.2.0: full setup by default)
+asimov init                    # Full setup: files + hooks + cleanup
+asimov init --type rust        # Language-specific template
+asimov init --force            # Overwrite existing files (including roadmap.yaml)
 
 # Validate
 asimov validate                # All files
@@ -1082,20 +1081,25 @@ asimov lint-docs --fix         # Auto-fix issues
 # Protocol refresh (for git hooks - compaction-resistant)
 asimov refresh                 # Output protocol reminder
 asimov refresh --verbose       # Include quality gates
+
+# Load session protocols
+asimov warmup                  # Display all hardcoded protocols
 ```
 
-### --asimov Flag
+### Full Setup (v8.2.0)
 
-Generates complete ROYALBIT ASIMOV setup:
+`asimov init` now performs complete setup by default:
 
 ```
-✓ warmup.yaml      - Protocol rules
-✓ sprint.yaml      - Session boundaries
-✓ roadmap.yaml     - Milestone planning
-✓ CLAUDE.md        - Self-healing trigger
-✓ .hooks/          - Pre-commit hooks
+✓ project.yaml     - Project identity and configuration
+✓ roadmap.yaml     - Milestone planning (preserved on re-init)
+✓ .claude/hooks/   - Claude Code hooks for autonomous mode
+✓ .git/hooks/      - Git pre-commit validation
 ✓ .gitignore       - Checkpoint file excluded
+✗ CLEANUP          - Deprecated protocol files removed
 ```
+
+Note: `roadmap.yaml` is project data and is preserved unless `--force` is used.
 
 ## Activation
 

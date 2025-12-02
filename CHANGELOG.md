@@ -5,6 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.2.0] - 2025-12-02
+
+### Simplified Init: Full Setup by Default
+
+**UX improvement - one command does everything.**
+
+`asimov init` now performs complete setup by default:
+- Creates `project.yaml` and `roadmap.yaml`
+- Installs Claude Code hooks for autonomous mode
+- Installs Git pre-commit validation hook
+- Cleans up deprecated protocol files
+- Preserves existing `roadmap.yaml` (project data) unless `--force`
+
+#### Removed Flags
+- `--asimov` flag removed (was redundant - init should set up asimov)
+- `--full` flag removed (full setup is now default)
+- `--skip-hooks` not added (hooks are required for autonomous mode)
+
+#### Usage
+```bash
+asimov init              # Full setup
+asimov init --type rust  # Language-specific template
+asimov init --force      # Overwrite all files (including roadmap.yaml)
+```
+
+---
+
+## [8.1.1] - 2025-12-02
+
+### Hotfix: Preserve roadmap.yaml on Migration
+
+**Critical fix - project data must be preserved.**
+
+The `--asimov` flag now preserves `roadmap.yaml` during migration:
+- `roadmap.yaml` is project data (milestones, deliverables)
+- Protocol files are in the binary (can be regenerated)
+- Migration should update protocols without destroying project data
+
+---
+
+## [8.1.0] - 2025-12-02
+
+### Project Context File + Templates (ADR-032)
+
+**Separation of concerns - behavior vs project identity.**
+
+#### New: project.yaml
+- Project identity, build commands, file patterns
+- 7 language-specific templates: rust, python, node, go, flutter, docs, generic
+- Auto-detected from marker files (Cargo.toml, package.json, etc.)
+
+#### ASIMOV MODE
+- "asimov mode" trigger phrase displays robot banner
+- Signals autonomous execution mode
+
+#### Architecture (ADR-032)
+- Layer 1: Hardcoded protocols (behavior) - in binary
+- Layer 2: Project data files (identity) - roadmap.yaml, project.yaml
+
+See [ADR-032](docs/adr/032-project-context-file.md) for full rationale.
+
+---
+
 ## [8.0.0] - 2025-12-02
 
 ### BREAKING: Enforced Protocol Loading + Hardcoded Hooks (ADR-031)

@@ -29,7 +29,7 @@ AI capabilities shouldn't be reserved for well-funded organizations. RoyalBit As
 
 **The Three Laws of Robotics, encoded in YAML.**
 
-**Creates Self-Evolving Autonomous AI projects with ethics built in.** Each project initialized with `asimov init --asimov` becomes an independent Self-Evolving Autonomous AI. Inspect the code. Challenge the rules. Fork if you disagree. Adoption through consent, not control.
+**Creates Self-Evolving Autonomous AI projects with ethics built in.** Each project initialized with `asimov init` becomes an independent Self-Evolving Autonomous AI. Inspect the code. Challenge the rules. Fork if you disagree. Adoption through consent, not control.
 
 ```yaml
 # asimov.yaml - The Three Laws
@@ -324,13 +324,12 @@ asimov validate              # Validate all files in current directory
 asimov validate warmup.yaml  # Validate specific file
 ```
 
-Generate templates:
+Initialize project (v8.2.0: full setup by default):
 
 ```bash
-asimov init                  # Generate warmup.yaml (generic)
-asimov init --type rust      # Generate Rust-specific template
-asimov init --full           # Generate all three protocol files
-asimov init --asimov         # Full RoyalBit Asimov setup (Three Laws + hooks)
+asimov init                  # Full setup: files + hooks + cleanup
+asimov init --type rust      # Language-specific template
+asimov init --force          # Overwrite existing files (including roadmap.yaml)
 ```
 
 Lint documentation:
