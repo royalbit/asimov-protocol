@@ -191,6 +191,9 @@ enum Commands {
 
     /// Session warmup - display current/next milestone and validate
     Warmup,
+
+    /// Show session statistics (v8.5.0)
+    Stats,
 }
 
 fn main() -> ExitCode {
@@ -218,6 +221,7 @@ fn main() -> ExitCode {
         Commands::Schema { name, output } => cmd_schema(&name, output),
         Commands::Update { check } => cmd_update(check),
         Commands::Warmup => cmd_warmup(),
+        Commands::Stats => cmd_stats(),
     }
 }
 
@@ -544,6 +548,122 @@ fn cmd_warmup() -> ExitCode {
         "{}",
         "Ready to execute. Say \"go\" to start autonomous execution.".bold()
     );
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    ExitCode::SUCCESS
+}
+
+/// v8.5.0: Show session statistics
+fn cmd_stats() -> ExitCode {
+    println!();
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!(
+        "{}",
+        "📊 ROYALBIT ASIMOV - SESSION STATS".bold().bright_cyan()
+    );
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!();
+
+    // Get git stats for current session
+    let today = chrono::Local::now().format("%Y-%m-%d").to_string();
+
+    // Count commits today
+    let commits_today = std::process::Command::new("git")
+        .args(["log", "--oneline", "--since=midnight"])
+        .output()
+        .map(|o| String::from_utf8_lossy(&o.stdout).lines().count())
+        .unwrap_or(0);
+
+    // Get first commit time today
+    let session_start = std::process::Command::new("git")
+        .args([
+            "log",
+            "--reverse",
+            "--since=midnight",
+            "--format=%H %ci",
+            "-1",
+        ])
+        .output()
+        .ok()
+        .and_then(|o| {
+            let output = String::from_utf8_lossy(&o.stdout);
+            output.split_whitespace().nth(1).map(|s| s.to_string())
+        });
+
+    // Count lines changed today
+    let lines_changed = std::process::Command::new("git")
+        .args(["diff", "--shortstat", "@{midnight}"])
+        .output()
+        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
+        .unwrap_or_default();
+
+    // Read roadmap for milestone info
+    let roadmap_path = resolve_protocol_dir(Path::new(".")).join("roadmap.yaml");
+    let milestone_info = std::fs::read_to_string(&roadmap_path)
+        .ok()
+        .and_then(|content| {
+            let doc: serde_yaml::Value = serde_yaml::from_str(&content).ok()?;
+            let current = doc.get("current")?;
+            let version = current.get("version")?.as_str()?;
+            let summary = current.get("summary")?.as_str()?;
+            let status = current.get("status")?.as_str()?;
+            Some((version.to_string(), summary.to_string(), status.to_string()))
+        });
+
+    // Display stats
+    println!("{}", "SESSION".bold());
+    println!("  Date: {}", today.bright_blue());
+    if let Some(start) = session_start {
+        println!("  Started: {}", start.bright_blue());
+    }
+    println!();
+
+    println!("{}", "GIT ACTIVITY".bold());
+    println!(
+        "  Commits today: {}",
+        commits_today.to_string().bright_green()
+    );
+    if !lines_changed.is_empty() {
+        println!("  Changes: {}", lines_changed.bright_yellow());
+    }
+    println!();
+
+    println!("{}", "MILESTONE".bold());
+    if let Some((version, summary, status)) = milestone_info {
+        let status_display = match status.as_str() {
+            "released" => format!("{} {}", "✓".green(), "released".green()),
+            "in_progress" => format!("{} {}", "→".yellow(), "in progress".yellow()),
+            _ => status.clone(),
+        };
+        println!("  v{} - {}", version.bright_blue(), summary);
+        println!("  Status: {}", status_display);
+    } else {
+        println!("  {} No roadmap found", "⚠".yellow());
+    }
+    println!();
+
+    // Calculate velocity if we have commits
+    if commits_today > 0 {
+        println!("{}", "VELOCITY".bold());
+        println!(
+            "  {} commits in session",
+            commits_today.to_string().bright_green()
+        );
+    }
+
     println!(
         "{}",
         "══════════════════════════════════════════════════════════════════════════════"

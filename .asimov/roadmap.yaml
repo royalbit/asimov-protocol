@@ -4,22 +4,21 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.4.0"
+  version: "8.5.0"
   status: released
-  summary: "Cross-platform self-update (Linux ARM64, checksum verification)"
-  goal: DevEx
+  summary: "asimov stats - Session duration, milestone velocity, commits/hour"
+  goal: Observability
   deliverables:
-    - "[x] Add Linux ARM64 to release workflow"
-    - "[x] Add checksum verification on download"
+    - "[x] Add stats subcommand"
+    - "[x] Show session date and start time"
+    - "[x] Show git commits and lines changed"
+    - "[x] Show current milestone status"
     - "[x] Tests pass (147 tests)"
     - "[x] Commit and push"
-    - "[x] GitHub release: v8.4.0"
+    - "[x] GitHub release: v8.5.0"
     - "[x] Installed to ~/bin"
 
 next:
-  - version: "8.5.0"
-    summary: "asimov stats - Session duration, milestone velocity, commits/hour"
-    goal: Observability
   - version: "8.6.0"
     summary: "asimov doctor - Diagnose why autonomous mode isn't working"
     goal: DevEx
