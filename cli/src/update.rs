@@ -271,7 +271,7 @@ mod tests {
 
     #[test]
     fn test_current_version_set() {
-        assert!(!CURRENT_VERSION.is_empty());
+        // CURRENT_VERSION comes from CARGO_PKG_VERSION, always valid semver
         assert!(CURRENT_VERSION.contains('.'));
     }
 }
