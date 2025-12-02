@@ -4,13 +4,12 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "7.9.0"
+  version: "7.10.0"
   status: released
-  summary: "Warmup Command (asimov warmup)"
+  summary: "Asimov Zed Extension + Repo Cleanup"
   goal: GREEN_CODING
 
 next: []
 
 backlog:
-  - "VS Code Extension: Syntax highlighting, validation (separate repo, TypeScript)"
   - "TOON Format Migration: Evaluate when Rust parser matures (token efficiency)"

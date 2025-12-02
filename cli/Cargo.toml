@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "7.9.0"
+version = "7.10.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Engineer <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "RoyalBit Asimov - The ethical operating system for Claude's autonomous power. Claude provides velocity, Asimov provides guardrails."
