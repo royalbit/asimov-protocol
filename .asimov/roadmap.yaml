@@ -21,4 +21,5 @@ current:
 
 next: []
 
-backlog: []
+backlog:
+  - "v8.4.0: Cross-platform self-update (Linux ARM64, checksum verification)"
