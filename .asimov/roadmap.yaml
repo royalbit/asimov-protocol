@@ -23,3 +23,7 @@ next: []
 
 backlog:
   - "v8.4.0: Cross-platform self-update (Linux ARM64, checksum verification)"
+  - "v8.5.0: asimov stats - Session duration, milestone velocity, commits/hour"
+  - "v8.6.0: asimov doctor - Diagnose why autonomous mode isn't working"
+  - "v8.7.0: asimov replay - Replay a session from git history (see what AI did)"
+  - "v9.0.0: Zig port (post Zig 1.0 release)"
