@@ -5,7 +5,7 @@
 
 current:
   version: "8.2.0"
-  status: in_progress
+  status: released
   summary: "Simplify init: remove --asimov flag, full setup by default"
   goal: UX
   deliverables:
@@ -16,7 +16,9 @@ current:
     - "[x] Update docs/SPECIFICATION.md"
     - "[x] Update README.md"
     - "[x] Tests pass (147 tests)"
-    - "[ ] Commit and push"
+    - "[x] Commit and push"
+    - "[x] GitHub release: v8.2.0"
+    - "[x] Installed to ~/bin"
 
 next: []
 
