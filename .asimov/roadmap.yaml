@@ -4,21 +4,13 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.1.0"
+  version: "8.1.1"
   status: released
-  summary: "Project Context File + Templates + ASIMOV MODE"
-  goal: ARCHITECTURE
-  adr: "docs/adr/032-project-context-file.md"
+  summary: "Hotfix: --asimov preserves roadmap.yaml"
+  goal: BUGFIX
   deliverables:
-    - "[x] ADR-032: Project Context File + Templates"
-    - "[x] Update SPECIFICATION.md with project.yaml schema"
-    - "[x] Create 7 project templates (rust, python, node, go, flutter, docs, generic)"
-    - "[x] Create project.yaml schema"
-    - "[x] Project type auto-detection"
-    - "[x] Update CLI commands (init, update, warmup)"
-    - "[x] Remove deprecated checkpoint mechanism"
-    - "[x] ASIMOV MODE trigger phrase in session-start hook"
-    - "[x] Tests pass (unit, E2E, clippy)"
+    - "[x] --asimov flag preserves existing roadmap.yaml"
+    - "[x] Tests updated for v8.1.x behavior"
 
 next: []
 
