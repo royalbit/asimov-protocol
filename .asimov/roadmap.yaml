@@ -17,6 +17,7 @@ next:
       - "asimov warmup - Display session start prompt with current/next milestone"
       - "Read roadmap.yaml and present current version + next milestone"
       - "Run validation internally and show status"
+      - "Auto-check for updates (one network call per session, not per command)"
       - "Pretty-print ready-to-go session prompt"
       - "Automates the manual warmup phase from sprint.yaml"
 
