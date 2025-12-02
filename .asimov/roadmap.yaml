@@ -27,5 +27,4 @@ current:
 
 next: []
 
-backlog:
-  - "v9.0.0: Zig port (post Zig 1.0 release)"
+backlog: []
