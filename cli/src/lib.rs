@@ -1,10 +1,13 @@
 //! RoyalBit Asimov CLI - Creates Self-Evolving Autonomous AI projects with ethics built in
 //!
 //! This crate provides validation for RoyalBit Asimov files:
-//! - `warmup.yaml` - Session bootstrap
-//! - `sprint.yaml` - Active work tracking
-//! - `roadmap.yaml` - Milestone planning
-//! - `.claude_checkpoint.yaml` - Session state for self-healing
+//! - `roadmap.yaml` - Milestone planning (WHAT to build)
+//! - `project.yaml` - Project context (HOW to build) - ADR-032
+//!
+//! # Architecture (v8.1.0 - ADR-032)
+//!
+//! - **Layer 1**: Behavior protocols are hardcoded in the binary (asimov, green, sycophancy, etc.)
+//! - **Layer 2**: Project data files in `.asimov/` (roadmap.yaml, project.yaml)
 //!
 //! # Ethics (Hardcoded)
 //!
@@ -67,16 +70,19 @@ pub use sycophancy::{
 #[allow(deprecated)]
 pub use templates::{
     asimov_template,
-    checkpoint_template,
     // v8.0.0: Hardcoded hook templates
     claude_pre_compact_hook,
     claude_session_start_hook,
     claude_settings_json,
+    // v8.1.0: Project type detection (ADR-032)
+    detect_project_type,
     ethics_template,
     git_precommit_hook,
     green_template,
     hook_installer_template,
     precommit_hook_template,
+    // v8.1.0: Project context file (ADR-032)
+    project_template,
     roadmap_template,
     sprint_template,
     sycophancy_template,
@@ -92,9 +98,10 @@ pub use validator::{
 };
 
 // Schema exports for editor integration (v7.2.0)
+// NOTE: PROJECT_SCHEMA added in v8.1.0 (ADR-032)
 pub use schemas::{
-    ASIMOV_SCHEMA, FRESHNESS_SCHEMA, GREEN_SCHEMA, MIGRATIONS_SCHEMA, ROADMAP_SCHEMA,
-    SPRINT_SCHEMA, SYCOPHANCY_SCHEMA, WARMUP_SCHEMA,
+    ASIMOV_SCHEMA, FRESHNESS_SCHEMA, GREEN_SCHEMA, MIGRATIONS_SCHEMA, PROJECT_SCHEMA,
+    ROADMAP_SCHEMA, SPRINT_SCHEMA, SYCOPHANCY_SCHEMA, WARMUP_SCHEMA,
 };
 
 // Update exports for self-update functionality (v7.8.0)

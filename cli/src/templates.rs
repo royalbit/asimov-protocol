@@ -49,6 +49,40 @@ impl std::str::FromStr for ProjectType {
     }
 }
 
+/// Detect project type from marker files in the given directory (ADR-032)
+/// Returns the detected project type or Generic if no markers found
+pub fn detect_project_type(dir: &std::path::Path) -> ProjectType {
+    // Check for marker files in priority order
+    // Flutter/Dart before Node (pubspec.yaml is more specific)
+    if dir.join("pubspec.yaml").exists() {
+        return ProjectType::Flutter;
+    }
+    if dir.join("Cargo.toml").exists() {
+        return ProjectType::Rust;
+    }
+    if dir.join("go.mod").exists() {
+        return ProjectType::Go;
+    }
+    if dir.join("pyproject.toml").exists() || dir.join("setup.py").exists() {
+        return ProjectType::Python;
+    }
+    if dir.join("package.json").exists() {
+        return ProjectType::Node;
+    }
+    // Check for docs project (only markdown files in certain patterns)
+    if dir.join("docs").is_dir() || dir.join("README.md").exists() {
+        // Check if there are no code files, only markdown
+        let has_code_markers = dir.join("src").is_dir()
+            || dir.join("lib").is_dir()
+            || dir.join("cmd").is_dir()
+            || dir.join("pkg").is_dir();
+        if !has_code_markers {
+            return ProjectType::Docs;
+        }
+    }
+    ProjectType::Generic
+}
+
 /// Generate a starter warmup.yaml template
 pub fn warmup_template(project_name: &str, project_type: ProjectType) -> String {
     match project_type {
@@ -1172,43 +1206,35 @@ backlog:
     .to_string()
 }
 
-/// Generate a .claude_checkpoint.yaml example template for RoyalBit Asimov
-/// This file is written during sessions and excluded from git
-pub fn checkpoint_template(milestone: &str) -> String {
-    format!(
-        r#"# RoyalBit Asimov - Session Checkpoint
-# This file is auto-generated during RoyalBit Asimov sessions
-# DO NOT commit to git - add to .gitignore
-#
-# SIZE LIMITS (ADR-007):
-#   Soft limit: 20 lines (triggers warning)
-#   Hard limit: 30 lines (requires trimming)
-#
-# TRIMMING RULES:
-#   - Keep: timestamp, milestone, status, in_progress, on_confusion
-#   - Trim completed[] to last 3 items
-#   - Trim next_steps[] to first 3 items
-#   - Remove notes if over limit
+// Project templates embedded from files (ADR-032)
+const PROJECT_RUST_TEMPLATE: &str = include_str!("templates/project-rust.yaml.tpl");
+const PROJECT_PYTHON_TEMPLATE: &str = include_str!("templates/project-python.yaml.tpl");
+const PROJECT_NODE_TEMPLATE: &str = include_str!("templates/project-node.yaml.tpl");
+const PROJECT_GO_TEMPLATE: &str = include_str!("templates/project-go.yaml.tpl");
+const PROJECT_FLUTTER_TEMPLATE: &str = include_str!("templates/project-flutter.yaml.tpl");
+const PROJECT_DOCS_TEMPLATE: &str = include_str!("templates/project-docs.yaml.tpl");
+const PROJECT_GENERIC_TEMPLATE: &str = include_str!("templates/project-generic.yaml.tpl");
 
-timestamp: "2025-01-01T00:00:00Z"
-tool_calls: 0
+/// Generate a project.yaml template for project-specific configuration (ADR-032)
+/// This replaces the deprecated checkpoint_template function.
+pub fn project_template(
+    project_name: &str,
+    project_tagline: &str,
+    project_type: ProjectType,
+) -> String {
+    let template = match project_type {
+        ProjectType::Rust => PROJECT_RUST_TEMPLATE,
+        ProjectType::Python => PROJECT_PYTHON_TEMPLATE,
+        ProjectType::Node => PROJECT_NODE_TEMPLATE,
+        ProjectType::Go => PROJECT_GO_TEMPLATE,
+        ProjectType::Flutter => PROJECT_FLUTTER_TEMPLATE,
+        ProjectType::Docs => PROJECT_DOCS_TEMPLATE,
+        ProjectType::Generic => PROJECT_GENERIC_TEMPLATE,
+    };
 
-milestone: "{}"
-status: in_progress
-
-completed: []
-
-in_progress: "Starting milestone"
-
-next_steps:
-  - "Review requirements"
-  - "Implement core functionality"
-  - "Write tests"
-
-on_confusion: "Re-read warmup.yaml and .claude_checkpoint.yaml"
-"#,
-        milestone
-    )
+    template
+        .replace("{PROJECT_NAME}", project_name)
+        .replace("{PROJECT_TAGLINE}", project_tagline)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1475,7 +1501,7 @@ pub fn claude_settings_json() -> String {
 pub fn claude_session_start_hook() -> String {
     r#"#!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ROYALBIT ASIMOV - SessionStart Hook (v8.0.0)
+# ROYALBIT ASIMOV - SessionStart Hook (v8.1.0)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: startup, resume, clear
@@ -1483,6 +1509,7 @@ pub fn claude_session_start_hook() -> String {
 #
 # When exit code is 0, stdout is injected into Claude's context.
 #
+# v8.1.0: project.yaml added for project context (ADR-032)
 # v8.0.0: Protocols are hardcoded in binary - run `asimov warmup` to load
 #
 # Protocol: https://github.com/royalbit/asimov
@@ -1491,7 +1518,7 @@ pub fn claude_session_start_hook() -> String {
 set -e
 
 cat << 'EOF'
-🔥 ROYALBIT ASIMOV ACTIVE (v8.0.0)
+🔥 ROYALBIT ASIMOV ACTIVE (v8.1.0)
 
 ══════════════════════════════════════════════════════════════════════════════
 SESSION START - Autonomous Development Protocol Initialized
@@ -1513,6 +1540,13 @@ Say "go" to start autonomous execution.
 Say "skip" to pick a different milestone.
 Say "plan" to discuss approach first.
 
+ASIMOV MODE:
+When user says "asimov mode", display:
+══════════════════════════════════════════════════════════════════════════════
+🤖 ASIMOV MODE - AUTONOMOUS EXECUTION ENGAGED
+══════════════════════════════════════════════════════════════════════════════
+Then proceed with full autonomous execution for 4h MAX or until roadmap exhausted.
+
 ══════════════════════════════════════════════════════════════════════════════
 EOF
 
@@ -1525,7 +1559,7 @@ exit 0
 pub fn claude_pre_compact_hook() -> String {
     r#"#!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ROYALBIT ASIMOV - PreCompact Hook (v8.0.0)
+# ROYALBIT ASIMOV - PreCompact Hook (v8.1.0)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: Before context compaction (auto or manual)

@@ -15,6 +15,8 @@ use royalbit_asimov::{
     claude_pre_compact_hook,
     claude_session_start_hook,
     claude_settings_json,
+    // v8.1.0: Project type detection and templates (ADR-032)
+    detect_project_type,
     find_markdown_files,
     fix_markdown_file,
     get_cargo_version,
@@ -22,6 +24,7 @@ use royalbit_asimov::{
     is_protocol_file,
     load_deprecated_patterns,
     perform_update,
+    project_template,
     red_flags,
     resolve_protocol_dir,
     roadmap_template,
@@ -32,6 +35,7 @@ use royalbit_asimov::{
     DeprecatedPattern,
     EthicsStatus,
     GreenStatus,
+    ProjectType,
     SemanticConfig,
     Severity,
     SycophancyStatus,
@@ -1041,15 +1045,15 @@ fn install_hooks(output: &Path, force: bool) -> bool {
 }
 
 fn cmd_init(
-    _name: Option<String>,
-    _project_type_str: &str,
+    name: Option<String>,
+    project_type_str: &str,
     _full: bool,
     asimov: bool,
     output: &Path,
     force: bool,
 ) -> ExitCode {
-    // v8.0.0: --full and --type are ignored (protocols hardcoded in binary)
-    // Only roadmap.yaml is generated
+    // v8.1.0: Generate roadmap.yaml + project.yaml (ADR-032)
+    // Protocols are hardcoded in binary (ADR-031)
 
     // Check if we're in a git subdirectory with .asimov/ at root (before any output)
     let output_abs = std::fs::canonicalize(output).unwrap_or_else(|_| output.to_path_buf());
@@ -1068,13 +1072,47 @@ fn cmd_init(
         }
     }
 
-    println!("{}", "RoyalBit Asimov Init (v8.0.0)".bold().green());
+    // Detect or parse project type (ADR-032)
+    let project_type: ProjectType = if project_type_str.is_empty() {
+        let detected = detect_project_type(output);
+        println!(
+            "  {} Detected project type: {}",
+            "AUTO".bold().cyan(),
+            detected
+        );
+        detected
+    } else {
+        match project_type_str.parse() {
+            Ok(pt) => pt,
+            Err(e) => {
+                eprintln!("{} {}", "ERROR".bold().red(), e);
+                return ExitCode::FAILURE;
+            }
+        }
+    };
+
+    // Get project name from argument or directory name
+    let project_name = name.unwrap_or_else(|| {
+        output
+            .file_name()
+            .and_then(|n| n.to_str())
+            .map(|s| s.to_string())
+            .unwrap_or_else(|| "my-project".to_string())
+    });
+
+    println!("{}", "RoyalBit Asimov Init (v8.1.0)".bold().green());
     println!("  Protocols are hardcoded in binary (ADR-031)");
-    println!("  Only roadmap.yaml will be created");
+    println!("  Project data: roadmap.yaml + project.yaml (ADR-032)");
     println!();
 
-    // v8.0.0: Only generate roadmap.yaml (protocols are hardcoded in binary)
-    let files: Vec<(&str, String)> = vec![("roadmap.yaml", roadmap_template())];
+    // v8.1.0: Generate roadmap.yaml + project.yaml (ADR-032)
+    let files: Vec<(&str, String)> = vec![
+        ("roadmap.yaml", roadmap_template()),
+        (
+            "project.yaml",
+            project_template(&project_name, "Brief project description", project_type),
+        ),
+    ];
 
     // Note: warmup.yaml, sprint.yaml, asimov.yaml, green.yaml, sycophancy.yaml
     // are no longer generated - they are hardcoded in the binary (ADR-031)
@@ -1197,9 +1235,10 @@ fn cmd_init(
 
     println!();
     println!("{}", "Next steps:".bold());
-    println!("  1. Edit .asimov/roadmap.yaml with your milestones");
-    println!("  2. Run: asimov warmup");
-    println!("  3. Protocols + hooks are loaded automatically from binary");
+    println!("  1. Edit .asimov/project.yaml with your project details");
+    println!("  2. Edit .asimov/roadmap.yaml with your milestones");
+    println!("  3. Run: asimov warmup");
+    println!("  4. Protocols + hooks are loaded automatically from binary");
     println!();
 
     ExitCode::SUCCESS

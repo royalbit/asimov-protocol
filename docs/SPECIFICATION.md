@@ -183,85 +183,80 @@ flowchart LR
 
 ## File Structure
 
-### Standard Structure
+### v8.1.0 Architecture (ADR-031 + ADR-032)
+
+**Behavior protocols are HARDCODED in the binary.** Only project data files remain in `.asimov/`.
 
 ```
 project/
-├── .asimov/                  # Protocol directory (v6.0.0+)
-│   ├── asimov.yaml           # Required - Three Laws of Robotics (canonical ethics)
-│   ├── green.yaml            # Required - Green Coding (Priority 0.5)
-│   ├── freshness.yaml        # Required - Date-Aware Search (Priority 1.25)
-│   ├── sycophancy.yaml       # Required - Anti-Sycophancy (Priority 1.5)
-│   ├── warmup.yaml           # Required - Protocol rules (HOW)
-│   ├── sprint.yaml           # Required - Session boundaries (WHEN)
-│   └── roadmap.yaml          # Required - Milestones (WHAT)
-├── CLAUDE.md                 # Required - Bootstrap
-└── .claude_checkpoint.yaml   # Generated - Session state
+├── .asimov/                  # Project data directory
+│   ├── roadmap.yaml          # WHAT to build (milestones)
+│   └── project.yaml          # HOW to build (project context) - NEW in v8.1.0
+├── .claude/                  # Claude Code hooks (hardcoded, restored on update)
+│   ├── settings.json
+│   └── hooks/
+│       ├── session-start.sh
+│       └── pre-compact.sh
+└── .git/hooks/
+    └── pre-commit            # Git hook (hardcoded, restored on update)
 ```
 
-### Modular Structure (Large Projects)
+### Two Layers
 
-When warmup.yaml exceeds 200 lines, split into modules. **CRITICAL: Core protocol files must NEVER be modularized - they stay in .asimov/.**
+| Layer | Location | Purpose | Modifiable? |
+|-------|----------|---------|-------------|
+| **Layer 1: Behavior** | Hardcoded in binary | Protocols (asimov, green, sycophancy, freshness, sprint, warmup, migrations) | NO - use new release |
+| **Layer 2: Project Data** | `.asimov/` | roadmap.yaml, project.yaml | YES - project-specific |
 
+### project.yaml Schema (v8.1.0 - ADR-032)
+
+```yaml
+# .asimov/project.yaml - Project context file
+identity:
+  name: "my-project"          # Required - project name
+  type: rust                   # Required - rust|python|node|go|flutter|docs|generic
+  version: "0.1.0"            # Optional
+  tagline: "Brief description" # Optional
+
+quality:
+  test: "cargo test"           # Test command
+  lint: "cargo clippy -- -D warnings"  # Lint command
+  format: "cargo fmt --check"  # Format command
+
+files:
+  source: ["src/"]            # Source directories
+  config: ["Cargo.toml"]      # Config files
+  docs: ["README.md"]         # Documentation
+
+patterns:                      # Language-specific best practices
+  - "Result<T, E> for errors"
+  - "No unwrap() in library code"
 ```
-project/
-├── .asimov/                      # Protocol directory
-│   ├── asimov.yaml               # NEVER modularize - Three Laws (canonical)
-│   ├── green.yaml                # NEVER modularize - Priority 0.5
-│   ├── freshness.yaml            # NEVER modularize - Priority 1.25
-│   ├── sycophancy.yaml           # NEVER modularize - Priority 1.5
-│   ├── warmup.yaml               # Core only (~100 lines)
-│   ├── sprint.yaml               # Session boundaries
-│   ├── roadmap.yaml              # Milestones
-│   └── modules/                  # Protocol modules (if needed)
-│       ├── identity.yaml         # Project identity/mission
-│       ├── files.yaml            # File structure docs
-│       ├── session.yaml          # Session workflow
-│       ├── quality.yaml          # Quality gates
-│       └── style.yaml            # Code style rules
-├── CLAUDE.md                     # Bootstrap
-└── .claude_checkpoint.yaml       # Generated session state
-```
 
-**Module Loading Order:**
-1. `warmup.yaml` - Always read first (contains `self_healing.on_confusion`)
-2. `.asimov/modules/*.yaml` - Loaded alphabetically when referenced
-3. Core protocol files - Checked at validation time (never in modules/)
+### Project Type Detection (v8.1.0)
 
-**Module Schemas:**
+`asimov init` auto-detects project type from marker files:
 
-| Module | Required Fields | Purpose |
-|--------|-----------------|---------|
-| identity.yaml | `project`, `version` | Project identity |
-| files.yaml | `source`, `docs` | File structure documentation |
-| session.yaml | `start`, `during`, `end` | Session workflow |
-| quality.yaml | `tests`, `lint` | Quality gates |
-| style.yaml | `code` | Code style guidelines |
+| Marker File | Detected Type |
+|-------------|---------------|
+| `Cargo.toml` | rust |
+| `pyproject.toml` or `setup.py` | python |
+| `package.json` | node |
+| `go.mod` | go |
+| `pubspec.yaml` | flutter |
+| `docs/` only | docs |
+| (none) | generic |
 
-**Why Core Protocol Files Cannot Be Modularized:**
-- `asimov.yaml` - The Three Laws of Robotics, foundational ethics (includes `human_veto`)
-- `green.yaml` - Core sustainability principles, non-negotiable
-- `freshness.yaml` - Date-aware search rules, prevents stale data hallucination
-- `sycophancy.yaml` - Anti-sycophancy directives, prevents validation hallucination
-- Validation MUST error if `human_veto` is missing from asimov.yaml
-- Putting these in a module directory risks oversight during security review
-- Three Laws is Priority 0, Green is Priority 0.5, Sycophancy is Priority 1.5 - visibility is mandatory
-
-### File Size Limits (ADR-007)
-
-Self-healing requires small files that can be re-read efficiently after compaction.
+### File Size Limits
 
 | File | Soft Limit | Hard Limit | Purpose |
 |------|------------|------------|---------|
-| CLAUDE.md | 10 lines | 15 lines | Must survive summarization |
-| .claude_checkpoint.yaml | 20 lines | 30 lines | Session state for recovery |
-| warmup.yaml | 200 lines | 500 lines | Full protocol rules |
+| project.yaml | 50 lines | 100 lines | Project context |
+| warmup.yaml | 200 lines | 500 lines | Deprecated - protocols hardcoded |
 
 **Enforcement:**
 - `asimov validate` warns on soft limit, errors on hard limit
-- CLAUDE.md: Ultra-short is critical - it's the bootstrap trigger
-- Checkpoint: Trim completed/next_steps arrays when oversized
-- Warmup: Consider modular structure (`.forge/` directory) if too large
+- Protocols are hardcoded, so no need to manage warmup.yaml size manually
 
 ### Structure Validation (v3.2.0)
 

@@ -68,9 +68,10 @@ pub struct FileSizeLimits {
 }
 
 impl FileSizeLimits {
-    pub const CHECKPOINT: FileSizeLimits = FileSizeLimits {
-        soft_lines: 20,
-        hard_lines: 30,
+    // NOTE: CHECKPOINT removed in v8.1.0 (ADR-032)
+    pub const PROJECT: FileSizeLimits = FileSizeLimits {
+        soft_lines: 50,
+        hard_lines: 100,
     };
 
     pub const CLAUDE_MD: FileSizeLimits = FileSizeLimits {
@@ -169,11 +170,12 @@ pub fn validate_file(path: &Path) -> Result<ValidationResult> {
 }
 
 /// Check file size against limits and return warnings (ADR-007)
+/// NOTE: checkpoint removed in v8.1.0 (ADR-032), replaced by project
 fn check_file_size(schema_type: &str, line_count: usize) -> Vec<String> {
     let mut warnings = Vec::new();
 
     let limits = match schema_type {
-        "checkpoint" => Some(FileSizeLimits::CHECKPOINT),
+        "project" => Some(FileSizeLimits::PROJECT),
         "warmup" => Some(FileSizeLimits::WARMUP),
         _ => None,
     };
@@ -304,10 +306,10 @@ fn validate_directory_internal(
     let protocol_dir = resolve_protocol_dir(base_dir);
 
     // Look for data files (v8.0.0: protocol YAMLs are deprecated, hardcoded in binary)
-    // Only validate files that exist - roadmap.yaml is the main project data file
+    // v8.1.0: project.yaml replaces deprecated checkpoint (ADR-032)
     let protocol_files = [
-        "roadmap.yaml",            // Project data (required)
-        ".claude_checkpoint.yaml", // Session state
+        "roadmap.yaml", // Project data - WHAT to build (required)
+        "project.yaml", // Project context - HOW to build (ADR-032)
     ];
 
     for filename in &protocol_files {
@@ -345,6 +347,7 @@ fn yaml_to_json(yaml: &serde_yaml::Value) -> Result<serde_json::Value> {
 }
 
 /// Check if a file is a valid protocol file by name
+/// NOTE: checkpoint deprecated in v8.1.0 (ADR-032), replaced by project.yaml
 pub fn is_protocol_file(filename: &str) -> bool {
     let name = filename.to_lowercase();
     let is_yaml = name.ends_with(".yaml") || name.ends_with(".yml");
@@ -357,7 +360,7 @@ pub fn is_protocol_file(filename: &str) -> bool {
             || name.contains("green")
             || name.contains("sycophancy")
             || name.contains("migrations")
-            || name.contains("checkpoint"))
+            || name.contains("project"))
 }
 
 /// Structure validation for asimov.yaml (Three Laws - ADR-031)

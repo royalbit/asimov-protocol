@@ -3,22 +3,23 @@
 //! Schemas are embedded as string constants and compiled at runtime.
 
 mod asimov;
-mod checkpoint;
 mod freshness;
 mod green;
 mod migrations;
+mod project;
 mod roadmap;
 mod sprint;
 mod sycophancy;
 mod warmup;
 
 // NOTE: ethics.rs removed - asimov.yaml is the canonical ethics source (ADR-031)
+// NOTE: checkpoint.rs removed - deprecated by hooks in ADR-032
 
 pub use asimov::ASIMOV_SCHEMA;
-pub use checkpoint::CHECKPOINT_SCHEMA;
 pub use freshness::FRESHNESS_SCHEMA;
 pub use green::GREEN_SCHEMA;
 pub use migrations::MIGRATIONS_SCHEMA;
+pub use project::PROJECT_SCHEMA;
 pub use roadmap::ROADMAP_SCHEMA;
 pub use sprint::SPRINT_SCHEMA;
 pub use sycophancy::SYCOPHANCY_SCHEMA;
@@ -26,6 +27,7 @@ pub use warmup::WARMUP_SCHEMA;
 
 /// Determine which schema to use based on filename
 /// NOTE: ethics.yaml is no longer supported - use asimov.yaml (ADR-031)
+/// NOTE: checkpoint.yaml is deprecated - use hooks instead (ADR-032)
 pub fn schema_for_file(filename: &str) -> Option<&'static str> {
     let name = filename.to_lowercase();
     if name.contains("warmup") {
@@ -44,8 +46,8 @@ pub fn schema_for_file(filename: &str) -> Option<&'static str> {
         Some(GREEN_SCHEMA)
     } else if name.contains("sycophancy") {
         Some(SYCOPHANCY_SCHEMA)
-    } else if name.contains("checkpoint") {
-        Some(CHECKPOINT_SCHEMA)
+    } else if name.contains("project") {
+        Some(PROJECT_SCHEMA)
     } else {
         None
     }
@@ -53,6 +55,7 @@ pub fn schema_for_file(filename: &str) -> Option<&'static str> {
 
 /// Get the schema type name for display
 /// NOTE: ethics.yaml is no longer supported - use asimov.yaml (ADR-031)
+/// NOTE: checkpoint.yaml is deprecated - use hooks instead (ADR-032)
 pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
     let name = filename.to_lowercase();
     if name.contains("warmup") {
@@ -71,8 +74,8 @@ pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
         Some("green")
     } else if name.contains("sycophancy") {
         Some("sycophancy")
-    } else if name.contains("checkpoint") {
-        Some("checkpoint")
+    } else if name.contains("project") {
+        Some("project")
     } else {
         None
     }
