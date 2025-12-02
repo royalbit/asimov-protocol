@@ -11,6 +11,16 @@ current:
 
 next:
   - version: "7.8.0"
+    summary: "Warmup Command (asimov warmup)"
+    goal: GREEN_CODING
+    features:
+      - "asimov warmup - Display session start prompt with current/next milestone"
+      - "Read roadmap.yaml and present current version + next milestone"
+      - "Run validation internally and show status"
+      - "Pretty-print ready-to-go session prompt"
+      - "Automates the manual warmup phase from sprint.yaml"
+
+  - version: "7.9.0"
     summary: "Auto-Update Feature (asimov update)"
     goal: GREEN_CODING
     features:
