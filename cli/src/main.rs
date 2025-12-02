@@ -1160,6 +1160,17 @@ fn cmd_init(
             asimov_dir.join(filename)
         };
 
+        // v8.1.1 HOTFIX: --asimov preserves roadmap.yaml (project data, not protocol)
+        // This allows safe migration without losing project milestones
+        if *filename == "roadmap.yaml" && file_path.exists() && asimov {
+            println!(
+                "  {} {} (project data preserved)",
+                "KEEP".bold().cyan(),
+                filename
+            );
+            continue;
+        }
+
         if file_path.exists() && !force {
             println!(
                 "  {} {} (use --force to overwrite)",

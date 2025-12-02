@@ -452,8 +452,8 @@ fn e2e_init_type_generic() {
 fn e2e_init_type_invalid() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.0.0: --type is ignored (protocols are hardcoded in binary)
-    // Even invalid types succeed - they just create roadmap.yaml
+    // v8.1.0: --type is used to generate project.yaml
+    // Invalid types should fail with error message
     let output = Command::new(binary_path())
         .arg("init")
         .arg("--type")
@@ -463,17 +463,17 @@ fn e2e_init_type_invalid() {
         .output()
         .expect("Failed to execute");
 
-    // v8.0.0: Now succeeds because --type is ignored
+    // v8.1.0: Should fail because invalid type is not recognized
     assert!(
-        output.status.success(),
-        "Init should succeed (--type is ignored in v8.0.0)"
+        !output.status.success(),
+        "Init should fail with invalid type"
     );
 
-    // v8.0.0: Only roadmap.yaml is created (protocols are hardcoded in binary)
-    let roadmap_path = temp_dir.path().join(".asimov").join("roadmap.yaml");
+    // Error message should mention the invalid type
+    let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
-        roadmap_path.exists(),
-        "roadmap.yaml should be created in .asimov/"
+        stderr.contains("invalid_type") || stderr.contains("Unknown project type"),
+        "Error should mention invalid type"
     );
 }
 
