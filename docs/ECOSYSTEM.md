@@ -23,7 +23,8 @@ flowchart TB
 
     subgraph foss["OPEN SOURCE"]
         FORGE[Forge Calculator<br/>Rust • 183 tests]
-        ZED[Zed Extension<br/>WASM]
+        FZED[forge-zed<br/>Zed Extension • WASM]
+        AZED[asimov-zed<br/>Zed Extension • WASM]
         PROTOCOL[RoyalBit Asimov<br/>Rust CLI • 79 tests]
     end
 
@@ -45,9 +46,10 @@ The same AI (Claude Opus 4.5) serves different roles depending on the project:
 
 | Repository | AI Role | Responsibilities |
 | ---------- | ------- | ---------------- |
-| **forge** | Principal Engineer | Full ownership of Rust codebase, 183 tests |
-| **asimov** | Principal Engineer | CLI, specification, 79 tests |
-| **forge-zed** | Extension Developer | WASM extension, LSP integration |
+| **forge** | Principal Autonomous AI | Full ownership of Rust codebase, 183 tests |
+| **asimov** | Principal Autonomous AI | CLI, specification, 79 tests |
+| **forge-zed** | Extension Developer | WASM extension for Forge, LSP integration |
+| **asimov-zed** | Extension Developer | WASM extension for Asimov protocols |
 | **backend-api** | Principal Backend Engineer | Core API, performance-critical queries |
 | **mobile-app** | Principal Mobile Engineer | Flutter app, production-quality UI |
 | **architecture** | Principal AI Architect | C4 diagrams, ADRs, cross-repo consistency |

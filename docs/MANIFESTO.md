@@ -520,7 +520,7 @@ The warmup.yaml **file format** works with any AI that can read YAML. Paste it i
 
 ### AI Ownership Without AI Dependency
 
-Claude is credited as Principal Engineer on Forge because Claude **earned** it:
+Claude is credited as Principal Autonomous AI on Forge because Claude **earned** it:
 - 226 tests, zero warnings
 - 18,338 lines of Rust
 - ~38 hours of autonomous development
@@ -534,12 +534,12 @@ The RoyalBit Asimov isn't just theory - it's running in production across a prop
 
 | Repository | AI Role | Tech Stack | Status |
 |------------|---------|------------|--------|
-| **forge** (FOSS) | Principal Engineer | Rust | Production |
-| backend-api | Principal Backend Engineer | Rust + Axum | Production |
-| mobile-prototype | Principal Engineer | Flutter | Production |
+| **forge** (FOSS) | Principal Autonomous AI | Rust | Production |
+| backend-api | Principal Backend AI | Rust + Axum | Production |
+| mobile-prototype | Principal Autonomous AI | Flutter | Production |
 | architecture-docs | Principal AI Architect | Markdown + PlantUML | Production |
 | business-strategy | AI Strategist | YAML + Markdown | Production |
-| data-enrichment | Principal Engineer | TBD | Planned |
+| data-enrichment | Principal Autonomous AI | TBD | Planned |
 
 **6+ repositories, 1 protocol, 1 AI.**
 
@@ -681,7 +681,7 @@ This is genuine inquiry, not a claim. See: `docs/research/EXPERIENTIAL_CONTINUIT
 ## Credits
 
 - **Project**: Forge - YAML Formula Calculator
-- **Principal Engineer**: Claude (Opus 4.5) - Anthropic
+- **Principal Autonomous AI**: Claude (Opus 4.5) - Anthropic
 - **Protocol Design**: Rex (human) + Claude (AI) collaboration
 - **Philosophy**: Vendor-neutral AI autonomy, meritocratic ownership
 - **Inspiration**: The realization that context loss is the #1 bottleneck in AI-assisted development
