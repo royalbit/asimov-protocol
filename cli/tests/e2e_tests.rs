@@ -1150,3 +1150,453 @@ fn e2e_lint_docs_without_semantic_skips_checks() {
         "Should NOT show semantic checks without flag"
     );
 }
+
+// ========== v8.14.0: Forge/External Path Tests ==========
+
+#[test]
+fn e2e_validate_external_path_creates_asimov_dir() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Run validate on empty directory - should create .asimov/roadmap.yaml
+    let output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Validate should succeed (with regeneration), stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Should have created .asimov/roadmap.yaml in target directory
+    let asimov_dir = temp_dir.path().join(".asimov");
+    assert!(asimov_dir.exists(), ".asimov/ should be created");
+    assert!(
+        asimov_dir.join("roadmap.yaml").exists(),
+        "roadmap.yaml should be created in .asimov/"
+    );
+}
+
+#[test]
+fn e2e_validate_external_path_no_regenerate() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Run validate with --no-regenerate on empty directory - should fail
+    let output = Command::new(binary_path())
+        .arg("validate")
+        .arg("--no-regenerate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    assert!(
+        !output.status.success(),
+        "Validate --no-regenerate on empty dir should fail"
+    );
+
+    // .asimov directory should NOT be created
+    let asimov_dir = temp_dir.path().join(".asimov");
+    assert!(!asimov_dir.exists(), ".asimov/ should NOT be created");
+}
+
+#[test]
+fn e2e_validate_external_path_with_existing_roadmap() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create .asimov/roadmap.yaml manually
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    let roadmap_content = r#"current:
+  version: "1.0.0"
+  status: in_progress
+  summary: "Test milestone"
+"#;
+    fs::write(asimov_dir.join("roadmap.yaml"), roadmap_content).unwrap();
+
+    // Run validate
+    let output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Validate should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(stdout.contains("roadmap"), "Should validate roadmap.yaml");
+}
+
+#[test]
+fn e2e_validate_external_path_ethics_scan() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create .asimov/roadmap.yaml
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0.0'\n  status: planned\n  summary: Test",
+    )
+    .unwrap();
+
+    // Create a file that might trigger ethics scan
+    fs::write(
+        temp_dir.path().join("test.rs"),
+        "// TODO: add crypto wallet",
+    )
+    .unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("validate")
+        .arg("--ethics-scan")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Should show ethics scan section
+    assert!(
+        stdout.contains("Ethics Scan") || stdout.contains("Red Flag"),
+        "Should show ethics scan results"
+    );
+}
+
+#[test]
+fn e2e_init_output_creates_files_in_target() {
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .arg("--name")
+        .arg("test-forge")
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Init should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // All files should be in target directory
+    let asimov_dir = temp_dir.path().join(".asimov");
+    assert!(asimov_dir.exists(), ".asimov/ should be in target");
+    assert!(
+        asimov_dir.join("roadmap.yaml").exists(),
+        "roadmap.yaml should be in target/.asimov/"
+    );
+    assert!(
+        asimov_dir.join("project.yaml").exists(),
+        "project.yaml should be in target/.asimov/"
+    );
+
+    // Claude hooks should be in target directory
+    let claude_dir = temp_dir.path().join(".claude");
+    assert!(claude_dir.exists(), ".claude/ should be in target");
+    assert!(
+        claude_dir.join("settings.json").exists(),
+        "settings.json should be in target/.claude/"
+    );
+    assert!(
+        claude_dir.join("hooks").join("session-start.sh").exists(),
+        "session-start.sh should be in target/.claude/hooks/"
+    );
+
+    // .gitignore should be in target directory
+    let gitignore = temp_dir.path().join(".gitignore");
+    assert!(gitignore.exists(), ".gitignore should be in target");
+}
+
+#[test]
+fn e2e_init_output_with_force_overwrites_target() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create existing roadmap
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    fs::write(asimov_dir.join("roadmap.yaml"), "existing: content").unwrap();
+
+    // Run init with --force
+    let output = Command::new(binary_path())
+        .arg("init")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .arg("--force")
+        .output()
+        .expect("Failed to execute");
+
+    assert!(output.status.success(), "Init --force should succeed");
+
+    // Roadmap should be overwritten with template
+    let content = fs::read_to_string(asimov_dir.join("roadmap.yaml")).unwrap();
+    assert!(
+        content.contains("current:"),
+        "Should contain template content"
+    );
+}
+
+#[test]
+fn e2e_lint_docs_external_path() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create markdown files in target
+    let docs_dir = temp_dir.path().join("docs");
+    fs::create_dir_all(&docs_dir).unwrap();
+    fs::write(docs_dir.join("README.md"), "# Test\n\nValid content.\n").unwrap();
+    fs::write(
+        temp_dir.path().join("CHANGELOG.md"),
+        "# Changelog\n\n## v1.0.0\n",
+    )
+    .unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("lint-docs")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "lint-docs should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(
+        stdout.contains("2 markdown file"),
+        "Should find 2 markdown files"
+    );
+}
+
+#[test]
+fn e2e_lint_docs_external_path_with_fix() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create markdown file with fixable issues (unclosed code block)
+    let test_md = temp_dir.path().join("test.md");
+    fs::write(&test_md, "# Test\n\n```rust\nlet x = 1;\n").unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("lint-docs")
+        .arg("--fix")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Should show fixed files
+    assert!(output.status.success(), "lint-docs --fix should succeed");
+    assert!(
+        stdout.contains("FIXED") || stdout.contains("Success"),
+        "Should fix or succeed"
+    );
+}
+
+#[test]
+fn e2e_check_external_file_path() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create a roadmap file
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    let roadmap_path = asimov_dir.join("roadmap.yaml");
+    fs::write(
+        &roadmap_path,
+        "current:\n  version: '2.0.0'\n  status: released\n  summary: Test",
+    )
+    .unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("check")
+        .arg(&roadmap_path)
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Check should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(
+        stdout.contains("roadmap") && stdout.contains("OK"),
+        "Should validate roadmap successfully"
+    );
+}
+
+#[test]
+fn e2e_schema_output_to_external_path() {
+    let temp_dir = TempDir::new().unwrap();
+    let output_dir = temp_dir.path().join("schemas");
+
+    let output = Command::new(binary_path())
+        .arg("schema")
+        .arg("all")
+        .arg("--output")
+        .arg(&output_dir)
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Schema --output should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // All schemas should be in the output directory
+    assert!(
+        output_dir.join("warmup.schema.json").exists(),
+        "warmup.schema.json should exist in output dir"
+    );
+    assert!(
+        output_dir.join("roadmap.schema.json").exists(),
+        "roadmap.schema.json should exist in output dir"
+    );
+}
+
+#[test]
+fn e2e_warmup_runs_from_project_dir() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize the project
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Run warmup FROM the project directory (not passing path arg)
+    let output = Command::new(binary_path())
+        .arg("warmup")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Warmup should succeed when run from project dir, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(
+        stdout.contains("ROYALBIT ASIMOV"),
+        "Should show warmup banner"
+    );
+    assert!(
+        stdout.contains("PROTOCOLS"),
+        "Should show protocols section"
+    );
+}
+
+#[test]
+fn e2e_doctor_runs_from_project_dir() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize the project
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Run doctor FROM the project directory
+    let output = Command::new(binary_path())
+        .arg("doctor")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Doctor should succeed when run from project dir, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(
+        stdout.contains("ASIMOV - DOCTOR"),
+        "Should show doctor banner"
+    );
+    assert!(
+        stdout.contains(".asimov/") || stdout.contains("directory exists"),
+        "Should check .asimov directory"
+    );
+}
+
+#[test]
+fn e2e_refresh_runs_from_any_dir() {
+    // Refresh doesn't need project files - it just outputs protocol info
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("refresh")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Refresh should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+    assert!(
+        stdout.contains("ASIMOV ETHICS") || stdout.contains("Three Laws"),
+        "Should show ethics principles"
+    );
+}
+
+#[test]
+fn e2e_validate_regeneration_in_external_asimov_dir() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Create .asimov directory but no files
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+
+    // Run validate - should regenerate roadmap.yaml in .asimov/
+    let output = Command::new(binary_path())
+        .arg("validate")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    assert!(output.status.success(), "Validate should succeed");
+    assert!(
+        stdout.contains("REGENERATED"),
+        "Should show regeneration message"
+    );
+
+    // roadmap.yaml should be in .asimov/
+    assert!(
+        asimov_dir.join("roadmap.yaml").exists(),
+        "roadmap.yaml should be regenerated in .asimov/"
+    );
+}

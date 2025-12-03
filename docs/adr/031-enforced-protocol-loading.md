@@ -1,7 +1,7 @@
 # ADR-031: Enforced Protocol Loading + Hardcoded Hooks
 
-**Status:** Implemented (v8.0.0)
-**Date:** 2025-12-02
+**Status:** Implemented (v8.0.0), Updated (v8.14.0)
+**Date:** 2025-12-02 (Updated: 2025-12-03)
 **Deciders:** Human + Claude (Principal Autonomous AI)
 **Priority:** CRITICAL
 
@@ -64,28 +64,37 @@ fn inject_dates(protocol: &str) -> String {
 {"asimov":{"harm":["financial","physical","privacy","deception"],"veto":["stop","halt","abort","emergency stop"]},"freshness":{"today":"2025-12-02","year":"2025","search":["version","pricing","api","current","latest","release","changelog","documentation"]},"sycophancy":{"truth_over_comfort":true,"disagree_openly":true,"banned":["You're absolutely right","Great question","I completely agree","That's a great point"]},"green":{"local_first":true,"avoid":["unnecessary API calls","cloud when local works","external services for validation"]},"sprint":{"max_hours":4,"stop_on":["roadmap_exhausted","blocked","human_stop","context_limit"]},"warmup":{"on_start":["load_protocols","validate","read_roadmap","present_milestone"]},"migrations":{"principle":"Migration complete = functionally equivalent, not just compiles","strategies":["test_parity","contract_testing","behavioral_snapshots","shadow_mode"],"red_flags":["Skipping tests for speed","Assuming compilation = correctness","Silent behavior changes"]}}
 ```
 
-### 4. File Structure (v8.0.0)
+### 4. File Structure (v8.14.0)
 
 ```
 .asimov/
-└── roadmap.yaml     # Project data (only file remaining)
+├── warmup.json      # Entry point - references other protocols
+├── asimov.json      # Ethics (Three Laws)
+├── freshness.json   # Date-aware search (dynamic dates)
+├── sycophancy.json  # Truth over comfort
+├── green.json       # Local-first
+├── sprint.json      # Session boundaries
+├── migrations.json  # Functional equivalence
+├── exhaustive.json  # Complete what you start
+├── roadmap.yaml     # Project data (what to build)
+└── project.yaml     # Project config (how to build)
 ```
 
-**Deleted by `asimov update`:**
-- asimov.yaml
-- freshness.yaml
-- sycophancy.yaml
-- green.yaml
-- sprint.yaml
-- warmup.yaml
-- migrations.yaml
-- ethics.yaml
+**v8.14.0 Changes:**
+- Protocol files are now written to `.asimov/` as individual JSON files
+- `warmup.json` is the entry point that references other protocols
+- Enables manual inspection and loading without asimov CLI
+- `asimov warmup --path <dir>` supports external directories
+
+**Deleted by `asimov update` (deprecated YAML protocols):**
+- asimov.yaml, freshness.yaml, sycophancy.yaml, green.yaml
+- sprint.yaml, warmup.yaml, migrations.yaml, ethics.yaml
 
 ### 5. Loading Hierarchy
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  asimov warmup                                              │
+│  asimov warmup [--path <dir>]                               │
 ├─────────────────────────────────────────────────────────────┤
 │  LAYER 1: HARDCODED (Rust binary, non-negotiable)           │
 │    - asimov (Three Laws)                                    │
@@ -95,11 +104,27 @@ fn inject_dates(protocol: &str) -> String {
 │    - sprint (session boundaries)                            │
 │    - warmup (session bootstrap)                             │
 │    - migrations (functional equivalence)                    │
+│    - exhaustive (complete what you start)                   │
 ├─────────────────────────────────────────────────────────────┤
-│  LAYER 2: PROJECT DATA (from .asimov/, validated)           │
+│  LAYER 2: PROTOCOL FILES (written to .asimov/, inspectable) │
+│    - warmup.json (entry point, references other protocols)  │
+│    - {protocol}.json (one file per protocol)                │
+├─────────────────────────────────────────────────────────────┤
+│  LAYER 3: PROJECT DATA (from .asimov/, validated)           │
 │    - roadmap.yaml (what to build)                           │
+│    - project.yaml (how to build)                            │
 │    - .claude_checkpoint.yaml (session state)                │
 └─────────────────────────────────────────────────────────────┘
+```
+
+**Loading without asimov CLI:**
+```bash
+# Read warmup.json to get list of protocols to load
+cat .asimov/warmup.json | jq '.load'
+# ["asimov.json", "freshness.json", "sycophancy.json", ...]
+
+# Load individual protocol
+cat .asimov/asimov.json
 ```
 
 ### 6. Hardcoded Hooks
@@ -131,9 +156,20 @@ Hooks are also hardcoded in the binary and created/restored automatically:
 
 ### Files Created
 - `cli/src/protocols/mod.rs` - Protocol module with structs and compilation
-- `cli/src/protocols/*.tpl` - 7 protocol templates
+- `cli/src/protocols/*.tpl` - 8 protocol templates
 - `cli/src/templates.rs` - Hook templates (`claude_settings_json()`, `claude_session_start_hook()`, `claude_pre_compact_hook()`, `git_precommit_hook()`)
-- `cli/src/main.rs` - `install_hooks()` function
+- `cli/src/main.rs` - `install_hooks()` function, `cmd_warmup()` writes protocol files
+
+### Protocol File Output (v8.14.0)
+`asimov warmup` writes 8 JSON files to `.asimov/`:
+- `warmup.json` - Entry point with `load` array referencing other protocols
+- `asimov.json`, `freshness.json`, `sycophancy.json`, `green.json`
+- `sprint.json`, `migrations.json`, `exhaustive.json`
+
+Functions in `cli/src/protocols/mod.rs`:
+- `warmup_entry_json()` - Entry point JSON
+- `{protocol}_json()` - Individual protocol JSON (pretty-printed)
+- `PROTOCOL_FILES` - List of all protocol files to write
 
 ### Hook Installation
 `install_hooks(path, force)` creates:
@@ -157,7 +193,9 @@ Hooks are also hardcoded in the binary and created/restored automatically:
 - **Tamper-proof**: Protocols and hooks cannot be bypassed
 - **Always current**: Date injected at runtime
 - **Token efficient**: ~60% reduction (one JSON blob vs 7 YAML files)
-- **Simpler**: Only `roadmap.yaml` in `.asimov/`
+- **Inspectable (v8.14.0)**: Individual JSON files for manual inspection
+- **CLI-independent (v8.14.0)**: Can load protocols without asimov CLI
+- **External paths (v8.14.0)**: `asimov warmup --path` supports forge directories
 - **Autonomous-ready**: Hooks use `asimov` from PATH, auto-restored on update
 
 ### Negative

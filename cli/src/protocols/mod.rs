@@ -79,6 +79,16 @@ pub struct WarmupProtocol {
     pub on_start: Vec<&'static str>,
 }
 
+/// Warmup entry point - references other protocol files
+#[derive(Debug, Clone, Serialize)]
+pub struct WarmupEntry {
+    pub protocol: &'static str,
+    pub version: &'static str,
+    pub description: &'static str,
+    pub on_start: Vec<&'static str>,
+    pub load: Vec<&'static str>,
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct MigrationsProtocol {
     pub principle: &'static str,
@@ -248,6 +258,92 @@ pub fn to_yaml() -> String {
     let protocols = compile_protocols();
     serde_yaml::to_string(&protocols).expect("Protocol serialization should never fail")
 }
+
+// ========== Individual Protocol JSON Output (v8.14.0) ==========
+
+/// Get warmup entry point JSON (references other protocols)
+pub fn warmup_entry_json() -> String {
+    let entry = WarmupEntry {
+        protocol: "warmup",
+        version: env!("CARGO_PKG_VERSION"),
+        description: "RoyalBit Asimov - Session warmup entry point",
+        on_start: vec![
+            "load_protocols",
+            "validate",
+            "read_roadmap",
+            "present_milestone",
+        ],
+        load: vec![
+            "asimov.json",
+            "freshness.json",
+            "sycophancy.json",
+            "green.json",
+            "sprint.json",
+            "migrations.json",
+            "exhaustive.json",
+        ],
+    };
+    serde_json::to_string_pretty(&entry).expect("Warmup entry serialization should never fail")
+}
+
+/// Get asimov protocol JSON (Three Laws)
+pub fn asimov_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.asimov).expect("Asimov serialization should never fail")
+}
+
+/// Get freshness protocol JSON (date-aware search)
+pub fn freshness_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.freshness)
+        .expect("Freshness serialization should never fail")
+}
+
+/// Get sycophancy protocol JSON (truth over comfort)
+pub fn sycophancy_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.sycophancy)
+        .expect("Sycophancy serialization should never fail")
+}
+
+/// Get green protocol JSON (local-first)
+pub fn green_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.green).expect("Green serialization should never fail")
+}
+
+/// Get sprint protocol JSON (session boundaries)
+pub fn sprint_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.sprint).expect("Sprint serialization should never fail")
+}
+
+/// Get migrations protocol JSON (functional equivalence)
+pub fn migrations_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.migrations)
+        .expect("Migrations serialization should never fail")
+}
+
+/// Get exhaustive protocol JSON (complete what you start)
+pub fn exhaustive_json() -> String {
+    let protocols = compile_protocols();
+    serde_json::to_string_pretty(&protocols.exhaustive)
+        .expect("Exhaustive serialization should never fail")
+}
+
+/// List of all protocol files to write
+#[allow(clippy::type_complexity)]
+pub const PROTOCOL_FILES: &[(&str, fn() -> String)] = &[
+    ("warmup.json", warmup_entry_json),
+    ("asimov.json", asimov_json),
+    ("freshness.json", freshness_json),
+    ("sycophancy.json", sycophancy_json),
+    ("green.json", green_json),
+    ("sprint.json", sprint_json),
+    ("migrations.json", migrations_json),
+    ("exhaustive.json", exhaustive_json),
+];
 
 #[cfg(test)]
 mod tests {

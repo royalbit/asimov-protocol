@@ -183,15 +183,23 @@ flowchart LR
 
 ## File Structure
 
-### v8.1.0 Architecture (ADR-031 + ADR-032)
+### v8.14.0 Architecture (ADR-031 + ADR-032)
 
-**Behavior protocols are HARDCODED in the binary.** Only project data files remain in `.asimov/`.
+**Behavior protocols are HARDCODED in the binary** and written to `.asimov/` as individual JSON files on warmup.
 
 ```
 project/
-├── .asimov/                  # Project data directory
+├── .asimov/                  # Protocol + project data directory
+│   ├── warmup.json           # Entry point - references other protocols
+│   ├── asimov.json           # Ethics (Three Laws)
+│   ├── freshness.json        # Date-aware search
+│   ├── sycophancy.json       # Truth over comfort
+│   ├── green.json            # Local-first
+│   ├── sprint.json           # Session boundaries
+│   ├── migrations.json       # Functional equivalence
+│   ├── exhaustive.json       # Complete what you start
 │   ├── roadmap.yaml          # WHAT to build (milestones)
-│   └── project.yaml          # HOW to build (project context) - NEW in v8.1.0
+│   └── project.yaml          # HOW to build (project context)
 ├── .claude/                  # Claude Code hooks (hardcoded, restored on update)
 │   ├── settings.json
 │   └── hooks/
@@ -201,12 +209,23 @@ project/
     └── pre-commit            # Git hook (hardcoded, restored on update)
 ```
 
-### Two Layers
+### Three Layers
 
 | Layer | Location | Purpose | Modifiable? |
 |-------|----------|---------|-------------|
-| **Layer 1: Behavior** | Hardcoded in binary | Protocols (asimov, green, sycophancy, freshness, sprint, warmup, migrations) | NO - use new release |
-| **Layer 2: Project Data** | `.asimov/` | roadmap.yaml, project.yaml | YES - project-specific |
+| **Layer 1: Behavior** | Hardcoded in binary | 8 protocols (asimov, green, sycophancy, freshness, sprint, warmup, migrations, exhaustive) | NO - use new release |
+| **Layer 2: Protocol Files** | `.asimov/*.json` | Inspectable protocol files (written by warmup) | NO - regenerated on warmup |
+| **Layer 3: Project Data** | `.asimov/` | roadmap.yaml, project.yaml | YES - project-specific |
+
+**Loading without asimov CLI:**
+```bash
+# Start with warmup.json
+cat .asimov/warmup.json | jq '.load'
+# ["asimov.json", "freshness.json", ...]
+
+# Load individual protocols
+cat .asimov/asimov.json
+```
 
 ### project.yaml Schema (v8.1.0 - ADR-032)
 

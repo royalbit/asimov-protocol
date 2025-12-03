@@ -691,7 +691,7 @@ backlog:
 
     #[test]
     fn test_valid_roadmap_all_statuses() {
-        for status in ["planned", "in_progress", "released"] {
+        for status in ["pending", "planned", "in_progress", "released"] {
             let content = format!(
                 r#"
 current:

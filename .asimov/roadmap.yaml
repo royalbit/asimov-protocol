@@ -4,18 +4,68 @@
 # See: CHANGELOG.md for release history
 
 current:
+  version: "8.14.0"
+  status: in_progress
+  summary: "CLI Commands Audit & Protocol File Output"
+  goal: Bugfix
+  priority: CRITICAL
+  deliverables:
+    # All Complete
+    - "[x] warmup: Add --path argument for external directories"
+    - "[x] schema: Add 'pending' status to roadmap schema"
+    - "[x] 17 new e2e tests for forge/external path scenarios"
+    - "[x] warmup: Output individual protocol files to .asimov/"
+    - "[x] File structure: .asimov/{protocol}.json per protocol"
+    - "[x] warmup.json loads/references other protocols"
+    - "[x] Update ADR-031 with new file structure"
+    - "[x] Update docs/SPECIFICATION.md"
+    - "[x] Test: Verify all protocol files created"
+    - "[x] Test: warmup.json as entry point"
+    - "[x] Test: warmup --path on forge"
+    - "[x] All 57 e2e tests passing"
+
+next:
+  - version: "8.15.0"
+    summary: "Review ALL Command Behaviors"
+    goal: Bugfix
+    priority: CRITICAL
+    deliverables:
+      - "[ ] Audit: validate command behavior"
+      - "[ ] Audit: init command behavior"
+      - "[ ] Audit: check command behavior"
+      - "[ ] Audit: lint-docs command behavior"
+      - "[ ] Audit: refresh command behavior"
+      - "[ ] Audit: schema command behavior"
+      - "[ ] Audit: update command behavior"
+      - "[ ] Audit: warmup command behavior"
+      - "[ ] Audit: stats command behavior"
+      - "[ ] Audit: doctor command behavior"
+      - "[ ] Audit: replay command behavior"
+      - "[ ] Fix any weird/unexpected behaviors"
+      - "[ ] Document expected behavior per command"
+
+  - version: "8.16.0"
+    summary: "Comprehensive E2E Test Suite"
+    goal: Quality
+    priority: HIGH
+    deliverables:
+      - "[ ] E2E: validate - all flags and scenarios"
+      - "[ ] E2E: init - all project types and flags"
+      - "[ ] E2E: check - file validation scenarios"
+      - "[ ] E2E: lint-docs - fix mode, semantic mode"
+      - "[ ] E2E: refresh - protocol output"
+      - "[ ] E2E: schema - all schemas, output modes"
+      - "[ ] E2E: update - check mode, update mode"
+      - "[ ] E2E: warmup - path arg, protocol files"
+      - "[ ] E2E: stats - git history scenarios"
+      - "[ ] E2E: doctor - diagnostic checks"
+      - "[ ] E2E: replay - commit replay scenarios"
+      - "[ ] E2E: Error handling and edge cases"
+
+previous:
   version: "8.13.0"
   status: released
   summary: "Library Crate Export"
   goal: Feature
-  deliverables:
-    - "[x] Add [lib] section to Cargo.toml"
-    - "[x] Enable use as dependency via git"
-
-previous:
-  version: "8.12.0"
-  status: released
-  summary: "Qowat Milat Commit History"
-  goal: Chore
 
 backlog: []

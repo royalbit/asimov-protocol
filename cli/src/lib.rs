@@ -108,6 +108,22 @@ pub use schemas::{
 pub use update::{check_for_update, perform_update, VersionCheck, CURRENT_VERSION};
 
 // Protocol exports for enforced loading (v8.0.0 - ADR-031)
+// v8.14.0: Added individual protocol JSON exports
 pub use protocols::{
-    compile_protocols, inject_dates, to_minified_json, to_pretty_json, CompiledProtocols,
+    // v8.14.0: Individual protocol JSON files
+    asimov_json,
+    compile_protocols,
+    exhaustive_json,
+    freshness_json,
+    green_json,
+    inject_dates,
+    migrations_json,
+    sprint_json,
+    sycophancy_json,
+    to_minified_json,
+    to_pretty_json,
+    warmup_entry_json,
+    CompiledProtocols,
+    WarmupEntry,
+    PROTOCOL_FILES,
 };

@@ -19,7 +19,7 @@ pub const ROADMAP_SCHEMA: &str = r#"
         "status": {
           "type": "string",
           "description": "Milestone status",
-          "enum": ["planned", "in_progress", "released"]
+          "enum": ["pending", "planned", "in_progress", "released"]
         },
         "summary": {
           "type": "string",

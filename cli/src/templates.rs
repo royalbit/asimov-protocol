@@ -1956,7 +1956,7 @@ mod tests {
 
         let current_status = yaml["current"]["status"].as_str().unwrap();
 
-        let valid_statuses = ["planned", "in_progress", "released"];
+        let valid_statuses = ["pending", "planned", "in_progress", "released"];
         assert!(
             valid_statuses.contains(&current_status),
             "Current status should be valid"

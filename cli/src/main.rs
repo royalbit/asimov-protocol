@@ -190,7 +190,11 @@ enum Commands {
     },
 
     /// Session warmup - display current/next milestone and validate
-    Warmup,
+    Warmup {
+        /// Target directory (default: current directory)
+        #[arg(short, long, default_value = ".")]
+        path: PathBuf,
+    },
 
     /// Show session statistics (v8.5.0)
     Stats,
@@ -244,7 +248,7 @@ fn main() -> ExitCode {
         Some(Commands::Refresh { verbose }) => cmd_refresh(verbose),
         Some(Commands::Schema { name, output }) => cmd_schema(&name, output),
         Some(Commands::Update { check }) => cmd_update(check),
-        Some(Commands::Warmup) => cmd_warmup(),
+        Some(Commands::Warmup { path }) => cmd_warmup(&path),
         Some(Commands::Stats) => cmd_stats(),
         Some(Commands::Doctor) => cmd_doctor(),
         Some(Commands::Replay {
@@ -372,7 +376,7 @@ fn cmd_update(check_only: bool) -> ExitCode {
     }
 }
 
-fn cmd_warmup() -> ExitCode {
+fn cmd_warmup(path: &Path) -> ExitCode {
     println!();
     println!(
         "{}",
@@ -404,8 +408,11 @@ fn cmd_warmup() -> ExitCode {
         }
     }
 
+    // v8.14.0: Use provided path instead of "."
+    let dir = path;
+
     // Read and parse roadmap.yaml
-    let roadmap_path = resolve_protocol_dir(Path::new(".")).join("roadmap.yaml");
+    let roadmap_path = resolve_protocol_dir(dir).join("roadmap.yaml");
     let roadmap_content = match std::fs::read_to_string(&roadmap_path) {
         Ok(content) => content,
         Err(_) => {
@@ -501,7 +508,6 @@ fn cmd_warmup() -> ExitCode {
 
     // Run validation - show all 7 hardcoded protocols (v8.3.0)
     println!("{}", "PROTOCOLS".bold());
-    let dir = Path::new(".");
     let ethics_status = check_ethics_status(dir);
     let sycophancy_status = check_sycophancy_status(dir);
     let green_status = check_green_status(dir);
@@ -619,7 +625,42 @@ fn cmd_warmup() -> ExitCode {
     );
     println!();
     println!("{}", "Context injection:".dimmed());
-    println!("{}", to_minified_json());
+    let protocols_json = to_minified_json();
+    println!("{}", protocols_json);
+
+    // v8.14.0: Write individual protocol files to .asimov/ for manual inspection and loading
+    let asimov_dir = resolve_protocol_dir(dir);
+    println!();
+    println!("{}", "PROTOCOL FILES".bold());
+
+    let mut all_written = true;
+    for (filename, generator) in royalbit_asimov::PROTOCOL_FILES {
+        let file_path = asimov_dir.join(filename);
+        let content = generator();
+        match std::fs::write(&file_path, &content) {
+            Ok(_) => {
+                println!("  {} {}", "✓".green(), filename);
+            }
+            Err(e) => {
+                eprintln!("  {} {} - {}", "✗".red(), filename, e);
+                all_written = false;
+            }
+        }
+    }
+
+    if all_written {
+        println!();
+        println!(
+            "  {} 8 protocol files written to {}",
+            "✓".green(),
+            asimov_dir.display()
+        );
+        println!(
+            "  {} Start with: {}",
+            "→".bright_cyan(),
+            "warmup.json".bold()
+        );
+    }
     println!();
 
     println!(
@@ -683,7 +724,7 @@ fn cmd_launch() -> ExitCode {
         println!();
         println!("{} Already inside Claude Code - running warmup", "ℹ".blue());
         println!();
-        return cmd_warmup();
+        return cmd_warmup(Path::new("."));
     }
 
     // Launch Claude Code with opus settings
