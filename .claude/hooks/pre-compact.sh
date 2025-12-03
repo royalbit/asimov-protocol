@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ROYALBIT ASIMOV - PreCompact Hook (v8.0.0)
+# ROYALBIT ASIMOV - PreCompact Hook (v8.1.0)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: Before context compaction (auto or manual)

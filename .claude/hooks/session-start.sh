@@ -1,14 +1,14 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# ROYALBIT ASIMOV - SessionStart Hook (v8.0.0)
+# ROYALBIT ASIMOV - SessionStart Hook (v8.1.0)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Triggers: startup, resume, clear
 # Purpose: Auto-initialize RoyalBit Asimov on every session start
 #
 # When exit code is 0, stdout is injected into Claude's context.
-# This replaces the need for manual "run warmup" command.
 #
+# v8.1.0: project.yaml added for project context (ADR-032)
 # v8.0.0: Protocols are hardcoded in binary - run `asimov warmup` to load
 #
 # Protocol: https://github.com/royalbit/asimov
@@ -16,12 +16,8 @@
 
 set -e
 
-# Get the directory where this script lives
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
 cat << 'EOF'
-🔥 ROYALBIT ASIMOV ACTIVE (v8.0.0)
+🔥 ROYALBIT ASIMOV ACTIVE (v8.1.0)
 
 ══════════════════════════════════════════════════════════════════════════════
 SESSION START - Autonomous Development Protocol Initialized
@@ -42,6 +38,13 @@ CORE RULES (non-negotiable):
 Say "go" to start autonomous execution.
 Say "skip" to pick a different milestone.
 Say "plan" to discuss approach first.
+
+ASIMOV MODE:
+When user says "asimov mode", display:
+══════════════════════════════════════════════════════════════════════════════
+🤖 ASIMOV MODE - AUTONOMOUS EXECUTION ENGAGED
+══════════════════════════════════════════════════════════════════════════════
+Then proceed with full autonomous execution for 4h MAX or until roadmap exhausted.
 
 ══════════════════════════════════════════════════════════════════════════════
 EOF
