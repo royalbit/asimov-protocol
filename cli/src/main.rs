@@ -15,8 +15,6 @@ use royalbit_asimov::{
     claude_pre_compact_hook,
     claude_session_start_hook,
     claude_settings_json,
-    // v8.1.0: Project type detection and templates (ADR-032)
-    detect_project_type,
     find_markdown_files,
     fix_markdown_file,
     get_cargo_version,
@@ -39,21 +37,12 @@ use royalbit_asimov::{
     SemanticConfig,
     Severity,
     SycophancyStatus,
-    // Schema exports for editor integration
-    ASIMOV_SCHEMA,
     CORE_PRINCIPLES,
-    FRESHNESS_SCHEMA,
     GREEN_MOTTO,
     GREEN_PRINCIPLES,
-    GREEN_SCHEMA,
     HUMAN_VETO_COMMANDS,
-    MIGRATIONS_SCHEMA,
-    ROADMAP_SCHEMA,
-    SPRINT_SCHEMA,
     SYCOPHANCY_MOTTO,
     SYCOPHANCY_PRINCIPLES,
-    SYCOPHANCY_SCHEMA,
-    WARMUP_SCHEMA,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -123,13 +112,12 @@ enum Commands {
     /// Full setup: creates project files, installs hooks, cleans up deprecated files.
     /// Existing roadmap.yaml is always preserved (project data).
     Init {
-        /// Project name (defaults to current directory name)
+        /// Project name (required)
         #[arg(short, long)]
-        name: Option<String>,
+        name: String,
 
-        /// Project type for language-specific templates (generic, rust, python, node, go, flutter, docs)
-        /// Auto-detected from Cargo.toml, package.json, pubspec.yaml, etc.
-        #[arg(short = 't', long = "type", default_value = "")]
+        /// Project type: generic, rust, python, node, go, flutter, docs (required)
+        #[arg(short = 't', long = "type")]
         project_type: String,
 
         /// Output directory (defaults to current directory)
@@ -139,12 +127,6 @@ enum Commands {
         /// Overwrite existing files (including roadmap.yaml)
         #[arg(long)]
         force: bool,
-    },
-
-    /// Check a single file (alias for validate)
-    Check {
-        /// File to check
-        file: PathBuf,
     },
 
     /// Lint markdown documentation for common issues
@@ -168,17 +150,6 @@ enum Commands {
         /// Show quality gates from warmup.yaml
         #[arg(short, long)]
         verbose: bool,
-    },
-
-    /// Export JSON schemas for editor integration (VS Code, etc.)
-    Schema {
-        /// Schema to export (all, warmup, sprint, roadmap, asimov, freshness, green, sycophancy, migrations)
-        #[arg(default_value = "all")]
-        name: String,
-
-        /// Output directory for schema files (default: stdout for single, ./schemas/ for all)
-        #[arg(short, long)]
-        output: Option<PathBuf>,
     },
 
     /// Check for updates and optionally self-update the binary
@@ -237,15 +208,13 @@ fn main() -> ExitCode {
             project_type,
             output,
             force,
-        }) => cmd_init(name, &project_type, &output, force),
-        Some(Commands::Check { file }) => cmd_validate(&file, false, true),
+        }) => cmd_init(&name, &project_type, &output, force),
         Some(Commands::LintDocs {
             path,
             fix,
             semantic,
         }) => cmd_lint_docs(&path, fix, semantic),
         Some(Commands::Refresh { verbose }) => cmd_refresh(verbose),
-        Some(Commands::Schema { name, output }) => cmd_schema(&name, output),
         Some(Commands::Update { check }) => cmd_update(check),
         Some(Commands::Warmup { path }) => cmd_warmup(&path),
         Some(Commands::Stats) => cmd_stats(),
@@ -1920,9 +1889,8 @@ fn install_hooks(output: &Path, force: bool) -> bool {
     success
 }
 
-fn cmd_init(name: Option<String>, project_type_str: &str, output: &Path, force: bool) -> ExitCode {
-    // v8.2.0: Full setup by default - no more --asimov flag
-    // Always: create files + install hooks + cleanup deprecated
+fn cmd_init(name: &str, project_type_str: &str, output: &Path, force: bool) -> ExitCode {
+    // v8.16.0: --name and --type are now required (no auto-detection)
     // Protocols are hardcoded in binary (ADR-031)
     // Project data: roadmap.yaml + project.yaml (ADR-032)
 
@@ -1943,35 +1911,18 @@ fn cmd_init(name: Option<String>, project_type_str: &str, output: &Path, force: 
         }
     }
 
-    // Detect or parse project type (ADR-032)
-    let project_type: ProjectType = if project_type_str.is_empty() {
-        let detected = detect_project_type(output);
-        println!(
-            "  {} Detected project type: {}",
-            "AUTO".bold().cyan(),
-            detected
-        );
-        detected
-    } else {
-        match project_type_str.parse() {
-            Ok(pt) => pt,
-            Err(e) => {
-                eprintln!("{} {}", "ERROR".bold().red(), e);
-                return ExitCode::FAILURE;
-            }
+    // Parse project type (required - no auto-detection)
+    let project_type: ProjectType = match project_type_str.parse() {
+        Ok(pt) => pt,
+        Err(e) => {
+            eprintln!("{} {}", "ERROR".bold().red(), e);
+            return ExitCode::FAILURE;
         }
     };
 
-    // Get project name from argument or directory name
-    let project_name = name.unwrap_or_else(|| {
-        output
-            .file_name()
-            .and_then(|n| n.to_str())
-            .map(|s| s.to_string())
-            .unwrap_or_else(|| "my-project".to_string())
-    });
+    let project_name = name.to_string();
 
-    println!("{}", "RoyalBit Asimov Init (v8.2.0)".bold().green());
+    println!("{}", "RoyalBit Asimov Init (v8.16.0)".bold().green());
     println!("  Protocols are hardcoded in binary (ADR-031)");
     println!("  Project data: roadmap.yaml + project.yaml (ADR-032)");
     println!();
@@ -2316,115 +2267,3 @@ fn find_git_root(start: &Path) -> Option<PathBuf> {
     }
 }
 
-/// Export JSON schemas for editor integration
-fn cmd_schema(name: &str, output: Option<PathBuf>) -> ExitCode {
-    let schemas: Vec<(&str, &str)> = vec![
-        ("warmup", WARMUP_SCHEMA),
-        ("sprint", SPRINT_SCHEMA),
-        ("roadmap", ROADMAP_SCHEMA),
-        ("asimov", ASIMOV_SCHEMA),
-        ("freshness", FRESHNESS_SCHEMA),
-        ("green", GREEN_SCHEMA),
-        ("sycophancy", SYCOPHANCY_SCHEMA),
-        ("migrations", MIGRATIONS_SCHEMA),
-    ];
-
-    let name_lower = name.to_lowercase();
-
-    if name_lower == "all" {
-        // Export all schemas to directory
-        let output_dir = output.unwrap_or_else(|| PathBuf::from("schemas"));
-
-        // Create output directory
-        if let Err(e) = std::fs::create_dir_all(&output_dir) {
-            eprintln!(
-                "{} Failed to create directory: {}",
-                "Error:".bold().red(),
-                e
-            );
-            return ExitCode::FAILURE;
-        }
-
-        println!("{}", "RoyalBit Asimov Schema Export".bold().green());
-        println!();
-
-        for (schema_name, schema_content) in &schemas {
-            let filename = format!("{}.schema.json", schema_name);
-            let file_path = output_dir.join(&filename);
-
-            match std::fs::write(&file_path, schema_content) {
-                Ok(_) => {
-                    println!("  {} {}", "CREATE".bold().green(), file_path.display());
-                }
-                Err(e) => {
-                    eprintln!("  {} {} - {}", "ERROR".bold().red(), file_path.display(), e);
-                }
-            }
-        }
-
-        println!();
-        println!(
-            "{} {} schema(s) exported to {}",
-            "Success:".bold().green(),
-            schemas.len(),
-            output_dir.display()
-        );
-
-        // Print VS Code integration hint
-        println!();
-        println!("{}", "VS Code Integration:".bold().cyan());
-        println!("  Add to .vscode/settings.json:");
-        println!();
-        println!("  {{");
-        println!("    \"yaml.schemas\": {{");
-        for (i, (schema_name, _)) in schemas.iter().enumerate() {
-            let is_last = i == schemas.len() - 1;
-            println!(
-                "      \"./schemas/{}.schema.json\": \"**/{}.yaml\"{}",
-                schema_name,
-                schema_name,
-                if is_last { "" } else { "," }
-            );
-        }
-        println!("    }}");
-        println!("  }}");
-
-        ExitCode::SUCCESS
-    } else {
-        // Export single schema to stdout or file
-        let schema = schemas.iter().find(|(n, _)| *n == name_lower);
-
-        match schema {
-            Some((schema_name, schema_content)) => {
-                if let Some(output_path) = output {
-                    // Write to file
-                    match std::fs::write(&output_path, schema_content) {
-                        Ok(_) => {
-                            println!(
-                                "{} {} schema written to {}",
-                                "Success:".bold().green(),
-                                schema_name,
-                                output_path.display()
-                            );
-                            ExitCode::SUCCESS
-                        }
-                        Err(e) => {
-                            eprintln!("{} Failed to write file: {}", "Error:".bold().red(), e);
-                            ExitCode::FAILURE
-                        }
-                    }
-                } else {
-                    // Output to stdout
-                    println!("{}", schema_content);
-                    ExitCode::SUCCESS
-                }
-            }
-            None => {
-                eprintln!("{} Unknown schema: {}", "Error:".bold().red(), name);
-                eprintln!();
-                eprintln!("Available schemas: all, warmup, sprint, roadmap, asimov, freshness, green, sycophancy, migrations");
-                ExitCode::FAILURE
-            }
-        }
-    }
-}

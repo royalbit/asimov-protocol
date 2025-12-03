@@ -311,27 +311,6 @@ fn e2e_validate_directory_no_protocol_files() {
     );
 }
 
-// ========== Check Command Tests ==========
-
-#[test]
-fn e2e_check_is_alias_for_validate() {
-    let file = test_data_path("valid_warmup.yaml");
-
-    let output = Command::new(binary_path())
-        .arg("check")
-        .arg(&file)
-        .output()
-        .expect("Failed to execute");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    assert!(
-        output.status.success(),
-        "Check should work like validate, stdout: {stdout}, stderr: {stderr}"
-    );
-}
-
 // ========== Init Command Tests ==========
 
 #[test]
@@ -340,6 +319,10 @@ fn e2e_init_creates_roadmap() {
 
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -367,6 +350,10 @@ fn e2e_init_creates_roadmap_and_project() {
 
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -424,9 +411,10 @@ fn e2e_init_type_rust() {
 fn e2e_init_type_generic() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("generic")
         .arg("--output")
@@ -451,10 +439,11 @@ fn e2e_init_type_generic() {
 fn e2e_init_type_invalid() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.1.0: --type is used to generate project.yaml
-    // Invalid types should fail with error message
+    // v8.16.0: Invalid types should fail with error message
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("invalid_type")
         .arg("--output")
@@ -462,7 +451,7 @@ fn e2e_init_type_invalid() {
         .output()
         .expect("Failed to execute");
 
-    // v8.1.0: Should fail because invalid type is not recognized
+    // Should fail because invalid type is not recognized
     assert!(
         !output.status.success(),
         "Init should fail with invalid type"
@@ -488,6 +477,10 @@ fn e2e_init_skips_existing_without_force() {
 
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -519,11 +512,13 @@ fn e2e_init_force_overwrites() {
 
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("new-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--force")
         .arg("--output")
         .arg(temp_dir.path())
-        .arg("--name")
-        .arg("new-project")
         .output()
         .expect("Failed to execute");
 
@@ -589,9 +584,10 @@ fn e2e_init_type_python() {
 fn e2e_init_type_python_alias() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("py")
         .arg("--output")
@@ -648,10 +644,11 @@ fn e2e_init_type_node() {
 fn e2e_init_type_node_aliases() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     // Test 'js' alias
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("js")
         .arg("--output")
@@ -708,9 +705,10 @@ fn e2e_init_type_go() {
 fn e2e_init_type_go_alias() {
     let temp_dir = TempDir::new().unwrap();
 
-    // v8.0.0: --type is accepted but ignored (protocols are hardcoded in binary)
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("golang")
         .arg("--output")
@@ -737,6 +735,8 @@ fn e2e_init_python_generated_files_pass_validation() {
 
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("python")
         .arg("--output")
@@ -767,6 +767,8 @@ fn e2e_init_node_generated_files_pass_validation() {
 
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("node")
         .arg("--output")
@@ -797,6 +799,8 @@ fn e2e_init_go_generated_files_pass_validation() {
 
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("go")
         .arg("--output")
@@ -830,6 +834,10 @@ fn e2e_init_generated_files_pass_validation() {
     // Generate all files
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -860,6 +868,8 @@ fn e2e_init_rust_generated_files_pass_validation() {
     // Generate Rust files
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
         .arg("--type")
         .arg("rust")
         .arg("--output")
@@ -906,141 +916,6 @@ fn e2e_validate_repo_protocol_files() {
         output.status.success(),
         "Repo protocol files should be valid, stdout: {stdout}, stderr: {stderr}"
     );
-}
-
-// ========== Schema Command Tests ==========
-
-#[test]
-fn e2e_schema_help_shows_options() {
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("--help")
-        .output()
-        .expect("Failed to execute");
-
-    assert!(output.status.success(), "Schema help should succeed");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("warmup"), "Should list warmup schema");
-    assert!(stdout.contains("sprint"), "Should list sprint schema");
-    assert!(stdout.contains("asimov"), "Should list asimov schema");
-    assert!(stdout.contains("--output"), "Should show output option");
-}
-
-#[test]
-fn e2e_schema_single_to_stdout() {
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("warmup")
-        .output()
-        .expect("Failed to execute");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    assert!(
-        output.status.success(),
-        "Schema warmup should succeed, stdout: {stdout}, stderr: {stderr}"
-    );
-
-    assert!(stdout.contains("$schema"), "Should contain JSON schema");
-    assert!(
-        stdout.contains("identity"),
-        "Should contain warmup properties"
-    );
-}
-
-#[test]
-fn e2e_schema_all_to_directory() {
-    let temp_dir = TempDir::new().unwrap();
-
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("all")
-        .arg("--output")
-        .arg(temp_dir.path())
-        .output()
-        .expect("Failed to execute");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    assert!(
-        output.status.success(),
-        "Schema all should succeed, stdout: {stdout}, stderr: {stderr}"
-    );
-
-    // Check all schema files were created
-    assert!(
-        temp_dir.path().join("warmup.schema.json").exists(),
-        "warmup.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("sprint.schema.json").exists(),
-        "sprint.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("roadmap.schema.json").exists(),
-        "roadmap.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("asimov.schema.json").exists(),
-        "asimov.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("freshness.schema.json").exists(),
-        "freshness.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("green.schema.json").exists(),
-        "green.schema.json should exist"
-    );
-    assert!(
-        temp_dir.path().join("sycophancy.schema.json").exists(),
-        "sycophancy.schema.json should exist"
-    );
-}
-
-#[test]
-fn e2e_schema_invalid_name() {
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("invalid_schema")
-        .output()
-        .expect("Failed to execute");
-
-    assert!(!output.status.success(), "Invalid schema name should fail");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    let combined = format!("{stdout}{stderr}");
-
-    assert!(
-        combined.contains("Unknown schema"),
-        "Should report unknown schema, got: {combined}"
-    );
-}
-
-#[test]
-fn e2e_schema_output_is_valid_json() {
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("asimov")
-        .output()
-        .expect("Failed to execute");
-
-    assert!(output.status.success(), "Schema asimov should succeed");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-
-    // Verify it's valid JSON by parsing
-    let parsed: Result<serde_json::Value, _> = serde_json::from_str(&stdout);
-    assert!(parsed.is_ok(), "Output should be valid JSON");
-
-    let json = parsed.unwrap();
-    assert!(json.get("$schema").is_some(), "Should have $schema field");
-    assert!(json.get("title").is_some(), "Should have title field");
-    assert!(json.get("properties").is_some(), "Should have properties");
 }
 
 // ========== Lint-Docs Semantic Tests ==========
@@ -1276,10 +1151,12 @@ fn e2e_init_output_creates_files_in_target() {
 
     let output = Command::new(binary_path())
         .arg("init")
-        .arg("--output")
-        .arg(temp_dir.path())
         .arg("--name")
         .arg("test-forge")
+        .arg("--type")
+        .arg("generic")
+        .arg("--output")
+        .arg(temp_dir.path())
         .output()
         .expect("Failed to execute");
 
@@ -1332,6 +1209,10 @@ fn e2e_init_output_with_force_overwrites_target() {
     // Run init with --force
     let output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .arg("--force")
@@ -1407,77 +1288,16 @@ fn e2e_lint_docs_external_path_with_fix() {
 }
 
 #[test]
-fn e2e_check_external_file_path() {
-    let temp_dir = TempDir::new().unwrap();
-
-    // Create a roadmap file
-    let asimov_dir = temp_dir.path().join(".asimov");
-    fs::create_dir_all(&asimov_dir).unwrap();
-    let roadmap_path = asimov_dir.join("roadmap.yaml");
-    fs::write(
-        &roadmap_path,
-        "current:\n  version: '2.0.0'\n  status: released\n  summary: Test",
-    )
-    .unwrap();
-
-    let output = Command::new(binary_path())
-        .arg("check")
-        .arg(&roadmap_path)
-        .output()
-        .expect("Failed to execute");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    assert!(
-        output.status.success(),
-        "Check should succeed, stdout: {stdout}, stderr: {stderr}"
-    );
-    assert!(
-        stdout.contains("roadmap") && stdout.contains("OK"),
-        "Should validate roadmap successfully"
-    );
-}
-
-#[test]
-fn e2e_schema_output_to_external_path() {
-    let temp_dir = TempDir::new().unwrap();
-    let output_dir = temp_dir.path().join("schemas");
-
-    let output = Command::new(binary_path())
-        .arg("schema")
-        .arg("all")
-        .arg("--output")
-        .arg(&output_dir)
-        .output()
-        .expect("Failed to execute");
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let stderr = String::from_utf8_lossy(&output.stderr);
-
-    assert!(
-        output.status.success(),
-        "Schema --output should succeed, stdout: {stdout}, stderr: {stderr}"
-    );
-
-    // All schemas should be in the output directory
-    assert!(
-        output_dir.join("warmup.schema.json").exists(),
-        "warmup.schema.json should exist in output dir"
-    );
-    assert!(
-        output_dir.join("roadmap.schema.json").exists(),
-        "roadmap.schema.json should exist in output dir"
-    );
-}
-
-#[test]
 fn e2e_warmup_runs_from_project_dir() {
     let temp_dir = TempDir::new().unwrap();
 
     // Initialize the project
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
@@ -1516,6 +1336,10 @@ fn e2e_doctor_runs_from_project_dir() {
     // Initialize the project
     let init_output = Command::new(binary_path())
         .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
         .arg("--output")
         .arg(temp_dir.path())
         .output()
