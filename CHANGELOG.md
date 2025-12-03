@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.10.0] - 2025-12-02
+
+### Exhaustive Execution Protocol (ADR-036)
+
+**Complete what you start.**
+
+Observable pattern: Claude declares tasks complete after partial execution. Research into official Anthropic documentation (2025) revealed:
+
+- **Effort parameter** (Opus 4.5): Controls reasoning depth, not task breadth
+- **Extended thinking** (Claude Code): Allocates thinking budget, not completion tracking
+- **Design philosophy**: Iterative correction expected, not single-pass completion
+
+**The gap**: No mechanism to specify "when I say all, I mean all."
+
+**Solution**: New `exhaustive` protocol injected into context:
+
+```yaml
+exhaustive:
+  triggers: ["all", "every", "each", "entire", "complete"]
+  escape: ["sample a few", "spot check", "quick scan"]
+  rules:
+    - When exhaustive intent detected, disable sampling
+    - Track progress: n of N
+    - Do not declare completion until N of N
+```
+
+**Files added:**
+- `cli/src/protocols/exhaustive.tpl` - Protocol template
+- `docs/adr/036-exhaustive-execution-protocol.md` - Decision record
+- `docs/research/exhaustive-execution-research.md` - Full research notes
+
+See [ADR-036](docs/adr/036-exhaustive-execution-protocol.md) for full rationale.
+
+---
+
 ## [8.9.1] - 2025-12-02
 
 ### GitHub About - Foundation Complete
