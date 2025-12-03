@@ -4,39 +4,15 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.9.0"
+  version: "8.9.1"
   status: released
-  summary: "Qowat Milat Reframe - Truth without prosecution"
-  goal: Ethics
-  adr: "ADR-035"
+  summary: "GitHub About - Foundation Complete"
+  goal: Marketing
   deliverables:
-    - "[x] Reframe docs/AI_REALITY.md (13 edits)"
-    - "[x] Reframe docs/adr/022-date-aware-search-protocol.md (7 edits)"
-    - "[x] Reframe docs/adr/015-anti-sycophancy-protocol.md (5 edits)"
-    - "[x] Reframe README.md (2 edits)"
-    - "[x] Reframe CHANGELOG.md (1 edit)"
-    - "[x] Reframe docs/adr/023-inaction-principle.md (2 edits)"
-    - "[x] Reframe docs/ORIGIN_STORY.md (1 edit)"
-    - "[x] Create ADR-035: Qowat Milat Reframe"
-    - "[x] Validation: grep confirms no accusatory phrases remain"
+    - "[x] Update GitHub About description"
+    - "[x] Verify via gh repo view"
     - "[x] Update CHANGELOG.md"
-    - "[ ] Tests pass"
-    - "[ ] Commit, push, release"
-
-next:
-  - version: "8.9.1"
-    summary: "GitHub About - Foundation Complete"
-    goal: Marketing
-    priority: NORMAL
-    rationale: |
-      Update GitHub repository "About" section to reflect v8.8.0 milestone.
-      The Foundation is complete - communicate this to visitors.
-    deliverables:
-      - "[ ] Update GitHub About description"
-      - "    CURRENT: (check current)"
-      - "    NEW: Reflect 'Foundation Complete' status"
-      - "    Include: Ethics, bounded autonomy, sustainability"
-      - "[ ] Verify via gh repo edit or GitHub UI"
+    - "[x] Commit, push, release"
 
 backlog:
   - "Research: Incomplete Task Execution Patterns"
