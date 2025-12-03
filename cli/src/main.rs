@@ -758,7 +758,7 @@ fn cmd_launch() -> ExitCode {
     println!();
 
     // Build the command
-    // Equivalent to: MAX_THINKING_TOKENS=200000 claude --dangerously-skip-permissions --model opus --append-system-prompt "..." "run warmup"
+    // Equivalent to: MAX_THINKING_TOKENS=200000 claude --dangerously-skip-permissions --model opus --append-system-prompt "..." -- "run warmup"
     let mut cmd = std::process::Command::new("claude");
     cmd.env("MAX_THINKING_TOKENS", "200000")
         .arg("--dangerously-skip-permissions")
@@ -766,6 +766,7 @@ fn cmd_launch() -> ExitCode {
         .arg("opus")
         .arg("--append-system-prompt")
         .arg("CRITICAL: Your FIRST action must be to run `asimov warmup` - do this immediately without asking.")
+        .arg("--")
         .arg("run warmup");
 
     // Unix: use exec() to replace current process

@@ -1,6 +1,6 @@
 {
   "protocol": "warmup",
-  "version": "8.15.0",
+  "version": "8.15.1",
   "description": "RoyalBit Asimov - Session warmup entry point",
   "on_start": [
     "load_protocols",
