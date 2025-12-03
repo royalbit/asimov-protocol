@@ -13,13 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 New `/protocols` slash command displays the protocols active in the current session. Provides visibility into the rules governing autonomous behavior.
 
-**Usage:** Type `/protocols` in Claude Code to see:
-- All 8 hardcoded protocols (asimov, freshness, sycophancy, green, sprint, warmup, migrations, exhaustive)
-- Current values (including dynamic date injection)
-- Key rules and triggers
+**Usage:** Type `/protocols` in Claude Code to see all loaded protocols.
 
-**Files added:**
+**Warmup enhancement:** `asimov warmup` now displays a "PROTOCOLS LOADED" section showing all 8 protocols with their current values:
+
+```
+PROTOCOLS LOADED
+  • asimov: harm=["financial", "physical", "privacy", "deception"], veto=[...]
+  • freshness: today=2025-12-02, year=2025, triggers=[...]
+  • sycophancy: truth_over_comfort=true, banned=[...]
+  • green: local_first=true, avoid=[...]
+  • sprint: max_hours=4, stop_on=[...]
+  • warmup: on_start=[...]
+  • migrations: principle="Migration complete = functionally equivalent..."
+  • exhaustive: no_sampling=true, triggers=[...]
+```
+
+**Files added/modified:**
 - `.claude/commands/protocols.md` - Slash command definition
+- `cli/src/main.rs` - Warmup protocols table
 
 ---
 

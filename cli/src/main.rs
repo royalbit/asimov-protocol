@@ -565,6 +565,58 @@ fn cmd_warmup() -> ExitCode {
         "  {} Protocols compiled from binary (cannot be bypassed)",
         "✓".green()
     );
+
+    // v8.11.0: Protocols table for visibility
+    println!();
+    println!("{}", "PROTOCOLS LOADED".bold());
+    let protocols = royalbit_asimov::compile_protocols();
+    println!(
+        "  {} asimov: harm={:?}, veto={:?}",
+        "•".bright_cyan(),
+        protocols.asimov.harm,
+        protocols.asimov.veto
+    );
+    println!(
+        "  {} freshness: today={}, year={}, triggers={:?}",
+        "•".bright_cyan(),
+        protocols.freshness.today,
+        protocols.freshness.year,
+        protocols.freshness.search
+    );
+    println!(
+        "  {} sycophancy: truth_over_comfort={}, banned={:?}",
+        "•".bright_cyan(),
+        protocols.sycophancy.truth_over_comfort,
+        protocols.sycophancy.banned
+    );
+    println!(
+        "  {} green: local_first={}, avoid={:?}",
+        "•".bright_cyan(),
+        protocols.green.local_first,
+        protocols.green.avoid
+    );
+    println!(
+        "  {} sprint: max_hours={}, stop_on={:?}",
+        "•".bright_cyan(),
+        protocols.sprint.max_hours,
+        protocols.sprint.stop_on
+    );
+    println!(
+        "  {} warmup: on_start={:?}",
+        "•".bright_cyan(),
+        protocols.warmup.on_start
+    );
+    println!(
+        "  {} migrations: principle=\"{}\"",
+        "•".bright_cyan(),
+        protocols.migrations.principle
+    );
+    println!(
+        "  {} exhaustive: no_sampling={}, triggers={:?}",
+        "•".bright_cyan(),
+        protocols.exhaustive.no_sampling,
+        protocols.exhaustive.triggers
+    );
     println!();
     println!("{}", "Context injection:".dimmed());
     println!("{}", to_minified_json());
