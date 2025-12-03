@@ -5,14 +5,14 @@
 
 current:
   version: "8.11.0"
-  status: in_progress
+  status: released
   summary: "Protocol Viewer Slash Command"
   goal: Feature
   deliverables:
     - "[x] Add `/protocols` slash command"
     - "[x] Display loaded protocols in readable table format"
     - "[x] Update CHANGELOG.md"
-    - "[ ] Commit, push, release"
+    - "[x] Commit, push, release"
 
 previous:
   version: "8.10.0"
