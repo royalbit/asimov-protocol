@@ -19,4 +19,5 @@ current:
     - "[x] Update CHANGELOG.md"
     - "[x] Commit, push, release"
 
-backlog: []
+backlog:
+  - "Decision: Reframe v8.10.0 commit message (d8626d8) - rebase or leave history"
