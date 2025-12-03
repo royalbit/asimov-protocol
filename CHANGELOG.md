@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.13.0] - 2025-12-02
+
+### Library Crate Export
+
+**Use as dependency.**
+
+Added `[lib]` section to Cargo.toml, enabling use as a library dependency via git:
+
+```toml
+[dependencies]
+royalbit-asimov = { git = "https://github.com/royalbit/asimov" }
+```
+
+All public APIs from `lib.rs` are now available to dependent crates: ethics, green, sycophancy, protocols, validator, templates, etc.
+
+---
+
 ## [8.12.0] - 2025-12-02
 
 ### Qowat Milat Commit History
