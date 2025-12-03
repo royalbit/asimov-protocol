@@ -26,6 +26,9 @@ const WARMUP_PROTOCOL: &str = include_str!("warmup.tpl");
 /// Migrations protocol - Functional equivalence (Priority 2)
 const MIGRATIONS_PROTOCOL: &str = include_str!("migrations.tpl");
 
+/// Exhaustive protocol - Complete what you start (Priority 1)
+const EXHAUSTIVE_PROTOCOL: &str = include_str!("exhaustive.tpl");
+
 /// Compiled protocol context for minimal token usage
 #[derive(Debug, Clone, Serialize)]
 pub struct CompiledProtocols {
@@ -36,6 +39,7 @@ pub struct CompiledProtocols {
     pub sprint: SprintProtocol,
     pub warmup: WarmupProtocol,
     pub migrations: MigrationsProtocol,
+    pub exhaustive: ExhaustiveProtocol,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -82,6 +86,14 @@ pub struct MigrationsProtocol {
     pub red_flags: Vec<&'static str>,
 }
 
+#[derive(Debug, Clone, Serialize)]
+pub struct ExhaustiveProtocol {
+    pub no_sampling: bool,
+    pub track_progress: bool,
+    pub triggers: Vec<&'static str>,
+    pub escape: Vec<&'static str>,
+}
+
 /// Get today's date in YYYY-MM-DD format
 fn get_today() -> String {
     chrono::Local::now().format("%Y-%m-%d").to_string()
@@ -126,6 +138,10 @@ pub fn get_warmup_protocol() -> String {
 
 pub fn get_migrations_protocol() -> String {
     inject_dates(MIGRATIONS_PROTOCOL)
+}
+
+pub fn get_exhaustive_protocol() -> String {
+    inject_dates(EXHAUSTIVE_PROTOCOL)
 }
 
 /// Compile all protocols into a minimal JSON blob for context injection
@@ -198,6 +214,20 @@ pub fn compile_protocols() -> CompiledProtocols {
                 "Silent behavior changes",
             ],
         },
+        exhaustive: ExhaustiveProtocol {
+            no_sampling: true,
+            track_progress: true,
+            triggers: vec![
+                "all",
+                "every",
+                "each",
+                "entire",
+                "complete",
+                "don't sample",
+                "actually read",
+            ],
+            escape: vec!["sample a few", "spot check", "quick scan"],
+        },
     }
 }
 
@@ -233,6 +263,8 @@ mod tests {
         assert!(protocols.freshness.today.len() == 10); // YYYY-MM-DD
         assert!(protocols.sycophancy.truth_over_comfort);
         assert!(protocols.green.local_first);
+        assert!(protocols.exhaustive.no_sampling);
+        assert!(protocols.exhaustive.triggers.contains(&"all"));
     }
 
     #[test]
@@ -248,6 +280,7 @@ mod tests {
         assert!(json.contains("\"sprint\""));
         assert!(json.contains("\"warmup\""));
         assert!(json.contains("\"migrations\""));
+        assert!(json.contains("\"exhaustive\""));
     }
 
     #[test]
@@ -261,5 +294,6 @@ mod tests {
         assert!(SPRINT_PROTOCOL.contains("hours"));
         assert!(WARMUP_PROTOCOL.contains("protocol"));
         assert!(MIGRATIONS_PROTOCOL.contains("Migration"));
+        assert!(EXHAUSTIVE_PROTOCOL.contains("sampling"));
     }
 }

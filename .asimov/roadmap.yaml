@@ -4,15 +4,19 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.9.1"
+  version: "8.10.0"
   status: released
-  summary: "GitHub About - Foundation Complete"
-  goal: Marketing
+  summary: "Exhaustive Execution Protocol"
+  goal: Research
+  adr: "ADR-036"
   deliverables:
-    - "[x] Update GitHub About description"
-    - "[x] Verify via gh repo view"
+    - "[x] Search Anthropic docs (2025) for task completion behavior"
+    - "[x] Search for context/token optimization documentation"
+    - "[x] Search for thoroughness/exhaustive execution guidance"
+    - "[x] Document findings in research notes"
+    - "[x] Draft ADR-036: Exhaustive Execution Protocol"
+    - "[x] Implement exhaustive protocol in codebase"
     - "[x] Update CHANGELOG.md"
     - "[x] Commit, push, release"
 
-backlog:
-  - "Research: Incomplete Task Execution Patterns"
+backlog: []
