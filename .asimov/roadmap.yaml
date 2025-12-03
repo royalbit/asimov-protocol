@@ -10,18 +10,72 @@ current:
   goal: Quality
   priority: HIGH
   deliverables:
-    # From validation backlog
-    - "[ ] Fix: asimov (no args) launcher - try spawn() instead of exec() for proper Claude Code launch with warmup"
-    - "[ ] Fix: asimov init MUST require --name and --type flags (no auto-detection)"
-    - "[ ] Fix: asimov validate - no args, validate ALL (protocols .json vs hardcoded, roadmap.yaml, project.yaml vs schemas)"
-    - "[ ] Remove: asimov check command (redundant with simplified validate)"
-    - "[ ] Fix: asimov lint-docs - use markdownlint-cli2, scan ALL .md files in ./ and subdirs"
-    - "[ ] Fix: asimov refresh - regenerate .json protocol files, update roadmap.yaml to new schema if needed"
-    - "[ ] Remove: asimov schema command + ADR (CLI autonomous mode, no IDE integration)"
-    - "[ ] Fix: asimov update - download correct binary for platform from GH releases, install to current PATH location"
-    - "[ ] Fix: asimov warmup - simplify for mid-session recovery (just milestone + protocols JSON), verbose only on session start"
-    - "[ ] Fix: asimov stats - show ENTIRE project stats (since asimov init) + current session, use git tag to mark init point"
-    - "[ ] Fix: asimov doctor - auto-create empty roadmap.yaml if missing (don't suggest init)"
+    # 1. Launcher
+    - "[ ] Fix: asimov (no args) launcher - spawn() instead of exec()"
+    - "[ ] Unit tests for launcher"
+    - "[ ] E2E tests for launcher"
+    - "[ ] Update --help if needed"
+
+    # 2. Init
+    - "[ ] Fix: asimov init - require --name and --type flags"
+    - "[ ] Unit tests for init"
+    - "[ ] E2E tests for init"
+    - "[ ] Update --help for init"
+    - "[ ] Update README if needed"
+
+    # 3. Validate
+    - "[ ] Fix: asimov validate - no args, validate ALL (protocols .json vs hardcoded, roadmap.yaml, project.yaml)"
+    - "[ ] Unit tests for validate"
+    - "[ ] E2E tests for validate"
+    - "[ ] Update --help for validate"
+
+    # 4. Remove check
+    - "[ ] Remove: asimov check command"
+    - "[ ] Remove check from --help"
+    - "[ ] Update README if needed"
+    - "[ ] ADR: why check was removed"
+
+    # 5. Lint-docs
+    - "[ ] Fix: asimov lint-docs - use markdownlint-cli2, scan ALL .md files"
+    - "[ ] Unit tests for lint-docs"
+    - "[ ] E2E tests for lint-docs"
+    - "[ ] Update --help if needed"
+
+    # 6. Refresh
+    - "[ ] Fix: asimov refresh - regenerate .json protocol files, update roadmap to new schema"
+    - "[ ] Unit tests for refresh"
+    - "[ ] E2E tests for refresh"
+    - "[ ] Update --help for refresh"
+
+    # 7. Remove schema
+    - "[ ] Remove: asimov schema command"
+    - "[ ] Remove schema from --help"
+    - "[ ] Update README if needed"
+    - "[ ] ADR: CLI autonomous mode, no IDE integration"
+
+    # 8. Update
+    - "[ ] Fix: asimov update - download binary from GH releases, install to current PATH"
+    - "[ ] Unit tests for update"
+    - "[ ] E2E tests for update"
+    - "[ ] Update --help if needed"
+
+    # 9. Warmup
+    - "[ ] Fix: asimov warmup - simplify for mid-session (just milestone + protocols JSON)"
+    - "[ ] Unit tests for warmup"
+    - "[ ] E2E tests for warmup"
+    - "[ ] Update --help if needed"
+
+    # 10. Stats
+    - "[ ] Fix: asimov stats - show ENTIRE project stats + current session, use git tag for init point"
+    - "[ ] Unit tests for stats"
+    - "[ ] E2E tests for stats"
+    - "[ ] Update --help if needed"
+
+    # 11. Doctor
+    - "[ ] Fix: asimov doctor - auto-create empty roadmap.yaml if missing"
+    - "[ ] Unit tests for doctor"
+    - "[ ] E2E tests for doctor"
+    - "[ ] Update --help if needed"
 
 next:
   - version: "8.17.0"
