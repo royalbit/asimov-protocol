@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.9.1] - 2025-12-02
+
+### GitHub About - Foundation Complete
+
+**Marketing update for repository discoverability.**
+
+Updated GitHub repository "About" section to reflect the v8.8.0 Foundation Complete milestone:
+
+> "RoyalBit Asimov - Self-evolving ethical AI. Foundation complete: Three Laws, bounded autonomy, green coding."
+
+Communicates core value proposition to visitors: ethics-first AI tooling with sustainable, bounded autonomy.
+
+---
+
 ## [8.9.0] - 2025-12-02
 
 ### Qowat Milat Reframe (ADR-035)
