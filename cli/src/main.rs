@@ -94,13 +94,6 @@ The Open Foundation: Creates Self-Evolving Autonomous AI projects with ethics bu
 Inspect the code. Challenge the rules. Fork if you disagree.
 Adoption through consent, not control.
 
-GREEN CODING - Why This Matters:
-  - Local validation: $0/file, ~0.002g CO2, <100ms
-  - Cloud AI validation: $0.02+/file, ~0.5g CO2, 1-3s
-  - Carbon reduction: 99.6% vs cloud AI
-
-Zero tokens. Zero emissions. Ship fast.
-
 Docs: https://github.com/royalbit/asimov")]
 #[command(version)]
 struct Cli {

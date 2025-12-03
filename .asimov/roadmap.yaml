@@ -4,99 +4,27 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.15.1"
+  version: "8.16.0"
   status: in_progress
-  summary: "User Validation of ALL Command Behaviors"
-  goal: Validation
-  priority: CRITICAL
+  summary: "Command Fixes from Validation"
+  goal: Quality
+  priority: HIGH
   deliverables:
-    # === NO SUBCOMMAND ===
-    - "[ ] asimov (no args) - should launch Claude Code from terminal"
-    - "[ ] asimov (no args) - inside Claude should run warmup instead"
-    - "[ ] asimov --help - show all commands"
-    - "[ ] asimov --version - show version number"
-
-    # === INIT ===
-    - "[ ] asimov init - default behavior (auto-detect type)"
-    - "[ ] asimov init --name <NAME> - set project name"
-    - "[ ] asimov init --type generic - generic template"
-    - "[ ] asimov init --type rust - rust template"
-    - "[ ] asimov init --type python - python template"
-    - "[ ] asimov init --type node - node template"
-    - "[ ] asimov init --type go - go template"
-    - "[ ] asimov init --type flutter - flutter template"
-    - "[ ] asimov init --type docs - docs template"
-    - "[ ] asimov init --output <DIR> - target directory"
-    - "[ ] asimov init --force - overwrite existing files"
-    - "[ ] asimov init in subdirectory with .asimov at root - should error"
-
-    # === VALIDATE ===
-    - "[ ] asimov validate - validate current directory"
-    - "[ ] asimov validate <PATH> - validate specific path"
-    - "[ ] asimov validate <FILE.yaml> - validate single file"
-    - "[ ] asimov validate --ethics-scan - scan for red flags"
-    - "[ ] asimov validate --no-regenerate - skip auto-regeneration"
-    - "[ ] asimov validate nonexistent.yaml - should error"
-    - "[ ] asimov validate nonexistent-dir - behavior?"
-
-    # === CHECK ===
-    - "[ ] asimov check <FILE> - validate single file"
-    - "[ ] asimov check nonexistent.yaml - should error"
-    - "[ ] asimov check non-protocol.txt - should error"
-
-    # === LINT-DOCS ===
-    - "[ ] asimov lint-docs - lint current directory"
-    - "[ ] asimov lint-docs <PATH> - lint specific path"
-    - "[ ] asimov lint-docs --fix - auto-fix issues"
-    - "[ ] asimov lint-docs --semantic - version consistency checks"
-    - "[ ] asimov lint-docs on empty dir - behavior?"
-
-    # === REFRESH ===
-    - "[ ] asimov refresh - show protocol reminder"
-    - "[ ] asimov refresh --verbose - show current milestone"
-
-    # === SCHEMA ===
-    - "[ ] asimov schema - export all schemas (default)"
-    - "[ ] asimov schema all - export all to ./schemas/"
-    - "[ ] asimov schema warmup - export warmup schema to stdout"
-    - "[ ] asimov schema sprint - export sprint schema"
-    - "[ ] asimov schema roadmap - export roadmap schema"
-    - "[ ] asimov schema asimov - export asimov schema"
-    - "[ ] asimov schema freshness - export freshness schema"
-    - "[ ] asimov schema green - export green schema"
-    - "[ ] asimov schema sycophancy - export sycophancy schema"
-    - "[ ] asimov schema migrations - export migrations schema"
-    - "[ ] asimov schema --output <DIR> - export to directory"
-    - "[ ] asimov schema invalid - should error with available list"
-
-    # === UPDATE ===
-    - "[ ] asimov update - check and install updates"
-    - "[ ] asimov update --check - only check, don't install"
-
-    # === WARMUP ===
-    - "[ ] asimov warmup - show milestone + validate + output protocols"
-    - "[ ] asimov warmup --path <DIR> - warmup in different directory"
-    - "[ ] asimov warmup without roadmap.yaml - should error"
-
-    # === STATS ===
-    - "[ ] asimov stats - show session statistics"
-    - "[ ] asimov stats outside git repo - behavior?"
-
-    # === DOCTOR ===
-    - "[ ] asimov doctor - run diagnostics"
-    - "[ ] asimov doctor with missing hooks - should show warnings"
-    - "[ ] asimov doctor with missing roadmap - should show errors"
-
-    # === REPLAY ===
-    - "[ ] asimov replay - show today's commits"
-    - "[ ] asimov replay --commits <N> - limit to N commits"
-    - "[ ] asimov replay --yesterday - show yesterday's commits"
-    - "[ ] asimov replay --since <TIME> - show commits since time"
-    - "[ ] asimov replay --verbose - show full diffs"
-    - "[ ] asimov replay outside git repo - should error"
+    # From validation backlog
+    - "[ ] Fix: asimov (no args) launcher - try spawn() instead of exec() for proper Claude Code launch with warmup"
+    - "[ ] Fix: asimov init MUST require --name and --type flags (no auto-detection)"
+    - "[ ] Fix: asimov validate - no args, validate ALL (protocols .json vs hardcoded, roadmap.yaml, project.yaml vs schemas)"
+    - "[ ] Remove: asimov check command (redundant with simplified validate)"
+    - "[ ] Fix: asimov lint-docs - use markdownlint-cli2, scan ALL .md files in ./ and subdirs"
+    - "[ ] Fix: asimov refresh - regenerate .json protocol files, update roadmap.yaml to new schema if needed"
+    - "[ ] Remove: asimov schema command + ADR (CLI autonomous mode, no IDE integration)"
+    - "[ ] Fix: asimov update - download correct binary for platform from GH releases, install to current PATH location"
+    - "[ ] Fix: asimov warmup - simplify for mid-session recovery (just milestone + protocols JSON), verbose only on session start"
+    - "[ ] Fix: asimov stats - show ENTIRE project stats (since asimov init) + current session, use git tag to mark init point"
+    - "[ ] Fix: asimov doctor - auto-create empty roadmap.yaml if missing (don't suggest init)"
 
 next:
-  - version: "8.16.0"
+  - version: "8.17.0"
     summary: "Comprehensive E2E Test Suite"
     goal: Quality
     priority: HIGH
@@ -104,10 +32,10 @@ next:
       - "[ ] E2E tests for all validated behaviors"
 
 previous:
-  version: "8.15.0"
+  version: "8.15.1"
   status: released
-  summary: "Review ALL Command Behaviors"
-  goal: Bugfix
+  summary: "User Validation of ALL Command Behaviors"
+  goal: Validation
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
