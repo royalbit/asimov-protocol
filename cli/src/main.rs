@@ -768,6 +768,7 @@ fn cmd_launch() -> ExitCode {
 }
 
 /// v8.5.0: Show session statistics
+/// v8.16.0: Show ENTIRE project stats + current session
 fn cmd_stats() -> ExitCode {
     println!();
     println!(
@@ -777,7 +778,7 @@ fn cmd_stats() -> ExitCode {
     );
     println!(
         "{}",
-        "📊 ROYALBIT ASIMOV - SESSION STATS".bold().bright_cyan()
+        "📊 ROYALBIT ASIMOV - PROJECT STATS".bold().bright_cyan()
     );
     println!(
         "{}",
@@ -786,7 +787,67 @@ fn cmd_stats() -> ExitCode {
     );
     println!();
 
-    // Get git stats for current session
+    // --- PROJECT STATS (from asimov init or first .asimov commit) ---
+    println!("{}", "PROJECT LIFETIME".bold());
+
+    // Try to find asimov init point: look for tag or first commit with .asimov
+    let project_start = std::process::Command::new("git")
+        .args(["log", "--oneline", "--diff-filter=A", "--", ".asimov/", "-1", "--format=%ci"])
+        .output()
+        .ok()
+        .and_then(|o| {
+            let output = String::from_utf8_lossy(&o.stdout).trim().to_string();
+            if output.is_empty() { None } else { Some(output) }
+        });
+
+    // Total commits in project (all time)
+    let total_commits = std::process::Command::new("git")
+        .args(["rev-list", "--count", "HEAD"])
+        .output()
+        .map(|o| String::from_utf8_lossy(&o.stdout).trim().parse::<usize>().unwrap_or(0))
+        .unwrap_or(0);
+
+    // Commits since .asimov was added
+    let asimov_commits = std::process::Command::new("git")
+        .args(["log", "--oneline", "--", ".asimov/"])
+        .output()
+        .map(|o| String::from_utf8_lossy(&o.stdout).lines().count())
+        .unwrap_or(0);
+
+    // Total lines of code (rough estimate)
+    let lines_of_code = std::process::Command::new("git")
+        .args(["ls-files"])
+        .output()
+        .ok()
+        .map(|o| {
+            let files: Vec<_> = String::from_utf8_lossy(&o.stdout)
+                .lines()
+                .filter(|f| f.ends_with(".rs") || f.ends_with(".ts") || f.ends_with(".py") || f.ends_with(".go"))
+                .map(|s| s.to_string())
+                .collect();
+
+            let mut total = 0usize;
+            for file in files {
+                if let Ok(content) = std::fs::read_to_string(&file) {
+                    total += content.lines().count();
+                }
+            }
+            total
+        })
+        .unwrap_or(0);
+
+    if let Some(start) = &project_start {
+        println!("  Asimov since: {}", start.split_whitespace().next().unwrap_or(start).bright_blue());
+    }
+    println!("  Total commits: {}", total_commits.to_string().bright_green());
+    println!("  Asimov commits: {}", asimov_commits.to_string().bright_green());
+    if lines_of_code > 0 {
+        println!("  Lines of code: {}", lines_of_code.to_string().bright_yellow());
+    }
+    println!();
+
+    // --- CURRENT SESSION STATS ---
+    println!("{}", "CURRENT SESSION".bold());
     let today = chrono::Local::now().format("%Y-%m-%d").to_string();
 
     // Count commits today
@@ -819,7 +880,18 @@ fn cmd_stats() -> ExitCode {
         .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
         .unwrap_or_default();
 
-    // Read roadmap for milestone info
+    println!("  Date: {}", today.bright_blue());
+    if let Some(start) = session_start {
+        println!("  Started: {}", start.bright_blue());
+    }
+    println!("  Commits today: {}", commits_today.to_string().bright_green());
+    if !lines_changed.is_empty() {
+        println!("  Changes: {}", lines_changed.bright_yellow());
+    }
+    println!();
+
+    // --- MILESTONE ---
+    println!("{}", "MILESTONE".bold());
     let roadmap_path = resolve_protocol_dir(Path::new(".")).join("roadmap.yaml");
     let milestone_info = std::fs::read_to_string(&roadmap_path)
         .ok()
@@ -832,25 +904,6 @@ fn cmd_stats() -> ExitCode {
             Some((version.to_string(), summary.to_string(), status.to_string()))
         });
 
-    // Display stats
-    println!("{}", "SESSION".bold());
-    println!("  Date: {}", today.bright_blue());
-    if let Some(start) = session_start {
-        println!("  Started: {}", start.bright_blue());
-    }
-    println!();
-
-    println!("{}", "GIT ACTIVITY".bold());
-    println!(
-        "  Commits today: {}",
-        commits_today.to_string().bright_green()
-    );
-    if !lines_changed.is_empty() {
-        println!("  Changes: {}", lines_changed.bright_yellow());
-    }
-    println!();
-
-    println!("{}", "MILESTONE".bold());
     if let Some((version, summary, status)) = milestone_info {
         let status_display = match status.as_str() {
             "released" => format!("{} {}", "✓".green(), "released".green()),
@@ -862,17 +915,8 @@ fn cmd_stats() -> ExitCode {
     } else {
         println!("  {} No roadmap found", "⚠".yellow());
     }
+
     println!();
-
-    // Calculate velocity if we have commits
-    if commits_today > 0 {
-        println!("{}", "VELOCITY".bold());
-        println!(
-            "  {} commits in session",
-            commits_today.to_string().bright_green()
-        );
-    }
-
     println!(
         "{}",
         "══════════════════════════════════════════════════════════════════════════════"

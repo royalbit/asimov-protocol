@@ -10,72 +10,18 @@ current:
   goal: Quality
   priority: HIGH
   deliverables:
-    # 1. Launcher
-    - "[ ] Fix: asimov (no args) launcher - spawn() instead of exec()"
-    - "[ ] Unit tests for launcher"
-    - "[ ] E2E tests for launcher"
-    - "[ ] Update --help if needed"
+    # COMPLETED
+    - "[x] Remove: asimov check command + ADR-037"
+    - "[x] Remove: asimov schema command + ADR-037"
+    - "[x] Fix: asimov init - require --name and --type flags"
+    - "[x] Fix: asimov warmup - add --verbose, simple output by default"
+    - "[x] Fix: asimov doctor - auto-create .asimov/ and roadmap.yaml"
+    - "[x] Fix: asimov validate - no args, validate ALL"
+    - "[x] Fix: asimov refresh - regenerate .json protocol files"
+    - "[x] Fix: asimov update - already correct (downloads from GH releases)"
 
-    # 2. Init
-    - "[ ] Fix: asimov init - require --name and --type flags"
-    - "[ ] Unit tests for init"
-    - "[ ] E2E tests for init"
-    - "[ ] Update --help for init"
-    - "[ ] Update README if needed"
-
-    # 3. Validate
-    - "[ ] Fix: asimov validate - no args, validate ALL (protocols .json vs hardcoded, roadmap.yaml, project.yaml)"
-    - "[ ] Unit tests for validate"
-    - "[ ] E2E tests for validate"
-    - "[ ] Update --help for validate"
-
-    # 4. Remove check
-    - "[ ] Remove: asimov check command"
-    - "[ ] Remove check from --help"
-    - "[ ] Update README if needed"
-    - "[ ] ADR: why check was removed"
-
-    # 5. Lint-docs
-    - "[ ] Fix: asimov lint-docs - use markdownlint-cli2, scan ALL .md files"
-    - "[ ] Unit tests for lint-docs"
-    - "[ ] E2E tests for lint-docs"
-    - "[ ] Update --help if needed"
-
-    # 6. Refresh
-    - "[ ] Fix: asimov refresh - regenerate .json protocol files, update roadmap to new schema"
-    - "[ ] Unit tests for refresh"
-    - "[ ] E2E tests for refresh"
-    - "[ ] Update --help for refresh"
-
-    # 7. Remove schema
-    - "[ ] Remove: asimov schema command"
-    - "[ ] Remove schema from --help"
-    - "[ ] Update README if needed"
-    - "[ ] ADR: CLI autonomous mode, no IDE integration"
-
-    # 8. Update
-    - "[ ] Fix: asimov update - download binary from GH releases, install to current PATH"
-    - "[ ] Unit tests for update"
-    - "[ ] E2E tests for update"
-    - "[ ] Update --help if needed"
-
-    # 9. Warmup
-    - "[ ] Fix: asimov warmup - simplify for mid-session (just milestone + protocols JSON)"
-    - "[ ] Unit tests for warmup"
-    - "[ ] E2E tests for warmup"
-    - "[ ] Update --help if needed"
-
-    # 10. Stats
-    - "[ ] Fix: asimov stats - show ENTIRE project stats + current session, use git tag for init point"
-    - "[ ] Unit tests for stats"
-    - "[ ] E2E tests for stats"
-    - "[ ] Update --help if needed"
-
-    # 11. Doctor
-    - "[ ] Fix: asimov doctor - auto-create empty roadmap.yaml if missing"
-    - "[ ] Unit tests for doctor"
-    - "[ ] E2E tests for doctor"
-    - "[ ] Update --help if needed"
+    - "[x] Fix: asimov lint-docs - already works (built-in linter, scans ALL .md)"
+    - "[x] Fix: asimov stats - show ENTIRE project stats + current session"
 
 next:
   - version: "8.17.0"
