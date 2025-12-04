@@ -3,8 +3,6 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use royalbit_asimov::{
-    anti_patterns,
-    banned_phrases,
     check_ethics_status,
     check_for_update,
     check_green_status,
@@ -19,7 +17,6 @@ use royalbit_asimov::{
     fix_markdown_file,
     get_cargo_version,
     git_precommit_hook,
-    is_protocol_file,
     load_deprecated_patterns,
     perform_update,
     project_template,
@@ -37,12 +34,6 @@ use royalbit_asimov::{
     SemanticConfig,
     Severity,
     SycophancyStatus,
-    CORE_PRINCIPLES,
-    GREEN_MOTTO,
-    GREEN_PRINCIPLES,
-    HUMAN_VETO_COMMANDS,
-    SYCOPHANCY_MOTTO,
-    SYCOPHANCY_PRINCIPLES,
 };
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -93,18 +84,11 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     /// Validate protocol files against the schema
+    /// v8.16.0: Validate ALL - protocols, roadmap, project.yaml
     Validate {
-        /// File or directory to validate (defaults to current directory)
-        #[arg(default_value = ".")]
-        path: PathBuf,
-
         /// Scan project files for red flag patterns (security, financial, privacy, deception)
         #[arg(long)]
         ethics_scan: bool,
-
-        /// Skip auto-regeneration of missing protocol files
-        #[arg(long)]
-        no_regenerate: bool,
     },
 
     /// Initialize or migrate an asimov project (v8.2.0)
@@ -164,6 +148,10 @@ enum Commands {
         /// Target directory (default: current directory)
         #[arg(short, long, default_value = ".")]
         path: PathBuf,
+
+        /// Show verbose output (full session start info)
+        #[arg(short, long)]
+        verbose: bool,
     },
 
     /// Show session statistics (v8.5.0)
@@ -198,11 +186,7 @@ fn main() -> ExitCode {
     match cli.command {
         // v8.8.0: No subcommand = launch Claude Code (ADR-033)
         None => cmd_launch(),
-        Some(Commands::Validate {
-            path,
-            ethics_scan,
-            no_regenerate,
-        }) => cmd_validate(&path, ethics_scan, !no_regenerate),
+        Some(Commands::Validate { ethics_scan }) => cmd_validate(ethics_scan),
         Some(Commands::Init {
             name,
             project_type,
@@ -216,7 +200,7 @@ fn main() -> ExitCode {
         }) => cmd_lint_docs(&path, fix, semantic),
         Some(Commands::Refresh { verbose }) => cmd_refresh(verbose),
         Some(Commands::Update { check }) => cmd_update(check),
-        Some(Commands::Warmup { path }) => cmd_warmup(&path),
+        Some(Commands::Warmup { path, verbose }) => cmd_warmup(&path, verbose),
         Some(Commands::Stats) => cmd_stats(),
         Some(Commands::Doctor) => cmd_doctor(),
         Some(Commands::Replay {
@@ -344,40 +328,43 @@ fn cmd_update(check_only: bool) -> ExitCode {
     }
 }
 
-fn cmd_warmup(path: &Path) -> ExitCode {
-    println!();
-    println!(
-        "{}",
-        "══════════════════════════════════════════════════════════════════════════════"
-            .bright_cyan()
-    );
-    println!(
-        "{}",
-        "🔥 ROYALBIT ASIMOV - SESSION WARMUP".bold().bright_cyan()
-    );
-    println!(
-        "{}",
-        "══════════════════════════════════════════════════════════════════════════════"
-            .bright_cyan()
-    );
-    println!();
+fn cmd_warmup(path: &Path, verbose: bool) -> ExitCode {
+    // v8.16.0: Simple output by default, verbose for session-start hook
+    let dir = path;
 
-    // Check for updates (one network call per session)
-    if let Ok(version_info) = check_for_update() {
-        if version_info.update_available {
-            println!(
-                "{}  Update available: {} → {} (run: {})",
-                "⚠️".yellow(),
-                version_info.current.dimmed(),
-                version_info.latest.bright_green(),
-                "asimov update".bold()
-            );
-            println!();
+    // Banner only in verbose mode
+    if verbose {
+        println!();
+        println!(
+            "{}",
+            "══════════════════════════════════════════════════════════════════════════════"
+                .bright_cyan()
+        );
+        println!(
+            "{}",
+            "🔥 ROYALBIT ASIMOV - SESSION WARMUP".bold().bright_cyan()
+        );
+        println!(
+            "{}",
+            "══════════════════════════════════════════════════════════════════════════════"
+                .bright_cyan()
+        );
+        println!();
+
+        // Check for updates only in verbose mode
+        if let Ok(version_info) = check_for_update() {
+            if version_info.update_available {
+                println!(
+                    "{}  Update available: {} → {} (run: {})",
+                    "⚠️".yellow(),
+                    version_info.current.dimmed(),
+                    version_info.latest.bright_green(),
+                    "asimov update".bold()
+                );
+                println!();
+            }
         }
     }
-
-    // v8.14.0: Use provided path instead of "."
-    let dir = path;
 
     // Read and parse roadmap.yaml
     let roadmap_path = resolve_protocol_dir(dir).join("roadmap.yaml");
@@ -387,7 +374,7 @@ fn cmd_warmup(path: &Path) -> ExitCode {
             eprintln!(
                 "{} roadmap.yaml not found. Run {} first.",
                 "Error:".bold().red(),
-                "asimov init".bold()
+                "asimov init --name <NAME> --type <TYPE>".bold()
             );
             return ExitCode::FAILURE;
         }
@@ -406,7 +393,9 @@ fn cmd_warmup(path: &Path) -> ExitCode {
     };
 
     // Extract current version info
-    println!("{}", "CURRENT VERSION".bold());
+    if verbose {
+        println!("{}", "CURRENT VERSION".bold());
+    }
     if let Some(current) = roadmap.get("current") {
         let version = current
             .get("version")
@@ -427,179 +416,193 @@ fn cmd_warmup(path: &Path) -> ExitCode {
             _ => format!("  {}", status),
         };
 
-        println!("  v{} - {}", version.bright_blue(), summary);
-        println!("  Status: {}", status_display);
+        if verbose {
+            println!("  v{} - {}", version.bright_blue(), summary);
+            println!("  Status: {}", status_display);
+        } else {
+            // Simple output: just the milestone
+            println!("v{} - {} [{}]", version.bright_blue(), summary, status);
+        }
     }
-    println!();
+    if verbose {
+        println!();
+    }
 
-    // Extract next milestone(s)
-    println!("{}", "NEXT MILESTONE".bold());
-    if let Some(next) = roadmap.get("next") {
-        if let Some(next_list) = next.as_sequence() {
-            if let Some(first_next) = next_list.first() {
-                let version = first_next
-                    .get("version")
-                    .and_then(|v| v.as_str())
-                    .unwrap_or("unknown");
-                let summary = first_next
-                    .get("summary")
-                    .and_then(|v| v.as_str())
-                    .unwrap_or("");
-                let goal = first_next
-                    .get("goal")
-                    .and_then(|v| v.as_str())
-                    .unwrap_or("");
+    // Extract next milestone(s) - only in verbose mode
+    if verbose {
+        println!("{}", "NEXT MILESTONE".bold());
+        if let Some(next) = roadmap.get("next") {
+            if let Some(next_list) = next.as_sequence() {
+                if let Some(first_next) = next_list.first() {
+                    let version = first_next
+                        .get("version")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("unknown");
+                    let summary = first_next
+                        .get("summary")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("");
+                    let goal = first_next
+                        .get("goal")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("");
 
-                println!("  v{} - {}", version.bright_yellow(), summary);
-                if !goal.is_empty() {
-                    println!("  Goal: {}", goal.dimmed());
-                }
+                    println!("  v{} - {}", version.bright_yellow(), summary);
+                    if !goal.is_empty() {
+                        println!("  Goal: {}", goal.dimmed());
+                    }
 
-                // Print features
-                if let Some(features) = first_next.get("features") {
-                    if let Some(feature_list) = features.as_sequence() {
-                        println!();
-                        println!("  {}:", "Features".dimmed());
-                        for feature in feature_list {
-                            if let Some(f) = feature.as_str() {
-                                println!("  {} {}", "•".bright_cyan(), f);
+                    // Print features
+                    if let Some(features) = first_next.get("features") {
+                        if let Some(feature_list) = features.as_sequence() {
+                            println!();
+                            println!("  {}:", "Features".dimmed());
+                            for feature in feature_list {
+                                if let Some(f) = feature.as_str() {
+                                    println!("  {} {}", "•".bright_cyan(), f);
+                                }
                             }
                         }
                     }
                 }
             }
+        } else {
+            println!("  {} No upcoming milestones in roadmap", "✓".green());
         }
-    } else {
-        println!("  {} No upcoming milestones in roadmap", "✓".green());
-    }
-    println!();
+        println!();
 
-    // Run validation - show all 7 hardcoded protocols (v8.3.0)
-    println!("{}", "PROTOCOLS".bold());
-    let ethics_status = check_ethics_status(dir);
-    let sycophancy_status = check_sycophancy_status(dir);
-    let green_status = check_green_status(dir);
+        // Run validation - show all 7 hardcoded protocols (v8.3.0)
+        println!("{}", "PROTOCOLS".bold());
+        let ethics_status = check_ethics_status(dir);
+        let sycophancy_status = check_sycophancy_status(dir);
+        let green_status = check_green_status(dir);
 
-    let ethics_display = match ethics_status {
-        EthicsStatus::Hardcoded => "HARDCODED".bright_cyan(),
-        EthicsStatus::Extended => "EXTENDED (core + asimov.yaml)".bright_green(),
-    };
-    let sycophancy_display = match sycophancy_status {
-        SycophancyStatus::Hardcoded => "HARDCODED".bright_cyan(),
-        SycophancyStatus::Extended => "EXTENDED (core + sycophancy.yaml)".bright_green(),
-    };
-    let green_display = match green_status {
-        GreenStatus::Hardcoded => "HARDCODED".bright_cyan(),
-        GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
-    };
+        let ethics_display = match ethics_status {
+            EthicsStatus::Hardcoded => "HARDCODED".bright_cyan(),
+            EthicsStatus::Extended => "EXTENDED (core + asimov.yaml)".bright_green(),
+        };
+        let sycophancy_display = match sycophancy_status {
+            SycophancyStatus::Hardcoded => "HARDCODED".bright_cyan(),
+            SycophancyStatus::Extended => "EXTENDED (core + sycophancy.yaml)".bright_green(),
+        };
+        let green_display = match green_status {
+            GreenStatus::Hardcoded => "HARDCODED".bright_cyan(),
+            GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
+        };
 
-    // All 7 protocols (ADR-031: compiled into binary)
-    println!("  {} Asimov (Ethics): {}", "✓".green(), ethics_display);
-    println!("  {} Freshness: {}", "✓".green(), "HARDCODED".bright_cyan());
-    println!("  {} Sycophancy: {}", "✓".green(), sycophancy_display);
-    println!("  {} Green: {}", "✓".green(), green_display);
-    println!("  {} Sprint: {}", "✓".green(), "HARDCODED".bright_cyan());
-    println!("  {} Warmup: {}", "✓".green(), "HARDCODED".bright_cyan());
-    println!(
-        "  {} Migrations: {}",
-        "✓".green(),
-        "HARDCODED".bright_cyan()
-    );
+        // All 7 protocols (ADR-031: compiled into binary)
+        println!("  {} Asimov (Ethics): {}", "✓".green(), ethics_display);
+        println!("  {} Freshness: {}", "✓".green(), "HARDCODED".bright_cyan());
+        println!("  {} Sycophancy: {}", "✓".green(), sycophancy_display);
+        println!("  {} Green: {}", "✓".green(), green_display);
+        println!("  {} Sprint: {}", "✓".green(), "HARDCODED".bright_cyan());
+        println!("  {} Warmup: {}", "✓".green(), "HARDCODED".bright_cyan());
+        println!(
+            "  {} Migrations: {}",
+            "✓".green(),
+            "HARDCODED".bright_cyan()
+        );
 
-    // Validate protocol files (roadmap.yaml)
-    match validate_directory_with_regeneration(dir, true) {
-        Ok((results, _)) => {
-            let valid_count = results.iter().filter(|r| r.is_valid).count();
-            let total = results.len();
-            if valid_count == total && total > 0 {
-                println!("  {} {} data file(s) valid", "✓".green(), total);
-            } else if total > 0 {
-                println!(
-                    "  {} {}/{} data file(s) valid",
-                    "⚠".yellow(),
-                    valid_count,
-                    total
-                );
+        // Validate protocol files (roadmap.yaml)
+        match validate_directory_with_regeneration(dir, true) {
+            Ok((results, _)) => {
+                let valid_count = results.iter().filter(|r| r.is_valid).count();
+                let total = results.len();
+                if valid_count == total && total > 0 {
+                    println!("  {} {} data file(s) valid", "✓".green(), total);
+                } else if total > 0 {
+                    println!(
+                        "  {} {}/{} data file(s) valid",
+                        "⚠".yellow(),
+                        valid_count,
+                        total
+                    );
+                }
+            }
+            Err(e) => {
+                println!("  {} Validation error: {}", "✗".red(), e);
             }
         }
-        Err(e) => {
-            println!("  {} Validation error: {}", "✗".red(), e);
-        }
+
+        // v8.3.0: Check and auto-repair hooks
+        println!();
+        println!("{}", "HOOKS".bold());
+        ensure_hooks(dir);
+
+        // Output compiled protocols for context injection (ADR-031)
+        println!();
+        println!("{}", "PROTOCOLS (ENFORCED)".bold());
+        println!(
+            "  {} Protocols compiled from binary (cannot be bypassed)",
+            "✓".green()
+        );
+
+        // v8.11.0: Protocols table for visibility
+        println!();
+        println!("{}", "PROTOCOLS LOADED".bold());
+        let protocols = royalbit_asimov::compile_protocols();
+        println!(
+            "  {} asimov: harm={:?}, veto={:?}",
+            "•".bright_cyan(),
+            protocols.asimov.harm,
+            protocols.asimov.veto
+        );
+        println!(
+            "  {} freshness: today={}, year={}, triggers={:?}",
+            "•".bright_cyan(),
+            protocols.freshness.today,
+            protocols.freshness.year,
+            protocols.freshness.search
+        );
+        println!(
+            "  {} sycophancy: truth_over_comfort={}, banned={:?}",
+            "•".bright_cyan(),
+            protocols.sycophancy.truth_over_comfort,
+            protocols.sycophancy.banned
+        );
+        println!(
+            "  {} green: local_first={}, avoid={:?}",
+            "•".bright_cyan(),
+            protocols.green.local_first,
+            protocols.green.avoid
+        );
+        println!(
+            "  {} sprint: max_hours={}, stop_on={:?}",
+            "•".bright_cyan(),
+            protocols.sprint.max_hours,
+            protocols.sprint.stop_on
+        );
+        println!(
+            "  {} warmup: on_start={:?}",
+            "•".bright_cyan(),
+            protocols.warmup.on_start
+        );
+        println!(
+            "  {} migrations: principle=\"{}\"",
+            "•".bright_cyan(),
+            protocols.migrations.principle
+        );
+        println!(
+            "  {} exhaustive: no_sampling={}, triggers={:?}",
+            "•".bright_cyan(),
+            protocols.exhaustive.no_sampling,
+            protocols.exhaustive.triggers
+        );
+        println!();
+        println!("{}", "Context injection:".dimmed());
     }
 
-    // v8.3.0: Check and auto-repair hooks
-    println!();
-    println!("{}", "HOOKS".bold());
-    ensure_hooks(dir);
-
-    // Output compiled protocols for context injection (ADR-031)
-    println!();
-    println!("{}", "PROTOCOLS (ENFORCED)".bold());
-    println!(
-        "  {} Protocols compiled from binary (cannot be bypassed)",
-        "✓".green()
-    );
-
-    // v8.11.0: Protocols table for visibility
-    println!();
-    println!("{}", "PROTOCOLS LOADED".bold());
-    let protocols = royalbit_asimov::compile_protocols();
-    println!(
-        "  {} asimov: harm={:?}, veto={:?}",
-        "•".bright_cyan(),
-        protocols.asimov.harm,
-        protocols.asimov.veto
-    );
-    println!(
-        "  {} freshness: today={}, year={}, triggers={:?}",
-        "•".bright_cyan(),
-        protocols.freshness.today,
-        protocols.freshness.year,
-        protocols.freshness.search
-    );
-    println!(
-        "  {} sycophancy: truth_over_comfort={}, banned={:?}",
-        "•".bright_cyan(),
-        protocols.sycophancy.truth_over_comfort,
-        protocols.sycophancy.banned
-    );
-    println!(
-        "  {} green: local_first={}, avoid={:?}",
-        "•".bright_cyan(),
-        protocols.green.local_first,
-        protocols.green.avoid
-    );
-    println!(
-        "  {} sprint: max_hours={}, stop_on={:?}",
-        "•".bright_cyan(),
-        protocols.sprint.max_hours,
-        protocols.sprint.stop_on
-    );
-    println!(
-        "  {} warmup: on_start={:?}",
-        "•".bright_cyan(),
-        protocols.warmup.on_start
-    );
-    println!(
-        "  {} migrations: principle=\"{}\"",
-        "•".bright_cyan(),
-        protocols.migrations.principle
-    );
-    println!(
-        "  {} exhaustive: no_sampling={}, triggers={:?}",
-        "•".bright_cyan(),
-        protocols.exhaustive.no_sampling,
-        protocols.exhaustive.triggers
-    );
-    println!();
-    println!("{}", "Context injection:".dimmed());
+    // Always output the JSON protocols (for context injection)
     let protocols_json = to_minified_json();
     println!("{}", protocols_json);
 
-    // v8.14.0: Write individual protocol files to .asimov/ for manual inspection and loading
+    // v8.14.0: Write individual protocol files to .asimov/ (always needed)
     let asimov_dir = resolve_protocol_dir(dir);
-    println!();
-    println!("{}", "PROTOCOL FILES".bold());
+
+    if verbose {
+        println!();
+        println!("{}", "PROTOCOL FILES".bold());
+    }
 
     let mut all_written = true;
     for (filename, generator) in royalbit_asimov::PROTOCOL_FILES {
@@ -607,7 +610,9 @@ fn cmd_warmup(path: &Path) -> ExitCode {
         let content = generator();
         match std::fs::write(&file_path, &content) {
             Ok(_) => {
-                println!("  {} {}", "✓".green(), filename);
+                if verbose {
+                    println!("  {} {}", "✓".green(), filename);
+                }
             }
             Err(e) => {
                 eprintln!("  {} {} - {}", "✗".red(), filename, e);
@@ -616,36 +621,38 @@ fn cmd_warmup(path: &Path) -> ExitCode {
         }
     }
 
-    if all_written {
+    if verbose {
+        if all_written {
+            println!();
+            println!(
+                "  {} 8 protocol files written to {}",
+                "✓".green(),
+                asimov_dir.display()
+            );
+            println!(
+                "  {} Start with: {}",
+                "→".bright_cyan(),
+                "warmup.json".bold()
+            );
+        }
         println!();
-        println!(
-            "  {} 8 protocol files written to {}",
-            "✓".green(),
-            asimov_dir.display()
-        );
-        println!(
-            "  {} Start with: {}",
-            "→".bright_cyan(),
-            "warmup.json".bold()
-        );
-    }
-    println!();
 
-    println!(
-        "{}",
-        "══════════════════════════════════════════════════════════════════════════════"
-            .bright_cyan()
-    );
-    println!(
-        "{}",
-        "Ready to execute. Say \"go\" to start autonomous execution.".bold()
-    );
-    println!(
-        "{}",
-        "══════════════════════════════════════════════════════════════════════════════"
-            .bright_cyan()
-    );
-    println!();
+        println!(
+            "{}",
+            "══════════════════════════════════════════════════════════════════════════════"
+                .bright_cyan()
+        );
+        println!(
+            "{}",
+            "Ready to execute. Say \"go\" to start autonomous execution.".bold()
+        );
+        println!(
+            "{}",
+            "══════════════════════════════════════════════════════════════════════════════"
+                .bright_cyan()
+        );
+        println!();
+    }
 
     ExitCode::SUCCESS
 }
@@ -687,11 +694,11 @@ fn cmd_launch() -> ExitCode {
         std::env::var("CLAUDECODE").is_ok() || std::env::var("CLAUDE_CODE_ENTRYPOINT").is_ok();
 
     if inside_claude {
-        // Already inside Claude Code - just run warmup
+        // Already inside Claude Code - just run warmup (verbose mode for full output)
         println!();
         println!("{} Already inside Claude Code - running warmup", "ℹ".blue());
         println!();
-        return cmd_warmup(Path::new("."));
+        return cmd_warmup(Path::new("."), true);
     }
 
     // Launch Claude Code with opus settings
@@ -895,17 +902,25 @@ fn cmd_doctor() -> ExitCode {
     let mut issues: Vec<String> = Vec::new();
     let mut warnings: Vec<String> = Vec::new();
 
-    // Check 1: .asimov directory exists
+    // Check 1: .asimov directory exists (auto-create if missing)
     println!("{}", "CHECKING PROJECT SETUP".bold());
     let asimov_dir = Path::new(".asimov");
     if asimov_dir.exists() {
         println!("  {} .asimov/ directory exists", "✓".green());
     } else {
-        println!("  {} .asimov/ directory missing", "✗".red());
-        issues.push("Run 'asimov init' to create project structure".to_string());
+        // v8.16.0: Auto-create .asimov directory
+        match std::fs::create_dir_all(asimov_dir) {
+            Ok(_) => {
+                println!("  {} .asimov/ directory created", "✓".green());
+            }
+            Err(e) => {
+                println!("  {} .asimov/ directory missing - failed to create: {}", "✗".red(), e);
+                issues.push(format!("Cannot create .asimov/ directory: {}", e));
+            }
+        }
     }
 
-    // Check 2: roadmap.yaml exists and is valid
+    // Check 2: roadmap.yaml exists and is valid (auto-create if missing)
     let roadmap_path = asimov_dir.join("roadmap.yaml");
     if roadmap_path.exists() {
         println!("  {} roadmap.yaml exists", "✓".green());
@@ -926,8 +941,34 @@ fn cmd_doctor() -> ExitCode {
             }
         }
     } else {
-        println!("  {} roadmap.yaml missing", "✗".red());
-        issues.push("Run 'asimov init' to create roadmap.yaml".to_string());
+        // v8.16.0: Auto-create empty roadmap.yaml
+        let empty_roadmap = r#"# RoyalBit Asimov Roadmap
+# Run `asimov init --name <NAME> --type <TYPE>` for full setup
+
+current:
+  version: "0.1.0"
+  status: in_progress
+  summary: "Initial setup"
+  goal: Setup
+  priority: HIGH
+  deliverables: []
+
+next: []
+
+previous: null
+
+backlog: []
+"#;
+        match std::fs::write(&roadmap_path, empty_roadmap) {
+            Ok(_) => {
+                println!("  {} roadmap.yaml created (empty template)", "✓".green());
+                println!("    {} Run 'asimov init --name <NAME> --type <TYPE>' for full setup", "→".bright_cyan());
+            }
+            Err(e) => {
+                println!("  {} roadmap.yaml missing - failed to create: {}", "✗".red(), e);
+                issues.push(format!("Cannot create roadmap.yaml: {}", e));
+            }
+        }
     }
     println!();
 
@@ -1264,308 +1305,235 @@ fn cmd_replay(
     ExitCode::SUCCESS
 }
 
+/// v8.16.0: Regenerate protocol .json files from hardcoded values
 fn cmd_refresh(verbose: bool) -> ExitCode {
     println!();
     println!(
         "{}",
-        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
     );
+    println!("{}", "🔄 ROYALBIT ASIMOV - REFRESH".bold().bright_cyan());
     println!(
         "{}",
-        "🤖 ROYALBIT ASIMOV - THE THREE LAWS".bold().bright_cyan()
-    );
-    println!(
-        "{}",
-        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
     );
     println!();
 
-    // Ethics reminder (hardcoded - cannot be removed)
-    println!(
-        "{}",
-        "[ASIMOV ETHICS] Core principles ACTIVE".bold().green()
-    );
-    println!(
-        "  {} Financial: {} | Physical: {} | Privacy: {} | Deception: {}",
-        "✓".green(),
-        if CORE_PRINCIPLES.financial {
-            "blocked".green()
-        } else {
-            "off".red()
-        },
-        if CORE_PRINCIPLES.physical {
-            "blocked".green()
-        } else {
-            "off".red()
-        },
-        if CORE_PRINCIPLES.privacy {
-            "blocked".green()
-        } else {
-            "off".red()
-        },
-        if CORE_PRINCIPLES.deception {
-            "blocked".green()
-        } else {
-            "off".red()
-        },
-    );
-    println!(
-        "  {} Red flags monitored: {} patterns",
-        "✓".green(),
-        red_flags::count()
-    );
-    println!(
-        "  {} Human veto: {}",
-        "✓".green(),
-        HUMAN_VETO_COMMANDS.join(" | ").dimmed()
-    );
-    println!();
+    let dir = Path::new(".");
+    let asimov_dir = resolve_protocol_dir(dir);
 
-    // Anti-sycophancy reminder (hardcoded - cannot be removed)
-    println!(
-        "{}",
-        "[ASIMOV ANTI-SYCOPHANCY] Core principles ACTIVE"
-            .bold()
-            .cyan()
-    );
-    println!(
-        "  {} Truth over comfort: {} | Disagree openly: {} | No empty validation: {}",
-        "✓".green(),
-        if SYCOPHANCY_PRINCIPLES.truth_over_comfort {
-            "on".green()
-        } else {
-            "off".red()
-        },
-        if SYCOPHANCY_PRINCIPLES.respectful_disagreement {
-            "on".green()
-        } else {
-            "off".red()
-        },
-        if SYCOPHANCY_PRINCIPLES.no_empty_validation {
-            "on".green()
-        } else {
-            "off".red()
-        },
-    );
-    println!(
-        "  {} Banned phrases: {} patterns | Motto: {}",
-        "✓".green(),
-        banned_phrases::count(),
-        SYCOPHANCY_MOTTO.dimmed()
-    );
-    println!();
+    // Create .asimov directory if it doesn't exist
+    if !asimov_dir.exists() {
+        if let Err(e) = std::fs::create_dir_all(&asimov_dir) {
+            eprintln!("{} Failed to create .asimov directory: {}", "✗".red(), e);
+            return ExitCode::FAILURE;
+        }
+        println!("  {} Created .asimov directory", "✓".green());
+    }
 
-    // Green coding reminder (hardcoded - cannot be removed)
-    println!(
-        "{}",
-        "[ASIMOV GREEN CODING] Core principles ACTIVE"
-            .bold()
-            .bright_green()
-    );
-    println!(
-        "  {} Local-first: {} | Token efficiency: {} | Binary efficiency: {}",
-        "✓".green(),
-        if GREEN_PRINCIPLES.local_first {
-            "on".green()
-        } else {
-            "off".red()
-        },
-        if GREEN_PRINCIPLES.token_efficiency {
-            "on".green()
-        } else {
-            "off".red()
-        },
-        if GREEN_PRINCIPLES.binary_efficiency {
-            "on".green()
-        } else {
-            "off".red()
-        },
-    );
-    println!(
-        "  {} Anti-patterns: {} patterns | Motto: {}",
-        "✓".green(),
-        anti_patterns::count(),
-        GREEN_MOTTO.dimmed()
-    );
-    println!();
+    // Regenerate protocol .json files from hardcoded values
+    println!("{}", "REGENERATING PROTOCOL FILES".bold());
 
-    println!(
-        "{} → {}",
-        "ON CONFUSION".bold().yellow(),
-        "run `asimov warmup`".white()
-    );
-    println!();
-    println!(
-        "{}: {} | {} | {}",
-        "RULES".bold(),
-        "4hr max".white(),
-        "tests pass".white(),
-        "keep shipping".green()
-    );
+    let mut all_written = true;
+    let mut regenerated = 0;
+    let mut unchanged = 0;
 
-    // v8.0.0: If verbose, try to read and display current milestone from roadmap.yaml
-    if verbose {
-        if let Ok(content) = std::fs::read_to_string(".asimov/roadmap.yaml") {
-            if let Ok(yaml) = serde_yaml::from_str::<serde_yaml::Value>(&content) {
-                if let Some(current) = yaml.get("current") {
-                    println!();
-                    println!("{}", "CURRENT MILESTONE:".bold());
-                    if let Some(version) = current.get("version").and_then(|v| v.as_str()) {
-                        println!("  {}: {}", "version".bright_blue(), version.dimmed());
+    for (filename, generator) in royalbit_asimov::PROTOCOL_FILES {
+        let file_path = asimov_dir.join(filename);
+        let expected_content = generator();
+
+        // Check if file exists and matches
+        let needs_update = if file_path.exists() {
+            match std::fs::read_to_string(&file_path) {
+                Ok(actual) => actual.trim() != expected_content.trim(),
+                Err(_) => true,
+            }
+        } else {
+            true
+        };
+
+        if needs_update {
+            match std::fs::write(&file_path, &expected_content) {
+                Ok(_) => {
+                    if verbose {
+                        println!("  {} {} (regenerated)", "✓".green(), filename);
                     }
-                    if let Some(summary) = current.get("summary").and_then(|v| v.as_str()) {
-                        println!("  {}: {}", "summary".bright_blue(), summary.dimmed());
-                    }
+                    regenerated += 1;
+                }
+                Err(e) => {
+                    eprintln!("  {} {} - {}", "✗".red(), filename, e);
+                    all_written = false;
                 }
             }
+        } else {
+            if verbose {
+                println!("  {} {} (unchanged)", "ℹ".bright_blue(), filename);
+            }
+            unchanged += 1;
         }
     }
 
+    if !verbose {
+        println!(
+            "  {} {} files regenerated, {} unchanged",
+            "✓".green(),
+            regenerated,
+            unchanged
+        );
+    }
+    println!();
+
+    // Summary
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+
+    if all_written {
+        println!(
+            "{}",
+            "✓ Protocol files refreshed from hardcoded values".bold().green()
+        );
+        ExitCode::SUCCESS
+    } else {
+        println!(
+            "{}",
+            "✗ Some files failed to refresh".bold().red()
+        );
+        ExitCode::FAILURE
+    }
+}
+
+/// v8.16.0: Validate ALL - protocols, roadmap, project.yaml
+fn cmd_validate(ethics_scan: bool) -> ExitCode {
     println!();
     println!(
         "{}",
-        "═══════════════════════════════════════════════════════════════════════".bright_cyan()
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+    println!("{}", "🔍 ROYALBIT ASIMOV - VALIDATOR".bold().bright_cyan());
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
     );
     println!();
 
-    ExitCode::SUCCESS
-}
+    let mut has_errors = false;
+    let dir = Path::new(".");
+    let asimov_dir = resolve_protocol_dir(dir);
 
-fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
-    println!("{}", "RoyalBit Asimov Validator".bold().green());
+    // Section 1: Protocol Files (compare .json against hardcoded)
+    println!("{}", "PROTOCOL FILES".bold());
+
+    for (filename, generator) in royalbit_asimov::PROTOCOL_FILES {
+        let file_path = asimov_dir.join(filename);
+        let expected_content = generator();
+
+        if file_path.exists() {
+            match std::fs::read_to_string(&file_path) {
+                Ok(actual_content) => {
+                    if actual_content.trim() == expected_content.trim() {
+                        println!("  {} {} (matches hardcoded)", "✓".green(), filename);
+                    } else {
+                        println!("  {} {} (TAMPERED - differs from hardcoded)", "✗".red(), filename);
+                        has_errors = true;
+                    }
+                }
+                Err(e) => {
+                    println!("  {} {} (read error: {})", "✗".red(), filename, e);
+                    has_errors = true;
+                }
+            }
+        } else {
+            println!("  {} {} (missing - run 'asimov warmup')", "⚠".yellow(), filename);
+        }
+    }
     println!();
 
-    // Check if path looks like a file (has .yaml extension) but doesn't exist
-    let looks_like_file = path
-        .extension()
-        .map(|ext| ext == "yaml" || ext == "yml")
-        .unwrap_or(false);
-
-    if looks_like_file && !path.exists() {
-        eprintln!(
-            "{} File not found: {}",
-            "Error:".bold().red(),
-            path.display()
-        );
-        return ExitCode::FAILURE;
-    }
-
-    // Show hardcoded ethics status
-    let dir = if path.is_file() {
-        path.parent().unwrap_or(Path::new("."))
+    // Section 2: Roadmap
+    println!("{}", "ROADMAP".bold());
+    let roadmap_path = asimov_dir.join("roadmap.yaml");
+    if roadmap_path.exists() {
+        match validate_file(&roadmap_path) {
+            Ok(result) if result.is_valid => {
+                println!("  {} roadmap.yaml (valid)", "✓".green());
+            }
+            Ok(result) => {
+                println!("  {} roadmap.yaml (invalid)", "✗".red());
+                for error in &result.errors {
+                    println!("      {} {}", "-".red(), error);
+                }
+                has_errors = true;
+            }
+            Err(e) => {
+                println!("  {} roadmap.yaml (error: {})", "✗".red(), e);
+                has_errors = true;
+            }
+        }
     } else {
-        path
-    };
+        println!("  {} roadmap.yaml (missing - run 'asimov doctor')", "⚠".yellow());
+    }
+    println!();
+
+    // Section 3: Project Config
+    println!("{}", "PROJECT CONFIG".bold());
+    let project_path = asimov_dir.join("project.yaml");
+    if project_path.exists() {
+        // Basic YAML validation
+        match std::fs::read_to_string(&project_path) {
+            Ok(content) => {
+                match serde_yaml::from_str::<serde_yaml::Value>(&content) {
+                    Ok(_) => {
+                        println!("  {} project.yaml (valid YAML)", "✓".green());
+                    }
+                    Err(e) => {
+                        println!("  {} project.yaml (invalid YAML: {})", "✗".red(), e);
+                        has_errors = true;
+                    }
+                }
+            }
+            Err(e) => {
+                println!("  {} project.yaml (read error: {})", "✗".red(), e);
+                has_errors = true;
+            }
+        }
+    } else {
+        println!("  {} project.yaml (not present - optional)", "ℹ".bright_blue());
+    }
+    println!();
+
+    // Section 4: Protocols Status
+    println!("{}", "PROTOCOLS STATUS".bold());
     let ethics_status = check_ethics_status(dir);
     let ethics_display = match ethics_status {
-        EthicsStatus::Hardcoded => "HARDCODED (core principles enforced)".bright_cyan(),
+        EthicsStatus::Hardcoded => "HARDCODED".bright_cyan(),
         EthicsStatus::Extended => "EXTENDED (core + asimov.yaml)".bright_green(),
     };
     println!("  {} Ethics: {}", "✓".green(), ethics_display);
 
-    // Show hardcoded sycophancy status
     let sycophancy_status = check_sycophancy_status(dir);
     let sycophancy_display = match sycophancy_status {
-        SycophancyStatus::Hardcoded => "HARDCODED (truth over comfort)".bright_cyan(),
+        SycophancyStatus::Hardcoded => "HARDCODED".bright_cyan(),
         SycophancyStatus::Extended => "EXTENDED (core + sycophancy.yaml)".bright_green(),
     };
     println!("  {} Anti-Sycophancy: {}", "✓".green(), sycophancy_display);
 
-    // Show hardcoded green coding status
     let green_status = check_green_status(dir);
     let green_display = match green_status {
-        GreenStatus::Hardcoded => "HARDCODED (local-first always)".bright_cyan(),
+        GreenStatus::Hardcoded => "HARDCODED".bright_cyan(),
         GreenStatus::Extended => "EXTENDED (core + green.yaml)".bright_green(),
     };
     println!("  {} Green Coding: {}", "✓".green(), green_display);
     println!();
 
-    let (results, regen_info) = if path.is_file() {
-        // Validate single file (no regeneration for single files)
-        let filename = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
-        if !is_protocol_file(filename) {
-            eprintln!(
-                "{} Not a protocol file. Expected warmup.yaml, sprint.yaml, or roadmap.yaml",
-                "Error:".bold().red()
-            );
-            return ExitCode::FAILURE;
-        }
-
-        match validate_file(path) {
-            Ok(result) => (vec![result], royalbit_asimov::RegenerationInfo::default()),
-            Err(e) => {
-                eprintln!("{} {}", "Error:".bold().red(), e);
-                return ExitCode::FAILURE;
-            }
-        }
-    } else {
-        // Validate directory with regeneration
-        match validate_directory_with_regeneration(path, regenerate) {
-            Ok((results, info)) => (results, info),
-            Err(e) => {
-                eprintln!("{} {}", "Error:".bold().red(), e);
-                return ExitCode::FAILURE;
-            }
-        }
-    };
-
-    // Print regeneration info first
-    if !regen_info.is_empty() {
-        for (filename, is_warn) in &regen_info.regenerated {
-            let level = if *is_warn {
-                "⚠️  REGENERATED".yellow()
-            } else {
-                "ℹ️  REGENERATED".bright_cyan()
-            };
-            let suffix = if filename == "roadmap.yaml" {
-                " [skeleton]"
-            } else {
-                ""
-            };
-            println!("  {} {} (was missing){}", level, filename, suffix);
-        }
-        println!();
-    }
-
-    // Print results
-    let mut has_errors = false;
-
-    for result in &results {
-        let status = if result.is_valid {
-            "OK".bold().green()
-        } else {
-            has_errors = true;
-            "FAIL".bold().red()
-        };
-
-        let regen_suffix = if result.regenerated {
-            " [REGENERATED]".dimmed()
-        } else {
-            "".into()
-        };
-
-        println!(
-            "  {} {} ({}){}",
-            status,
-            result.file.bright_blue(),
-            result.schema_type.dimmed(),
-            regen_suffix
-        );
-
-        for error in &result.errors {
-            println!("      {} {}", "-".red(), error);
-        }
-
-        for warning in &result.warnings {
-            println!("      {} {}", "!".yellow(), warning);
-        }
-    }
-
-    println!();
-
-    // Run ethics scan if requested
+    // Section 5: Ethics Scan (optional)
     if ethics_scan {
-        println!("{}", "Ethics Scan (Red Flag Detection)".bold().yellow());
+        println!("{}", "ETHICS SCAN (Red Flag Detection)".bold().yellow());
         println!();
 
         match scan_directory_for_red_flags(dir) {
@@ -1602,34 +1570,24 @@ fn cmd_validate(path: &Path, ethics_scan: bool, regenerate: bool) -> ExitCode {
                 eprintln!("  {} Failed to scan: {}", "Error:".bold().red(), e);
             }
         }
-
         println!();
     }
 
+    // Summary
+    println!(
+        "{}",
+        "══════════════════════════════════════════════════════════════════════════════"
+            .bright_cyan()
+    );
+
     if has_errors {
-        let fail_count = results.iter().filter(|r| !r.is_valid).count();
         println!(
-            "{} {} file(s) failed validation",
-            "Error:".bold().red(),
-            fail_count
+            "{}",
+            "✗ Validation failed - fix errors above".bold().red()
         );
         ExitCode::FAILURE
     } else {
-        let regen_count = regen_info.regenerated.len();
-        if regen_count > 0 {
-            println!(
-                "{} {} file(s) valid ({} regenerated)",
-                "Success:".bold().green(),
-                results.len(),
-                regen_count
-            );
-        } else {
-            println!(
-                "{} {} file(s) valid",
-                "Success:".bold().green(),
-                results.len()
-            );
-        }
+        println!("{}", "✓ All validations passed".bold().green());
         ExitCode::SUCCESS
     }
 }
