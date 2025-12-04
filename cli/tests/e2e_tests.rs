@@ -25,14 +25,6 @@ fn binary_path() -> PathBuf {
     path
 }
 
-/// Get the path to a test data file
-fn test_data_path(filename: &str) -> PathBuf {
-    let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    path.push("test-data");
-    path.push(filename);
-    path
-}
-
 // ========== Help and Version Tests ==========
 
 #[test]

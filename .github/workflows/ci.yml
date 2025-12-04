@@ -108,6 +108,9 @@ jobs:
       - name: Build asimov
         run: cd cli && cargo build --release
 
+      - name: Refresh protocol files
+        run: ./cli/target/release/asimov refresh
+
       - name: Validate protocol files
         run: ./cli/target/release/asimov validate
 
