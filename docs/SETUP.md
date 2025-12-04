@@ -5,8 +5,9 @@
 ## Quick Start
 
 ```bash
-# Install asimov
-cargo install royalbit-asimov
+# Install asimov (from GitHub Releases)
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 
 # Full ROYALBIT ASIMOV setup
 asimov init --type rust --asimov
@@ -121,9 +122,7 @@ asimov init --type docs --asimov
 
 The pre-commit hooks use asimov for protocol validation and documentation linting.
 
-```bash
-cargo install royalbit-asimov
-```
+Download from [GitHub Releases](https://github.com/royalbit/asimov/releases/latest).
 
 **Verify installation:**
 ```bash

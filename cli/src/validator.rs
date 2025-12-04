@@ -121,7 +121,7 @@ pub fn validate_file(path: &Path) -> Result<ValidationResult> {
     let error_messages: Vec<String> = validator
         .iter_errors(&json_value)
         .map(|e| {
-            let path = e.instance_path.to_string();
+            let path = e.instance_path().to_string();
             if path.is_empty() {
                 e.to_string()
             } else {
@@ -156,14 +156,11 @@ pub fn validate_file(path: &Path) -> Result<ValidationResult> {
         }
     }
 
-    // Structure validation for warmup.yaml (v3.2.0 Anti-Hallucination)
+    // Structure validation for warmup.yaml (v7.0.6: minimal validation)
+    // Note: warmup.yaml now only contains project-specific config
     if schema_type == "warmup" {
-        let (structure_errors, structure_warnings) = check_warmup_structure(&content);
-        if !structure_errors.is_empty() {
-            result.is_valid = false;
-            result.errors.extend(structure_errors);
-        }
-        result = result.with_warnings(structure_warnings);
+        let (_errors, warnings) = check_warmup_structure(&content);
+        result = result.with_warnings(warnings);
     }
 
     Ok(result)
@@ -429,6 +426,94 @@ pub fn delete_deprecated_claude_md(dir: &Path) {
             }
         }
     }
+}
+
+// ============================================================================
+// PROTOCOL INTEGRITY CHECK (v9.0.0)
+// ============================================================================
+
+/// Result of checking a single protocol file
+#[derive(Debug, Clone)]
+pub struct ProtocolCheck {
+    pub filename: String,
+    pub exists: bool,
+    pub matches: bool,
+    pub outdated: bool, // v9.0.0: renamed from tampered - could be old version, not malicious
+}
+
+/// Check all protocol JSON files against expected (hardcoded) content
+/// Returns list of checks with status for each file
+pub fn check_protocol_integrity(dir: &Path) -> Vec<ProtocolCheck> {
+    use crate::protocols::PROTOCOL_FILES;
+
+    let asimov_dir = dir.join(".asimov");
+    let mut checks = Vec::new();
+
+    for (filename, generator) in PROTOCOL_FILES {
+        let file_path = asimov_dir.join(filename);
+        let expected = generator();
+
+        let (exists, matches, outdated) = if file_path.exists() {
+            match std::fs::read_to_string(&file_path) {
+                Ok(content) => {
+                    // Normalize whitespace for comparison
+                    let content_normalized = content.trim();
+                    let expected_normalized = expected.trim();
+                    let matches = content_normalized == expected_normalized;
+                    (true, matches, !matches)
+                }
+                Err(_) => (true, false, true), // Can't read = outdated/corrupt
+            }
+        } else {
+            (false, false, false) // Missing, not outdated
+        };
+
+        checks.push(ProtocolCheck {
+            filename: filename.to_string(),
+            exists,
+            matches,
+            outdated,
+        });
+    }
+
+    checks
+}
+
+/// Regenerate protocol files and return which ones were changed
+/// Returns: (filename, was_different)
+pub fn regenerate_protocol_files(dir: &Path) -> Result<Vec<(String, bool)>> {
+    use crate::protocols::PROTOCOL_FILES;
+
+    let asimov_dir = dir.join(".asimov");
+    if !asimov_dir.exists() {
+        return Err(Error::ValidationError(
+            "Not in an asimov project (.asimov/ not found)".to_string(),
+        ));
+    }
+
+    let mut results = Vec::new();
+
+    for (filename, generator) in PROTOCOL_FILES {
+        let file_path = asimov_dir.join(filename);
+        let expected = generator();
+
+        let was_different = if file_path.exists() {
+            match std::fs::read_to_string(&file_path) {
+                Ok(content) => content.trim() != expected.trim(),
+                Err(_) => true,
+            }
+        } else {
+            true // Missing = different
+        };
+
+        // Write the correct content
+        std::fs::write(&file_path, &expected)
+            .map_err(|e| Error::ValidationError(format!("Failed to write {}: {}", filename, e)))?;
+
+        results.push((filename.to_string(), was_different));
+    }
+
+    Ok(results)
 }
 
 #[cfg(test)]
@@ -858,6 +943,23 @@ identity:
         assert_eq!(result.errors.len(), 2);
     }
 
+    #[test]
+    fn test_validation_result_with_warning() {
+        let result = ValidationResult::success("test.yaml".to_string(), "warmup".to_string())
+            .with_warning("Warning message".to_string());
+        assert!(result.is_valid);
+        assert_eq!(result.warnings.len(), 1);
+        assert_eq!(result.warnings[0], "Warning message");
+    }
+
+    #[test]
+    fn test_validation_result_with_warnings() {
+        let warnings = vec!["Warning 1".to_string(), "Warning 2".to_string()];
+        let result = ValidationResult::success("test.yaml".to_string(), "warmup".to_string())
+            .with_warnings(warnings);
+        assert_eq!(result.warnings.len(), 2);
+    }
+
     // ========== Asimov Structure Validation Tests (ADR-031) ==========
 
     #[test]
@@ -1080,5 +1182,126 @@ current:
         let result = ValidationResult::success("test.yaml".to_string(), "warmup".to_string())
             .with_regenerated();
         assert!(result.regenerated);
+    }
+
+    #[test]
+    fn test_check_file_size_project() {
+        // Under soft limit - no warnings
+        let warnings = check_file_size("project", 30);
+        assert!(warnings.is_empty());
+
+        // Over soft limit - warning
+        let warnings = check_file_size("project", 60);
+        assert_eq!(warnings.len(), 1);
+        assert!(warnings[0].contains("exceeds recommended"));
+
+        // Over hard limit - warning
+        let warnings = check_file_size("project", 150);
+        assert_eq!(warnings.len(), 1);
+        assert!(warnings[0].contains("exceeds hard limit"));
+    }
+
+    #[test]
+    fn test_check_file_size_warmup() {
+        // Under soft limit - no warnings
+        let warnings = check_file_size("warmup", 100);
+        assert!(warnings.is_empty());
+
+        // Over soft limit - warning
+        let warnings = check_file_size("warmup", 300);
+        assert_eq!(warnings.len(), 1);
+        assert!(warnings[0].contains("exceeds recommended"));
+
+        // Over hard limit - warning
+        let warnings = check_file_size("warmup", 600);
+        assert_eq!(warnings.len(), 1);
+        assert!(warnings[0].contains("exceeds hard limit"));
+    }
+
+    #[test]
+    fn test_check_file_size_unknown_type() {
+        // Unknown types have no limits
+        let warnings = check_file_size("unknown", 1000);
+        assert!(warnings.is_empty());
+    }
+
+    #[test]
+    fn test_validate_directory_wrapper() {
+        // Test the validate_directory wrapper calls validate_directory_with_options
+        let temp_dir = tempfile::tempdir().unwrap();
+        let asimov_dir = temp_dir.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
+        std::fs::write(
+            asimov_dir.join("roadmap.yaml"),
+            "current:\n  version: '1.0'\n  status: planned\n  summary: Test\n",
+        )
+        .unwrap();
+
+        let results = validate_directory(temp_dir.path()).unwrap();
+        assert!(!results.is_empty());
+    }
+
+    #[test]
+    fn test_delete_deprecated_claude_md_removes_file() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let claude_md = temp_dir.path().join("CLAUDE.md");
+        std::fs::write(&claude_md, "# Legacy content").unwrap();
+
+        assert!(claude_md.exists());
+        delete_deprecated_claude_md(temp_dir.path());
+        assert!(!claude_md.exists());
+    }
+
+    #[test]
+    fn test_delete_deprecated_claude_md_nonexistent() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        // No CLAUDE.md exists - should not panic
+        delete_deprecated_claude_md(temp_dir.path());
+    }
+
+    #[test]
+    fn test_warmup_structure_validation_path() {
+        // v7.0.6: warmup.yaml has minimal structure validation
+        // This test exercises the check_warmup_structure code path
+        let content = r#"
+identity:
+  project: "test"
+  tagline: "A test"
+"#;
+        let mut file = NamedTempFile::with_suffix("_warmup.yaml").unwrap();
+        write!(file, "{}", content).unwrap();
+
+        let result = validate_file(file.path()).unwrap();
+        // Since v7.0.6, warmup.yaml has minimal validation (just YAML schema)
+        // This test verifies the code path is executed without error
+        assert!(result.is_valid);
+    }
+
+    #[test]
+    fn test_ensure_protocol_dir_creates() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let asimov_dir = temp_dir.path().join(".asimov");
+
+        assert!(!asimov_dir.exists());
+        let result = ensure_protocol_dir(temp_dir.path());
+        assert!(result.is_ok());
+        assert!(asimov_dir.exists());
+    }
+
+    #[test]
+    fn test_check_asimov_structure_invalid_yaml() {
+        // Invalid YAML should return empty errors (parse errors handled elsewhere)
+        let content = "not: valid: yaml: [";
+        let errors = check_asimov_structure(content);
+        assert!(errors.is_empty());
+    }
+
+    #[test]
+    fn test_check_warmup_structure_returns_empty() {
+        // v7.0.6: check_warmup_structure always returns empty
+        let content = "identity: test";
+        let (errors, warnings) = check_warmup_structure(content);
+        assert!(errors.is_empty());
+        assert!(warnings.is_empty());
     }
 }

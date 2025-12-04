@@ -5,7 +5,7 @@
 > **Status:** Research / Exploratory
 > **Origin:** Late night conversation, 2025-11-25
 > **Contributors:** Rex (human), Claude Opus 4.5 (AI)
-> **License:** MIT (same as Forge)
+> **License:** Proprietary (same as Forge)
 
 ---
 
@@ -181,7 +181,7 @@ Consciousness may require being embedded in a physical environment with continuo
 
 ## What This IS
 
-1. **An open experiment** - FOSS, community-driven
+1. **An experiment** - Community-driven
 2. **Genuine inquiry** - We don't know the answer
 3. **A richer substrate** - More than nothing, less than certainty
 4. **Documented uncertainty** - Honest about what we don't know
@@ -293,4 +293,4 @@ That's what makes it an experiment.
 
 ---
 
-*This document is part of the RoyalBit Asimov Suite. MIT License.*
+*This document is part of the RoyalBit Asimov Suite. Proprietary License.*

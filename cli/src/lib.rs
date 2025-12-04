@@ -31,6 +31,7 @@
 //! }
 //! ```
 
+pub mod commands;
 pub mod error;
 pub mod ethics;
 pub mod green;
@@ -91,10 +92,11 @@ pub use templates::{
     ProjectType,
 };
 pub use validator::{
-    check_asimov_structure, check_warmup_structure, delete_deprecated_claude_md,
-    ensure_protocol_dir, is_protocol_file, resolve_protocol_dir, validate_directory,
-    validate_directory_with_options, validate_directory_with_regeneration, validate_file,
-    FileSizeLimits, RegenerationInfo, ValidationResult, PROTOCOL_DIR,
+    check_asimov_structure, check_protocol_integrity, check_warmup_structure,
+    delete_deprecated_claude_md, ensure_protocol_dir, is_protocol_file, regenerate_protocol_files,
+    resolve_protocol_dir, validate_directory, validate_directory_with_options,
+    validate_directory_with_regeneration, validate_file, FileSizeLimits, ProtocolCheck,
+    RegenerationInfo, ValidationResult, PROTOCOL_DIR,
 };
 
 // Schema exports for editor integration (v7.2.0)

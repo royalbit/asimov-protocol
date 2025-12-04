@@ -189,7 +189,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 | ADRs (15) | `docs/adr/` | Hypotheses, experiments, results |
 | Git log | `git log --oneline` | Timestamped development record |
 | Research citations | ADRs, AI_REALITY.md | External validation |
-| Published crate | crates.io/royalbit-asimov | Working implementation |
+| Published release | GitHub Releases | Working implementation |
 
 ## Estimated Eligible Expenditures
 
@@ -213,7 +213,7 @@ First empirical methodology for measuring autonomous AI development velocity.
 
 ### Published Work
 
-- [crates.io/royalbit-asimov](https://crates.io/crates/royalbit-asimov)
+- [GitHub Releases (asimov)](https://github.com/royalbit/asimov/releases)
 - [GitHub: royalbit/asimov](https://github.com/royalbit/asimov)
 
 ---

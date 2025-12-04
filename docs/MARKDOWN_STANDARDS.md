@@ -17,8 +17,9 @@ Markdown rendering breaks silently. Common issues:
 The `asimov` CLI includes a documentation linter that catches common issues.
 
 ```bash
-# Install
-cargo install royalbit-asimov
+# Install from GitHub Releases
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 
 # Check documentation
 asimov lint-docs                 # Check current directory
@@ -104,7 +105,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install asimov
-        run: cargo install royalbit-asimov
+        run: |
+          curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          sudo mv asimov /usr/local/bin/
 
       - name: Lint documentation
         run: asimov lint-docs .
@@ -139,7 +142,7 @@ asimov validate
 
 | Tool | Purpose | Install |
 |------|---------|---------|
-| `asimov lint-docs` | Code block closers | `cargo install royalbit-asimov` |
+| `asimov lint-docs` | Code block closers | [GitHub Releases](https://github.com/royalbit/asimov/releases) |
 | `markdownlint-cli2` | Standard markdown rules | `npm i -g markdownlint-cli2` |
 | `mermaid-cli` | Mermaid diagram validation | `npm i -g @mermaid-js/mermaid-cli` |
 

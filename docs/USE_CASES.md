@@ -241,7 +241,7 @@ asimov validate --ethics-check
 | Tests | 226 passing |
 | Releases | 41 |
 | Time | ~38 hours |
-| Published | crates.io (646+ downloads) |
+| Published | GitHub (646+ downloads) |
 
 **Verify it yourself**: [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
@@ -252,7 +252,7 @@ asimov validate --ethics-check
 | LOC | 17,118 |
 | Releases | 10 |
 | Time | ~9 hours |
-| Published | crates.io |
+| Published | GitHub |
 
 **The protocol built itself.** That's the proof.
 

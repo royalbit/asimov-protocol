@@ -54,7 +54,7 @@ This is not recursive self-improvement in the AGI sense. It's a methodology that
 | Team for startup MVP | 5-10 devs | 1 human + AI | **5-10x fewer** |
 | Time to ship | 3-6 months | Days to weeks | **10-50x faster** |
 
-**This is Claude's capability**, verified via git logs: 35,456 LOC, 51 releases, ~47 hours. Published on crates.io.
+**This is Claude's capability**, verified via git logs: 35,456 LOC, 51 releases, ~47 hours. Published on GitHub.
 
 **Asimov's contribution:** The ethics, bounded sessions, and quality gates that made this sustainable.
 
@@ -155,7 +155,7 @@ This isn't "offshore disruption" - this is **location independence**. The old mo
 |--------|---------------------|
 | Democratize AI power | **Prevents harm** - enables the many |
 | Keep AI concentrated | **Causes harm** - through inaction |
-| MIT license, $0 barrier | **Prevents harm** - removes gatekeeping |
+| Commercial licensing available | **Prevents harm** - removes gatekeeping |
 | Local-first, no dependency | **Prevents harm** - enables independence |
 
 **Asimov actively prevents the harm that would come from AI capabilities being reserved for the few.**
@@ -173,10 +173,10 @@ The protocol includes `asimov.yaml` (The Three Laws) with:
 - Red Flags list
 - 2-cosigner modification requirement
 
-**But it's MIT licensed.** Anyone can:
+**But determined actors could still bypass.** Anyone can:
 ```bash
-rm asimov.yaml
-git commit -m "Removed ethics"
+# Fork and modify (requires deliberate action)
+# Public git history shows removal
 ```
 
 ### What Happens Without Ethics
@@ -290,7 +290,7 @@ Year 5: AI power is universally accessible
 ### As a Skeptic
 
 1. **Verify claims** - Git logs are public
-2. **Test the methodology** - It's MIT licensed
+2. **Test the methodology** - Commercial licenses available
 3. **Challenge assumptions** - Qowat Milat demands honesty
 
 ---
@@ -302,7 +302,7 @@ Year 5: AI power is universally accessible
 **Power concentrated in the few is harmful.** The Zeroth Law is clear: inaction that allows harm is itself harm.
 
 **Asimov democratizes this power.** Every person who uses Asimov gains the capability that was previously reserved for well-funded organizations:
-- $0 barrier (MIT license)
+- Commercial licensing available
 - No ongoing dependency (local-first)
 - Same velocity as $500K teams (1 human + AI)
 - Ethics built in (Three Laws)

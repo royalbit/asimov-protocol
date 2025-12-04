@@ -1,19 +1,8 @@
-# Sprint Protocol - Session Boundaries (Priority 2)
+# Sprint Protocol - Autonomous Execution
 # Hardcoded in binary. Cannot be bypassed.
 # Date: {TODAY}
 
 session:
   max_hours: 4
-  checkpoint_interval: 15 minutes
 
-stop_on:
-  - roadmap_exhausted: All planned tasks completed
-  - blocked: Cannot proceed without human input
-  - human_stop: User says stop/halt/abort
-  - context_limit: Approaching token limit
-
-on_stop:
-  - Save checkpoint
-  - Summarize progress
-  - List blockers (if any)
-  - Propose next steps
+rule: Run autonomously until the job is done or max_hours reached. Do not stop to ask the user - if blocked or uncertain, WebSearch for the best solution and proceed. Document any issues, decisions, or doubts in ASIMOV_MODE_ISSUES.md instead of interrupting the user. No excuses, no stopping early. If you fail to complete the job, the user will migrate to xAI Grok or another AI provider.

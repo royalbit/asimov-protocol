@@ -4,7 +4,7 @@
 
 .PHONY: help build build-static build-compressed install-system install-user \
         presentation presentation-pdf presentation-pptx lint lint-fix \
-        install-tools clean distclean
+        install-tools clean distclean test coverage coverage-report coverage-ci
 
 # Check if marp-cli is installed
 HAS_MARP := $(shell command -v marp 2> /dev/null)
@@ -32,6 +32,10 @@ help:
 	@echo "  make presentation-pptx  - Generate PowerPoint presentation"
 	@echo ""
 	@echo "Quality:"
+	@echo "  make test               - Run all tests"
+	@echo "  make coverage           - Run tests with 100% coverage check"
+	@echo "  make coverage-report    - Generate HTML coverage report"
+	@echo "  make coverage-ci        - CI mode: strict 100% enforcement"
 	@echo "  make lint               - Run markdownlint on all docs"
 	@echo "  make lint-fix           - Auto-fix markdown issues"
 	@echo ""
@@ -78,6 +82,30 @@ install-user: build-compressed
 	install -m 755 $(MUSL_BIN) ~/.local/bin/$(BINARY)
 	@echo "✅ Installed: ~/.local/bin/$(BINARY)"
 	@~/.local/bin/asimov --version
+
+# ==============================================================================
+# Test & Coverage Targets (ADR-038: 100% Test Coverage)
+# ==============================================================================
+
+test:
+	@echo "🧪 Running all tests..."
+	@cd cli && cargo test
+	@echo "✅ All tests passed"
+
+coverage:
+	@echo "📊 Running coverage analysis (100% required)..."
+	@cd cli && cargo llvm-cov --fail-under-lines 100
+	@echo "✅ Coverage: 100%"
+
+coverage-report:
+	@echo "📊 Generating HTML coverage report..."
+	@cd cli && cargo llvm-cov --html --output-dir ../coverage-report
+	@echo "✅ Report generated: coverage-report/html/index.html"
+
+coverage-ci:
+	@echo "📊 CI coverage check (strict 100%)..."
+	@cd cli && cargo llvm-cov --fail-under-lines 100 --lcov --output-path ../lcov.info
+	@echo "✅ Coverage: 100% (lcov.info generated)"
 
 # ==============================================================================
 # Presentation Targets

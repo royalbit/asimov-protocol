@@ -80,3 +80,73 @@ pub fn schema_type_for_file(filename: &str) -> Option<&'static str> {
         None
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_schema_for_file_warmup() {
+        assert!(schema_for_file("warmup.yaml").is_some());
+        assert!(schema_for_file(".asimov/warmup.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_sprint() {
+        assert!(schema_for_file("sprint.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_roadmap() {
+        assert!(schema_for_file("roadmap.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_asimov() {
+        assert!(schema_for_file("asimov.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_freshness() {
+        assert!(schema_for_file("freshness.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_migrations() {
+        assert!(schema_for_file("migrations.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_green() {
+        assert!(schema_for_file("green.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_sycophancy() {
+        assert!(schema_for_file("sycophancy.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_project() {
+        assert!(schema_for_file("project.yaml").is_some());
+    }
+
+    #[test]
+    fn test_schema_for_file_unknown() {
+        assert!(schema_for_file("unknown.yaml").is_none());
+    }
+
+    #[test]
+    fn test_schema_type_for_file_all() {
+        assert_eq!(schema_type_for_file("warmup.yaml"), Some("warmup"));
+        assert_eq!(schema_type_for_file("sprint.yaml"), Some("sprint"));
+        assert_eq!(schema_type_for_file("roadmap.yaml"), Some("roadmap"));
+        assert_eq!(schema_type_for_file("asimov.yaml"), Some("asimov"));
+        assert_eq!(schema_type_for_file("freshness.yaml"), Some("freshness"));
+        assert_eq!(schema_type_for_file("migrations.yaml"), Some("migrations"));
+        assert_eq!(schema_type_for_file("green.yaml"), Some("green"));
+        assert_eq!(schema_type_for_file("sycophancy.yaml"), Some("sycophancy"));
+        assert_eq!(schema_type_for_file("project.yaml"), Some("project"));
+        assert_eq!(schema_type_for_file("unknown.yaml"), None);
+    }
+}

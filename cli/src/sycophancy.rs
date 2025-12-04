@@ -235,6 +235,18 @@ mod tests {
     }
 
     #[test]
+    fn test_sycophancy_status_extended_asimov_dir() {
+        // Test the .asimov/sycophancy.yaml path (v6.0.0+)
+        let temp_dir = TempDir::new().unwrap();
+        let asimov_dir = temp_dir.path().join(".asimov");
+        std::fs::create_dir(&asimov_dir).unwrap();
+        std::fs::write(asimov_dir.join("sycophancy.yaml"), "test: true").unwrap();
+
+        let status = check_sycophancy_status(temp_dir.path());
+        assert_eq!(status, SycophancyStatus::Extended);
+    }
+
+    #[test]
     fn test_banned_phrase_category_display() {
         assert_eq!(
             format!("{}", BannedPhraseCategory::EmptyValidation),

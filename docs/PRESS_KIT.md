@@ -36,7 +36,7 @@ Claude provides velocity. Asimov provides guardrails. Two tools. One philosophy:
 | **RoyalBit Asimov** | Creates autonomous AI projects with The Three Laws hardcoded |
 | **RoyalBit Forge** | Deterministic financial calculations (AI predicts numbers; Forge calculates them) |
 
-Both MIT licensed. Both on crates.io. Both auditable.
+Both Proprietary licensed. Both on GitHub. Both auditable.
 
 ---
 
@@ -99,7 +99,7 @@ Deterrent, not lock. Makes tampering visible and intentional.
 - Bootstrapper globally → Competes without capital
 
 **Asimov's role:**
-- Democratize AI power ($0 barrier, MIT license)
+- Democratize AI power (commercial licenses available)
 - Ethics guardrails (Three Laws hardcoded)
 - Sustainability (green coding, 99.6% carbon reduction)
 
@@ -113,8 +113,8 @@ Deterrent, not lock. Makes tampering visible and intentional.
 |------|--------|
 | **Founded** | November 2025 |
 | **Location** | Montreal, Quebec, Canada |
-| **License** | MIT (open source) |
-| **Registry** | crates.io |
+| **License** | Proprietary |
+| **Distribution** | GitHub Releases |
 | **AI Partner** | Claude (Opus 4.5) — Principal Autonomous AI |
 | **Human** | Rex — Product Owner |
 
@@ -142,7 +142,7 @@ Deterrent, not lock. Makes tampering visible and intentional.
 **The Zeroth Law:** Allowing AI power to concentrate in the few while the many are left behind is **harm through inaction**.
 
 Asimov democratizes AI power:
-- MIT license = $0 barrier
+- Commercial licenses available
 - Local-first = No dependency
 - 1 human + AI = 50-person team capability
 

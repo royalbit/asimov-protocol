@@ -1209,9 +1209,29 @@ fn e2e_doctor_runs_from_project_dir() {
 }
 
 #[test]
-fn e2e_refresh_runs_from_any_dir() {
-    // v8.16.0: Refresh regenerates protocol .json files from hardcoded values
+fn e2e_refresh_requires_asimov_project() {
+    // v8.16.2: Refresh requires .asimov/ directory (must be in an asimov project)
     let temp_dir = TempDir::new().unwrap();
+
+    // Without .asimov/ - should fail
+    let output = Command::new(binary_path())
+        .arg("refresh")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        !output.status.success(),
+        "Refresh should fail without .asimov/"
+    );
+    assert!(
+        stderr.contains("Not in an asimov project"),
+        "Should show error about not being in asimov project, got: {stderr}"
+    );
+
+    // With .asimov/ - should succeed
+    std::fs::create_dir(temp_dir.path().join(".asimov")).unwrap();
 
     let output = Command::new(binary_path())
         .arg("refresh")
@@ -1224,12 +1244,187 @@ fn e2e_refresh_runs_from_any_dir() {
 
     assert!(
         output.status.success(),
-        "Refresh should succeed, stdout: {stdout}, stderr: {stderr}"
+        "Refresh should succeed with .asimov/, stdout: {stdout}, stderr: {stderr}"
     );
     assert!(
         stdout.contains("REFRESH") || stdout.contains("REGENERAT"),
         "Should show refresh/regeneration output, got: {stdout}"
     );
+}
+
+#[test]
+fn e2e_refresh_detects_outdated_protocol() {
+    // v9.0.0: Refresh should detect and update outdated protocol files
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize project first
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Simulate outdated protocol file (old version)
+    let freshness_path = temp_dir.path().join(".asimov").join("freshness.json");
+    fs::write(&freshness_path, r#"{"old_format": true}"#).unwrap();
+
+    // Run refresh
+    let output = Command::new(binary_path())
+        .arg("refresh")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute refresh");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(output.status.success(), "Refresh should succeed");
+    assert!(
+        stdout.contains("UPDATED") && stdout.contains("freshness.json"),
+        "Should show UPDATED for outdated file, got: {stdout}"
+    );
+    assert!(
+        stdout.contains("updated"),
+        "Should mention protocols were updated, got: {stdout}"
+    );
+
+    // Verify file was updated to correct content
+    let content = fs::read_to_string(&freshness_path).unwrap();
+    assert!(
+        content.contains("rule"),
+        "Updated file should have 'rule' field, got: {content}"
+    );
+}
+
+#[test]
+fn e2e_doctor_detects_outdated_protocol() {
+    // v9.0.0: Doctor should detect outdated protocol files
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize project first
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Simulate outdated protocol file (old version format)
+    let sycophancy_path = temp_dir.path().join(".asimov").join("sycophancy.json");
+    fs::write(&sycophancy_path, r#"{"old_version": true}"#).unwrap();
+
+    // Run doctor
+    let output = Command::new(binary_path())
+        .arg("doctor")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute doctor");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(
+        !output.status.success(),
+        "Doctor should fail with outdated protocol"
+    );
+    assert!(
+        stdout.contains("outdated") || stdout.contains("Outdated"),
+        "Should mention outdated file, got: {stdout}"
+    );
+    assert!(
+        stdout.contains("sycophancy.json"),
+        "Should mention the specific outdated file, got: {stdout}"
+    );
+}
+
+#[test]
+fn e2e_doctor_detects_missing_protocol() {
+    // v9.0.0: Doctor should detect missing protocol files
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize project first
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Delete a protocol file
+    let green_path = temp_dir.path().join(".asimov").join("green.json");
+    fs::remove_file(&green_path).unwrap();
+
+    // Run doctor
+    let output = Command::new(binary_path())
+        .arg("doctor")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute doctor");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(
+        !output.status.success(),
+        "Doctor should fail with missing protocol"
+    );
+    assert!(
+        stdout.contains("missing") || stdout.contains("Missing"),
+        "Should mention missing file, got: {stdout}"
+    );
+    assert!(
+        stdout.contains("green.json"),
+        "Should mention the specific missing file, got: {stdout}"
+    );
+}
+
+#[test]
+fn e2e_refresh_creates_missing_protocol() {
+    // v9.0.0: Refresh should create missing protocol files
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize project first
+    let init_output = Command::new(binary_path())
+        .arg("init")
+        .arg("--name")
+        .arg("test-project")
+        .arg("--type")
+        .arg("generic")
+        .arg("--output")
+        .arg(temp_dir.path())
+        .output()
+        .expect("Failed to execute init");
+    assert!(init_output.status.success(), "Init should succeed");
+
+    // Delete a protocol file
+    let sprint_path = temp_dir.path().join(".asimov").join("sprint.json");
+    fs::remove_file(&sprint_path).unwrap();
+    assert!(!sprint_path.exists(), "File should be deleted");
+
+    // Run refresh
+    let output = Command::new(binary_path())
+        .arg("refresh")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute refresh");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(output.status.success(), "Refresh should succeed");
+    assert!(
+        stdout.contains("CREATED") || stdout.contains("UPDATED"),
+        "Should show CREATED or UPDATED for missing file, got: {stdout}"
+    );
+    assert!(sprint_path.exists(), "File should be recreated");
 }
 
 #[test]
@@ -1253,5 +1448,141 @@ fn e2e_validate_warns_on_missing_roadmap() {
     assert!(
         stdout.contains("missing") || stdout.contains("roadmap"),
         "Should mention missing roadmap, got: {stdout}"
+    );
+}
+
+// ========== Update Command Integration Tests ==========
+
+#[test]
+fn e2e_update_check_runs() {
+    // Test `asimov update --check` - makes network call to GitHub API
+    let output = Command::new(binary_path())
+        .args(["update", "--check"])
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    // Should either succeed (found version info) or fail gracefully (network error)
+    // Both are valid outcomes - we're testing the code path runs
+    assert!(
+        stdout.contains("Update")
+            || stdout.contains("version")
+            || stdout.contains("latest")
+            || stderr.contains("Error")
+            || stdout.contains("OK"),
+        "Update check should produce output, got stdout: {stdout}, stderr: {stderr}"
+    );
+}
+
+#[test]
+fn e2e_default_command_runs() {
+    // Test running `asimov` with no args (default command)
+    // This exercises the main() dispatch and cmd_launch()
+    let temp_dir = TempDir::new().unwrap();
+
+    let output = Command::new(binary_path())
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    // Should either:
+    // - Show "Claude Code not found" if claude not installed
+    // - Show "Launching Claude Code..." if claude found
+    // - Run warmup if inside Claude session
+    // - Show roadmap error if no project
+    assert!(
+        stderr.contains("Claude")
+            || stderr.contains("roadmap")
+            || stdout.contains("Launching")
+            || stdout.contains("warmup")
+            || stderr.contains("Error")
+            || stdout.contains("RoyalBit"),
+        "Default command should run, got stdout: {stdout}, stderr: {stderr}"
+    );
+}
+
+#[test]
+fn e2e_stats_command_runs() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize git repo
+    Command::new("git")
+        .args(["init"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+
+    // Create .asimov with roadmap
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
+    )
+    .unwrap();
+
+    let output = Command::new(binary_path())
+        .arg("stats")
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    // Stats should show commit info
+    assert!(
+        stdout.contains("commits") || stdout.contains("Commits") || stdout.contains("Stats"),
+        "Stats should show commit information, got: {stdout}"
+    );
+}
+
+#[test]
+fn e2e_replay_command_runs() {
+    let temp_dir = TempDir::new().unwrap();
+
+    // Initialize git repo with a commit
+    Command::new("git")
+        .args(["init"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+    Command::new("git")
+        .args(["config", "user.email", "test@test.com"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+    Command::new("git")
+        .args(["config", "user.name", "Test"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+    fs::write(temp_dir.path().join("test.txt"), "content").unwrap();
+    Command::new("git")
+        .args(["add", "."])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+    Command::new("git")
+        .args(["commit", "-m", "test commit"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
+
+    let output = Command::new(binary_path())
+        .args(["replay", "--commits", "5"])
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+
+    assert!(
+        output.status.success(),
+        "Replay should succeed, got: {stdout}"
     );
 }

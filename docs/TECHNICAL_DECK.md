@@ -84,7 +84,7 @@ Forge guarantees WHAT (no hallucinations in numbers)
 Together = What no one else has
 ```
 
-**Both MIT licensed. Both on crates.io. Both auditable.**
+**Both proprietary licensed. Both on GitHub. Both auditable.**
 
 ---
 
@@ -259,7 +259,7 @@ third_law:   # Self-preserve (within limits)
 | 1 | Forge built → birthed the protocol |
 | 2 | Protocol extracted → became Asimov |
 | 3 | Asimov now builds Forge |
-| 4 | Both production, both on [crates.io](https://crates.io/crates/royalbit-asimov) |
+| 4 | Both production, both on [GitHub](https://github.com/royalbit) |
 
 | Property | Description |
 |----------|-------------|
@@ -377,7 +377,7 @@ Deterministic. Auditable. No spreadsheet chaos.
 | Bootstrapper globally | Outships funded startups | **Meritocracy restored** |
 
 **The economics:**
-- MIT License = $0 barrier
+- Free for personal learning
 - Local-first = No cloud dependency
 - 1 human + AI = 50-person team capability
 
@@ -417,7 +417,7 @@ Deterministic. Auditable. No spreadsheet chaos.
 |--------|---------------------|
 | Democratize AI power | **Prevents harm** - enables the many |
 | Keep AI concentrated | **Causes harm** - through inaction |
-| MIT license, $0 barrier | **Prevents harm** - removes gatekeeping |
+| Free for learning, commercial license available | **Prevents harm** - accessible to individuals |
 | Local-first, no dependency | **Prevents harm** - enables independence |
 
 **The question:** "What would happen if we DIDN'T democratize?"
@@ -476,8 +476,8 @@ Deterministic. Auditable. No spreadsheet chaos.
 <div class="smaller">
 
 ```bash
-# Install both tools
-cargo install royalbit-asimov royalbit-forge
+# Install from GitHub Releases
+# See: github.com/royalbit/asimov/releases
 
 # Initialize Self-Evolving AI project
 asimov init --type rust --asimov
@@ -523,8 +523,8 @@ forge validate model.yaml
 <div class="smaller">
 
 ```bash
-# Install RoyalBit tools
-cargo install royalbit-asimov royalbit-forge
+# Install from GitHub Releases
+# github.com/royalbit/asimov/releases
 
 # Initialize project with Three Laws
 asimov init --type rust --asimov
@@ -554,13 +554,13 @@ forge calculate model.yaml
 | Releases | 78 in 8 days |
 | LOC / Tests / Commits | 22,239 / 257 / 404 |
 | Velocity | 56x vs senior developer |
-| Registry | Both on crates.io |
+| Registry | GitHub Releases |
 
 **Complete Solution:** Asimov (ethics, velocity) + Forge (deterministic math)
 
 </div>
 
-*"The code is free. The git logs are public. Verify yourself."*
+*"The git logs are public. Verify yourself."*
 
 ---
 
@@ -571,7 +571,7 @@ forge calculate model.yaml
 
 <div class="small">
 
-**License:** MIT — Use it, fork it, verify it
+**License:** Proprietary — Commercial licenses available
 
 **Qowat Milat:** This deck tells the truth — the power AND the responsibility.
 
@@ -595,7 +595,7 @@ forge calculate model.yaml
 - [OpenAI: Why LLMs "Hallucinate"](https://openai.com/index/why-language-models-hallucinate/) | [METR 2025: AI Makes Devs 19% Slower](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
 - [Stanford: 42% Code Errors](https://arxiv.org/abs/2507.09089) | [ACM: Survey on Hallucination](https://dl.acm.org/doi/10.1145/3703155)
 
-**Democratization:** [MIT License](https://opensource.org/licenses/MIT) | [crates.io](https://crates.io/crates/royalbit-asimov)
+**Democratization:** [Proprietary License](https://github.com/royalbit/asimov/blob/main/LICENSE) | [GitHub](https://github.com/royalbit/asimov)
 
 **Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study: Surveillance Blocked](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
 

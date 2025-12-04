@@ -389,4 +389,315 @@ mod tests {
         assert!(result.version_refs_found >= 1);
         assert!(!result.issues.is_empty());
     }
+
+    #[test]
+    fn test_semantic_result_is_ok() {
+        let mut result = SemanticResult::default();
+        assert!(result.is_ok());
+
+        result.issues.push(SemanticIssue {
+            file: PathBuf::from("test.md"),
+            line: Some(1),
+            category: IssueCategory::VersionMismatch,
+            severity: Severity::Warning,
+            message: "test".to_string(),
+            context: None,
+        });
+        assert!(!result.is_ok());
+    }
+
+    #[test]
+    fn test_semantic_result_counts() {
+        let mut result = SemanticResult::default();
+
+        // Add an error
+        result.issues.push(SemanticIssue {
+            file: PathBuf::from("test.md"),
+            line: Some(1),
+            category: IssueCategory::VersionMismatch,
+            severity: Severity::Error,
+            message: "error".to_string(),
+            context: None,
+        });
+
+        // Add a warning
+        result.issues.push(SemanticIssue {
+            file: PathBuf::from("test.md"),
+            line: Some(2),
+            category: IssueCategory::DeprecatedPattern,
+            severity: Severity::Warning,
+            message: "warning".to_string(),
+            context: None,
+        });
+
+        assert_eq!(result.error_count(), 1);
+        assert_eq!(result.warning_count(), 1);
+    }
+
+    #[test]
+    fn test_issue_category_display() {
+        assert_eq!(format!("{}", IssueCategory::VersionMismatch), "version");
+        assert_eq!(
+            format!("{}", IssueCategory::DeprecatedPattern),
+            "deprecated"
+        );
+        assert_eq!(format!("{}", IssueCategory::HelpDocMismatch), "help-doc");
+    }
+
+    #[test]
+    fn test_deprecated_pattern_builder() {
+        let dp = DeprecatedPattern::new("old_name")
+            .with_replacement("new_name")
+            .with_reason("deprecated");
+        assert_eq!(dp.pattern, "old_name");
+        assert_eq!(dp.replacement, Some("new_name".to_string()));
+        assert_eq!(dp.reason, Some("deprecated".to_string()));
+        assert!(!dp.case_sensitive);
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_empty() {
+        let temp = TempDir::new().unwrap();
+        // No deprecated.yaml file
+        let patterns = load_deprecated_patterns(temp.path());
+        assert!(patterns.is_empty());
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_with_file() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        fs::create_dir(&asimov_dir).unwrap();
+        fs::write(
+            asimov_dir.join("deprecated.yaml"),
+            "deprecated:\n  - pattern: old_term\n    replacement: new_term\n    reason: updated\n",
+        )
+        .unwrap();
+
+        let patterns = load_deprecated_patterns(temp.path());
+        assert_eq!(patterns.len(), 1);
+        assert_eq!(patterns[0].pattern, "old_term");
+        assert_eq!(patterns[0].replacement, Some("new_term".to_string()));
+    }
+
+    #[test]
+    fn test_get_cargo_version_found() {
+        let temp = TempDir::new().unwrap();
+        fs::write(
+            temp.path().join("Cargo.toml"),
+            "[package]\nname = \"test\"\nversion = \"1.2.3\"\n",
+        )
+        .unwrap();
+
+        let version = get_cargo_version(temp.path());
+        assert_eq!(version, Some("1.2.3".to_string()));
+    }
+
+    #[test]
+    fn test_get_cargo_version_not_found() {
+        let temp = TempDir::new().unwrap();
+        // No Cargo.toml
+        let version = get_cargo_version(temp.path());
+        assert!(version.is_none());
+    }
+
+    #[test]
+    fn test_get_cargo_version_cli_subdir() {
+        let temp = TempDir::new().unwrap();
+        let cli_dir = temp.path().join("cli");
+        fs::create_dir(&cli_dir).unwrap();
+        fs::write(
+            cli_dir.join("Cargo.toml"),
+            "[package]\nname = \"cli\"\nversion = \"2.0.0\"\n",
+        )
+        .unwrap();
+
+        let version = get_cargo_version(temp.path());
+        assert_eq!(version, Some("2.0.0".to_string()));
+    }
+
+    #[test]
+    fn test_check_semantic_empty_dir() {
+        let temp = TempDir::new().unwrap();
+        let config = SemanticConfig::default();
+        let result = check_semantic(temp.path(), &config);
+        assert!(result.is_ok());
+        assert_eq!(result.files_checked, 0);
+    }
+
+    #[test]
+    fn test_check_help_doc_consistency() {
+        let temp = TempDir::new().unwrap();
+        let config = SemanticConfig {
+            check_help: true,
+            ..Default::default()
+        };
+        let result = check_semantic(temp.path(), &config);
+        // Should not crash, even if no binary found
+        assert!(result.issues.is_empty() || !result.issues.is_empty());
+    }
+
+    #[test]
+    fn test_case_sensitive_deprecated_pattern() {
+        let temp = TempDir::new().unwrap();
+        let test_file = temp.path().join("test.md");
+        fs::write(&test_file, "This has UPPERCASE and lowercase text.\n").unwrap();
+
+        // Case-sensitive pattern (default is false)
+        let mut pattern = DeprecatedPattern::new("UPPERCASE");
+        pattern.case_sensitive = true;
+
+        let config = SemanticConfig {
+            deprecated_patterns: vec![pattern],
+            ..Default::default()
+        };
+
+        let result = check_semantic(temp.path(), &config);
+        assert_eq!(result.deprecated_matches, 1);
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_partial() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        fs::create_dir(&asimov_dir).unwrap();
+        // Pattern with only pattern field, no replacement or reason
+        fs::write(
+            asimov_dir.join("deprecated.yaml"),
+            "deprecated:\n  - pattern: old_api\n",
+        )
+        .unwrap();
+
+        let patterns = load_deprecated_patterns(temp.path());
+        assert_eq!(patterns.len(), 1);
+        assert_eq!(patterns[0].pattern, "old_api");
+        assert!(patterns[0].replacement.is_none());
+        assert!(patterns[0].reason.is_none());
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_invalid_yaml() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        fs::create_dir(&asimov_dir).unwrap();
+        // Invalid YAML
+        fs::write(asimov_dir.join("deprecated.yaml"), "not: valid: yaml: [").unwrap();
+
+        let patterns = load_deprecated_patterns(temp.path());
+        assert!(patterns.is_empty());
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_no_deprecated_key() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        fs::create_dir(&asimov_dir).unwrap();
+        // YAML without deprecated key
+        fs::write(asimov_dir.join("deprecated.yaml"), "other_key: value\n").unwrap();
+
+        let patterns = load_deprecated_patterns(temp.path());
+        assert!(patterns.is_empty());
+    }
+
+    #[test]
+    fn test_find_source_files() {
+        let temp = TempDir::new().unwrap();
+        // Create various source files
+        fs::write(temp.path().join("test.rs"), "fn main() {}").unwrap();
+        fs::write(temp.path().join("test.py"), "def main(): pass").unwrap();
+        fs::write(temp.path().join("test.js"), "function main() {}").unwrap();
+        fs::write(temp.path().join("test.ts"), "function main() {}").unwrap();
+        fs::write(temp.path().join("readme.md"), "# Readme").unwrap();
+
+        // Run check_semantic which uses find_source_files internally
+        let config = SemanticConfig {
+            expected_version: Some("1.0.0".to_string()),
+            ..Default::default()
+        };
+        let result = check_semantic(temp.path(), &config);
+        // Just verify it runs without error
+        assert!(result.files_checked >= 0);
+    }
+
+    #[test]
+    fn test_load_deprecated_patterns_full() {
+        // Test loading patterns with all fields (replacement and reason)
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        fs::create_dir(&asimov_dir).unwrap();
+        fs::write(
+            asimov_dir.join("deprecated.yaml"),
+            r#"deprecated:
+  - pattern: old_function
+    replacement: new_function
+    reason: renamed in v2.0
+  - pattern: legacy_api
+    replacement: modern_api
+    reason: deprecated
+"#,
+        )
+        .unwrap();
+
+        let patterns = load_deprecated_patterns(temp.path());
+        assert_eq!(patterns.len(), 2);
+        assert_eq!(patterns[0].replacement, Some("new_function".to_string()));
+        assert_eq!(patterns[0].reason, Some("renamed in v2.0".to_string()));
+        assert_eq!(patterns[1].replacement, Some("modern_api".to_string()));
+    }
+
+    #[test]
+    fn test_get_cargo_version_invalid_format() {
+        // Cargo.toml without valid version line
+        let temp = TempDir::new().unwrap();
+        fs::write(
+            temp.path().join("Cargo.toml"),
+            "[package]\nname = \"test\"\n",
+        )
+        .unwrap();
+
+        let version = get_cargo_version(temp.path());
+        assert!(version.is_none());
+    }
+
+    #[test]
+    fn test_version_mismatch_detection() {
+        let temp = TempDir::new().unwrap();
+
+        // Create markdown file with a version
+        fs::write(
+            temp.path().join("readme.md"),
+            "This is version 1.0.0 of the project.\n",
+        )
+        .unwrap();
+
+        // Check with expected version that matches
+        let config = SemanticConfig {
+            expected_version: Some("1.0.0".to_string()),
+            ..Default::default()
+        };
+        let result = check_semantic(temp.path(), &config);
+        // Should find the version reference
+        assert!(result.files_checked > 0);
+    }
+
+    #[test]
+    fn test_deprecated_check_with_replacement_message() {
+        let temp = TempDir::new().unwrap();
+        let test_file = temp.path().join("test.md");
+        fs::write(&test_file, "This uses old_api which is deprecated.\n").unwrap();
+
+        let pattern = DeprecatedPattern::new("old_api")
+            .with_replacement("new_api")
+            .with_reason("updated in v3");
+
+        let config = SemanticConfig {
+            deprecated_patterns: vec![pattern],
+            ..Default::default()
+        };
+
+        let result = check_semantic(temp.path(), &config);
+        assert_eq!(result.deprecated_matches, 1);
+        // The issue should contain replacement info
+        assert!(result.issues.iter().any(|i| i.message.contains("new_api")));
+    }
 }

@@ -6,7 +6,7 @@ How one protocol powers an entire product suite.
 
 The RoyalBit Asimov wasn't designed in isolation. It emerged from building real products:
 
-1. **Forge** (FOSS) - A YAML formula calculator that needed autonomous development
+1. **Forge** - A YAML formula calculator that needed autonomous development
 2. **A proprietary platform** - A full product ecosystem with backend, mobile apps, and business strategy
 
 The problems we solved building Forge became the protocol. The protocol then scaled to power an entire ecosystem.
@@ -134,7 +134,7 @@ The `master-roadmap.yaml` coordinates across repositories:
 | MCP tools | 10 |
 | Editor extensions | 1 (forge-zed) |
 | Excel functions | 60+ |
-| crates.io downloads | 646+ |
+| GitHub downloads | 646+ |
 
 **Velocity multiplier: 50-150x** (verified via git logs, zero rework, production quality from first iteration)
 
@@ -225,8 +225,8 @@ The protocol built itself. Both projects use the same methodology:
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
-| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
+| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [GitHub](https://github.com/royalbit/forge/releases) |
+| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [GitHub](https://github.com/royalbit/asimov/releases) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -238,7 +238,7 @@ The protocol built itself. Both projects use the same methodology:
 | Productivity | 1.1-1.6x | **50-150x** | [arXiv:2302.06590](https://arxiv.org/abs/2302.06590), git logs |
 | Autonomy | Autocomplete | Ships releases | Verified |
 | Self-hosting | No | **Yes** | This repo |
-| Cost | $39/user/mo | **Free (OSS)** | [GitHub pricing](https://github.com/features/copilot/plans) |
+| Cost | $39/user/mo | **Commercial license** | [GitHub pricing](https://github.com/features/copilot/plans) |
 
 ## Green Coding
 

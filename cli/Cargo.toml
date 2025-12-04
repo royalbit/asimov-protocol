@@ -1,15 +1,14 @@
 [package]
 name = "royalbit-asimov"
-version = "8.16.4"
+version = "9.0.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Autonomous AI <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "RoyalBit Asimov - The ethical operating system for Claude's autonomous power. Claude provides velocity, Asimov provides guardrails."
 repository = "https://github.com/royalbit/asimov"
 homepage = "https://github.com/royalbit/asimov"
 documentation = "https://github.com/royalbit/asimov#readme"
-license = "MIT"
-keywords = ["ai", "ethics", "asimov", "automation", "cli"]
-categories = ["command-line-utilities", "development-tools"]
+license = "LicenseRef-Proprietary"
+publish = false
 readme = "../README.md"
 
 [lib]
@@ -30,13 +29,13 @@ serde_yaml = "0.9"
 serde_json = "1.0"
 
 # JSON Schema validation
-jsonschema = "0.26"
+jsonschema = "0.37"
 
 # Error handling
-thiserror = "1.0"
+thiserror = "2.0"
 
 # Pretty output
-colored = "2.1"
+colored = "3.0"
 
 # Directory traversal (for lint-docs)
 walkdir = "2.5"
@@ -50,6 +49,8 @@ chrono = "0.4"
 [dev-dependencies]
 # Testing
 tempfile = "3.8"
+# HTTP mocking for update tests
+mockito = "1.2"
 # Git hooks (auto-installs on cargo test)
 cargo-husky = { version = "1", default-features = false, features = ["user-hooks"] }
 

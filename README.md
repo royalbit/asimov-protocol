@@ -1,9 +1,7 @@
 # RoyalBit Asimov
 
 [![CI](https://github.com/royalbit/asimov/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
-[![Downloads](https://img.shields.io/crates/d/royalbit-asimov.svg)](https://crates.io/crates/royalbit-asimov)
-[![License](https://img.shields.io/crates/l/royalbit-asimov.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 
 > 🤖 **RoyalBit Asimov** | The Ethical Operating System for Claude's Autonomous Power
 >
@@ -305,7 +303,7 @@ See [ADR-022: Date-Aware Search Protocol](https://github.com/royalbit/asimov/blo
 
 ## CLI Validator
 
-### Option 1: Download Binary (No Rust Required)
+### Download Binary
 
 Download pre-built binaries from [GitHub Releases](https://github.com/royalbit/asimov/releases/latest):
 
@@ -326,24 +324,6 @@ sudo mv asimov /usr/local/bin/
 Invoke-WebRequest -Uri https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-pc-windows-msvc.zip -OutFile asimov.zip
 Expand-Archive asimov.zip -DestinationPath .
 # Add to PATH or move to a directory in PATH
-```
-
-### Option 2: Install via Cargo
-
-Install from [crates.io](https://crates.io/crates/royalbit-asimov):
-
-```bash
-cargo install royalbit-asimov
-```
-
-### Option 3: Build from Source
-
-```bash
-git clone https://github.com/royalbit/asimov
-cd asimov
-make install-system    # Install to /usr/local/bin (1.3MB compressed)
-# OR
-make install-user      # Install to ~/.local/bin
 ```
 
 Validate your protocol files:
@@ -540,8 +520,9 @@ When organizations adopt the RoyalBit Asimov:
 ### Implementation
 
 ```bash
-# Install once (1.3MB)
-cargo install royalbit-asimov
+# Install once (1.3MB) - see GitHub Releases
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 
 # Validate forever ($0, ~0.002g CO₂ per run)
 asimov validate
@@ -673,9 +654,9 @@ The ultimate proof: asimov was built using asimov.
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
-| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
-| **Total** | **35,456** | **51** | **~47** | Both published |
+| [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [GitHub](https://github.com/royalbit/forge/releases) |
+| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [GitHub](https://github.com/royalbit/asimov/releases) |
+| **Total** | **35,456** | **51** | **~47** | Git history |
 
 **1 human. 1 AI. 47 hours. 51 releases. Verify it yourself.**
 
@@ -887,14 +868,28 @@ PRs require human code review, but humans reviewing AI-generated code is not the
 |--------|-------------|
 | **[Issues](https://github.com/royalbit/asimov/issues)** | Report bugs, request features |
 | **[Discussions](https://github.com/royalbit/asimov/discussions)** | Ask questions, share ideas |
-| **Fork** | Create your own version (carry `asimov.yaml` forward) |
 
 When AI implements your idea from an Issue, you'll be credited in the commit message.
 
-### Forks Welcome
+### Commercial Licensing
 
-Fork freely! The social contract: carry `asimov.yaml` forward. See [ADR-008](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) and [ADR-020](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md).
+For commercial use, contact us via [GitHub Issues](https://github.com/royalbit/asimov/issues) with subject "Commercial License Request".
 
 ## License
 
-MIT
+**Proprietary** - See [LICENSE](LICENSE)
+
+### What This Means
+
+| Use Case | Allowed? |
+|----------|----------|
+| View and study source code | ✅ Yes |
+| Clone for local viewing | ✅ Yes |
+| Personal, non-commercial educational use | ✅ Yes |
+| **Any commercial use** | ❌ Requires license |
+| **Use by/for employers, clients, organizations** | ❌ Requires license |
+| **Compensation, funding, or commercial benefit** | ❌ Requires license |
+| **Modify, distribute, sublicense** | ❌ Not permitted |
+| **Create derivative works** | ❌ Not permitted |
+
+**Commercial licensing:** [Open an issue](https://github.com/royalbit/asimov/issues)

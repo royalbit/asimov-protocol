@@ -280,4 +280,121 @@ Done.
         let errors = check_content(content);
         assert!(errors.is_empty());
     }
+
+    #[test]
+    fn test_lint_result_is_ok() {
+        let result = LintResult {
+            file: PathBuf::from("test.md"),
+            errors: vec![],
+            fixed: false,
+        };
+        assert!(result.is_ok());
+
+        let result_with_error = LintResult {
+            file: PathBuf::from("test.md"),
+            errors: vec![LintError {
+                line: 1,
+                message: "test error".to_string(),
+            }],
+            fixed: false,
+        };
+        assert!(!result_with_error.is_ok());
+    }
+
+    #[test]
+    fn test_check_file() {
+        use std::io::Write;
+        use tempfile::NamedTempFile;
+
+        let content = "# Valid\n\n```rust\ncode\n```\n";
+        let mut file = NamedTempFile::with_suffix(".md").unwrap();
+        write!(file, "{}", content).unwrap();
+        file.flush().unwrap();
+
+        let result = check_file(file.path()).unwrap();
+        assert!(result.is_ok());
+        assert!(!result.fixed);
+    }
+
+    #[test]
+    fn test_fix_file_with_error() {
+        use std::io::Write;
+        use tempfile::NamedTempFile;
+
+        let content = "# Test\n\n```rust\ncode\n```text\n\nMore.\n";
+        let mut file = NamedTempFile::with_suffix(".md").unwrap();
+        write!(file, "{}", content).unwrap();
+        file.flush().unwrap();
+
+        let result = fix_file(file.path()).unwrap();
+        assert!(result.fixed);
+        assert!(result.errors.is_empty()); // After fix, no errors remain
+
+        // Verify the file was actually fixed
+        let fixed_content = std::fs::read_to_string(file.path()).unwrap();
+        assert!(fixed_content.contains("```\n\nMore"));
+    }
+
+    #[test]
+    fn test_fix_file_no_errors() {
+        use std::io::Write;
+        use tempfile::NamedTempFile;
+
+        let content = "# Valid\n\n```rust\ncode\n```\n";
+        let mut file = NamedTempFile::with_suffix(".md").unwrap();
+        write!(file, "{}", content).unwrap();
+        file.flush().unwrap();
+
+        let result = fix_file(file.path()).unwrap();
+        assert!(!result.fixed);
+    }
+
+    #[test]
+    fn test_check_tilde_with_suffix() {
+        // Test the ~~~suffix error case
+        let content = r#"# Test
+
+~~~bash
+code
+~~~sh
+
+Done.
+"#;
+        let errors = check_content(content);
+        assert_eq!(errors.len(), 1);
+        assert!(errors[0].message.contains("~~~sh"));
+    }
+
+    #[test]
+    fn test_fix_tilde_with_suffix() {
+        // Test fixing ~~~ blocks with suffix
+        let content = "# Test\n\n~~~bash\ncode\n~~~sh\n\nDone.\n";
+        let (fixed, count) = fix_content(content);
+        assert_eq!(count, 1);
+        assert!(fixed.contains("~~~\n\nDone"));
+    }
+
+    #[test]
+    fn test_fix_tilde_clean() {
+        // Clean tilde block should not be modified
+        let content = "# Test\n\n~~~\ncode\n~~~\n\nDone.\n";
+        let (fixed, count) = fix_content(content);
+        assert_eq!(count, 0);
+        assert_eq!(fixed, content.trim_end());
+    }
+
+    #[test]
+    fn test_tilde_block_matching() {
+        // Tilde blocks should match correctly
+        let content = r#"# Test
+
+~~~rust
+let x = 1;
+~~~
+
+Done.
+"#;
+        let errors = check_content(content);
+        assert!(errors.is_empty());
+    }
 }

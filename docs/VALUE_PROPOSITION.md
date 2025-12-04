@@ -51,14 +51,14 @@ Every company using Claude gets the velocity. The question is:
 | Releases | 3-5 typical | 41 in 6 days | **10x** |
 | Rework | 30-50% | 0% | **Infinite** |
 
-**Verify it**: [github.com/royalbit/forge](https://github.com/royalbit/forge), [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge)
+**Verify it**: [github.com/royalbit/forge](https://github.com/royalbit/forge)
 
 ### The Protocol Built Itself
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
-| forge | 18,338 | 41 | ~38 | crates.io |
-| asimov | 17,118 | 10 | ~9 | crates.io |
+| forge | 18,338 | 41 | ~38 | GitHub |
+| asimov | 17,118 | 10 | ~9 | GitHub |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -129,7 +129,7 @@ Every company using Claude gets the velocity. The question is:
 | Mode | Autocomplete | **Autonomous sessions** |
 | Scope | Line/function | **Full milestones** |
 | Self-hosting | No | **Yes** |
-| Cost | $19-39/user/mo | **Free (MIT)** |
+| Cost | $19-39/user/mo | **Commercial license** |
 
 ### vs Devin / SWE-Agent
 
@@ -137,7 +137,7 @@ Every company using Claude gets the velocity. The question is:
 |--------|--------------|----------------|
 | Benchmark success | 13.86% | **51 releases shipped** |
 | Maturity | "Still maturing" | **Production proven** |
-| Cost | $500/mo+ | **Free (MIT)** |
+| Cost | $500/mo+ | **Commercial license** |
 | Ethics built-in | No | **Yes** |
 | Human oversight | Varies | **Structured (gates)** |
 
@@ -199,14 +199,16 @@ Claude API calls cost money and carbon. **Asimov minimizes both.**
 
 - [Forge commits](https://github.com/royalbit/forge/commits)
 - [Protocol commits](https://github.com/royalbit/asimov/commits)
-- [crates.io downloads](https://crates.io/crates/royalbit-forge)
+- [GitHub releases](https://github.com/royalbit/forge/releases)
 
 ### For the Pragmatist
 
-> "MIT licensed. Free. Try it on your next project."
+> "Try it on your next project."
 
 ```bash
-cargo install royalbit-asimov
+# Install from GitHub Releases
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 asimov init --type rust
 ```
 
@@ -253,7 +255,9 @@ asimov validate --ethics-check  # Verify ethics
 ### 5 Minutes
 
 ```bash
-cargo install royalbit-asimov
+# Install from GitHub Releases
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 cd your-project
 asimov init --type rust
 ```
@@ -286,7 +290,7 @@ AI: [reports completion at gate]
 
 **The math**: 50-150x velocity, verified, published, free.
 
-**The catch**: None. MIT licensed. Use it. Verify it. Ship with it.
+**The catch**: Commercial license required. Contact us to get started.
 
 ---
 

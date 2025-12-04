@@ -149,8 +149,9 @@ See [Vendor Implementation Guide](VENDOR_IMPLEMENTATION.md) for what other tools
 ## Quick Start
 
 ```bash
-# Install asimov
-cargo install royalbit-asimov
+# Install asimov (from GitHub Releases)
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 
 # Full ROYALBIT ASIMOV setup
 asimov init --type rust --asimov
@@ -185,7 +186,7 @@ claude --dangerously-skip-permissions
 | Context after compaction | Lost | Recovered |
 | Scope creep | Common | Rejected |
 
-**Proven:** 50-150x velocity, 41 releases in ~38 hours (Forge project: 18K LOC, 226 tests, published on crates.io)
+**Proven:** 50-150x velocity, 41 releases in ~38 hours (Forge project: 18K LOC, 226 tests, published on GitHub)
 
 ## Component Deep Dives
 

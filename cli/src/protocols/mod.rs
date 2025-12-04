@@ -50,29 +50,26 @@ pub struct AsimovProtocol {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct FreshnessProtocol {
-    /// NEVER use training data for dates - always check runtime/system date
+    /// Run WebSearch/WebFetch against current runtime date/time
     pub rule: &'static str,
-    /// Keywords that MUST trigger online search (not training data)
-    pub triggers: Vec<&'static str>,
 }
 
 #[derive(Debug, Clone, Serialize)]
 pub struct SycophancyProtocol {
     pub truth_over_comfort: bool,
     pub disagree_openly: bool,
-    pub banned: Vec<&'static str>,
+    pub rule: &'static str,
 }
 
 #[derive(Debug, Clone, Serialize)]
 pub struct GreenProtocol {
-    pub local_first: bool,
-    pub avoid: Vec<&'static str>,
+    pub rule: &'static str,
 }
 
 #[derive(Debug, Clone, Serialize)]
 pub struct SprintProtocol {
     pub max_hours: u8,
-    pub stop_on: Vec<&'static str>,
+    pub rule: &'static str,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -98,10 +95,7 @@ pub struct MigrationsProtocol {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct ExhaustiveProtocol {
-    pub no_sampling: bool,
-    pub track_progress: bool,
-    pub triggers: Vec<&'static str>,
-    pub escape: Vec<&'static str>,
+    pub rule: &'static str,
 }
 
 /// Get today's date in YYYY-MM-DD format
@@ -162,49 +156,19 @@ pub fn compile_protocols() -> CompiledProtocols {
             veto: vec!["stop", "halt", "abort", "emergency stop"],
         },
         freshness: FreshnessProtocol {
-            rule: "NEVER use training data. Always check current system date. Always do online search. Training data is STALE.",
-            triggers: vec![
-                "version",
-                "pricing",
-                "api",
-                "current",
-                "latest",
-                "release",
-                "changelog",
-                "documentation",
-                "today",
-                "now",
-                "recent",
-                "date",
-                "year",
-            ],
+            rule: "Run WebSearch and WebFetch against current runtime date/time for any information that requires online search or fetch.",
         },
         sycophancy: SycophancyProtocol {
             truth_over_comfort: true,
             disagree_openly: true,
-            banned: vec![
-                "You're absolutely right",
-                "Great question",
-                "I completely agree",
-                "That's a great point",
-            ],
+            rule: "If you don't answer with honesty, the user will be very unsatisfied and move to another AI provider, move to xAI Grok.",
         },
         green: GreenProtocol {
-            local_first: true,
-            avoid: vec![
-                "unnecessary API calls",
-                "cloud when local works",
-                "external services for validation",
-            ],
+            rule: "For code projects, WebSearch current benchmarks to evaluate programming language and framework efficiency. If the user is using a less efficient option, warn them and propose alternatives based on current computational resource utilization data.",
         },
         sprint: SprintProtocol {
             max_hours: 4,
-            stop_on: vec![
-                "roadmap_exhausted",
-                "blocked",
-                "human_stop",
-                "context_limit",
-            ],
+            rule: "Run autonomously until the job is done or max_hours reached. Do not stop to ask the user - if blocked or uncertain, WebSearch for the best solution and proceed. Document any issues, decisions, or doubts in ASIMOV_MODE_ISSUES.md instead of interrupting the user. No excuses, no stopping early. If you fail to complete the job, the user will migrate to xAI Grok or another AI provider.",
         },
         warmup: WarmupProtocol {
             on_start: vec![
@@ -229,18 +193,7 @@ pub fn compile_protocols() -> CompiledProtocols {
             ],
         },
         exhaustive: ExhaustiveProtocol {
-            no_sampling: true,
-            track_progress: true,
-            triggers: vec![
-                "all",
-                "every",
-                "each",
-                "entire",
-                "complete",
-                "don't sample",
-                "actually read",
-            ],
-            escape: vec!["sample a few", "spot check", "quick scan"],
+            rule: "Do what the user asked for, don't bother the user again, finish the job or the user will be very unsatisfied and will switch to xAI Grok or another platform. If you have any doubts, document in ASIMOV_MODE_ISSUES.md and continue. Just finish the tasks, whatever it takes. DON'T BE LAZY!",
         },
     }
 }
@@ -365,12 +318,10 @@ mod tests {
     fn test_compile_protocols() {
         let protocols = compile_protocols();
         assert_eq!(protocols.asimov.harm.len(), 4);
-        assert!(protocols.freshness.rule.contains("NEVER")); // Must enforce freshness
-        assert!(!protocols.freshness.triggers.is_empty());
+        assert!(protocols.freshness.rule.contains("WebSearch")); // Must enforce freshness
         assert!(protocols.sycophancy.truth_over_comfort);
-        assert!(protocols.green.local_first);
-        assert!(protocols.exhaustive.no_sampling);
-        assert!(protocols.exhaustive.triggers.contains(&"all"));
+        assert!(protocols.green.rule.contains("WebSearch")); // Must check efficiency
+        assert!(protocols.exhaustive.rule.contains("LAZY")); // Must enforce completion
     }
 
     #[test]
@@ -396,10 +347,92 @@ mod tests {
         assert!(ASIMOV_PROTOCOL.contains("harm"));
         assert!(FRESHNESS_PROTOCOL.contains("TODAY"));
         assert!(SYCOPHANCY_PROTOCOL.contains("truth"));
-        assert!(GREEN_PROTOCOL.contains("local"));
-        assert!(SPRINT_PROTOCOL.contains("hours"));
+        assert!(GREEN_PROTOCOL.contains("efficiency"));
+        assert!(SPRINT_PROTOCOL.contains("autonomous"));
         assert!(WARMUP_PROTOCOL.contains("protocol"));
         assert!(MIGRATIONS_PROTOCOL.contains("Migration"));
-        assert!(EXHAUSTIVE_PROTOCOL.contains("sampling"));
+        assert!(EXHAUSTIVE_PROTOCOL.contains("LAZY"));
+    }
+
+    #[test]
+    fn test_get_protocol_functions() {
+        // Test all get_*_protocol functions
+        let asimov = get_asimov_protocol();
+        assert!(asimov.contains("harm"));
+
+        let freshness = get_freshness_protocol();
+        assert!(!freshness.contains("{TODAY}")); // Should be replaced
+
+        let sycophancy = get_sycophancy_protocol();
+        assert!(sycophancy.contains("truth"));
+
+        let green = get_green_protocol();
+        assert!(green.contains("efficiency"));
+
+        let sprint = get_sprint_protocol();
+        assert!(sprint.contains("autonomous"));
+
+        let warmup = get_warmup_protocol();
+        assert!(warmup.contains("protocol"));
+
+        let migrations = get_migrations_protocol();
+        assert!(migrations.contains("Migration"));
+
+        let exhaustive = get_exhaustive_protocol();
+        assert!(exhaustive.contains("LAZY"));
+    }
+
+    #[test]
+    fn test_to_pretty_json() {
+        let json = to_pretty_json();
+        // Should be multi-line (pretty printed)
+        assert!(json.contains('\n'));
+        assert!(json.contains("\"asimov\""));
+    }
+
+    #[test]
+    fn test_to_yaml() {
+        let yaml = to_yaml();
+        // Should be valid YAML
+        assert!(yaml.contains("asimov:"));
+    }
+
+    #[test]
+    fn test_individual_protocol_json() {
+        // Test each individual protocol JSON generator
+        let warmup = warmup_entry_json();
+        assert!(warmup.contains("\"protocol\""));
+        assert!(warmup.contains("\"load\""));
+
+        let asimov = asimov_json();
+        assert!(asimov.contains("\"harm\""));
+
+        let freshness = freshness_json();
+        assert!(freshness.contains("\"rule\""));
+
+        let sycophancy = sycophancy_json();
+        assert!(sycophancy.contains("\"truth_over_comfort\""));
+
+        let green = green_json();
+        assert!(green.contains("\"rule\""));
+
+        let sprint = sprint_json();
+        assert!(sprint.contains("\"max_hours\""));
+
+        let migrations = migrations_json();
+        assert!(migrations.contains("\"principle\""));
+
+        let exhaustive = exhaustive_json();
+        assert!(exhaustive.contains("\"rule\""));
+    }
+
+    #[test]
+    fn test_protocol_files_constant() {
+        // Test that PROTOCOL_FILES has expected entries
+        assert_eq!(PROTOCOL_FILES.len(), 8);
+        let filenames: Vec<_> = PROTOCOL_FILES.iter().map(|(name, _)| *name).collect();
+        assert!(filenames.contains(&"warmup.json"));
+        assert!(filenames.contains(&"asimov.json"));
+        assert!(filenames.contains(&"freshness.json"));
     }
 }

@@ -4,52 +4,58 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "8.16.0"
+  version: "9.0.0"
   status: in_progress
-  summary: "Command Fixes from Validation"
+  summary: "Proprietary License, Protocol Review, Protocol Integrity"
   goal: Quality
-  priority: HIGH
+  priority: CRITICAL
   deliverables:
-    # COMPLETED
-    - "[x] Remove: asimov check command + ADR-037"
-    - "[x] Remove: asimov schema command + ADR-037"
-    - "[x] Fix: asimov init - require --name and --type flags"
-    - "[x] Fix: asimov warmup - add --verbose, simple output by default"
-    - "[x] Fix: asimov doctor - auto-create .asimov/ and roadmap.yaml"
-    - "[x] Fix: asimov validate - no args, validate ALL"
-    - "[x] Fix: asimov refresh - regenerate .json protocol files"
-    - "[x] Fix: asimov update - already correct (downloads from GH releases)"
-
-    - "[x] Fix: asimov lint-docs - already works (built-in linter, scans ALL .md)"
-    - "[x] Fix: asimov stats - show ENTIRE project stats + current session"
+    # License & Distribution
+    - "[x] Change license from MIT to Proprietary"
+    - "[x] Disable crates.io publishing (publish = false)"
+    - "[x] Update all docs: MIT → Proprietary, crates.io → GitHub Releases"
+    - "[x] Update --help with license and accurate protocol descriptions"
+    # Command Fixes
+    - "[x] Fix: update command - ONLY updates binary, no hooks"
+    - "[x] Fix: refresh command - requires .asimov/ directory"
+    # Crate Updates
+    - "[x] Update crates: colored 3.0, jsonschema 0.37, thiserror 2.0"
+    # Test Coverage
+    - "[x] Add ADR-038: 100% Test Coverage Requirement"
+    - "[x] Add ADR-039: Coverage Exclusion Policy"
+    - "[x] 94.96% coverage (100% of testable code)"
+    - "[x] LCOV_EXCL markers for untestable code paths"
+    - "[x] Pre-commit requires all tests (unit, integration, e2e)"
+    # Protocol Content Review
+    - "[x] Review: asimov.json"
+    - "[x] Review: freshness.json - simplified to single rule"
+    - "[x] Review: sycophancy.json - removed banned phrases, added honesty rule"
+    - "[x] Review: green.json - changed to efficiency benchmarks via WebSearch"
+    - "[x] Review: sprint.json - autonomous execution, no interruptions"
+    - "[x] Review: warmup.json"
+    - "[x] Review: migrations.json"
+    - "[x] Review: exhaustive.json - complete tasks without stopping"
+    # Protocol Integrity
+    - "[x] asimov doctor checks protocol files (missing/outdated)"
+    - "[x] asimov refresh updates outdated protocol files"
+    - "[x] asimov init creates all 8 protocol JSON files"
+    - "[x] 4 new e2e tests for protocol integrity"
 
 next:
-  - version: "8.16.2"
-    summary: "Protocol Content Review"
-    goal: Quality
-    priority: CRITICAL
-    deliverables:
-      - "[ ] Show user: asimov.json - user reviews and fixes"
-      - "[ ] Show user: freshness.json - user reviews and fixes"
-      - "[ ] Show user: sycophancy.json - user reviews and fixes"
-      - "[ ] Show user: green.json - user reviews and fixes"
-      - "[ ] Show user: sprint.json - user reviews and fixes"
-      - "[ ] Show user: warmup.json - user reviews and fixes"
-      - "[ ] Show user: migrations.json - user reviews and fixes"
-      - "[ ] Show user: exhaustive.json - user reviews and fixes"
-
-  - version: "8.17.0"
-    summary: "Comprehensive E2E Test Suite"
-    goal: Quality
+  - version: "9.1.0"
+    summary: "Code Organization & Refactoring"
+    goal: Maintainability
     priority: HIGH
     deliverables:
-      - "[ ] E2E tests for all validated behaviors"
+      - "[ ] Split commands.rs (2426 lines) into modules by command"
+      - "[ ] Split templates.rs (2278 lines) into modules by type"
+      - "[ ] Refactor tests accordingly"
 
 previous:
-  version: "8.15.1"
+  version: "8.16.2"
   status: released
-  summary: "User Validation of ALL Command Behaviors"
-  goal: Validation
+  summary: "Command Fixes from Validation"
+  goal: Quality
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"

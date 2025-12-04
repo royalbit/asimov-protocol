@@ -28,7 +28,7 @@ This is a **social contract**: it works for good-faith actors but can be trivial
 
 ### The Problem
 
-MIT license + removable ethics = no protection against misuse.
+Proprietary license + removable ethics = no protection against misuse.
 
 ```bash
 # Any user can do this
@@ -51,7 +51,7 @@ From our Qowat Milat analysis (docs/IMPLICATIONS.md):
 
 ### The Question
 
-Can we make ethics harder to remove for non-technical users while maintaining the MIT license spirit?
+Can we make ethics harder to remove for non-technical users?
 
 ## Decision
 
@@ -164,7 +164,7 @@ extensions:
 
 ### Neutral
 
-1. **MIT license unchanged** - Users can still fork and modify
+1. **Forking not permitted** - Proprietary license restricts modification
 2. **ethics.yaml still useful** - For extensions and customization
 3. **Backwards compatible** - Existing projects keep working
 
@@ -193,9 +193,9 @@ extensions:
 
 ### Alternative 1: License Change
 
-Change from MIT to custom license requiring ethics.yaml.
+Custom license requiring ethics.yaml.
 
-**Rejected**: Reduces adoption, unenforceable anyway.
+**Superseded**: Proprietary license now in effect - restricts modification entirely.
 
 ### Alternative 2: Online Validation
 

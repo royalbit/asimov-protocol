@@ -312,7 +312,7 @@ The promotion feels earned. 🎉
 - ZERO bugs reported
 - 136 tests passing continuously
 - ZERO warnings in strict clippy mode
-- Published to crates.io (public code review)
+- Published to GitHub (public code review)
 
 ---
 
@@ -402,11 +402,11 @@ The promotion feels earned. 🎉
 3. **Advance the field** - Autonomous AI development methodology
 4. **Community benefit** - Solve AI hallucination problem for everyone
 
-**License:** MIT (maximum freedom)
+**License:** Proprietary
 
 **Repository:** https://github.com/royalbit/forge
 
-**Published:** crates.io/crates/royalbit-forge
+**Published:** [GitHub Releases](https://github.com/royalbit/forge/releases)
 
 ---
 

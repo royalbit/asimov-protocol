@@ -1077,8 +1077,12 @@ See [ADR-018](adr/018-claude-code-hooks-integration.md) for full rationale.
 
 ### Installation
 
+Download from [GitHub Releases](https://github.com/royalbit/asimov/releases/latest):
+
 ```bash
-cargo install royalbit-asimov
+# Linux
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
 ```
 
 ### Commands

@@ -18,6 +18,9 @@ if [ -d "$CLI_DIR" ]; then
 
     echo "Running clippy..."
     cargo clippy -- -D warnings
+
+    echo "Running tests (unit, integration, e2e)..."
+    cargo test
 fi
 
 cd "$REPO_ROOT"
@@ -36,7 +39,7 @@ else
 fi
 
 echo "Validating protocol files..."
-$FP validate .
+$FP validate
 
 echo "Linting documentation..."
 $FP lint-docs docs/

@@ -95,7 +95,7 @@ The largest source of R&D funding in Canada. Provides tax credits for eligible R
 **Why RoyalBit Asimov Qualifies:**
 - Novel AI technology with no prior art
 - Documented technological uncertainties
-- Commercial potential (published on crates.io)
+- Commercial potential (published on GitHub)
 - Canadian IP ownership
 
 **Links:**

@@ -783,7 +783,7 @@ For teams building **complete products** (not just code), the RoyalBit Asimov pr
 ### RoyalBit Asimov
 
 - **GitHub Repository**: [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
-- **crates.io**: [https://crates.io/crates/royalbit-asimov](https://crates.io/crates/royalbit-asimov)
+- **GitHub Releases**: [https://github.com/royalbit/asimov/releases](https://github.com/royalbit/asimov/releases)
 - **The Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml)
 - **Green Coding**: [https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml)
 - **Anti-Sycophancy**: [https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml)

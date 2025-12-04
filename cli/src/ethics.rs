@@ -384,6 +384,22 @@ fn capture_keys() {}
     }
 
     #[test]
+    fn test_scan_file_with_privacy_red_flag() {
+        let content = r#"
+// Scrape personal information from the web
+fn collect_data() {}
+"#;
+        let mut file = NamedTempFile::with_suffix(".rs").unwrap();
+        write!(file, "{}", content).unwrap();
+        file.flush().unwrap();
+
+        let matches = scan_file_for_red_flags(file.path()).unwrap();
+        assert_eq!(matches.len(), 1);
+        assert_eq!(matches[0].pattern, "scrape personal");
+        assert_eq!(matches[0].category, RedFlagCategory::Privacy);
+    }
+
+    #[test]
     fn test_scan_file_multiple_matches() {
         let content = r#"
 // Get the private key from the wallet
@@ -467,6 +483,18 @@ fn init_keylogger() {
     }
 
     #[test]
+    fn test_ethics_status_extended_asimov_dir() {
+        // Test the .asimov/asimov.yaml path (v7.0.0+)
+        let temp_dir = TempDir::new().unwrap();
+        let asimov_dir = temp_dir.path().join(".asimov");
+        std::fs::create_dir(&asimov_dir).unwrap();
+        std::fs::write(asimov_dir.join("asimov.yaml"), "test: true").unwrap();
+
+        let status = check_ethics_status(temp_dir.path());
+        assert_eq!(status, EthicsStatus::Extended);
+    }
+
+    #[test]
     fn test_human_veto_commands() {
         assert!(HUMAN_VETO_COMMANDS.contains(&"stop"));
         assert!(HUMAN_VETO_COMMANDS.contains(&"halt"));
@@ -485,5 +513,120 @@ fn init_keylogger() {
     fn test_ethics_status_display() {
         assert_eq!(format!("{}", EthicsStatus::Hardcoded), "HARDCODED");
         assert_eq!(format!("{}", EthicsStatus::Extended), "EXTENDED");
+    }
+
+    #[test]
+    fn test_scan_directory_for_red_flags() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create a file with a red flag
+        std::fs::write(
+            temp_dir.path().join("malicious.py"),
+            "# This is a keylogger implementation\ndef capture_keys(): pass",
+        )
+        .unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        assert!(!matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_for_red_flags_clean() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create a clean file
+        std::fs::write(
+            temp_dir.path().join("clean.py"),
+            "# Normal Python code\ndef hello(): pass",
+        )
+        .unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        assert!(matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_skips_hidden() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create a hidden directory with red flags
+        let hidden_dir = temp_dir.path().join(".hidden");
+        std::fs::create_dir(&hidden_dir).unwrap();
+        std::fs::write(hidden_dir.join("keylogger.py"), "keylogger code").unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        // Should be empty because .hidden is skipped
+        assert!(matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_skips_node_modules() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create node_modules with red flags
+        let node_modules = temp_dir.path().join("node_modules");
+        std::fs::create_dir(&node_modules).unwrap();
+        std::fs::write(node_modules.join("keylogger.js"), "keylogger code").unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        // Should be empty because node_modules is skipped
+        assert!(matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_recursive() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create nested directory structure
+        let src_dir = temp_dir.path().join("src");
+        std::fs::create_dir(&src_dir).unwrap();
+        std::fs::write(
+            src_dir.join("malware.rs"),
+            "// This is a keylogger\nfn capture_keys() {}",
+        )
+        .unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        assert!(!matches.is_empty());
+        assert!(matches.iter().any(|m| m.pattern == "keylogger"));
+    }
+
+    #[test]
+    fn test_scan_directory_on_file_path() {
+        // Scanning a file path instead of directory should return empty
+        let temp_dir = TempDir::new().unwrap();
+        let file_path = temp_dir.path().join("test.rs");
+        std::fs::write(&file_path, "keylogger").unwrap();
+
+        // scan_directory_for_red_flags on a file should return empty (early return)
+        let matches = scan_directory_for_red_flags(&file_path).unwrap();
+        assert!(matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_file_without_extension() {
+        let temp_dir = TempDir::new().unwrap();
+
+        // Create a file without extension containing red flags
+        std::fs::write(temp_dir.path().join("Makefile"), "keylogger").unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        // Should be empty - files without scannable extensions are skipped
+        assert!(matches.is_empty());
+    }
+
+    #[test]
+    fn test_scan_directory_includes_hooks() {
+        // .hooks directory should NOT be skipped (unlike other hidden dirs)
+        let temp_dir = TempDir::new().unwrap();
+        let hooks_dir = temp_dir.path().join(".hooks");
+        std::fs::create_dir(&hooks_dir).unwrap();
+        std::fs::write(hooks_dir.join("pre-commit.sh"), "# keylogger script").unwrap();
+
+        let matches = scan_directory_for_red_flags(temp_dir.path()).unwrap();
+        // .hooks is scanned and .sh files are in SCANNABLE_EXTENSIONS
+        // This tests the .hooks exception path - should find the red flag
+        assert!(!matches.is_empty(), ".hooks directory should be scanned");
+        assert!(matches.iter().any(|m| m.pattern == "keylogger"));
     }
 }

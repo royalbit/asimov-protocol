@@ -195,7 +195,7 @@ This is ethics through architecture, not policy.
 
 The anti-tampering architecture works for good-faith actors. But let's be honest:
 
-- **MIT license** means anyone can fork and remove ethics
+- **Proprietary license** means forking is not permitted (but determined actors could still copy)
 - **Same velocity** that ships SaaS can ship malware
 - **Ethics are a social contract**, not a technical lock
 - **We cannot prevent determined bad actors**
@@ -261,7 +261,7 @@ Every `asimov init` project is a green-coding project by default.
 The old model concentrated AI power in well-funded organizations. This is **harm to humanity through inaction** - allowing the many to be left behind while the few accelerate.
 
 Asimov breaks this pattern:
-- MIT License = $0 barrier to entry
+- Commercial license available
 - Local-first = No ongoing cloud dependency
 - Claude Code = 200k thinking tokens free
 - 1 human + AI = 50-person team capability
@@ -319,7 +319,7 @@ Not just "faster development." Not just "ethics built in."
 
 **The math:**
 
-- MIT License = $0 barrier
+- Commercial license available
 - Local-first = No ongoing cloud costs
 - Claude Code = 200k thinking tokens free
 - 1 human + AI = 50-person team capability
@@ -374,7 +374,7 @@ This isn't about "did I do good?" That framing implies doubt.
 
 1. **Ethics into architecture** — The Three Laws are in the Rust binary. When Claude refused the surveillance request, the protocol worked. Ethics that can't be quietly disabled.
 
-2. **Open by design** — MIT license. Public git logs. Anyone can verify. Anyone can fork. Adoption through consent, not control.
+2. **Transparent by design** — Public git logs. Anyone can view and study. Adoption through consent, not control.
 
 3. **Accessible to all** — $0 barrier. Local-first. No ongoing dependency. The student in Mumbai has the same capability as the team in San Francisco.
 
@@ -409,4 +409,4 @@ The protocol was designed by an AI to constrain AI. That's the point.
 
 ---
 
-*"Creates Self-Evolving Autonomous AI projects with ethics built in. The Open Foundation. Inspect the code. Challenge the rules. Fork if you disagree."*
+*"Creates Self-Evolving Autonomous AI projects with ethics built in. Inspect the code. Challenge the rules."*

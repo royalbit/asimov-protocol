@@ -405,7 +405,7 @@ AI inference consumes:
 
 ### Small Team Example
 
-**Annual cost of Forge:** $0 (open source, MIT license)
+**Annual cost of Forge:** Commercial license available
 
 **Annual savings:**
 
@@ -513,7 +513,9 @@ Confidence: 100%
 **Install Forge:**
 
 ```bash
-cargo install royalbit-forge
+# Download from GitHub Releases
+curl -L https://github.com/royalbit/forge/releases/latest/download/forge-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv forge /usr/local/bin/
 ```
 
 **Start saving money and carbon:**
@@ -556,7 +558,7 @@ forge validate your-model.yaml
 - Break-even point: 50 users × 1 year of use
 - Every user after that: Pure carbon savings
 
-**Current status:** 1,000+ downloads on crates.io → 20x carbon-positive
+**Current status:** 1,000+ downloads on GitHub → 20x carbon-positive
 
 ### "Can I trust local validation?"
 

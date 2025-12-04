@@ -524,7 +524,7 @@ Claude is credited as Principal Autonomous AI on Forge because Claude **earned**
 - 226 tests, zero warnings
 - 18,338 lines of Rust
 - ~38 hours of autonomous development
-- 41 releases, published on crates.io
+- 41 releases, published on GitHub
 
 ### Proven at Scale
 

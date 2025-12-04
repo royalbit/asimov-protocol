@@ -25,7 +25,7 @@ The Forge project demonstrates **50-150x velocity** is achievable:
 | LOC/day | 3,056 (vs 25 industry average) |
 | **Multiplier** | **50-150x** |
 
-This is **proven data** from git logs, not a projection. Published on [crates.io](https://crates.io/crates/royalbit-forge) with 646+ downloads.
+This is **proven data** from git logs, not a projection. Published on [GitHub](https://github.com/royalbit/forge/releases) with 646+ downloads.
 
 **vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains ([arXiv:2302.06590](https://arxiv.org/abs/2302.06590)). RoyalBit Asimov delivers **50-150x**.
 
@@ -35,8 +35,8 @@ The protocol built itself — asimov was developed using asimov:
 
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
-| forge | 18,338 | 41 | ~38 | [crates.io](https://crates.io/crates/royalbit-forge) |
-| asimov | 17,118 | 10 | ~9 | [crates.io](https://crates.io/crates/royalbit-asimov) |
+| forge | 18,338 | 41 | ~38 | [GitHub](https://github.com/royalbit/forge/releases) |
+| asimov | 17,118 | 10 | ~9 | [GitHub](https://github.com/royalbit/asimov/releases) |
 | **Combined** | **35,456** | **51** | **~47** | Both published |
 
 **1 human. 1 AI. 47 hours. 51 releases.**
@@ -130,8 +130,8 @@ The real optimization is **subscription tier** and **context window size**.
 ### Velocity Proof
 - [Forge Project](https://github.com/royalbit/forge) - 18K LOC, 226 tests, 41 releases
 - [RoyalBit Asimov](https://github.com/royalbit/asimov) - 17K LOC, 10 releases (self-hosted)
-- [crates.io/royalbit-forge](https://crates.io/crates/royalbit-forge) - Published, 646+ downloads
-- [crates.io/royalbit-asimov](https://crates.io/crates/royalbit-asimov) - Published
+- [GitHub Releases (forge)](https://github.com/royalbit/forge/releases) - Published, 646+ downloads
+- [GitHub Releases (asimov)](https://github.com/royalbit/asimov/releases) - Published
 
 ### AI Productivity Research
 - [GitHub Copilot Study](https://arxiv.org/abs/2302.06590) - 1.1-1.6x productivity (vs Forge 50-150x)

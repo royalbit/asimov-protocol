@@ -97,7 +97,10 @@ Anyone can use these files - just paste them:
 ### The Validation CLI (Universal)
 
 ```bash
-cargo install royalbit-asimov
+# Download from GitHub Releases
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv asimov /usr/local/bin/
+
 asimov validate          # Works anywhere
 asimov lint-docs         # Works anywhere
 asimov init              # Works anywhere

@@ -103,7 +103,7 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 **Asimov governs HOW** (ethics, velocity, autonomy)
 **Forge guarantees WHAT** (zero hallucinations in numbers)
 
-**Both MIT licensed. Both on [crates.io](https://crates.io/crates/royalbit-asimov). Both auditable.**
+**Both Proprietary licensed. Both on [GitHub](https://github.com/royalbit). Both auditable.**
 
 ---
 
@@ -198,7 +198,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 | Investment | Return |
 |------------|--------|
-| Protocol license | **$0** (MIT open source) |
+| Protocol license | **Commercial license** |
 | Training | **2 hours** to proficiency |
 | Rework rate | **30-50% → ~0%** |
 | Velocity | **56x** proven (git logs) |
@@ -300,6 +300,6 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 **Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
 
-**Proof:** [Forge](https://github.com/royalbit/forge) | [Asimov](https://github.com/royalbit/asimov) | [crates.io](https://crates.io/crates/royalbit-asimov)
+**Proof:** [Forge](https://github.com/royalbit/forge) | [Asimov](https://github.com/royalbit/asimov) | [GitHub Releases](https://github.com/royalbit/asimov/releases)
 
 </div>

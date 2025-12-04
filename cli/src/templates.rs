@@ -1986,4 +1986,293 @@ mod tests {
         );
         // Skeleton template only has "current" status, no "next"
     }
+
+    #[test]
+    fn test_warmup_template_flutter_contains_flutter_specific() {
+        let template = warmup_template("test-app", ProjectType::Flutter);
+        assert!(
+            template.contains("flutter")
+                || template.contains("dart")
+                || template.contains("pubspec"),
+            "Flutter template should have Flutter-specific content"
+        );
+    }
+
+    #[test]
+    fn test_warmup_template_docs_contains_docs_specific() {
+        let template = warmup_template("test-docs", ProjectType::Docs);
+        assert!(
+            template.contains("documentation")
+                || template.contains("markdown")
+                || template.contains("docs"),
+            "Docs template should have docs-specific content"
+        );
+    }
+
+    #[test]
+    fn test_detect_project_type_rust() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("Cargo.toml"), "[package]").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Rust
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_python() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("pyproject.toml"), "[tool.poetry]").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Python
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_python_setup() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("setup.py"), "from setuptools").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Python
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_node() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("package.json"), "{}").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Node
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_go() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("go.mod"), "module test").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Go
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_flutter() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("pubspec.yaml"), "name: test").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Flutter
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_docs() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::create_dir(temp_dir.path().join("docs")).unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Docs
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_generic() {
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Generic
+        ));
+    }
+
+    #[test]
+    fn test_detect_project_type_priority() {
+        // Flutter should take priority over Node (pubspec.yaml before package.json)
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("pubspec.yaml"), "name: test").unwrap();
+        std::fs::write(temp_dir.path().join("package.json"), "{}").unwrap();
+        assert!(matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Flutter
+        ));
+    }
+
+    #[test]
+    fn test_ethics_template_valid_yaml() {
+        let template = ethics_template();
+        let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+        assert!(yaml.is_ok(), "Ethics template should be valid YAML");
+    }
+
+    #[test]
+    fn test_green_template_valid_yaml() {
+        let template = green_template();
+        let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+        assert!(yaml.is_ok(), "Green template should be valid YAML");
+    }
+
+    #[test]
+    fn test_sycophancy_template_valid_yaml() {
+        let template = sycophancy_template();
+        let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+        assert!(yaml.is_ok(), "Sycophancy template should be valid YAML");
+    }
+
+    #[test]
+    fn test_asimov_template_valid_yaml() {
+        let template = asimov_template();
+        let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+        assert!(yaml.is_ok(), "Asimov template should be valid YAML");
+    }
+
+    #[test]
+    fn test_project_template_valid_yaml() {
+        let template = project_template("test-project", "A test project", ProjectType::Rust);
+        let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+        assert!(yaml.is_ok(), "Project template should be valid YAML");
+    }
+
+    #[test]
+    fn test_uses_cargo_husky() {
+        // Rust projects use cargo-husky
+        assert!(uses_cargo_husky(ProjectType::Rust));
+        // Other project types don't use cargo-husky
+        assert!(!uses_cargo_husky(ProjectType::Python));
+        assert!(!uses_cargo_husky(ProjectType::Node));
+        assert!(!uses_cargo_husky(ProjectType::Go));
+        assert!(!uses_cargo_husky(ProjectType::Flutter));
+        assert!(!uses_cargo_husky(ProjectType::Docs));
+        assert!(!uses_cargo_husky(ProjectType::Generic));
+    }
+
+    #[test]
+    fn test_git_precommit_hook() {
+        let hook = git_precommit_hook();
+        assert!(hook.contains("#!/bin/sh") || hook.contains("#!/bin/bash"));
+    }
+
+    #[test]
+    fn test_precommit_hook_template() {
+        let hook = precommit_hook_template(ProjectType::Rust);
+        assert!(hook.contains("cargo") || hook.contains("Checking"));
+    }
+
+    #[test]
+    fn test_hook_installer_template() {
+        let installer = hook_installer_template();
+        assert!(installer.contains("#!/bin/sh") || installer.contains("#!/bin/bash"));
+    }
+
+    #[test]
+    fn test_claude_settings_json() {
+        let settings = claude_settings_json();
+        let json: Result<serde_json::Value, _> = serde_json::from_str(&settings);
+        assert!(json.is_ok(), "Claude settings should be valid JSON");
+    }
+
+    #[test]
+    fn test_claude_session_start_hook() {
+        let hook = claude_session_start_hook();
+        assert!(
+            hook.contains("#!/bin/sh") || hook.contains("#!/bin/bash") || hook.contains("asimov")
+        );
+    }
+
+    #[test]
+    fn test_claude_pre_compact_hook() {
+        let hook = claude_pre_compact_hook();
+        assert!(
+            hook.contains("#!/bin/sh") || hook.contains("#!/bin/bash") || hook.contains("asimov")
+        );
+    }
+
+    #[test]
+    fn test_project_type_display_all() {
+        // Ensure all project types have Display implementations
+        assert_eq!(format!("{}", ProjectType::Generic), "generic");
+        assert_eq!(format!("{}", ProjectType::Rust), "rust");
+        assert_eq!(format!("{}", ProjectType::Python), "python");
+        assert_eq!(format!("{}", ProjectType::Node), "node");
+        assert_eq!(format!("{}", ProjectType::Go), "go");
+        assert_eq!(format!("{}", ProjectType::Flutter), "flutter");
+        assert_eq!(format!("{}", ProjectType::Docs), "docs");
+    }
+
+    #[test]
+    fn test_detect_project_type_readme_with_src() {
+        // README.md with src/ should NOT be detected as Docs
+        let temp_dir = tempfile::TempDir::new().unwrap();
+        std::fs::write(temp_dir.path().join("README.md"), "# Test").unwrap();
+        std::fs::create_dir(temp_dir.path().join("src")).unwrap();
+        assert!(!matches!(
+            detect_project_type(temp_dir.path()),
+            ProjectType::Docs
+        ));
+    }
+
+    #[test]
+    fn test_project_template_all_types() {
+        // Test all project type templates
+        let types = [
+            ProjectType::Rust,
+            ProjectType::Python,
+            ProjectType::Node,
+            ProjectType::Go,
+            ProjectType::Flutter,
+            ProjectType::Docs,
+            ProjectType::Generic,
+        ];
+        for pt in types {
+            let template = project_template("test", "tagline", pt);
+            let yaml: Result<serde_yaml::Value, _> = serde_yaml::from_str(&template);
+            assert!(yaml.is_ok(), "Template for {:?} should be valid YAML", pt);
+        }
+    }
+
+    #[test]
+    fn test_claude_md_template() {
+        let template = claude_md_template("test-project", ProjectType::Rust);
+        assert!(template.contains("cargo") || template.contains("test-project"));
+    }
+
+    #[test]
+    fn test_claude_md_template_all_types() {
+        let types = [
+            ProjectType::Rust,
+            ProjectType::Python,
+            ProjectType::Node,
+            ProjectType::Go,
+            ProjectType::Flutter,
+            ProjectType::Docs,
+            ProjectType::Generic,
+        ];
+        for pt in types {
+            let template = claude_md_template("test", pt);
+            assert!(
+                !template.is_empty(),
+                "CLAUDE.md for {:?} should not be empty",
+                pt
+            );
+        }
+    }
+
+    #[test]
+    fn test_precommit_hook_all_types() {
+        let types = [
+            ProjectType::Rust,
+            ProjectType::Python,
+            ProjectType::Node,
+            ProjectType::Go,
+            ProjectType::Flutter,
+            ProjectType::Docs,
+            ProjectType::Generic,
+        ];
+        for pt in types {
+            let hook = precommit_hook_template(pt);
+            assert!(!hook.is_empty(), "Hook for {:?} should not be empty", pt);
+        }
+    }
 }
