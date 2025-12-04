@@ -53,3 +53,4 @@ previous:
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
+  - "Deliverables Template (ADR-034): auto-append standard checklist to milestones based on project type - needs design for how to inject/display"

@@ -82,8 +82,13 @@ pub fn check_for_update() -> Result<VersionCheck, String> {
     let download_url = if update_available {
         get_platform_asset().and_then(|asset_name| {
             // Find the browser_download_url for our asset
-            let search = format!("\"name\":\"{}\"", asset_name);
-            if let Some(pos) = body.find(&search) {
+            // Try both with and without space after colon (GitHub uses space)
+            let search_with_space = format!("\"name\": \"{}\"", asset_name);
+            let search_no_space = format!("\"name\":\"{}\"", asset_name);
+            let pos = body
+                .find(&search_with_space)
+                .or_else(|| body.find(&search_no_space));
+            if let Some(pos) = pos {
                 // Look for browser_download_url near this position
                 let chunk = &body[pos.saturating_sub(500)..body.len().min(pos + 500)];
                 extract_json_string(chunk, "browser_download_url")
@@ -98,8 +103,11 @@ pub fn check_for_update() -> Result<VersionCheck, String> {
 
     // Find checksums.txt URL (v8.4.0)
     let checksums_url = if update_available {
-        let search = "\"name\":\"checksums.txt\"";
-        if let Some(pos) = body.find(search) {
+        // Try both with and without space after colon
+        let pos = body
+            .find("\"name\": \"checksums.txt\"")
+            .or_else(|| body.find("\"name\":\"checksums.txt\""));
+        if let Some(pos) = pos {
             let chunk = &body[pos.saturating_sub(500)..body.len().min(pos + 500)];
             extract_json_string(chunk, "browser_download_url")
                 .filter(|url| url.contains("checksums.txt"))
@@ -121,14 +129,21 @@ pub fn check_for_update() -> Result<VersionCheck, String> {
 
 /// Simple JSON string extraction (avoids adding serde_json dependency)
 fn extract_json_string(json: &str, key: &str) -> Option<String> {
-    let search = format!("\"{}\":\"", key);
-    if let Some(start) = json.find(&search) {
-        let value_start = start + search.len();
-        if let Some(end) = json[value_start..].find('"') {
-            return Some(json[value_start..value_start + end].to_string());
-        }
-    }
-    None
+    // Try with space after colon first (GitHub style), then without
+    let search_with_space = format!("\"{}\": \"", key);
+    let search_no_space = format!("\"{}\":\"", key);
+
+    let (start, search_len) = json
+        .find(&search_with_space)
+        .map(|pos| (pos, search_with_space.len()))
+        .or_else(|| {
+            json.find(&search_no_space)
+                .map(|pos| (pos, search_no_space.len()))
+        })?;
+
+    let value_start = start + search_len;
+    let end = json[value_start..].find('"')?;
+    Some(json[value_start..value_start + end].to_string())
 }
 
 /// Compare semantic versions (returns true if latest > current)
@@ -360,6 +375,7 @@ mod tests {
 
     #[test]
     fn test_extract_json_string() {
+        // Without spaces (compact JSON)
         let json = r#"{"tag_name":"v7.8.0","name":"Release 7.8.0"}"#;
         assert_eq!(
             extract_json_string(json, "tag_name"),
@@ -370,6 +386,17 @@ mod tests {
             Some("Release 7.8.0".to_string())
         );
         assert_eq!(extract_json_string(json, "missing"), None);
+
+        // With spaces (GitHub API style)
+        let json_spaced = r#"{"tag_name": "v8.16.1", "name": "Release 8.16.1"}"#;
+        assert_eq!(
+            extract_json_string(json_spaced, "tag_name"),
+            Some("v8.16.1".to_string())
+        );
+        assert_eq!(
+            extract_json_string(json_spaced, "name"),
+            Some("Release 8.16.1".to_string())
+        );
     }
 
     #[test]
