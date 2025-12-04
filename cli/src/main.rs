@@ -212,9 +212,18 @@ fn main() -> ExitCode {
     }
 }
 
+/// Check if current directory is an asimov project
+fn is_asimov_project() -> bool {
+    Path::new(".asimov").is_dir()
+}
+
 /// Migrate v8.0.0: Delete deprecated protocol YAMLs (now hardcoded in binary)
 /// Also ensures hooks are installed/restored
+/// Only runs if in an asimov project directory
 fn migrate_v8() {
+    if !is_asimov_project() {
+        return; // Don't pollute non-asimov directories
+    }
     let protocol_dir = resolve_protocol_dir(Path::new("."));
     let deprecated_files = [
         "asimov.yaml",
