@@ -150,9 +150,13 @@ jobs:
 
       - name: Create and push tag
         if: steps.tag_check.outputs.exists == 'false'
+        env:
+          # PAT required to trigger release workflow (GITHUB_TOKEN can't trigger workflows)
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag -a "v${{ steps.cargo_version.outputs.version }}" -m "Release v${{ steps.cargo_version.outputs.version }}"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
           git push origin "v${{ steps.cargo_version.outputs.version }}"
           echo "✅ Created and pushed tag v${{ steps.cargo_version.outputs.version }}"
