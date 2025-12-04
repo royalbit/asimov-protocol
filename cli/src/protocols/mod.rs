@@ -84,7 +84,6 @@ pub struct WarmupProtocol {
 #[derive(Debug, Clone, Serialize)]
 pub struct WarmupEntry {
     pub protocol: &'static str,
-    pub version: &'static str,
     pub description: &'static str,
     pub on_start: Vec<&'static str>,
     pub load: Vec<&'static str>,
@@ -270,7 +269,6 @@ pub fn to_yaml() -> String {
 pub fn warmup_entry_json() -> String {
     let entry = WarmupEntry {
         protocol: "warmup",
-        version: env!("CARGO_PKG_VERSION"),
         description: "RoyalBit Asimov - Session warmup entry point",
         on_start: vec![
             "load_protocols",
