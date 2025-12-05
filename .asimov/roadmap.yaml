@@ -10,9 +10,9 @@ current:
   goal: Maintainability
   priority: HIGH
   deliverables:
-    - "[ ] Split commands.rs (2424 lines) into modules by command"
-    - "[ ] Split templates.rs (2263 lines) into modules by type"
-    - "[ ] Refactor tests accordingly"
+    - "[x] Split commands.rs (2424 lines) into modules by command"
+    - "[x] Split templates.rs (2263 lines) into modules by type"
+    - "[x] Refactor tests accordingly"
 
 next:
   - version: "9.2.0"
