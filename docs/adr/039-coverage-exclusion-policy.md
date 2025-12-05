@@ -65,69 +65,31 @@ Code may ONLY be marked for exclusion if it meets ALL criteria:
 
 ### Approved Exclusions (v9.0.0)
 
-#### Infrastructure Functions
-
 | File | Function | Lines | Reason |
 |------|----------|-------|--------|
 | main.rs | `main()` | 22 | CLI entry point, only executes in binary |
 | main.rs | `cmd_launch()` | 27 | Spawns external claude process |
 | update.rs | `perform_update()` | 45 | Downloads, extracts, replaces running binary |
 | update.rs | `verify_checksum()` | 26 | Downloads checksums from network |
-| commands.rs | perform_update call | 14 | Calls perform_update (excluded separately) |
 
-#### Filesystem Error Handlers (v9.1.0)
-
-| File | Function | Lines | Reason |
-|------|----------|-------|--------|
-| validator.rs | `write_regenerated_file()` | 4 | Write failure - requires OS mocking |
-| validator.rs | `create_asimov_dir()` | 3 | Create dir failure - requires OS mocking |
-| validator.rs | `try_delete_claude_md()` | 12 | Delete failure - requires OS mocking |
-| validator.rs | `check_protocol_file_content()` | 9 | Read failure - requires OS mocking |
-| validator.rs | `protocol_file_differs()` | 6 | Read failure - requires OS mocking |
-
-#### Command Module Helpers (v9.1.0)
+### Command Function Exclusions (v9.1.0)
 
 | File | Function | Reason |
 |------|----------|--------|
-| doctor.rs | `handle_create_dir_error()` | Filesystem error path |
-| doctor.rs | `handle_validation_errors()` | Error result handling |
-| doctor.rs | `handle_validation_failure()` | Validation error path |
-| doctor.rs | `handle_write_error()` | Filesystem write error |
-| warmup.rs | `check_and_set_update()` | Network-dependent update check |
-| warmup.rs | `extract_identity_from_project()` | Nested conditionals |
-| warmup.rs | `extract_current_milestone()` | Nested conditionals |
-| init.rs | `set_init_error()` | Error return path |
-| init.rs | `track_file_kept()` | Conditional branch |
-| init.rs | `write_init_file()` | Filesystem error handling |
-| init.rs | `install_hook_file()` | Filesystem error handling |
-| init.rs | `install_git_precommit()` | Filesystem + git operations |
-| init.rs | `update_gitignore()` | Conditional filesystem ops |
-| init.rs | `install_settings_json()` | Filesystem error handling |
-| refresh.rs | `handle_protocol_results()` | Conditional branches |
-| refresh.rs | `handle_validation_results()` | Conditional branches |
-| refresh.rs | `set_refresh_error()` | Error path |
-| stats.rs | `parse_git_count()` | Git process success parsing |
-| stats.rs | `extract_milestone_info()` | Nested conditionals |
-| replay.rs | `parse_diff_stats()` | Git output parsing |
-| validate.rs | `classify_file_result()` | Conditional branches |
-| validate.rs | `process_ethics_scan()` | Scan result handling |
-| lint_docs.rs | `process_lint_errors()` | Error handling |
-| lint_docs.rs | `handle_lint_error()` | Error path |
-| lint_docs.rs | `process_semantic_issues()` | Issue severity handling |
-| update.rs | `run_update()` | Network-dependent |
-| ethics.rs | `scan_directory_recursive()` | Filesystem traversal |
-| semantic.rs | `check_version_consistency()` | Filesystem-dependent |
-| semantic.rs | `check_deprecated_patterns()` | Filesystem-dependent |
-| semantic.rs | `load_deprecated_patterns()` | Filesystem-dependent |
-| semantic.rs | `get_cargo_version()` | Filesystem-dependent |
+| commands/doctor.rs | `run_doctor()` | Filesystem operations + network check |
+| commands/init.rs | `run_init()` | Filesystem operations + hook installation |
+| commands/launch.rs | `check_launch_conditions()` | Process spawning for PATH check |
+| commands/update.rs | `run_update()` | Network operations |
+| commands/lint_docs.rs | `run_lint_docs()` | Filesystem traversal + file operations |
+| commands/replay.rs | `run_replay()` | Git process spawning |
+| commands/stats.rs | `run_stats()` | Git process spawning + filesystem |
+| commands/refresh.rs | `run_refresh()` | Filesystem operations |
+| commands/validate.rs | `run_validate()` | Filesystem operations + ethics scan |
+| commands/warmup.rs | `run_warmup()` | Network + filesystem operations |
 
-These helper functions encapsulate operations that depend on external state (filesystem, network,
-git processes) and require OS/network mocking to test comprehensively.
+### Test Function Exclusions (v9.1.0)
 
-#### Test Functions with Unreachable Branches (v9.1.0)
-
-Test functions containing `match` arms that verify error types have panic branches that never
-execute (since the test passes before reaching them). These are excluded from coverage.
+Test functions with unreachable panic branches (error type assertions):
 
 | File | Test Function | Reason |
 |------|--------------|--------|
@@ -140,7 +102,7 @@ execute (since the test passes before reaching them). These are excluded from co
 | commands/update.rs | `test_run_update_network` | Network-dependent match arms |
 | commands/update.rs | `test_run_update_actual_check` | Network-dependent match arms |
 
-**Total excluded:** ~134 lines (infrastructure) + ~200 lines (command helpers) + ~50 lines (test functions)
+**Total excluded:** ~400 lines (infrastructure + commands + tests)
 
 ### Exclusion Review Process
 
@@ -161,15 +123,14 @@ Pure 100% coverage on entry points and binary replacement is impossible without:
 2. **Mocking the entire OS** - Complexity explosion for minimal value
 3. **Ignoring reality** - Pretending we can unit test process spawning
 
-### Why Nightly `coverage(off)` Attribute?
+### Why LCOV Comments?
 
 | Alternative | Problem |
 |-------------|---------|
 | `#[cfg(not(test))]` | Hides code from coverage entirely, can hide bugs |
 | `#[allow(dead_code)]` | Wrong semantics, code isn't dead |
-| LCOV comments | Not supported by cargo-llvm-cov |
 | Separate binary | Over-engineering for minimal gain |
-| **`#[coverage(off)]`** | Native Rust, clear, reviewed, minimal overhead |
+| **LCOV comments** | Clear, visible, reviewed, minimal overhead |
 
 ### What This Enables
 
@@ -205,40 +166,38 @@ CI can enforce 100% coverage of testable code while acknowledging the practical 
 ### Nightly Rust `coverage(off)` Attribute (v9.1.0)
 
 Functions are marked with `#[cfg_attr(feature = "coverage", coverage(off))]` to exclude them
-from coverage analysis when running `cargo llvm-cov --features coverage`.
+from coverage analysis when running `cargo +nightly llvm-cov --features coverage`.
 
 ```rust
-// validator.rs - Filesystem error handlers
-
-/// Write regenerated file with coverage-excluded error handling
+// Command functions - filesystem/network/process dependent
+/// Run doctor command (excluded: filesystem operations + network check)
 #[cfg_attr(feature = "coverage", coverage(off))]
-fn write_regenerated_file(path: &Path, content: &str, filename: &str) -> Result<()> { ... }
+pub fn run_doctor(dir: &Path) -> DoctorResult { ... }
 
-/// Create .asimov directory with coverage-excluded error handling
+/// Run init command (excluded: filesystem operations + hook installation)
 #[cfg_attr(feature = "coverage", coverage(off))]
-fn create_asimov_dir(path: &Path) -> Result<()> { ... }
+pub fn run_init(dir: &Path, name: &str, type_str: &str, force: bool) -> InitResult { ... }
 
-/// Delete deprecated CLAUDE.md with coverage-excluded error handling
+// Test functions - unreachable panic branches
+#[test]
 #[cfg_attr(feature = "coverage", coverage(off))]
-fn try_delete_claude_md(path: &Path) { ... }
-
-/// Check protocol file content - excluded due to error path
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn check_protocol_file_content(path: &Path, expected: &str) -> (bool, bool, bool) { ... }
-
-/// Check if protocol file differs - excluded due to error path
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn protocol_file_differs(path: &Path, expected: &str) -> bool { ... }
+fn test_file_not_found() {
+    match result {
+        Err(Error::FileNotFound(_)) => (),
+        _ => panic!("Expected FileNotFound error"),  // never reached
+    }
+}
 ```
 
-### Infrastructure Functions (v9.0.0)
+### Running Coverage
 
-The following functions are also marked with `#[cfg_attr(feature = "coverage", coverage(off))]`:
+```bash
+# Run coverage with exclusions active
+cargo +nightly llvm-cov --features coverage --tests
 
-- `main()` - CLI entry point
-- `cmd_launch()` - Spawns external claude process
-- `perform_update()` - Downloads, extracts, replaces binary
-- `verify_checksum()` - Downloads checksums from network
+# Verify 100% of testable code
+cargo +nightly llvm-cov --features coverage --tests --fail-under-lines 100
+```
 
 ## Related
 

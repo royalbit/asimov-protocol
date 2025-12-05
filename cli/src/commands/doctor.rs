@@ -106,6 +106,8 @@ pub struct DoctorResult {
     pub version_info: Option<(String, bool)>, // (version, is_latest)
 }
 
+/// Run doctor command (excluded: filesystem operations + network check)
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_doctor(dir: &Path) -> DoctorResult {
     let mut result = DoctorResult {
         checks: Vec::new(),

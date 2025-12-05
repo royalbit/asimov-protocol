@@ -6,67 +6,6 @@ use crate::{
 };
 use std::path::Path;
 
-// ============================================================================
-// COVERAGE EXCLUSIONS (ADR-039: require filesystem/lint state)
-// ============================================================================
-
-/// Handle lint errors for a file (excluded: conditional error handling)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn process_lint_errors(
-    result: &mut LintDocsResult,
-    file_result: &mut LintFileResult,
-    lint_result: &crate::markdown::LintResult,
-    file: &Path,
-    fix: bool,
-) {
-    result.files_with_errors += 1;
-    for err in &lint_result.errors {
-        file_result
-            .errors
-            .push(format!("Line {}: {}", err.line, err.message));
-    }
-
-    if fix {
-        if fix_markdown_file(file).is_ok() {
-            file_result.fixed = true;
-            result.files_fixed += 1;
-        }
-    } else {
-        result.success = false;
-    }
-}
-
-/// Handle lint file error (excluded: error path)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn handle_lint_error(
-    result: &mut LintDocsResult,
-    file_result: &mut LintFileResult,
-    e: std::io::Error,
-) {
-    file_result.errors.push(format!("Error: {}", e));
-    result.success = false;
-}
-
-/// Process semantic issues (excluded: conditional severity handling)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn process_semantic_issues(
-    result: &mut LintDocsResult,
-    issues: Vec<crate::semantic::SemanticIssue>,
-) {
-    for issue in issues {
-        result.semantic_issues.push(SemanticIssue {
-            file: issue.file.display().to_string(),
-            line: issue.line.unwrap_or(0),
-            severity: format!("{:?}", issue.severity),
-            message: issue.message,
-        });
-
-        if issue.severity == Severity::Error {
-            result.success = false;
-        }
-    }
-}
-
 #[derive(Debug, Clone)]
 pub struct LintFileResult {
     pub file: String,
@@ -93,7 +32,7 @@ pub struct LintDocsResult {
     pub semantic_files_checked: usize,
 }
 
-/// Run lint docs command (excluded: filesystem + lint operations)
+/// Run lint-docs command (excluded: filesystem traversal + file operations)
 #[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_lint_docs(dir: &Path, fix: bool, semantic: bool) -> LintDocsResult {
     let mut result = LintDocsResult {
@@ -119,11 +58,26 @@ pub fn run_lint_docs(dir: &Path, fix: bool, semantic: bool) -> LintDocsResult {
         match check_markdown_file(file) {
             Ok(lint_result) => {
                 if !lint_result.errors.is_empty() {
-                    process_lint_errors(&mut result, &mut file_result, &lint_result, file, fix);
+                    result.files_with_errors += 1;
+                    for err in &lint_result.errors {
+                        file_result
+                            .errors
+                            .push(format!("Line {}: {}", err.line, err.message));
+                    }
+
+                    if fix {
+                        if fix_markdown_file(file).is_ok() {
+                            file_result.fixed = true;
+                            result.files_fixed += 1;
+                        }
+                    } else {
+                        result.success = false;
+                    }
                 }
             }
             Err(e) => {
-                handle_lint_error(&mut result, &mut file_result, e);
+                file_result.errors.push(format!("Error: {}", e));
+                result.success = false;
             }
         }
 
@@ -141,7 +95,18 @@ pub fn run_lint_docs(dir: &Path, fix: bool, semantic: bool) -> LintDocsResult {
         let semantic_result = check_semantic(dir, &config);
         result.semantic_files_checked = semantic_result.files_checked;
 
-        process_semantic_issues(&mut result, semantic_result.issues);
+        for issue in semantic_result.issues {
+            result.semantic_issues.push(SemanticIssue {
+                file: issue.file.display().to_string(),
+                line: issue.line.unwrap_or(0),
+                severity: format!("{:?}", issue.severity),
+                message: issue.message,
+            });
+
+            if issue.severity == Severity::Error {
+                result.success = false;
+            }
+        }
     }
 
     result

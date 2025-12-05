@@ -3,39 +3,6 @@
 use crate::resolve_protocol_dir;
 use std::path::Path;
 
-// ============================================================================
-// COVERAGE EXCLUSIONS (ADR-039: require git/process state)
-// ============================================================================
-
-/// Parse git count output (excluded: depends on git process success)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn parse_git_count(output: &std::process::Output) -> Option<usize> {
-    if output.status.success() {
-        String::from_utf8_lossy(&output.stdout).trim().parse().ok()
-    } else {
-        None
-    }
-}
-
-/// Extract milestone info from roadmap (excluded: nested conditionals)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn extract_milestone_info(result: &mut StatsResult, roadmap: &serde_yaml::Value) {
-    if let Some(current) = roadmap.get("current") {
-        result.milestone_version = current
-            .get("version")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        result.milestone_summary = current
-            .get("summary")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        result.milestone_status = current
-            .get("status")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-    }
-}
-
 #[derive(Debug, Clone)]
 pub struct StatsResult {
     pub total_commits: usize,
@@ -47,7 +14,7 @@ pub struct StatsResult {
     pub milestone_status: Option<String>,
 }
 
-/// Run stats command (excluded: git process execution)
+/// Run stats command (excluded: git process spawning + filesystem)
 #[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_stats(dir: &Path) -> StatsResult {
     use chrono::Local;
@@ -69,8 +36,10 @@ pub fn run_stats(dir: &Path) -> StatsResult {
         .current_dir(dir)
         .output()
     {
-        if let Some(count) = parse_git_count(&output) {
-            result.total_commits = count;
+        if output.status.success() {
+            if let Ok(count) = String::from_utf8_lossy(&output.stdout).trim().parse() {
+                result.total_commits = count;
+            }
         }
     }
 
@@ -79,8 +48,10 @@ pub fn run_stats(dir: &Path) -> StatsResult {
         .current_dir(dir)
         .output()
     {
-        if let Some(count) = parse_git_count(&output) {
-            result.asimov_commits = count;
+        if output.status.success() {
+            if let Ok(count) = String::from_utf8_lossy(&output.stdout).trim().parse() {
+                result.asimov_commits = count;
+            }
         }
     }
 
@@ -94,8 +65,10 @@ pub fn run_stats(dir: &Path) -> StatsResult {
         .current_dir(dir)
         .output()
     {
-        if let Some(count) = parse_git_count(&output) {
-            result.today_commits = count;
+        if output.status.success() {
+            if let Ok(count) = String::from_utf8_lossy(&output.stdout).trim().parse() {
+                result.today_commits = count;
+            }
         }
     }
 
@@ -103,7 +76,20 @@ pub fn run_stats(dir: &Path) -> StatsResult {
     let roadmap_path = resolve_protocol_dir(dir).join("roadmap.yaml");
     if let Ok(content) = std::fs::read_to_string(&roadmap_path) {
         if let Ok(roadmap) = serde_yaml::from_str::<serde_yaml::Value>(&content) {
-            extract_milestone_info(&mut result, &roadmap);
+            if let Some(current) = roadmap.get("current") {
+                result.milestone_version = current
+                    .get("version")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+                result.milestone_summary = current
+                    .get("summary")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+                result.milestone_status = current
+                    .get("status")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+            }
         }
     }
 

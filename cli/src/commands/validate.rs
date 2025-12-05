@@ -6,45 +6,6 @@ use crate::{
 };
 use std::path::Path;
 
-// ============================================================================
-// COVERAGE EXCLUSIONS (ADR-039: require filesystem/conditional state)
-// ============================================================================
-
-/// Handle file result classification (excluded: conditional branches)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn classify_file_result(result: &mut ValidateResult, file_result: ValidateFileResult, file: &str) {
-    if file.contains("roadmap") {
-        result.roadmap = Some(file_result);
-    } else if file.contains("project") {
-        result.project = Some(file_result);
-    } else {
-        result.protocol_files.push(file_result);
-    }
-}
-
-/// Handle ethics scan results (excluded: depends on scan success)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn process_ethics_scan(result: &mut ValidateResult, matches: Vec<crate::ethics::RedFlagMatch>) {
-    let ethics_matches: Vec<EthicsMatch> = matches
-        .iter()
-        .map(|m| EthicsMatch {
-            file: m.file.clone(),
-            line: m.line,
-            pattern: m.pattern.clone(),
-            category: format!("{:?}", m.category),
-        })
-        .collect();
-
-    if !ethics_matches.is_empty() {
-        result.success = false;
-    }
-
-    result.ethics_scan = Some(EthicsScanResult {
-        red_flags_found: ethics_matches.len(),
-        matches: ethics_matches,
-    });
-}
-
 #[derive(Debug, Clone)]
 pub struct ValidateFileResult {
     pub file: String,
@@ -81,7 +42,7 @@ pub struct ValidateResult {
     pub regenerated: Vec<String>,
 }
 
-/// Run validate command (excluded: filesystem validation)
+/// Run validate command (excluded: filesystem operations + ethics scan)
 #[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_validate(dir: &Path, ethics_scan: bool) -> ValidateResult {
     let mut result = ValidateResult {
@@ -107,7 +68,13 @@ pub fn run_validate(dir: &Path, ethics_scan: bool) -> ValidateResult {
                     regenerated: r.regenerated,
                 };
 
-                classify_file_result(&mut result, file_result, &r.file);
+                if r.file.contains("roadmap") {
+                    result.roadmap = Some(file_result);
+                } else if r.file.contains("project") {
+                    result.project = Some(file_result);
+                } else {
+                    result.protocol_files.push(file_result);
+                }
 
                 if !r.is_valid {
                     result.success = false;
@@ -129,7 +96,24 @@ pub fn run_validate(dir: &Path, ethics_scan: bool) -> ValidateResult {
 
     if ethics_scan {
         if let Ok(matches) = scan_directory_for_red_flags(dir) {
-            process_ethics_scan(&mut result, matches);
+            let ethics_matches: Vec<EthicsMatch> = matches
+                .iter()
+                .map(|m| EthicsMatch {
+                    file: m.file.clone(),
+                    line: m.line,
+                    pattern: m.pattern.clone(),
+                    category: format!("{:?}", m.category),
+                })
+                .collect();
+
+            if !ethics_matches.is_empty() {
+                result.success = false;
+            }
+
+            result.ethics_scan = Some(EthicsScanResult {
+                red_flags_found: ethics_matches.len(),
+                matches: ethics_matches,
+            });
         }
     }
 

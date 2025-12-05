@@ -3,54 +3,6 @@
 use crate::{check_for_update, compile_protocols, resolve_protocol_dir, to_minified_json};
 use std::path::Path;
 
-// ============================================================================
-// COVERAGE EXCLUSIONS (ADR-039: require network/external state)
-// ============================================================================
-
-/// Check for updates and set result field (excluded: network-dependent)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn check_and_set_update(result: &mut WarmupResult) {
-    if let Ok(info) = check_for_update() {
-        if info.update_available {
-            result.update_available = Some(info.latest);
-        }
-    }
-}
-
-/// Extract identity from project yaml (excluded: nested conditionals)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn extract_identity_from_project(result: &mut WarmupResult, project: &serde_yaml::Value) {
-    if let Some(identity) = project.get("identity") {
-        result.project_name = identity
-            .get("project")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        result.project_tagline = identity
-            .get("tagline")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-    }
-}
-
-/// Extract current milestone from roadmap (excluded: nested conditionals)
-#[cfg_attr(feature = "coverage", coverage(off))]
-fn extract_current_milestone(result: &mut WarmupResult, roadmap: &serde_yaml::Value) {
-    if let Some(current) = roadmap.get("current") {
-        result.current_version = current
-            .get("version")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        result.current_status = current
-            .get("status")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        result.current_summary = current
-            .get("summary")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-    }
-}
-
 #[derive(Debug, Clone)]
 pub struct WarmupResult {
     pub success: bool,
@@ -64,7 +16,7 @@ pub struct WarmupResult {
     pub error: Option<String>,
 }
 
-/// Run warmup command (excluded: filesystem + network operations)
+/// Run warmup command (excluded: network + filesystem operations)
 #[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
     let mut result = WarmupResult {
@@ -80,7 +32,11 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
     };
 
     if check_updates {
-        check_and_set_update(&mut result);
+        if let Ok(info) = check_for_update() {
+            if info.update_available {
+                result.update_available = Some(info.latest);
+            }
+        }
     }
 
     let roadmap_path = resolve_protocol_dir(dir).join("roadmap.yaml");
@@ -100,13 +56,35 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         }
     };
 
-    extract_current_milestone(&mut result, &roadmap);
+    if let Some(current) = roadmap.get("current") {
+        result.current_version = current
+            .get("version")
+            .and_then(|v| v.as_str())
+            .map(String::from);
+        result.current_status = current
+            .get("status")
+            .and_then(|v| v.as_str())
+            .map(String::from);
+        result.current_summary = current
+            .get("summary")
+            .and_then(|v| v.as_str())
+            .map(String::from);
+    }
 
     // Load project.yaml if exists
     let project_path = resolve_protocol_dir(dir).join("project.yaml");
     if let Ok(content) = std::fs::read_to_string(&project_path) {
         if let Ok(project) = serde_yaml::from_str::<serde_yaml::Value>(&content) {
-            extract_identity_from_project(&mut result, &project);
+            if let Some(identity) = project.get("identity") {
+                result.project_name = identity
+                    .get("project")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+                result.project_tagline = identity
+                    .get("tagline")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+            }
         }
     }
 

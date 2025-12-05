@@ -7,7 +7,7 @@ pub enum LaunchResult {
     Launching,
 }
 
-/// Check launch conditions (excluded: env vars + process spawning)
+/// Check launch conditions (excluded: process spawning for PATH check)
 #[cfg_attr(feature = "coverage", coverage(off))]
 pub fn check_launch_conditions() -> LaunchResult {
     // Check if inside Claude
