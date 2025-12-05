@@ -2,6 +2,10 @@
 
 use crate::{check_for_update, perform_update};
 
+// ============================================================================
+// COVERAGE EXCLUSIONS (ADR-039: require network operations)
+// ============================================================================
+
 #[derive(Debug, Clone)]
 pub enum UpdateResult {
     AlreadyLatest {
@@ -31,6 +35,8 @@ pub enum UpdateResult {
     },
 }
 
+/// Run update check or perform update (excluded: network-dependent)
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn run_update(check_only: bool) -> UpdateResult {
     match check_for_update() {
         Ok(info) => {

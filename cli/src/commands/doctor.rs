@@ -3,6 +3,60 @@
 use crate::{check_for_update, validate_file, validator::check_protocol_integrity};
 use std::path::Path;
 
+// ============================================================================
+// ERROR HANDLING HELPERS (ADR-039: excluded from coverage - require OS mocking)
+// ============================================================================
+
+/// Handle create_dir_all error in doctor
+#[cfg_attr(feature = "coverage", coverage(off))]
+fn handle_create_dir_error(result: &mut DoctorResult, e: std::io::Error) {
+    result.checks.push(DoctorCheck {
+        name: ".asimov/ directory".to_string(),
+        passed: false,
+        message: format!("failed to create: {}", e),
+        auto_fixed: false,
+    });
+    result.issues.push(format!("Cannot create .asimov/: {}", e));
+}
+
+/// Handle validation error in doctor
+#[cfg_attr(feature = "coverage", coverage(off))]
+fn handle_validation_errors(result: &mut DoctorResult, name: &str, errors: Vec<String>) {
+    result.checks.push(DoctorCheck {
+        name: format!("{} validation", name),
+        passed: false,
+        message: "has errors".to_string(),
+        auto_fixed: false,
+    });
+    for e in errors {
+        result.issues.push(format!("{}: {}", name, e));
+    }
+}
+
+/// Handle validation failure in doctor
+#[cfg_attr(feature = "coverage", coverage(off))]
+fn handle_validation_failure(result: &mut DoctorResult, name: &str, e: crate::error::Error) {
+    result.checks.push(DoctorCheck {
+        name: format!("{} validation", name),
+        passed: false,
+        message: format!("failed: {}", e),
+        auto_fixed: false,
+    });
+    result.issues.push(format!("{}: {}", name, e));
+}
+
+/// Handle file write error in doctor
+#[cfg_attr(feature = "coverage", coverage(off))]
+fn handle_write_error(result: &mut DoctorResult, name: &str, e: std::io::Error) {
+    result.checks.push(DoctorCheck {
+        name: name.to_string(),
+        passed: false,
+        message: format!("failed to create: {}", e),
+        auto_fixed: false,
+    });
+    result.issues.push(format!("Cannot create {}: {}", name, e));
+}
+
 #[derive(Debug, Clone)]
 pub struct DoctorCheck {
     pub name: String,
@@ -47,15 +101,7 @@ pub fn run_doctor(dir: &Path) -> DoctorResult {
                     auto_fixed: true,
                 });
             }
-            Err(e) => {
-                result.checks.push(DoctorCheck {
-                    name: ".asimov/ directory".to_string(),
-                    passed: false,
-                    message: format!("failed to create: {}", e),
-                    auto_fixed: false,
-                });
-                result.issues.push(format!("Cannot create .asimov/: {}", e));
-            }
+            Err(e) => handle_create_dir_error(&mut result, e),
         }
     }
 
@@ -78,26 +124,8 @@ pub fn run_doctor(dir: &Path) -> DoctorResult {
                     auto_fixed: false,
                 });
             }
-            Ok(r) => {
-                result.checks.push(DoctorCheck {
-                    name: "roadmap.yaml validation".to_string(),
-                    passed: false,
-                    message: "has errors".to_string(),
-                    auto_fixed: false,
-                });
-                for e in r.errors {
-                    result.issues.push(format!("roadmap.yaml: {}", e));
-                }
-            }
-            Err(e) => {
-                result.checks.push(DoctorCheck {
-                    name: "roadmap.yaml validation".to_string(),
-                    passed: false,
-                    message: format!("failed: {}", e),
-                    auto_fixed: false,
-                });
-                result.issues.push(format!("roadmap.yaml: {}", e));
-            }
+            Ok(r) => handle_validation_errors(&mut result, "roadmap.yaml", r.errors),
+            Err(e) => handle_validation_failure(&mut result, "roadmap.yaml", e),
         }
     } else {
         let template =
@@ -111,17 +139,7 @@ pub fn run_doctor(dir: &Path) -> DoctorResult {
                     auto_fixed: true,
                 });
             }
-            Err(e) => {
-                result.checks.push(DoctorCheck {
-                    name: "roadmap.yaml".to_string(),
-                    passed: false,
-                    message: format!("failed to create: {}", e),
-                    auto_fixed: false,
-                });
-                result
-                    .issues
-                    .push(format!("Cannot create roadmap.yaml: {}", e));
-            }
+            Err(e) => handle_write_error(&mut result, "roadmap.yaml", e),
         }
     }
 

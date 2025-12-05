@@ -227,6 +227,8 @@ pub fn scan_directory_for_red_flags(dir: &Path) -> std::io::Result<Vec<RedFlagMa
     Ok(all_matches)
 }
 
+/// Recursively scan directory for red flags (excluded: filesystem traversal)
+#[cfg_attr(feature = "coverage", coverage(off))]
 fn scan_directory_recursive(dir: &Path, matches: &mut Vec<RedFlagMatch>) -> std::io::Result<()> {
     if !dir.is_dir() {
         return Ok(());

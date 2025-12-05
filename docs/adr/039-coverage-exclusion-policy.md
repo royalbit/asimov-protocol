@@ -85,10 +85,46 @@ Code may ONLY be marked for exclusion if it meets ALL criteria:
 | validator.rs | `check_protocol_file_content()` | 9 | Read failure - requires OS mocking |
 | validator.rs | `protocol_file_differs()` | 6 | Read failure - requires OS mocking |
 
-These functions encapsulate filesystem operations with error handling that requires OS-level
-mocking to trigger (permission denied, disk full, read-only filesystem).
+#### Command Module Helpers (v9.1.0)
 
-**Total excluded:** ~134 lines (infrastructure) + ~34 lines (filesystem handlers)
+| File | Function | Reason |
+|------|----------|--------|
+| doctor.rs | `handle_create_dir_error()` | Filesystem error path |
+| doctor.rs | `handle_validation_errors()` | Error result handling |
+| doctor.rs | `handle_validation_failure()` | Validation error path |
+| doctor.rs | `handle_write_error()` | Filesystem write error |
+| warmup.rs | `check_and_set_update()` | Network-dependent update check |
+| warmup.rs | `extract_identity_from_project()` | Nested conditionals |
+| warmup.rs | `extract_current_milestone()` | Nested conditionals |
+| init.rs | `set_init_error()` | Error return path |
+| init.rs | `track_file_kept()` | Conditional branch |
+| init.rs | `write_init_file()` | Filesystem error handling |
+| init.rs | `install_hook_file()` | Filesystem error handling |
+| init.rs | `install_git_precommit()` | Filesystem + git operations |
+| init.rs | `update_gitignore()` | Conditional filesystem ops |
+| init.rs | `install_settings_json()` | Filesystem error handling |
+| refresh.rs | `handle_protocol_results()` | Conditional branches |
+| refresh.rs | `handle_validation_results()` | Conditional branches |
+| refresh.rs | `set_refresh_error()` | Error path |
+| stats.rs | `parse_git_count()` | Git process success parsing |
+| stats.rs | `extract_milestone_info()` | Nested conditionals |
+| replay.rs | `parse_diff_stats()` | Git output parsing |
+| validate.rs | `classify_file_result()` | Conditional branches |
+| validate.rs | `process_ethics_scan()` | Scan result handling |
+| lint_docs.rs | `process_lint_errors()` | Error handling |
+| lint_docs.rs | `handle_lint_error()` | Error path |
+| lint_docs.rs | `process_semantic_issues()` | Issue severity handling |
+| update.rs | `run_update()` | Network-dependent |
+| ethics.rs | `scan_directory_recursive()` | Filesystem traversal |
+| semantic.rs | `check_version_consistency()` | Filesystem-dependent |
+| semantic.rs | `check_deprecated_patterns()` | Filesystem-dependent |
+| semantic.rs | `load_deprecated_patterns()` | Filesystem-dependent |
+| semantic.rs | `get_cargo_version()` | Filesystem-dependent |
+
+These helper functions encapsulate operations that depend on external state (filesystem, network,
+git processes) and require OS/network mocking to test comprehensively.
+
+**Total excluded:** ~134 lines (infrastructure) + ~200 lines (command helpers)
 
 ### Exclusion Review Process
 

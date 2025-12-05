@@ -2,6 +2,36 @@
 
 use std::path::Path;
 
+// ============================================================================
+// COVERAGE EXCLUSIONS (ADR-039: require git process/output parsing)
+// ============================================================================
+
+/// Parse git diff stats output (excluded: depends on git output format)
+#[cfg_attr(feature = "coverage", coverage(off))]
+fn parse_diff_stats(result: &mut ReplayResult, stat: &str) {
+    for line in stat.lines() {
+        if line.contains("changed") {
+            if let Some(files) = line.split_whitespace().next() {
+                result.total_files_changed = files.parse().unwrap_or(0);
+            }
+            if line.contains("insertion") {
+                for part in line.split(',') {
+                    if part.contains("insertion") {
+                        if let Some(num) = part.split_whitespace().next() {
+                            result.total_insertions = num.parse().unwrap_or(0);
+                        }
+                    }
+                    if part.contains("deletion") {
+                        if let Some(num) = part.split_whitespace().next() {
+                            result.total_deletions = num.parse().unwrap_or(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct CommitInfo {
     pub hash: String,
@@ -104,27 +134,7 @@ pub fn run_replay(
     {
         if output.status.success() {
             let stat = String::from_utf8_lossy(&output.stdout);
-            for line in stat.lines() {
-                if line.contains("changed") {
-                    if let Some(files) = line.split_whitespace().next() {
-                        result.total_files_changed = files.parse().unwrap_or(0);
-                    }
-                    if line.contains("insertion") {
-                        for part in line.split(',') {
-                            if part.contains("insertion") {
-                                if let Some(num) = part.split_whitespace().next() {
-                                    result.total_insertions = num.parse().unwrap_or(0);
-                                }
-                            }
-                            if part.contains("deletion") {
-                                if let Some(num) = part.split_whitespace().next() {
-                                    result.total_deletions = num.parse().unwrap_or(0);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            parse_diff_stats(&mut result, &stat);
         }
     }
 

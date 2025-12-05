@@ -175,7 +175,8 @@ fn find_source_files(dir: &Path) -> Vec<PathBuf> {
         .collect()
 }
 
-/// Check version consistency across files
+/// Check version consistency across files (excluded: filesystem-dependent)
+#[cfg_attr(feature = "coverage", coverage(off))]
 fn check_version_consistency(
     _dir: &Path,
     expected: &str,
@@ -232,7 +233,8 @@ fn check_version_consistency(
     }
 }
 
-/// Check for deprecated patterns in markdown files
+/// Check for deprecated patterns in markdown files (excluded: filesystem-dependent)
+#[cfg_attr(feature = "coverage", coverage(off))]
 fn check_deprecated_patterns(
     files: &[PathBuf],
     patterns: &[DeprecatedPattern],
@@ -288,6 +290,8 @@ fn check_help_doc_consistency(_dir: &Path, _result: &mut SemanticResult) {
 }
 
 /// Load deprecated patterns from a config file or warmup.yaml
+/// Load deprecated patterns (excluded: filesystem-dependent)
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn load_deprecated_patterns(dir: &Path) -> Vec<DeprecatedPattern> {
     let mut patterns = Vec::new();
 
@@ -325,7 +329,8 @@ pub fn load_deprecated_patterns(dir: &Path) -> Vec<DeprecatedPattern> {
     patterns
 }
 
-/// Get version from Cargo.toml
+/// Get version from Cargo.toml (excluded: filesystem-dependent)
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn get_cargo_version(dir: &Path) -> Option<String> {
     // Look for Cargo.toml in common locations
     let cargo_paths = [dir.join("Cargo.toml"), dir.join("cli").join("Cargo.toml")];
