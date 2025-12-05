@@ -822,6 +822,7 @@ current:
     // ========== Error Handling Tests ==========
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_file_not_found() {
         let result = validate_file(Path::new("/nonexistent/path/warmup.yaml"));
         assert!(result.is_err());
@@ -832,6 +833,7 @@ current:
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_unknown_file_type() {
         let content = "key: value";
         let mut file = NamedTempFile::with_suffix(".yaml").unwrap();
@@ -846,6 +848,7 @@ current:
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_malformed_yaml() {
         let content = r#"
 identity:
@@ -899,6 +902,7 @@ identity:
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_validate_directory_no_protocol_files() {
         let temp_dir = TempDir::new().unwrap();
 
@@ -1189,6 +1193,7 @@ current:
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_regeneration_warn_levels() {
         let temp_dir = tempfile::tempdir().unwrap();
 

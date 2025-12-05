@@ -124,7 +124,23 @@ Code may ONLY be marked for exclusion if it meets ALL criteria:
 These helper functions encapsulate operations that depend on external state (filesystem, network,
 git processes) and require OS/network mocking to test comprehensively.
 
-**Total excluded:** ~134 lines (infrastructure) + ~200 lines (command helpers)
+#### Test Functions with Unreachable Branches (v9.1.0)
+
+Test functions containing `match` arms that verify error types have panic branches that never
+execute (since the test passes before reaching them). These are excluded from coverage.
+
+| File | Test Function | Reason |
+|------|--------------|--------|
+| validator.rs | `test_file_not_found` | Panic branch for error type assertion |
+| validator.rs | `test_unknown_file_type` | Panic branch for error type assertion |
+| validator.rs | `test_malformed_yaml` | Panic branch for error type assertion |
+| validator.rs | `test_validate_directory_no_protocol_files` | Panic branch for error type assertion |
+| validator.rs | `test_regeneration_warn_levels` | Conditional assertion branch |
+| commands/update.rs | `test_run_update_check_only` | Network-dependent match arms |
+| commands/update.rs | `test_run_update_network` | Network-dependent match arms |
+| commands/update.rs | `test_run_update_actual_check` | Network-dependent match arms |
+
+**Total excluded:** ~134 lines (infrastructure) + ~200 lines (command helpers) + ~50 lines (test functions)
 
 ### Exclusion Review Process
 

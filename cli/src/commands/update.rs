@@ -113,6 +113,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_run_update_check_only() {
         // This tests the check_only path - won't actually update
         // Note: This will make a network call to check for updates
@@ -127,6 +128,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_run_update_network() {
         // This test exercises the network code path
         // May succeed or fail depending on network availability
@@ -141,6 +143,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(feature = "coverage", coverage(off))]
     fn test_run_update_actual_check() {
         // Run the actual update check - exercises network code
         // This will hit either AlreadyLatest, UpdateAvailable, or CheckFailed
