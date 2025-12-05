@@ -52,32 +52,24 @@ Each project initialized with `asimov init` becomes a Self-Evolving Autonomous A
 
 ---
 
-### 🏛️ The Foundation is Complete
+### The Journey: 10 Phases in 12 Days
 
-> *"The needs of the many outweigh the needs of the few."*
-> — Spock (1982) / The Zeroth Law (1985)
+| Phase | Date | What Happened |
+|-------|------|---------------|
+| 1 | Nov 23 | **Forge** - Building a spreadsheet engine, context lost every session. Created `warmup.yaml` hack. |
+| 2 | Nov 23-24 | **Warmup Protocol** - The hack became a protocol. Quality standards, file locations, release procedures. |
+| 3 | Nov 24-25 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added 4hr max, "done > perfect". |
+| 4 | Nov 25 | **Forge Protocol** - Extracted as standalone. But the name was wrong—other projects could use it. |
+| 5 | Nov 25-26 | **Ethics** - Claude refused to build surveillance features. The protocol worked. Formalized harm prevention. |
+| 6 | Nov 26-27 | **Asimov** - Named after Isaac Asimov's Three Laws (1942). First Law = do no harm. Second = obey humans. Third = self-preserve. |
+| 7 | Nov 27-28 | **Protocol Suite** - Not one protocol, eight. Ethics, freshness, sycophancy, green, sprint, migrations, exhaustive. |
+| 8 | Nov 28-29 | **Inaction Principle** - Asimov's First Law has two halves: "do no harm" AND "allow no harm through inaction". |
+| 9 | Nov 29-30 | **Self-Evolving AI** - The protocol improves itself. Forge built Asimov → Asimov now builds Forge. |
+| 10 | Nov 30-Dec 4 | **Zeroth Law** - "The needs of the many outweigh the needs of the few." Democratize AI power. |
 
-**v9.0.0: Protocol Integrity.** The foundation is complete. Ready for the many.
+**12 days. 10 phases. 62 releases. 65,000+ LOC. 1 human + 1 AI.**
 
-```
-Nov 23 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Dec 4, 2025
-   │                                      │
-   warmup.json                    Protocol Integrity
-   (a hack)                         (v9.0.0)
-
-   12 days  •  10 phases  •  50+ hours  •  62 releases
-```
-
-| Built | Count |
-|-------|-------|
-| Protocols hardcoded | 8 |
-| ADRs documented | 34 |
-| Unit tests | 429 |
-| Ethics compromises | 0 |
-
-**Credits:** Rex (human) + Claude Opus 4.5 (AI)
-
-*The protocol was designed by an AI to constrain AI. That's the point.*
+📖 [Full Origin Story](docs/ORIGIN_STORY.md)
 
 ---
 

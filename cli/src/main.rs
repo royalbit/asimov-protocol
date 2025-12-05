@@ -772,6 +772,7 @@ mod tests {
         let temp = TempDir::new().unwrap();
         std::env::set_current_dir(temp.path()).unwrap();
         let result = cmd_refresh();
+        // Refresh requires .asimov/ to exist (run init first)
         assert_eq!(result, ExitCode::FAILURE);
     }
 
