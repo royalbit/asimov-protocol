@@ -379,8 +379,7 @@ When AI implements your idea from an Issue, you'll be credited in the commit mes
 | Use Case | Allowed? |
 |----------|----------|
 | View and study source code | ✅ Yes |
-| Clone for local viewing | ✅ Yes |
-| Personal, non-commercial educational use | ✅ Yes |
+| Run for personal, non-commercial educational use | ✅ Yes |
 | **Any commercial use** | ❌ No |
 | **Use by/for employers, clients, organizations** | ❌ No |
 | **Modify, distribute, sublicense** | ❌ No |
