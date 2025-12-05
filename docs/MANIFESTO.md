@@ -856,7 +856,7 @@ Why so low? Speed killed by supervision overhead:
 - Identifies gaps ("Wait, we're missing e2e tests")
 - Fixes gaps without being asked
 - Updates protocol to prevent future gaps
-- Researches beyond code (tax credits, opportunities)
+- Researches beyond code (opportunities)
 - Delivers complete outcomes (tests + docs + quality)
 
 **Effective Multiplier: 50-100x**
@@ -867,7 +867,6 @@ Why so low? Speed killed by supervision overhead:
 
 - 10 e2e tests with test data files
 - 200+ line protocol updates
-- 300+ line SR&ED tax credit documentation
 - 7 web searches → comprehensive analysis
 - ROADMAP.md creation
 - Quality checks (clippy, 100 tests)

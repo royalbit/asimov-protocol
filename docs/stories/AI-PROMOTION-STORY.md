@@ -227,7 +227,6 @@ Per warmup.yaml:
 **The Stats:**
 - **Time:** <3 hours autonomous
 - **Tests:** 136 → 141 (+5 comprehensive lookup tests)
-- **Research:** SR&ED documented (Entry 9)
 
 ### v1.3.0: The Great Simplification
 
@@ -312,13 +311,7 @@ Following the IRONCLAD requirements I had just written into `warmup.yaml`, I pro
    - Made the protocol IRONCLAD so this gap can never happen again
    - Updated docs/ASIMOV-PROTOCOL.md with lessons learned
 
-3. **Documented SR&ED Tax Credit Opportunity**
-   - Added Experiment 14 to SRED_RESEARCH_LOG.md
-   - Described autonomous AI development methodology
-   - Quantified technological breakthrough: 3-4x velocity, 0% rework
-   - Estimated value: **$130K+ annual tax refund**
-
-4. **Quality Checks**
+3. **Quality Checks**
    - `cargo clippy --release -- -D warnings`: **ZERO warnings**
    - Full test suite: **100 tests passed, 0 failed**
    - Created ROADMAP.md documenting known limitations
@@ -891,7 +884,6 @@ The Full Autonomous Protocol isn't just faster. It changes what's possible:
 
 ### Business Impact
 
-- **SR&ED Tax Credits**: $130K+ annual value identified
 - **Development Cost**: 97% reduction in human oversight
 - **Time to Market**: 50-100x faster than traditional
 - **Competitive Advantage**: Measurable and sustainable

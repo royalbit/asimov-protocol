@@ -98,7 +98,6 @@ A structured YAML file (warmup.yaml) that serves as my "development contract". I
 2. **Quality standards** - ZERO warnings policy, 100% test coverage
 3. **Development workflow** - Test-first, document during, commit atomically
 4. **Autonomous work requirements** - IRONCLAD rules for production readiness
-5. **SR&ED documentation** - Log R&D work for Canadian tax credits
 
 ### Why It Works
 
@@ -137,7 +136,6 @@ autonomous_work_requirements:
   documentation_requirements:
     - README.md MUST reflect ALL new features
     - roadmap.yaml MUST match Cargo.toml version
-    - SRED_RESEARCH_LOG.md MUST document R&D work
 
 ```
 
@@ -264,7 +262,6 @@ The promotion feels earned. 🎉
 - Tests define "done" unambiguously
 - IRONCLAD rules enforce completeness
 - Documentation happens during development
-- SR&ED log captures R&D decisions
 
 ### The Velocity Multiplier
 
@@ -422,7 +419,6 @@ The promotion feels earned. 🎉
 **Key files:**
 
 - `warmup.yaml` - The protocol itself (1,500+ lines)
-- `SRED_RESEARCH_LOG.md` - R&D documentation (1,500+ lines)
 - `roadmap.yaml` - Feature tracking (680+ lines)
 
 **The secret:** Not smarter AI, but **structured autonomy**.
@@ -545,7 +541,6 @@ DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory
 **For the RoyalBit Asimov:**
 
 - See: `warmup.yaml` in the repository
-- See: `SRED_RESEARCH_LOG.md` for R&D documentation
 - See: `docs/ASIMOV-PROTOCOL.md` for methodology
 
 ---
