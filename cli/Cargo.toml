@@ -11,6 +11,10 @@ license = "LicenseRef-Proprietary"
 publish = false
 readme = "../README.md"
 
+[features]
+# Enable coverage attribute (requires nightly)
+coverage = []
+
 [lib]
 name = "royalbit_asimov"
 path = "src/lib.rs"

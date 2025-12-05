@@ -1,4 +1,4 @@
-#![feature(coverage_attribute)]
+#![cfg_attr(feature = "coverage", feature(coverage_attribute))]
 //! RoyalBit Asimov CLI - Creates Self-Evolving Autonomous AI projects with ethics built in
 //!
 //! This crate provides validation for RoyalBit Asimov files:

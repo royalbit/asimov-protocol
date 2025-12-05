@@ -114,7 +114,7 @@ pub fn find_checksums_url(body: &str) -> Option<String> {
     }
 }
 
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 /// Fetch data from a URL using curl
 fn fetch_url(url: &str) -> Result<String, String> {
     let output = std::process::Command::new("curl")
@@ -251,7 +251,7 @@ pub fn verify_checksum_match(expected: &str, actual: &str) -> Result<(), String>
 }
 
 /// Download and install the update with optional checksum verification (v8.4.0)
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn perform_update(download_url: &str, checksums_url: Option<&str>) -> Result<(), String> {
     let current_exe = env::current_exe()
         .map_err(|e| format!("Could not determine current executable path: {}", e))?;
@@ -299,7 +299,7 @@ pub fn perform_update(download_url: &str, checksums_url: Option<&str>) -> Result
 }
 
 /// Download a file from URL to local path
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn download_file(url: &str, dest: &Path) -> Result<(), String> {
     let download_status = std::process::Command::new("curl")
         .args(["-L", "-o", dest.to_str().unwrap(), url])
@@ -314,7 +314,7 @@ pub fn download_file(url: &str, dest: &Path) -> Result<(), String> {
 }
 
 /// Extract archive to directory
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn extract_archive(archive: &Path, dest_dir: &Path) -> Result<(), String> {
     #[cfg(not(target_os = "windows"))]
     {
@@ -356,7 +356,7 @@ pub fn extract_archive(archive: &Path, dest_dir: &Path) -> Result<(), String> {
 }
 
 /// Replace the current binary with a new one
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 pub fn replace_binary(new_binary: &Path, current_exe: &Path) -> Result<(), String> {
     let backup_path = current_exe.with_extension("old");
 
@@ -390,7 +390,7 @@ pub fn replace_binary(new_binary: &Path, current_exe: &Path) -> Result<(), Strin
 }
 
 /// Verify SHA256 checksum of downloaded file (v8.4.0)
-#[coverage(off)]
+#[cfg_attr(feature = "coverage", coverage(off))]
 fn verify_checksum(
     file_path: &std::path::Path,
     checksums_url: &str,
