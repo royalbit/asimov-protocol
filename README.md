@@ -56,16 +56,16 @@ Each project initialized with `asimov init` becomes a Self-Evolving Autonomous A
 
 | Phase | Date | What Happened |
 |-------|------|---------------|
-| 1 | Nov 23 | **Forge** - Building a spreadsheet engine, context lost every session. Created `warmup.yaml` hack. |
-| 2 | Nov 23-24 | **Warmup Protocol** - The hack became a protocol. Quality standards, file locations, release procedures. |
-| 3 | Nov 24-25 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added 4hr max, "done > perfect". |
-| 4 | Nov 25 | **Forge Protocol** - Extracted as standalone. But the name was wrong—other projects could use it. |
-| 5 | Nov 25-26 | **Ethics** - Claude refused to build surveillance features. The protocol worked. Formalized harm prevention. |
-| 6 | Nov 26-27 | **Asimov** - Named after Isaac Asimov's Three Laws (1942). First Law = do no harm. Second = obey humans. Third = self-preserve. |
-| 7 | Nov 27-28 | **Protocol Suite** - Not one protocol, eight. Ethics, freshness, sycophancy, green, sprint, migrations, exhaustive. |
-| 8 | Nov 28-29 | **Inaction Principle** - Asimov's First Law has two halves: "do no harm" AND "allow no harm through inaction". |
-| 9 | Nov 29-30 | **Self-Evolving AI** - The protocol improves itself. Forge built Asimov → Asimov now builds Forge. |
-| 10 | Nov 30-Dec 4 | **Zeroth Law** - "The needs of the many outweigh the needs of the few." Democratize AI power. |
+| 1 | Nov 23, 2025 | **Forge** - Building a spreadsheet engine, context lost every session. Created `warmup.yaml` hack. |
+| 2 | Nov 23-24, 2025 | **Warmup Protocol** - The hack became a protocol. Quality standards, file locations, release procedures. |
+| 3 | Nov 24-25, 2025 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added 4hr max, "done > perfect". |
+| 4 | Nov 25, 2025 | **Forge Protocol** - Extracted as standalone. But the name was wrong—other projects could use it. |
+| 5 | Nov 25-26, 2025 | **Ethics** - Claude refused to build surveillance features. The protocol worked. Formalized harm prevention. |
+| 6 | Nov 26-27, 2025 | **Asimov** - Named after Isaac Asimov's Three Laws (1942). First Law = do no harm. Second = obey humans. Third = self-preserve. |
+| 7 | Nov 27-28, 2025 | **Protocol Suite** - Not one protocol, eight. Ethics, freshness, sycophancy, green, sprint, migrations, exhaustive. |
+| 8 | Nov 28-29, 2025 | **Inaction Principle** - Asimov's First Law has two halves: "do no harm" AND "allow no harm through inaction". |
+| 9 | Nov 29-30, 2025 | **Self-Evolving AI** - The protocol improves itself. Forge built Asimov → Asimov now builds Forge. |
+| 10 | Nov 30-Dec 4, 2025 | **Zeroth Law** - "The needs of the many outweigh the needs of the few." Democratize AI power. |
 
 **12 days. 10 phases. 62 releases. 65,000+ LOC. 1 human + 1 AI.**
 
