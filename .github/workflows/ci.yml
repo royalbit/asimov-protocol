@@ -7,14 +7,16 @@ on:
       - 'cli/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
-      - '.github/workflows/ci.yml'
+      - 'rust-toolchain.toml'
+      - '.github/workflows/*.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'cli/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
-      - '.github/workflows/ci.yml'
+      - 'rust-toolchain.toml'
+      - '.github/workflows/*.yml'
 
 env:
   CARGO_TERM_COLOR: always
