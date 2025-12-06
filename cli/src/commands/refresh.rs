@@ -7,8 +7,11 @@ use crate::templates::{
 };
 use crate::{validate_directory_with_regeneration, validator::regenerate_protocol_files};
 use std::io::{self, BufRead, Write};
-use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
+
+// Unix-specific imports for setting executable permissions
+#[cfg(unix)]
+use std::os::unix::fs::PermissionsExt;
 
 /// Options for refresh command
 #[derive(Debug, Clone, Default)]
@@ -323,13 +326,16 @@ fn regenerate_precommit_hook(dir: &Path, project_type: ProjectType) -> Result<()
     std::fs::write(&hook_path, hook_content)
         .map_err(|e| format!("Failed to write pre-commit hook: {}", e))?;
 
-    // Make executable (Unix)
-    let mut perms = std::fs::metadata(&hook_path)
-        .map_err(|e| format!("Failed to get hook metadata: {}", e))?
-        .permissions();
-    perms.set_mode(0o755);
-    std::fs::set_permissions(&hook_path, perms)
-        .map_err(|e| format!("Failed to set hook permissions: {}", e))?;
+    // Make executable (Unix only - Windows doesn't need this)
+    #[cfg(unix)]
+    {
+        let mut perms = std::fs::metadata(&hook_path)
+            .map_err(|e| format!("Failed to get hook metadata: {}", e))?
+            .permissions();
+        perms.set_mode(0o755);
+        std::fs::set_permissions(&hook_path, perms)
+            .map_err(|e| format!("Failed to set hook permissions: {}", e))?;
+    }
 
     Ok(())
 }

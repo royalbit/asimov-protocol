@@ -4,11 +4,22 @@
 # See: CHANGELOG.md for release history
 
 current:
+  version: "9.6.1"
+  status: in_progress
+  summary: "Fix Windows build - cross-platform hook permissions"
+  goal: "Use #[cfg(unix)] for PermissionsExt, Windows doesn't need chmod"
+  priority: CRITICAL
+  deliverables:
+    - "[x] Identify issue: std::os::unix::fs::PermissionsExt not available on Windows"
+    - "[x] Fix: Use #[cfg(unix)] conditional compilation for set_mode()"
+    - "[ ] Tests passing"
+    - "[ ] CI/CD Release workflow passes"
+
+previous:
   version: "9.6.0"
   status: released
   summary: "Direct Coding Standards Enforcement (No SPOF)"
   goal: "Pre-commit hooks use direct tool calls, asimov is not a runtime dependency"
-  priority: CRITICAL
   deliverables:
     - "[x] ADR-043: Direct Coding Standards Enforcement"
     - "[x] Update hooks.rs: precommit templates for ALL project types"
@@ -23,13 +34,38 @@ current:
     - "[x] Update SPECIFICATION.md"
     - "[x] Tests passing (473 tests)"
 
-next: []
-
-previous:
-  version: "9.5.1"
-  status: released
-  summary: "Enhanced Refresh + Update fix"
-  goal: "Project migration assistant, rate-limit-free updates"
+next:
+  - version: "9.7.0"
+    status: planned
+    summary: "Dependency Setup Assistant"
+    goal: "asimov init adds dev dependencies for coding standards tools"
+    priority: NORMAL
+    deliverables:
+      - "[ ] ADR-044: Dependency Setup for Coding Standards"
+      - "[ ] Rust: add cargo-husky to Cargo.toml [dev-dependencies]"
+      - "[ ] Python: add [tool.ruff] section to pyproject.toml"
+      - "[ ] Node: add devDependencies to package.json"
+      - "[ ] Go: print install instructions (golangci-lint is GPL)"
+      - "[ ] asimov doctor: check if tools are installed"
+  - version: "9.8.0"
+    status: planned
+    summary: "Dependency Health Audit (STRICT)"
+    goal: "GOOD CODE = Fresh deps, zero vulns, license-compliant. Pre-commit FAILS on violations."
+    priority: NORMAL
+    deliverables:
+      - "[ ] ADR-045: Dependency Health Protocol"
+      - "[ ] LICENSE file detection (MIT, Apache-2.0, GPL, Proprietary, etc.)"
+      - "[ ] License compatibility matrix (auto-check deps against project license)"
+      - "[ ] Security: FAIL commit on any vulnerability (cargo audit, pip-audit, npm audit, govulncheck)"
+      - "[ ] Freshness: FAIL commit on outdated deps (including MAJOR versions)"
+      - "[ ] Rust: cargo audit + cargo deny + cargo outdated"
+      - "[ ] Python: pip-audit + pip-licenses + pip list --outdated"
+      - "[ ] Node: npm audit + license-checker + npm outdated"
+      - "[ ] Go: govulncheck + go-licenses + go list -m -u all"
+      - "[ ] Flutter: dep_audit + license_checker + dart pub outdated"
+      - "[ ] Pre-commit hooks: direct tool calls (no SPOF), FAIL on issues"
+      - "[ ] asimov doctor: full dependency health report"
+      - "[ ] asimov validate: license compliance check"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
