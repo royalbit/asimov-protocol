@@ -1,7 +1,9 @@
 //! Doctor command implementation
+//! v9.7.0: Add coding standards tool checks (ADR-044)
 
-use crate::{check_for_update, validate_file, validator::check_protocol_integrity};
+use crate::{check_for_update, validate_file, validator::check_protocol_integrity, ProjectType};
 use std::path::Path;
+use std::process::Command;
 
 #[derive(Debug, Clone)]
 pub struct DoctorCheck {
@@ -252,12 +254,125 @@ pub fn run_doctor(dir: &Path) -> DoctorResult {
         }
     }
 
-    // Check 6: Version
+    // Check 6: Coding standards tools (v9.7.0 ADR-044)
+    if let Some(project_type) = detect_project_type_from_yaml(dir) {
+        check_coding_tools(project_type, &mut result);
+    }
+
+    // Check 7: Version
     if let Ok(info) = check_for_update() {
         result.version_info = Some((info.current.clone(), !info.update_available));
     }
 
     result
+}
+
+/// Detect project type from project.yaml
+fn detect_project_type_from_yaml(dir: &Path) -> Option<ProjectType> {
+    let project_path = dir.join(".asimov").join("project.yaml");
+    if !project_path.exists() {
+        return None;
+    }
+
+    let content = std::fs::read_to_string(&project_path).ok()?;
+    if content.contains("type: rust") {
+        Some(ProjectType::Rust)
+    } else if content.contains("type: python") {
+        Some(ProjectType::Python)
+    } else if content.contains("type: node") {
+        Some(ProjectType::Node)
+    } else if content.contains("type: go") {
+        Some(ProjectType::Go)
+    } else if content.contains("type: flutter") {
+        Some(ProjectType::Flutter)
+    } else if content.contains("type: docs") {
+        Some(ProjectType::Docs)
+    } else {
+        Some(ProjectType::Generic)
+    }
+}
+
+/// Check if coding standards tools are installed (v9.7.0 ADR-044)
+fn check_coding_tools(project_type: ProjectType, result: &mut DoctorResult) {
+    match project_type {
+        ProjectType::Rust => {
+            check_tool("cargo", &["--version"], "cargo", result);
+            check_tool("cargo fmt", &["fmt", "--version"], "rustfmt", result);
+            check_tool("cargo clippy", &["clippy", "--version"], "clippy", result);
+        }
+        ProjectType::Python => {
+            check_command("ruff", &["--version"], result);
+            check_command("pytest", &["--version"], result);
+        }
+        ProjectType::Node => {
+            check_command("prettier", &["--version"], result);
+            check_command("eslint", &["--version"], result);
+        }
+        ProjectType::Go => {
+            check_command("go", &["version"], result);
+            check_command("golangci-lint", &["--version"], result);
+        }
+        ProjectType::Flutter => {
+            check_command("dart", &["--version"], result);
+            check_command("flutter", &["--version"], result);
+        }
+        ProjectType::Docs | ProjectType::Arch => {
+            check_command("markdownlint-cli2", &["--help"], result);
+        }
+        _ => {}
+    }
+}
+
+/// Check if a command is available
+fn check_command(name: &str, args: &[&str], result: &mut DoctorResult) {
+    match Command::new(name).args(args).output() {
+        Ok(output) if output.status.success() => {
+            result.checks.push(DoctorCheck {
+                name: name.to_string(),
+                passed: true,
+                message: "installed".to_string(),
+                auto_fixed: false,
+            });
+        }
+        _ => {
+            result.checks.push(DoctorCheck {
+                name: name.to_string(),
+                passed: false,
+                message: "not found".to_string(),
+                auto_fixed: false,
+            });
+            result.warnings.push(format!(
+                "{} not installed - coding standards may not work",
+                name
+            ));
+        }
+    }
+}
+
+/// Check cargo subcommand (uses cargo instead of direct binary)
+fn check_tool(display_name: &str, args: &[&str], component: &str, result: &mut DoctorResult) {
+    match Command::new("cargo").args(args).output() {
+        Ok(output) if output.status.success() => {
+            result.checks.push(DoctorCheck {
+                name: display_name.to_string(),
+                passed: true,
+                message: "installed".to_string(),
+                auto_fixed: false,
+            });
+        }
+        _ => {
+            result.checks.push(DoctorCheck {
+                name: display_name.to_string(),
+                passed: false,
+                message: "not found".to_string(),
+                auto_fixed: false,
+            });
+            result.warnings.push(format!(
+                "{} not installed - run: rustup component add {}",
+                display_name, component
+            ));
+        }
+    }
 }
 
 #[cfg(test)]

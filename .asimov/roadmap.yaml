@@ -4,49 +4,27 @@
 # See: CHANGELOG.md for release history
 
 current:
+  version: "9.7.0"
+  status: released
+  summary: "Dependency Setup Assistant"
+  goal: "asimov init adds dev dependencies for coding standards tools"
+  priority: NORMAL
+  deliverables:
+    - "[x] ADR-044: Dependency Setup for Coding Standards"
+    - "[x] Rust: add cargo-husky to Cargo.toml [dev-dependencies]"
+    - "[x] Python: add [tool.ruff] section to pyproject.toml"
+    - "[x] Node: add devDependencies to package.json"
+    - "[x] Go: print install instructions (golangci-lint is GPL)"
+    - "[x] asimov doctor: check if tools are installed"
+    - "[x] Tests passing (477+ tests)"
+
+previous:
   version: "9.6.1"
   status: released
   summary: "Fix Windows build - cross-platform hook permissions"
-  goal: "Use #[cfg(unix)] for PermissionsExt, Windows doesn't need chmod"
-  priority: CRITICAL
-  deliverables:
-    - "[x] Identify issue: std::os::unix::fs::PermissionsExt not available on Windows"
-    - "[x] Fix: Use #[cfg(unix)] conditional compilation for set_mode()"
-    - "[x] Tests passing (473 tests)"
-    - "[x] CI/CD Release workflow passes"
-
-previous:
-  version: "9.6.0"
-  status: released
-  summary: "Direct Coding Standards Enforcement (No SPOF)"
-  goal: "Pre-commit hooks use direct tool calls, asimov is not a runtime dependency"
-  deliverables:
-    - "[x] ADR-043: Direct Coding Standards Enforcement"
-    - "[x] Update hooks.rs: precommit templates for ALL project types"
-    - "[x] Rust: cargo fmt/clippy/test + file size check"
-    - "[x] Python: ruff format/check + pytest + file size check"
-    - "[x] Node: prettier/eslint/npm test + file size check"
-    - "[x] Go: gofmt/golangci-lint/go test + file size check"
-    - "[x] Flutter: dart format/analyze/flutter test + file size check"
-    - "[x] Docs/Arch/Generic: markdownlint + file size check"
-    - "[x] Make asimov calls optional in hooks (soft-fail)"
-    - "[x] Refresh command: always regenerate hooks"
-    - "[x] Update SPECIFICATION.md"
-    - "[x] Tests passing (473 tests)"
+  goal: "Use #[cfg(unix)] for PermissionsExt"
 
 next:
-  - version: "9.7.0"
-    status: planned
-    summary: "Dependency Setup Assistant"
-    goal: "asimov init adds dev dependencies for coding standards tools"
-    priority: NORMAL
-    deliverables:
-      - "[ ] ADR-044: Dependency Setup for Coding Standards"
-      - "[ ] Rust: add cargo-husky to Cargo.toml [dev-dependencies]"
-      - "[ ] Python: add [tool.ruff] section to pyproject.toml"
-      - "[ ] Node: add devDependencies to package.json"
-      - "[ ] Go: print install instructions (golangci-lint is GPL)"
-      - "[ ] asimov doctor: check if tools are installed"
   - version: "9.8.0"
     status: planned
     summary: "Dependency Health Audit (STRICT)"

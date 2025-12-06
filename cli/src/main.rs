@@ -434,10 +434,29 @@ fn cmd_init(name: &str, project_type: &str, output: &std::path::Path, force: boo
         println!("  {} {}", "HOOK".bright_cyan(), h);
     }
 
+    // v9.7.0: Show dev dependencies added
+    for d in &result.deps_added {
+        println!("  {} {}", "DEP".bright_magenta(), d);
+    }
+
     println!();
     if result.success {
         println!("{} Project initialized", "Success:".bold().green());
         println!();
+
+        // v9.7.0: Show install instructions if any
+        if !result.install_instructions.is_empty() {
+            println!("Install tools:");
+            for instr in &result.install_instructions {
+                if instr.starts_with("Note:") {
+                    println!("  {} {}", "!".yellow(), instr);
+                } else {
+                    println!("  $ {}", instr.bright_cyan());
+                }
+            }
+            println!();
+        }
+
         println!("Next steps:");
         println!("  1. Edit .asimov/roadmap.yaml with your milestones");
         println!("  2. Run: asimov warmup");

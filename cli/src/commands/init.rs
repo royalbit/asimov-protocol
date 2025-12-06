@@ -1,4 +1,5 @@
 //! Init command implementation
+//! v9.7.0: Add dev dependencies for coding standards tools (ADR-044)
 
 use crate::{
     claude_pre_compact_hook, claude_session_start_hook, claude_settings_json, git_precommit_hook,
@@ -14,6 +15,8 @@ pub struct InitResult {
     pub files_updated: Vec<String>,
     pub files_kept: Vec<String>,
     pub hooks_installed: Vec<String>,
+    pub deps_added: Vec<String>, // v9.7.0: Dev dependencies added
+    pub install_instructions: Vec<String>, // v9.7.0: Manual install instructions
     pub error: Option<String>,
 }
 
@@ -25,6 +28,8 @@ pub fn run_init(dir: &Path, name: &str, type_str: &str, force: bool) -> InitResu
         files_updated: Vec::new(),
         files_kept: Vec::new(),
         hooks_installed: Vec::new(),
+        deps_added: Vec::new(),
+        install_instructions: Vec::new(),
         error: None,
     };
 
@@ -189,8 +194,176 @@ pub fn run_init(dir: &Path, name: &str, type_str: &str, force: bool) -> InitResu
         }
     }
 
+    // v9.7.0: Setup dev dependencies for coding standards (ADR-044)
+    setup_dev_dependencies(dir, project_type, &mut result);
+
     result.success = true;
     result
+}
+
+/// Setup dev dependencies for coding standards tools (v9.7.0 ADR-044)
+fn setup_dev_dependencies(dir: &Path, project_type: ProjectType, result: &mut InitResult) {
+    match project_type {
+        ProjectType::Rust => setup_rust_deps(dir, result),
+        ProjectType::Python => setup_python_deps(dir, result),
+        ProjectType::Node => setup_node_deps(dir, result),
+        ProjectType::Go => setup_go_deps(result),
+        ProjectType::Flutter => setup_flutter_deps(result),
+        ProjectType::Docs | ProjectType::Arch | ProjectType::Generic => setup_docs_deps(result),
+        ProjectType::Migration => {} // No deps needed
+    }
+}
+
+/// Add cargo-husky to Cargo.toml [dev-dependencies]
+fn setup_rust_deps(dir: &Path, result: &mut InitResult) {
+    let cargo_toml = dir.join("Cargo.toml");
+    if !cargo_toml.exists() {
+        return;
+    }
+
+    if let Ok(content) = std::fs::read_to_string(&cargo_toml) {
+        // Check if cargo-husky already present
+        if content.contains("cargo-husky") {
+            return;
+        }
+
+        // Add cargo-husky to [dev-dependencies]
+        let husky_dep =
+            "cargo-husky = { version = \"1\", default-features = false, features = [\"user-hooks\"] }";
+
+        let new_content = if content.contains("[dev-dependencies]") {
+            // Add after existing [dev-dependencies]
+            content.replace(
+                "[dev-dependencies]",
+                &format!("[dev-dependencies]\n{}", husky_dep),
+            )
+        } else {
+            // Add new section at end
+            format!(
+                "{}\n\n[dev-dependencies]\n{}\n",
+                content.trim_end(),
+                husky_dep
+            )
+        };
+
+        if std::fs::write(&cargo_toml, new_content).is_ok() {
+            result
+                .deps_added
+                .push("cargo-husky (Cargo.toml)".to_string());
+        }
+    }
+}
+
+/// Add ruff config to pyproject.toml
+fn setup_python_deps(dir: &Path, result: &mut InitResult) {
+    let pyproject = dir.join("pyproject.toml");
+
+    let ruff_config = r#"
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+"#;
+
+    if pyproject.exists() {
+        if let Ok(content) = std::fs::read_to_string(&pyproject) {
+            if content.contains("[tool.ruff]") {
+                return; // Already configured
+            }
+            let new_content = format!("{}\n{}", content.trim_end(), ruff_config);
+            if std::fs::write(&pyproject, new_content).is_ok() {
+                result
+                    .deps_added
+                    .push("[tool.ruff] (pyproject.toml)".to_string());
+            }
+        }
+    } else {
+        // Create new pyproject.toml with ruff config
+        let content = format!(
+            "[project]\nname = \"\"\nversion = \"0.1.0\"\n{}",
+            ruff_config
+        );
+        if std::fs::write(&pyproject, content).is_ok() {
+            result
+                .deps_added
+                .push("pyproject.toml with [tool.ruff]".to_string());
+        }
+    }
+
+    result
+        .install_instructions
+        .push("pip install ruff pytest".to_string());
+}
+
+/// Add prettier/eslint to package.json devDependencies
+fn setup_node_deps(dir: &Path, result: &mut InitResult) {
+    let package_json = dir.join("package.json");
+
+    if package_json.exists() {
+        if let Ok(content) = std::fs::read_to_string(&package_json) {
+            if content.contains("prettier") && content.contains("eslint") {
+                return; // Already configured
+            }
+
+            // Try to parse and modify JSON
+            if let Ok(mut json) = serde_json::from_str::<serde_json::Value>(&content) {
+                let dev_deps = json.as_object_mut().and_then(|obj| {
+                    obj.entry("devDependencies")
+                        .or_insert_with(|| serde_json::json!({}))
+                        .as_object_mut()
+                });
+
+                if let Some(deps) = dev_deps {
+                    let mut added = false;
+                    if !deps.contains_key("prettier") {
+                        deps.insert("prettier".to_string(), serde_json::json!("^3.0.0"));
+                        added = true;
+                    }
+                    if !deps.contains_key("eslint") {
+                        deps.insert("eslint".to_string(), serde_json::json!("^8.0.0"));
+                        added = true;
+                    }
+                    if added {
+                        if let Ok(new_content) = serde_json::to_string_pretty(&json) {
+                            if std::fs::write(&package_json, new_content).is_ok() {
+                                result
+                                    .deps_added
+                                    .push("prettier, eslint (package.json)".to_string());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    result.install_instructions.push("npm install".to_string());
+}
+
+/// Print install instructions for Go (golangci-lint is GPL)
+fn setup_go_deps(result: &mut InitResult) {
+    result
+        .install_instructions
+        .push("go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest".to_string());
+    result
+        .install_instructions
+        .push("Note: golangci-lint is GPL-3.0 licensed (tool use is fine)".to_string());
+}
+
+/// Print install instructions for Flutter
+fn setup_flutter_deps(result: &mut InitResult) {
+    result
+        .install_instructions
+        .push("dart pub add --dev test".to_string());
+}
+
+/// Print install instructions for docs projects
+fn setup_docs_deps(result: &mut InitResult) {
+    result
+        .install_instructions
+        .push("npm install -g markdownlint-cli2".to_string());
 }
 
 #[cfg(test)]
@@ -236,9 +409,79 @@ mod tests {
             files_updated: vec![],
             files_kept: vec![],
             hooks_installed: vec!["pre-commit".to_string()],
+            deps_added: vec!["cargo-husky".to_string()],
+            install_instructions: vec![],
             error: None,
         };
         assert!(r.success);
+        assert!(!r.deps_added.is_empty());
+    }
+
+    #[test]
+    fn test_init_rust_adds_cargo_husky() {
+        let temp = TempDir::new().unwrap();
+        // Create Cargo.toml
+        std::fs::write(
+            temp.path().join("Cargo.toml"),
+            "[package]\nname = \"test\"\nversion = \"0.1.0\"\n",
+        )
+        .unwrap();
+
+        let result = run_init(temp.path(), "Test", "rust", false);
+        assert!(result.success);
+        assert!(result.deps_added.iter().any(|d| d.contains("cargo-husky")));
+
+        // Verify Cargo.toml was updated
+        let content = std::fs::read_to_string(temp.path().join("Cargo.toml")).unwrap();
+        assert!(content.contains("cargo-husky"));
+    }
+
+    #[test]
+    fn test_init_python_creates_pyproject() {
+        let temp = TempDir::new().unwrap();
+
+        let result = run_init(temp.path(), "Test", "python", false);
+        assert!(result.success);
+        assert!(result
+            .install_instructions
+            .iter()
+            .any(|i| i.contains("ruff")));
+
+        // Verify pyproject.toml was created
+        assert!(temp.path().join("pyproject.toml").exists());
+        let content = std::fs::read_to_string(temp.path().join("pyproject.toml")).unwrap();
+        assert!(content.contains("[tool.ruff]"));
+    }
+
+    #[test]
+    fn test_init_node_adds_devdeps() {
+        let temp = TempDir::new().unwrap();
+        // Create package.json
+        std::fs::write(
+            temp.path().join("package.json"),
+            r#"{"name": "test", "version": "1.0.0"}"#,
+        )
+        .unwrap();
+
+        let result = run_init(temp.path(), "Test", "node", false);
+        assert!(result.success);
+
+        // Verify package.json was updated
+        let content = std::fs::read_to_string(temp.path().join("package.json")).unwrap();
+        assert!(content.contains("prettier"));
+        assert!(content.contains("eslint"));
+    }
+
+    #[test]
+    fn test_init_go_has_instructions() {
+        let temp = TempDir::new().unwrap();
+
+        let result = run_init(temp.path(), "Test", "go", false);
+        assert!(result.success);
+        assert!(result
+            .install_instructions
+            .iter()
+            .any(|i| i.contains("golangci-lint")));
     }
 
     #[test]
