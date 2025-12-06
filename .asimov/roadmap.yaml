@@ -5,15 +5,15 @@
 
 current:
   version: "9.6.1"
-  status: in_progress
+  status: released
   summary: "Fix Windows build - cross-platform hook permissions"
   goal: "Use #[cfg(unix)] for PermissionsExt, Windows doesn't need chmod"
   priority: CRITICAL
   deliverables:
     - "[x] Identify issue: std::os::unix::fs::PermissionsExt not available on Windows"
     - "[x] Fix: Use #[cfg(unix)] conditional compilation for set_mode()"
-    - "[ ] Tests passing"
-    - "[ ] CI/CD Release workflow passes"
+    - "[x] Tests passing (473 tests)"
+    - "[x] CI/CD Release workflow passes"
 
 previous:
   version: "9.6.0"
