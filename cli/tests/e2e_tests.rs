@@ -1561,6 +1561,12 @@ fn e2e_replay_command_runs() {
         .current_dir(temp_dir.path())
         .output()
         .unwrap();
+    // Disable commit signing for test environments
+    Command::new("git")
+        .args(["config", "commit.gpgsign", "false"])
+        .current_dir(temp_dir.path())
+        .output()
+        .unwrap();
     fs::write(temp_dir.path().join("test.txt"), "content").unwrap();
     Command::new("git")
         .args(["add", "."])

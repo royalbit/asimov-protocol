@@ -9,6 +9,9 @@ on:
       - 'Cargo.lock'
       - 'rust-toolchain.toml'
       - '.github/workflows/*.yml'
+      - '.asimov/**'
+      - 'docs/**'
+      - '*.md'
   pull_request:
     branches: [ main ]
     paths:
@@ -17,6 +20,9 @@ on:
       - 'Cargo.lock'
       - 'rust-toolchain.toml'
       - '.github/workflows/*.yml'
+      - '.asimov/**'
+      - 'docs/**'
+      - '*.md'
 
 env:
   CARGO_TERM_COLOR: always
@@ -54,8 +60,11 @@ jobs:
           path: cli/target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run tests
-        run: cd cli && cargo test --verbose
+      - name: Run unit tests
+        run: cd cli && cargo test --lib --verbose
+
+      - name: Run e2e tests
+        run: cd cli && cargo test --test e2e_tests --verbose
 
   lint:
     name: Lint

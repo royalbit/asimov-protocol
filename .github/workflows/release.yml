@@ -10,8 +10,51 @@ env:
   RUSTUP_TOOLCHAIN: stable  # Override rust-toolchain.toml for release builds
 
 jobs:
+  # Gate: All tests must pass before building release artifacts
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            cli/target
+          key: ${{ runner.os }}-cargo-release-test-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Check formatting
+        run: cd cli && cargo fmt --all -- --check
+
+      - name: Run clippy
+        run: cd cli && cargo clippy --all-targets -- -D warnings
+
+      - name: Run unit tests
+        run: cd cli && cargo test --verbose
+
+      - name: Run e2e tests
+        run: cd cli && cargo test --test e2e_tests --verbose
+
+      - name: Build for validation
+        run: cd cli && cargo build --release
+
+      - name: Validate protocols
+        run: ./cli/target/release/asimov validate
+
+      - name: Lint documentation
+        run: ./cli/target/release/asimov lint-docs
+
   build:
     name: Build ${{ matrix.target }}
+    needs: test  # Gate: tests must pass first
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

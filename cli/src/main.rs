@@ -936,6 +936,12 @@ mod tests {
             .current_dir(temp.path())
             .output()
             .unwrap();
+        // Disable commit signing for test environments
+        std::process::Command::new("git")
+            .args(["config", "commit.gpgsign", "false"])
+            .current_dir(temp.path())
+            .output()
+            .unwrap();
         std::fs::write(temp.path().join("test.txt"), "test").unwrap();
         std::process::Command::new("git")
             .args(["add", "."])
@@ -1162,6 +1168,12 @@ mod tests {
             .unwrap();
         std::process::Command::new("git")
             .args(["config", "user.name", "T"])
+            .current_dir(temp.path())
+            .output()
+            .unwrap();
+        // Disable commit signing for test environments
+        std::process::Command::new("git")
+            .args(["config", "commit.gpgsign", "false"])
             .current_dir(temp.path())
             .output()
             .unwrap();

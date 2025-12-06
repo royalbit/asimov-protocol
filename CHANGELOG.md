@@ -5,6 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.1.0] - 2025-12-06
+
+### Code Organization & Refactoring
+
+**Maintainability release.**
+
+#### Module Refactoring
+- Split commands.rs (2424 lines) into commands/ module with separate files per command
+- Split templates.rs (2263 lines) into templates/ module by type
+- Refactored tests accordingly
+
+---
+
+## [9.0.0] - 2025-12-05
+
+### Proprietary License, Protocol Review, Protocol Integrity
+
+**Quality release.**
+
+#### License & Distribution
+- Changed license from MIT to Proprietary
+- Disabled crates.io publishing (publish = false)
+- Updated all docs: MIT → Proprietary, crates.io → GitHub Releases
+- Updated --help with license and accurate protocol descriptions
+
+#### Command Fixes
+- Fix: update command - ONLY updates binary, no hooks
+- Fix: refresh command - requires .asimov/ directory
+
+#### Crate Updates
+- Updated crates: colored 3.0, jsonschema 0.37, thiserror 2.0
+
+#### Test Coverage
+- Added ADR-038: 100% Test Coverage Requirement
+- Added ADR-039: Coverage Exclusion Policy
+- 94.96% coverage (100% of testable code)
+- LCOV_EXCL markers for untestable code paths
+- Pre-commit requires all tests (unit, integration, e2e)
+
+#### Protocol Content Review
+- Review: asimov.json
+- Review: freshness.json - simplified to single rule
+- Review: sycophancy.json - removed banned phrases, added honesty rule
+- Review: green.json - changed to efficiency benchmarks via WebSearch
+- Review: sprint.json - autonomous execution, no interruptions
+- Review: warmup.json
+- Review: migrations.json
+- Review: exhaustive.json - complete tasks without stopping
+
+#### Protocol Integrity
+- asimov doctor checks protocol files (missing/outdated)
+- asimov refresh updates outdated protocol files
+- asimov init creates all 8 protocol JSON files
+- 4 new e2e tests for protocol integrity
+
+---
+
 ## [8.13.0] - 2025-12-02
 
 ### Library Crate Export

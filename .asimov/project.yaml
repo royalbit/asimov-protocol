@@ -1,6 +1,15 @@
 # RoyalBit Asimov - Project Context
 # The ethical operating system for Claude's autonomous power
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# CODING STANDARDS
+# ═══════════════════════════════════════════════════════════════════════════════
+# - Unit tests: Keep with code (Rust way: #[cfg(test)] mod tests in same file)
+# - Test coverage: 100% mandatory for all functional code
+# - No file > 1,000 lines (split into submodules when exceeded)
+# - Zero warnings policy
+# ═══════════════════════════════════════════════════════════════════════════════
+
 identity:
   name: "royalbit-asimov"
   type: rust
