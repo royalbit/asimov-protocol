@@ -2,12 +2,23 @@
 # The ethical operating system for Claude's autonomous power
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# CODING STANDARDS
+# CODING STANDARDS (ADR-038, ADR-040)
 # ═══════════════════════════════════════════════════════════════════════════════
-# - Unit tests: Keep with code (Rust way: #[cfg(test)] mod tests in same file)
-# - Test coverage: 100% mandatory for all functional code
-# - No file > 1,000 lines (split into submodules when exceeded)
-# - Zero warnings policy
+# Philosophy: Human-readable, beautiful, well-formatted code
+#
+# "Without these rules, you are a JUNIOR programmer - but super fast one...
+#  that creates tons of ugly, unmaintainable code for humans at high velocity!"
+#
+# Rust recommendations followed STRICTLY ("should" → "must"):
+# - File size: 1,000 lines soft limit, 1,500 hard limit (ADR-040)
+# - Tests: Colocated with code (#[cfg(test)] mod tests)
+# - Coverage: 100% mandatory (ADR-038)
+# - Warnings: Zero tolerance
+# - Linting: clippy pedantic
+#
+# References:
+# - https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+# - RFC 2119: "should" = recommended → for RoyalBit: "must"
 # ═══════════════════════════════════════════════════════════════════════════════
 
 identity:
