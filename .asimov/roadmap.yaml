@@ -4,46 +4,33 @@
 # See: CHANGELOG.md for release history
 
 current:
+  version: "9.8.0"
+  status: released
+  summary: "Dependency Health Audit (STRICT)"
+  goal: "GOOD CODE = Fresh deps, zero vulns, license-compliant. Pre-commit FAILS on violations."
+  priority: NORMAL
+  deliverables:
+    - "[x] ADR-045: Dependency Health Protocol"
+    - "[x] LICENSE file detection (MIT, Apache-2.0, GPL, BSD, Proprietary)"
+    - "[x] License compatibility: auto-detect from LICENSE/Cargo.toml/package.json/pyproject.toml"
+    - "[x] Security: FAIL commit on any vulnerability (cargo audit, pip-audit, npm audit, govulncheck)"
+    - "[x] Freshness: FAIL commit on outdated deps (including MAJOR versions)"
+    - "[x] Rust: cargo audit + cargo deny + cargo outdated"
+    - "[x] Python: pip-audit + pip-licenses + pip list --outdated"
+    - "[x] Node: npm audit + license-checker + npm outdated"
+    - "[x] Go: govulncheck + go list -m -u all"
+    - "[x] Flutter: dart pub outdated"
+    - "[x] Pre-commit hooks: direct tool calls (no SPOF), FAIL on issues"
+    - "[x] asimov doctor: full dependency health report with license display"
+    - "[x] Tests passing (488 tests)"
+
+previous:
   version: "9.7.0"
   status: released
   summary: "Dependency Setup Assistant"
   goal: "asimov init adds dev dependencies for coding standards tools"
-  priority: NORMAL
-  deliverables:
-    - "[x] ADR-044: Dependency Setup for Coding Standards"
-    - "[x] Rust: add cargo-husky to Cargo.toml [dev-dependencies]"
-    - "[x] Python: add [tool.ruff] section to pyproject.toml"
-    - "[x] Node: add devDependencies to package.json"
-    - "[x] Go: print install instructions (golangci-lint is GPL)"
-    - "[x] asimov doctor: check if tools are installed"
-    - "[x] Tests passing (477+ tests)"
 
-previous:
-  version: "9.6.1"
-  status: released
-  summary: "Fix Windows build - cross-platform hook permissions"
-  goal: "Use #[cfg(unix)] for PermissionsExt"
-
-next:
-  - version: "9.8.0"
-    status: planned
-    summary: "Dependency Health Audit (STRICT)"
-    goal: "GOOD CODE = Fresh deps, zero vulns, license-compliant. Pre-commit FAILS on violations."
-    priority: NORMAL
-    deliverables:
-      - "[ ] ADR-045: Dependency Health Protocol"
-      - "[ ] LICENSE file detection (MIT, Apache-2.0, GPL, Proprietary, etc.)"
-      - "[ ] License compatibility matrix (auto-check deps against project license)"
-      - "[ ] Security: FAIL commit on any vulnerability (cargo audit, pip-audit, npm audit, govulncheck)"
-      - "[ ] Freshness: FAIL commit on outdated deps (including MAJOR versions)"
-      - "[ ] Rust: cargo audit + cargo deny + cargo outdated"
-      - "[ ] Python: pip-audit + pip-licenses + pip list --outdated"
-      - "[ ] Node: npm audit + license-checker + npm outdated"
-      - "[ ] Go: govulncheck + go-licenses + go list -m -u all"
-      - "[ ] Flutter: dep_audit + license_checker + dart pub outdated"
-      - "[ ] Pre-commit hooks: direct tool calls (no SPOF), FAIL on issues"
-      - "[ ] asimov doctor: full dependency health report"
-      - "[ ] asimov validate: license compliance check"
+next: []
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"

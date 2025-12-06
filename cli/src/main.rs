@@ -625,6 +625,13 @@ fn cmd_doctor() -> ExitCode {
     println!("{}", "RoyalBit ASIMOV - DOCTOR".bold().green());
     println!();
 
+    // v9.8.0: Display detected license (ADR-045)
+    if let Some(ref license) = result.license {
+        println!("{}", "DEPENDENCY HEALTH".bold());
+        println!("  License: {} (detected)", license.bright_blue());
+        println!();
+    }
+
     for check in &result.checks {
         let icon = if check.passed {
             "✓".green()
