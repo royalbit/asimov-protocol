@@ -4,27 +4,31 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "9.4.0"
+  version: "9.5.0"
   status: in_progress
-  summary: "Unified Coding Standards for Programming Projects"
-  goal: "Programming templates include doc + arch standards (not just code)"
+  summary: "Enhanced Refresh: Project Migration Assistant"
+  goal: "Refresh upgrades existing projects to latest template format"
   priority: HIGH
   deliverables:
-    - "[x] Update Rust template: add documentation + architecture sections"
-    - "[x] Update Go template: add documentation + architecture sections"
-    - "[x] Update Flutter template: add documentation + architecture sections"
-    - "[x] Update Python template: add documentation + architecture sections"
-    - "[x] Update Node template: add documentation + architecture sections"
-    - "[x] Use markdownlint-cli2 for doc linting (preferred)"
-    - "[x] Tests: 343 lib + 59 main + 53 e2e = 456 tests passing"
+    - "[x] ADR-042: Enhanced Refresh Protocol - migration design"
+    - "[x] Detect missing identity.type in project.yaml"
+    - "[x] Interactive project type selection (numbered list: 1=rust, 2=python, etc.)"
+    - "[x] Detect missing or outdated coding_standards section"
+    - "[x] Compare project coding_standards vs template coding_standards"
+    - "[x] Recommend template coding_standards if outdated (prompt)"
+    - "[x] User choice: [A]ccept template / [K]eep current"
+    - "[x] Preserve user customizations (identity.name, identity.tagline)"
+    - "[x] --yes flag for non-interactive mode"
+    - "[x] --dry-run flag to preview changes"
+    - "[x] Tests passing (lib + main + e2e)"
 
 next: []
 
 previous:
-  version: "9.3.0"
+  version: "9.4.0"
   status: released
-  summary: "Coding Standards Protocol"
-  goal: Quality
+  summary: "Unified Coding Standards for Programming Projects"
+  goal: "Programming templates include doc + arch standards"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"

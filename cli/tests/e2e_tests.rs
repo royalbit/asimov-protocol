@@ -1717,3 +1717,213 @@ fn e2e_warmup_generic_project_excludes_migrations() {
         "Generic project should NOT include migrations protocol, got: {stdout}"
     );
 }
+
+// v9.5.0: Enhanced refresh migration e2e tests
+
+#[test]
+fn e2e_refresh_with_yes_flag() {
+    let temp_dir = TempDir::new().unwrap();
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+
+    // Create minimal roadmap
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0'\n  status: planned\n  summary: Test\n",
+    )
+    .unwrap();
+
+    // Add Cargo.toml to detect as Rust project
+    fs::write(temp_dir.path().join("Cargo.toml"), "[package]").unwrap();
+
+    // Run refresh with --yes (should auto-create project.yaml)
+    let output = Command::new(binary_path())
+        .args(["refresh", "--yes"])
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Refresh --yes should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Should have created project.yaml
+    assert!(
+        asimov_dir.join("project.yaml").exists(),
+        "project.yaml should be created with --yes"
+    );
+
+    // project.yaml should have rust type
+    let content = fs::read_to_string(asimov_dir.join("project.yaml")).unwrap();
+    assert!(
+        content.contains("type: rust"),
+        "Should detect and set rust type"
+    );
+}
+
+#[test]
+fn e2e_refresh_with_dry_run_flag() {
+    let temp_dir = TempDir::new().unwrap();
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+
+    // Create minimal roadmap
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0'\n  status: planned\n  summary: Test\n",
+    )
+    .unwrap();
+
+    // Add Cargo.toml to detect as Rust project
+    fs::write(temp_dir.path().join("Cargo.toml"), "[package]").unwrap();
+
+    // Run refresh with --dry-run (should NOT create project.yaml)
+    let output = Command::new(binary_path())
+        .args(["refresh", "--dry-run"])
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Refresh --dry-run should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Should show dry run message
+    assert!(
+        stdout.contains("dry run"),
+        "Should show dry run message, got: {stdout}"
+    );
+
+    // Should NOT have created project.yaml
+    assert!(
+        !asimov_dir.join("project.yaml").exists(),
+        "project.yaml should NOT be created with --dry-run"
+    );
+}
+
+#[test]
+fn e2e_refresh_upgrades_coding_standards() {
+    let temp_dir = TempDir::new().unwrap();
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+
+    // Create minimal roadmap
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0'\n  status: planned\n  summary: Test\n",
+    )
+    .unwrap();
+
+    // Create old-style project.yaml (coding_standards without code/documentation/architecture)
+    fs::write(
+        asimov_dir.join("project.yaml"),
+        r#"identity:
+  name: test-project
+  type: rust
+  tagline: Test
+
+coding_standards:
+  file_size:
+    soft_limit: 1000
+  coverage: "100%"
+"#,
+    )
+    .unwrap();
+
+    // Run refresh with --yes to auto-accept upgrade
+    let output = Command::new(binary_path())
+        .args(["refresh", "--yes", "--verbose"])
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "Refresh should succeed, stdout: {stdout}, stderr: {stderr}"
+    );
+
+    // Check that coding_standards was upgraded
+    let content = fs::read_to_string(asimov_dir.join("project.yaml")).unwrap();
+    assert!(
+        content.contains("documentation:") && content.contains("architecture:"),
+        "Should upgrade coding_standards to include documentation and architecture sections, got: {content}"
+    );
+}
+
+#[test]
+fn e2e_refresh_preserves_identity() {
+    let temp_dir = TempDir::new().unwrap();
+    let asimov_dir = temp_dir.path().join(".asimov");
+    fs::create_dir_all(&asimov_dir).unwrap();
+
+    // Create roadmap
+    fs::write(
+        asimov_dir.join("roadmap.yaml"),
+        "current:\n  version: '1.0'\n  status: planned\n  summary: Test\n",
+    )
+    .unwrap();
+
+    // Create project.yaml with custom name and tagline
+    fs::write(
+        asimov_dir.join("project.yaml"),
+        r#"identity:
+  name: my-custom-project
+  type: rust
+  tagline: My custom tagline
+
+coding_standards:
+  file_size:
+    soft_limit: 500
+"#,
+    )
+    .unwrap();
+
+    // Run refresh with --yes
+    let output = Command::new(binary_path())
+        .args(["refresh", "--yes"])
+        .current_dir(temp_dir.path())
+        .output()
+        .expect("Failed to execute");
+
+    assert!(output.status.success(), "Refresh should succeed");
+
+    // Check that identity was preserved
+    let content = fs::read_to_string(asimov_dir.join("project.yaml")).unwrap();
+    assert!(
+        content.contains("my-custom-project"),
+        "Should preserve identity.name, got: {content}"
+    );
+    assert!(
+        content.contains("My custom tagline"),
+        "Should preserve identity.tagline, got: {content}"
+    );
+}
+
+#[test]
+fn e2e_refresh_help_shows_new_flags() {
+    let output = Command::new(binary_path())
+        .args(["refresh", "--help"])
+        .output()
+        .expect("Failed to execute");
+
+    assert!(output.status.success(), "Help should succeed");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(stdout.contains("--yes"), "Should show --yes flag");
+    assert!(stdout.contains("--dry-run"), "Should show --dry-run flag");
+    assert!(
+        stdout.contains("migrate") || stdout.contains("auto-accept"),
+        "Should describe migration features"
+    );
+}

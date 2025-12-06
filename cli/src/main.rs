@@ -7,8 +7,9 @@
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 use royalbit_asimov::commands::{
-    check_launch_conditions, run_doctor, run_init, run_lint_docs, run_refresh, run_replay,
-    run_stats, run_update, run_validate, run_warmup, LaunchResult, UpdateResult,
+    check_launch_conditions, run_doctor, run_init, run_lint_docs, run_refresh_with_options,
+    run_replay, run_stats, run_update, run_validate, run_warmup, LaunchResult, RefreshOptions,
+    UpdateResult,
 };
 use std::path::PathBuf;
 use std::process::ExitCode;
@@ -92,11 +93,19 @@ enum Commands {
         semantic: bool,
     },
 
-    /// Refresh protocol context
+    /// Refresh protocol context and migrate project files
     Refresh {
         /// Show verbose output
         #[arg(short, long)]
         verbose: bool,
+
+        /// Auto-accept template defaults without prompting
+        #[arg(short, long)]
+        yes: bool,
+
+        /// Show what would change without writing
+        #[arg(long)]
+        dry_run: bool,
     },
 
     /// Check for updates and self-update
@@ -161,7 +170,11 @@ fn main() -> ExitCode {
             fix,
             semantic,
         }) => cmd_lint_docs(&path, fix, semantic),
-        Some(Commands::Refresh { verbose: _ }) => cmd_refresh(),
+        Some(Commands::Refresh {
+            verbose,
+            yes,
+            dry_run,
+        }) => cmd_refresh(verbose, yes, dry_run),
         Some(Commands::Update { check }) => cmd_update(check),
         Some(Commands::Warmup { path, verbose }) => cmd_warmup(&path, verbose),
         Some(Commands::Stats) => cmd_stats(),
@@ -477,8 +490,9 @@ fn cmd_lint_docs(path: &std::path::Path, fix: bool, semantic: bool) -> ExitCode 
 }
 
 #[cfg_attr(feature = "coverage", coverage(off))]
-fn cmd_refresh() -> ExitCode {
-    let result = run_refresh(std::path::Path::new("."));
+fn cmd_refresh(verbose: bool, yes: bool, dry_run: bool) -> ExitCode {
+    let options = RefreshOptions { yes, dry_run };
+    let result = run_refresh_with_options(std::path::Path::new("."), options);
 
     if !result.is_asimov_project {
         eprintln!("{} Not in an asimov project", "Error:".bold().red());
@@ -492,6 +506,9 @@ fn cmd_refresh() -> ExitCode {
     }
 
     println!("{}", "RoyalBit Asimov REFRESH".bold().green());
+    if dry_run {
+        println!("{}", "(dry run - no changes made)".dimmed());
+    }
     println!();
 
     // v9.0.0: Protocol integrity status
@@ -513,18 +530,36 @@ fn cmd_refresh() -> ExitCode {
         println!("  {} {}", "UNCHANGED".dimmed(), f);
     }
 
+    // v9.5.0: Migration status
+    if verbose {
+        if let Some(ref pt) = result.project_type_detected {
+            println!();
+            println!("{}", "MIGRATION".bold());
+            println!("  Project type: {}", pt.to_string().bright_blue());
+            if result.project_type_was_missing {
+                println!("    {} Type was missing, now set", "→".yellow());
+            }
+            if result.coding_standards_upgraded {
+                println!(
+                    "    {} coding_standards upgraded to v9.4.0 format",
+                    "→".yellow()
+                );
+            }
+        }
+    }
+
     println!();
     if result.success {
         let updated_count = result.protocols_updated.len();
-        if updated_count > 0 {
-            println!(
-                "{} Protocols refreshed ({} updated)",
-                "Success:".bold().green(),
-                updated_count
-            );
+        let mut msg = if updated_count > 0 {
+            format!("Protocols refreshed ({} updated)", updated_count)
         } else {
-            println!("{} Protocols refreshed", "Success:".bold().green());
+            "Protocols refreshed".to_string()
+        };
+        if result.coding_standards_upgraded {
+            msg.push_str(", coding_standards upgraded");
         }
+        println!("{} {}", "Success:".bold().green(), msg);
         ExitCode::SUCCESS
     } else {
         ExitCode::FAILURE
@@ -771,7 +806,7 @@ mod tests {
     fn test_cmd_refresh_no_project() {
         let temp = TempDir::new().unwrap();
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh();
+        let result = cmd_refresh(false, true, false);
         // Refresh requires .asimov/ to exist (run init first)
         assert_eq!(result, ExitCode::FAILURE);
     }
@@ -785,7 +820,7 @@ mod tests {
         // Use proper template so it passes validation
         std::fs::write(asimov_dir.join("roadmap.yaml"), roadmap_template()).unwrap();
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh();
+        let result = cmd_refresh(false, true, false);
         // May succeed or fail depending on parallel test execution changing cwd
         assert!(result == ExitCode::SUCCESS || result == ExitCode::FAILURE);
     }
@@ -1067,7 +1102,7 @@ mod tests {
         std::fs::create_dir_all(&asimov_dir).unwrap();
         // No roadmap - should still work
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh();
+        let result = cmd_refresh(false, true, false);
         assert!(result == ExitCode::SUCCESS || result == ExitCode::FAILURE);
     }
 
