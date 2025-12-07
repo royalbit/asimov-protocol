@@ -232,9 +232,10 @@ echo "Running pre-commit checks..."
 {}
 
 # === DOCUMENTATION CHECK (if markdownlint-cli2 available) ===
+# Note: markdownlint-cli2 uses .markdownlintignore for exclusions (not --ignore flags)
 if command -v markdownlint-cli2 &>/dev/null; then
   echo "Linting markdown..."
-  markdownlint-cli2 "**/*.md" --ignore node_modules --ignore target --ignore vendor 2>/dev/null || true
+  markdownlint-cli2 "*.md" "**/*.md" 2>/dev/null || true
 fi
 
 # === ASIMOV (optional, soft-fail) ===
