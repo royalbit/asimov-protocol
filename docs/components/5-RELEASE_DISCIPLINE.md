@@ -146,10 +146,10 @@ Tests: 193 passing, ZERO warnings
 | Protocol Files | roadmap.yaml tracks versions |
 | Sprint Autonomy | Every session ends with release |
 | Quality Gates | Must pass before release |
-| Self-Healing | Checkpoint written before release |
+| Self-Healing | Recovery state before release |
 
 ---
 
-**Back to:** [ROYALBIT ASIMOV Overview](../ASIMOV_MODE.md)
+**Back to:** [RoyalBit Asimov Overview](../ROYALBIT_ASIMOV.md)
 
 ---

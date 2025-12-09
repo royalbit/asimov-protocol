@@ -8,10 +8,10 @@ Every feature must serve one of these goals. Features that don't serve these goa
 
 | Priority | Goal | Problem | Solution |
 |----------|------|---------|----------|
-| **0** | ETHICAL_AUTONOMY | AI can build harmful tools | Three Laws safeguards (asimov.yaml) |
-| **0.5** | GREEN_CODING | Cloud AI tokens for routine validation | Local CLI validation (green.yaml) |
-| **1** | ANTI-HALLUCINATION | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
-| **1.5** | ANTI-SYCOPHANCY | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (sycophancy.yaml) |
+| **0** | ETHICAL_AUTONOMY | AI can build harmful tools | Three Laws safeguards (asimov.json) |
+| **0.5** | GREEN_CODING | Cloud AI tokens for routine validation | Local CLI validation (green.json) |
+| **1** | ANTI-HALLUCINATION | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.json) |
+| **1.5** | ANTI-SYCOPHANCY | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (sycophancy.json) |
 | **2** | SELF-HEALING | Rules lost after context compaction | Re-read from disk on confusion |
 | **3** | SESSION_CONTINUITY | Context lost between sessions | Claude Code native (--continue/--resume) |
 | **4** | AUTONOMOUS_DEVELOPMENT | Unbounded sessions never ship | Run until done, keep shipping, quality gates |
@@ -22,8 +22,8 @@ Every feature must serve one of these goals. Features that don't serve these goa
 
 | Type | What AI Does | Forge Solution |
 |------|--------------|----------------|
-| **Factual Hallucination** | Generates false *facts* | File-based grounding (warmup.yaml) |
-| **Validation Hallucination** | Generates false *agreement* | Anti-sycophancy directives (sycophancy.yaml) |
+| **Factual Hallucination** | Generates false *facts* | File-based grounding (warmup.json) |
+| **Validation Hallucination** | Generates false *agreement* | Anti-sycophancy directives (sycophancy.json) |
 
 See [AI_REALITY.md](AI_REALITY.md) for full analysis.
 
@@ -37,7 +37,7 @@ When evaluating features or changes, ask:
 
 **Examples:**
 - ✅ "Add ethics validation" → ETHICAL_AUTONOMY
-- ✅ "Add sycophancy.yaml" → ANTI-SYCOPHANCY
+- ✅ "Add sycophancy.json" → ANTI-SYCOPHANCY
 - ✅ "Add file size warnings" → ANTI-HALLUCINATION
 - ❌ "Add project scaffolding" → Nice-to-have but not core
 - ❌ "Add AI chat interface" → Out of scope
@@ -51,14 +51,14 @@ Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
 - Auto-compact at 95% capacity
 
 **RoyalBit Asimov's unique value:**
-- Ethics Protocol (asimov.yaml - Three Laws)
-- Green Protocol (green.yaml)
-- Anti-Sycophancy Protocol (sycophancy.yaml)
+- Ethics Protocol (asimov.json - Three Laws)
+- Green Protocol (green.json)
+- Anti-Sycophancy Protocol (sycophancy.json)
 - Sprint Autonomy (run until done, keep shipping)
-- Mid-session self-healing (warmup.yaml re-read)
+- Mid-session self-healing (warmup.json re-read)
 - Schema Validation (`asimov validate`)
 
-**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during ROYALBIT ASIMOV is NOT replaced.
+**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during RoyalBit Asimov sessions is NOT replaced.
 
 See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 

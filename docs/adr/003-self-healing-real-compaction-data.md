@@ -240,6 +240,6 @@ ls .forge/*.yaml
 ### Internal Documentation
 
 - [ADR-002: Self-Healing Protocol](002-self-healing-protocol.md) - Superseded assumptions
-- [ROYALBIT ASIMOV Overview](../ASIMOV_MODE.md) - System architecture
+- [RoyalBit Asimov Overview](../ROYALBIT_ASIMOV.md) - System architecture
 
 ---

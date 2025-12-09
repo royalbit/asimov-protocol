@@ -39,7 +39,7 @@ Update all documentation, code, and marketing materials to reflect the **creator
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     ROYALBIT ASIMOV                              │
+│                     RoyalBit Asimov                              │
 │                                                                  │
 │  "Creates Self-Evolving Autonomous AI projects with ethics"     │
 │                                                                  │

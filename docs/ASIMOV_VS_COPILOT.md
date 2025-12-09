@@ -159,14 +159,14 @@ Even with Claude models, Copilot has **none** of the Asimov protocol suite:
 
 | Protocol | Purpose | Copilot Has? |
 |----------|---------|--------------|
-| **asimov.yaml** | Three Laws (ethics) | ❌ |
-| **warmup.yaml** | Anti-hallucination, session bootstrap | ❌ |
-| **sprint.yaml** | Bounded autonomy (WHEN to stop) | ❌ |
-| **roadmap.yaml** | Milestone planning (WHAT to build) | ❌ |
-| **freshness.yaml** | Date-aware search (stale data awareness) | ❌ |
-| **green.yaml** | Local-first validation, ESG metrics | ❌ |
-| **sycophancy.yaml** | Anti-sycophancy (honest feedback) | ❌ |
-| **migrations.yaml** | Functional equivalence for refactors | ❌ |
+| **asimov.json** | Three Laws (ethics) | ❌ |
+| **warmup.json** | Anti-hallucination, session bootstrap | ❌ |
+| **sprint.json** | Bounded autonomy (WHEN to stop) | ❌ |
+| **roadmap.json** | Milestone planning (WHAT to build) | ❌ |
+| **freshness.json** | Date-aware search (stale data awareness) | ❌ |
+| **green.json** | Local-first validation, ESG metrics | ❌ |
+| **sycophancy.json** | Anti-sycophancy (honest feedback) | ❌ |
+| **migrations.json** | Functional equivalence for refactors | ❌ |
 
 ### The One-Liner
 
@@ -196,7 +196,7 @@ CLAUDE CODE + ASIMOV:
 
 ## 🛡️ CORE PRINCIPLES: The Three Laws of Robotics
 
-The RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in YAML—transparent, inspectable, and enforceable.
+RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in JSON format—transparent, inspectable, and enforceable.
 
 ### The Three Laws (Hardcoded)
 
@@ -260,7 +260,7 @@ flowchart TD
 
 > **The Three Laws work even against the project creator. This is the difference between content filtering and principled ethics.**
 
-**Source:** [asimov.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml)
+**Source:** [asimov.json](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.json)
 
 ---
 
@@ -278,7 +278,7 @@ flowchart TD
 ### Cost Comparison
 
 ```
-ROYALBIT ASIMOV (local validation):
+RoyalBit Asimov (local validation):
   cargo clippy: $0.00 (runs on your machine)
   cargo test:   $0.00 (runs on your machine)
 
@@ -287,7 +287,7 @@ COPILOT (cloud AI):
   Carbon footprint: Cloud compute for every keystroke
 ```
 
-**Source:** [green.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml)
+**Source:** [green.json](https://github.com/royalbit/asimov/blob/main/.asimov/green.json)
 
 ---
 
@@ -311,7 +311,7 @@ Sycophancy leads to:
 - Technical debt from unquestioned code
 - Security vulnerabilities from unchallenged assumptions
 
-**Source:** [sycophancy.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml)
+**Source:** [sycophancy.json](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.json)
 
 ---
 
@@ -409,7 +409,7 @@ Sycophancy leads to:
 ### Code-Only Comparison
 
 ```
-ROYALBIT ASIMOV:
+RoyalBit Asimov:
   Code output: 41,653 LOC
   Hours: 248
   Velocity: 168 LOC/hour
@@ -426,7 +426,7 @@ MULTIPLIER (code only): 8.4x
 ### Full Product Comparison
 
 ```
-ROYALBIT ASIMOV:
+RoyalBit Asimov:
   Total output: 213,518 lines
   Hours: 248
   Velocity: 861 lines/hour
@@ -611,7 +611,7 @@ HARDWARE PENALTY PAID: 35.2 hours extra on ancient hardware!
 ### Hardware-Adjusted Final Calculation
 
 ```
-ROYALBIT ASIMOV (on corporate i9 hardware):
+RoyalBit Asimov (on corporate i9 hardware):
   Actual time on kveldulf:     248 hours
   Hardware penalty removed:    -35 hours
   ─────────────────────────────────────────
@@ -676,7 +676,7 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### 4. Self-Healing Context
 
-- `warmup.yaml` re-read on confusion
+- `warmup.json` re-read on confusion
 - Checkpoint triggers every 15 minutes
 - Git hooks trigger protocol refresh
 - **Recovery over surveillance** philosophy
@@ -706,9 +706,9 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 ### Conditions for Replication
 
 - Claude Code with `--dangerously-skip-permissions` flag
-- Full protocol file suite (`warmup.yaml`, `sprint.yaml`, `asimov.yaml`)
+- Full protocol file suite (`warmup.json`, `sprint.json`, `asimov.json`)
 - Greenfield or well-documented existing codebase
-- Clear milestone definitions in `roadmap.yaml`
+- Clear milestone definitions in `roadmap.json`
 
 ---
 
@@ -783,9 +783,9 @@ For teams building **complete products** (not just code), the RoyalBit Asimov pr
 
 - **GitHub Repository**: [https://github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 - **GitHub Releases**: [https://github.com/royalbit/asimov/releases](https://github.com/royalbit/asimov/releases)
-- **The Three Laws (asimov.yaml)**: [https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.yaml)
-- **Green Coding**: [https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/green.yaml)
-- **Anti-Sycophancy**: [https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.yaml)
+- **The Three Laws (asimov.json)**: [https://github.com/royalbit/asimov/blob/main/.asimov/asimov.json](https://github.com/royalbit/asimov/blob/main/.asimov/asimov.json)
+- **Green Coding**: [https://github.com/royalbit/asimov/blob/main/.asimov/green.json](https://github.com/royalbit/asimov/blob/main/.asimov/green.json)
+- **Anti-Sycophancy**: [https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.json](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.json)
 
 ### Benchmarks & Tools
 

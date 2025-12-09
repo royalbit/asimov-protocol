@@ -69,7 +69,7 @@ Even with large context windows, LLMs have a documented failure mode: they atten
 
 This means even if you provide correct information, the model might ignore it if it's buried in the middle of a long prompt.
 
-**Source:** [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) (Liu et al., 2025, MIT Press)
+**Source:** [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) (Liu et al., 2023)
 
 ### 1.5 Training Data Cutoff
 
@@ -333,7 +333,7 @@ File Truth (stable, deterministic) → Reliability
 **RoyalBit Asimov solution:** Quality Gates
 
 ```yaml
-# warmup.yaml
+# warmup.json
 quality:
   pre_commit:
     - "cargo test"           # Deterministic verification
@@ -352,7 +352,7 @@ The AI generates code, but **deterministic tools verify it**. If tests fail, the
 **RoyalBit Asimov solution:** Project-Specific Truth in Files
 
 ```yaml
-# warmup.yaml - always current, travels with git
+# warmup.json - always current, travels with git
 identity:
   project: "MyProject"
   version: "2.3.1"  # I don't need to "know" this - I read it
@@ -376,7 +376,7 @@ I don't need training data about your project. **The file IS the truth.**
 
 ```mermaid
 flowchart TD
-    A["CLAUDE.md<br/>@warmup.yaml<br/>@asimov.yaml"] --> B["warmup.yaml<br/>Full rules on disk"]
+    A["CLAUDE.md<br/>@warmup.json<br/>@asimov.json"] --> B["warmup.json<br/>Full rules on disk"]
     B --> C["Claude Code Native<br/>/rewind, --continue"]
     C --> D["Session Restored"]
 
@@ -423,11 +423,11 @@ YAML is:
 **RoyalBit Asimov solution:** Trust Files, Not Memory
 
 ```yaml
-# warmup.yaml
+# warmup.json
 session:
   start:
-    - "Read warmup.yaml"      # Trust the file
-    - "Read sprint.yaml"      # Trust the file
+    - "Read warmup.json"      # Trust the file
+    - "Read sprint.json"      # Trust the file
     - "Run git status"        # Trust the system
     - "Run cargo test"        # Trust deterministic output
 
@@ -450,7 +450,7 @@ flowchart LR
         A2 --> A3["❓ Maybe right"]
     end
     subgraph forge["RoyalBit Asimov"]
-        B1["Human asks"] --> B2["AI reads warmup.yaml"]
+        B1["Human asks"] --> B2["AI reads warmup.json"]
         B2 --> B3["✅ Verifiable"]
     end
 
@@ -487,7 +487,7 @@ Plus:
 **RoyalBit Asimov solution:** Anti-Sycophancy Directives (ADR-015)
 
 ```yaml
-# warmup.yaml - Anti-Sycophancy Protocol
+# sycophancy.json - Anti-Sycophancy Protocol
 anti_sycophancy:
   philosophy: "Truth over comfort. Disagreement is respect."
 
@@ -566,7 +566,7 @@ The [Forge Calculator](https://github.com/royalbit/forge) executes formulas dete
 ### For Claude Code Users
 
 1. **Use CLAUDE.md** - Ultra-short file that survives compaction
-2. **Put critical rules in warmup.yaml** - Re-read when confused
+2. **Put critical rules in warmup.json** - Re-read when confused
 3. **Run `/compact` manually** - At logical breakpoints, not mid-task
 4. **Use MAX_THINKING_TOKENS=200000** - Delays compaction (slightly)
 5. **Accept that forgetting will happen** - Plan for recovery, not survival
@@ -591,7 +591,7 @@ The [Forge Calculator](https://github.com/royalbit/forge) executes formulas dete
 ### Research Papers
 - [Why Language Models Hallucinate](https://openai.com/index/why-language-models-hallucinate/) - OpenAI, 2025
 - [Survey on Hallucination in Large Language Models](https://dl.acm.org/doi/10.1145/3703155) - ACM TOIS, 2025
-- [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) - Liu et al., MIT Press, 2025
+- [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) - Liu et al., 2023
 - [Comprehensive Review of AI Hallucinations](https://www.preprints.org/manuscript/202505.1405/v1) - Preprints.org, 2025
 
 ### Sycophancy Research (2025)

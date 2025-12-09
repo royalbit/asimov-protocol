@@ -147,7 +147,7 @@ Building these would waste effort duplicating Claude Code's native features.
 1. **Breaking change** - v4.0.0 changes file structure
 2. **Migration needed** - Existing users must update
 3. **Feature removal** - Checkpoint validation removed
-4. **Claude Code coupling** - ROYALBIT ASIMOV more tightly coupled
+4. **Claude Code coupling** - RoyalBit Asimov more tightly coupled
 
 ### Neutral
 

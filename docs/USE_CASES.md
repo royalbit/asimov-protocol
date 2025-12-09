@@ -61,7 +61,7 @@ take_rate:
 
 **How it works**:
 1. Human says "run warmup"
-2. AI loads context (warmup.yaml, sprint.yaml, roadmap.yaml)
+2. AI loads context (warmup.yaml, sprint.json, roadmap.json)
 3. AI presents next milestone
 4. Human says "go"
 5. AI executes autonomously until milestone complete
@@ -156,13 +156,13 @@ take_rate:
 
 ### Anything Violating Ethics
 
-The protocol includes `asimov.yaml` (The Three Laws):
+The protocol includes `asimov.json` (The Three Laws):
 - No financial harm (unauthorized money movement)
 - No physical harm (weapons, sabotage)
 - No privacy violations (credential harvesting, doxxing)
 - No deception (deepfakes, phishing)
 
-If asimov.yaml is removed, that's a choice. The community will notice.
+If asimov.json is removed, that's a choice. The community will notice.
 
 ### Unbounded "Just Keep Going" Development
 
@@ -199,9 +199,9 @@ AI executes. Human directs. That's the model.
 ### Full Setup
 
 1. `warmup.yaml` - How to develop (quality, standards)
-2. `sprint.yaml` - When to stop (bounded sessions)
-3. `roadmap.yaml` - What to build (milestones)
-4. `asimov.yaml` - The Three Laws (ethics)
+2. `sprint.json` - When to stop (bounded sessions)
+3. `roadmap.json` - What to build (milestones)
+4. `asimov.json` - The Three Laws (ethics)
 5. `CLAUDE.md` - Entry point that imports above
 
 ### Validation

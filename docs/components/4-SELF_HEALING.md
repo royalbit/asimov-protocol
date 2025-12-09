@@ -12,15 +12,15 @@ Self-Healing fixes this by **re-reading rules from disk** instead of trying to p
 
 ## The Reality (ADR-003)
 
-**v1.x assumed:** Checkpoint every 2 hours
-**v2.0 research found:** Compaction happens every **10-20 minutes** with heavy reasoning
+**Early assumption:** Checkpoint based on time intervals
+**Research found:** Compaction happens every **10-20 minutes** with heavy reasoning
 
 ```
 With MAX_THINKING_TOKENS=200000:
 - Context window: 200k tokens
 - Thinking budget: 200k tokens
 - Context fills in: 1-3 heavy turns
-- Compaction interval: ~10-20 minutes (not 2 hours!)
+- Compaction interval: ~10-20 minutes
 ```
 
 See [ADR-003](../adr/003-self-healing-real-compaction-data.md) for the full research.
@@ -45,10 +45,11 @@ As documented by DoltHub:
 flowchart LR
     subgraph healing["SELF-HEALING PROTOCOL - ALL ON DISK (survives compaction)"]
         CM["**CLAUDE.md**<br/>(auto-loaded)<br/><br/>Ultra-short +<br/>'re-read'"]
-        WU["**warmup.yaml**<br/>(full rules)<br/><br/>Complete<br/>protocol + gates"]
-        CP["**checkpoint.yaml**<br/>(session state)<br/><br/>Progress<br/>+ hints"]
+        WU["**warmup.json**<br/>(protocol loader)<br/><br/>Loads all<br/>protocols"]
+        PR["**protocols/**<br/>(full rules)<br/><br/>Complete<br/>protocol + gates"]
+        CP["**checkpoint**<br/>(session state)<br/><br/>Progress<br/>+ hints"]
 
-        CM --> WU --> CP
+        CM --> WU --> PR --> CP
     end
 ```
 
@@ -61,46 +62,43 @@ Must survive summarization. Single critical instruction:
 ```markdown
 # Project Name
 
-ON CONFUSION → re-read warmup.yaml + .claude_checkpoint.yaml
+ON CONFUSION → run warmup (loads all protocols)
 
 Rules: run until done, keep shipping, tests pass.
 ```
 
-### 2. warmup.yaml (Full Rules)
+### 2. warmup.json (Protocol Loader)
 
-Complete protocol on disk. Re-read when confused:
+Entry point that loads all protocol files. Re-read when confused:
 
-```yaml
-self_healing:
-  checkpoint_triggers:
-    - "Every major task completion"
-    - "Every 10-15 tool calls (~15 min)"
-    - "Before any commit"
-    - "On ANY confusion"
-
-  on_confusion: "STOP → re-read warmup.yaml"
-  core_rules: "run until done, keep shipping, tests pass"
+```json
+{
+  "protocol": "warmup",
+  "description": "RoyalBit Asimov - Session warmup entry point",
+  "on_start": [
+    "load_protocols",
+    "load_project",
+    "validate",
+    "read_roadmap",
+    "present_milestone"
+  ],
+  "load": [
+    "asimov.json",
+    "sprint.json",
+    "coding-standards.json",
+    "freshness.json",
+    "green.json",
+    "exhaustive.json",
+    "sycophancy.json"
+  ]
+}
 ```
 
-### 3. .claude_checkpoint.yaml (Session State)
+### 3. Session State (WIP Continuity)
 
-Written during session. Contains progress and recovery hint:
+Written during session. Contains progress and recovery state. Format determined by implementation (may be checkpoint file or other mechanism).
 
-```yaml
-timestamp: "2025-11-27T10:30:00Z"
-session_started: "2025-11-27T09:00:00Z"
-tool_calls: 45
-
-milestone: "Add user authentication"
-completed:
-  - "Created auth middleware"
-  - "Added JWT generation"
-in_progress: "Writing login tests"
-
-on_confusion: "cat warmup.yaml"
-```
-
-## Checkpoint Triggers (v2.0)
+## Recovery Triggers
 
 Based on real compaction data, NOT time-based intervals:
 
@@ -112,7 +110,7 @@ Based on real compaction data, NOT time-based intervals:
 | Before any commit | Quality gate |
 | On ANY confusion | Recovery signal |
 
-**NOT "every 2 hours"** - compaction happens every 10-20 minutes with heavy reasoning.
+Compaction happens every 10-20 minutes with heavy reasoning, so recovery mechanisms are designed around task completion rather than time intervals.
 
 ## Platform Requirement
 
@@ -128,10 +126,10 @@ Based on real compaction data, NOT time-based intervals:
 
 | Component | Connection |
 |-----------|------------|
-| Protocol Files | warmup.yaml is the source of truth |
-| Sprint Autonomy | Checkpoints align with task completion |
+| Protocol Files | warmup.json loads all protocol files |
+| Sprint Autonomy | Recovery aligns with task completion |
 | Quality Gates | Re-read before running gates |
-| Release Discipline | Checkpoint before release |
+| Release Discipline | Recovery state before release |
 
 ---
 

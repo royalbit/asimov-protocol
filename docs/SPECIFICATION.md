@@ -1,6 +1,6 @@
 # RoyalBit Asimov Specification
 
-Version 9.6.0
+Version 9.12.0
 
 ## Overview
 
@@ -16,13 +16,13 @@ See [ADR-024](adr/024-creator-protocol-architecture.md) for the full architectur
 
 **All RoyalBit Asimov projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
 
-**Mid-session self-healing is NOT replaced by Claude Code native features** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL commands. Mid-session recovery uses `warmup.yaml` re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
+**Mid-session self-healing is NOT replaced by Claude Code native features** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL commands. Mid-session recovery uses protocol re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
 
 ## Design Principles
 
 1. **Ethics first** - Power creates responsibility; autonomy requires ethics
 2. **Integrate, don't duplicate** - Use Claude Code native features where available
-3. **Vendor-neutral files** - Plain YAML readable by any AI (ROYALBIT ASIMOV is Claude Code only)
+3. **Vendor-neutral files** - Plain YAML readable by any AI (RoyalBit Asimov is Claude Code only)
 4. **Human-readable** - No encoded or proprietary formats
 5. **Minimal** - Include only what's needed
 6. **Self-documenting** - The protocol describes itself
@@ -39,18 +39,18 @@ RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead
 |---------|-------------------|---------------------|
 | Checkpoints | `/rewind`, Esc+Esc | **MANUAL** - use TodoWrite for tasks |
 | Session resume | `--continue`, `--resume` | **MANUAL** - cross-session only |
-| Memory hierarchy | `CLAUDE.md` with `@imports` | **Integrate** (warmup.yaml via @import) |
+| Memory hierarchy | `CLAUDE.md` with `@imports` | **Integrate** (protocol files via @import) |
 | Auto-compact | 95% capacity trigger | **Documented** in ADR-003 |
-| Mid-session self-healing | **NONE** | **RoyalBit Asimov** (warmup.yaml re-read) |
+| Mid-session self-healing | **NONE** | **RoyalBit Asimov** (protocol re-read) |
 
 ### What RoyalBit Asimov Uniquely Provides
 
 | Feature | Description | Claude Code Has? |
 |---------|-------------|------------------|
-| **Ethics Protocol** | `asimov.yaml`, `human_veto`, red flags | NO |
-| **Green Protocol** | `green.yaml`, local-first, carbon awareness | NO |
-| **Anti-Sycophancy Protocol** | `sycophancy.yaml`, banned phrases, honesty directives | NO |
-| **Freshness Protocol** | `freshness.yaml`, date-aware search, stale data prevention | NO |
+| **Ethics Protocol** | `.asimov/asimov.json`, `human_veto`, red flags | NO |
+| **Green Protocol** | `.asimov/green.json`, local-first, carbon awareness | NO |
+| **Anti-Sycophancy Protocol** | `.asimov/sycophancy.json`, banned phrases, honesty directives | NO |
+| **Freshness Protocol** | `.asimov/freshness.json`, date-aware search, stale data prevention | NO |
 | **Sprint Autonomy** | Run until done, keep shipping, anti-patterns | NO |
 | **Schema Validation** | `asimov validate` | NO |
 
@@ -61,10 +61,10 @@ The new CLAUDE.md template uses Claude Code's native `@import` syntax:
 ```markdown
 # {project-name}
 
-@warmup.yaml
-@asimov.yaml
-@green.yaml
-@sycophancy.yaml
+@.asimov/warmup.json
+@.asimov/asimov.json
+@.asimov/green.json
+@.asimov/sycophancy.json
 
 Rules: Run until done, keep shipping, tests pass.
 ```
@@ -77,13 +77,13 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
-| **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Three Laws safeguards (asimov.yaml) |
-| **1** | **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (warmup.yaml) |
-| **1.25** | **FRESHNESS** | Stale data misattributed as hallucination | Date-aware search (freshness.yaml) |
-| **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (warmup.yaml) |
+| **0** | **ETHICAL_AUTONOMY** | AI can build harmful tools | Three Laws safeguards (.asimov/asimov.json) |
+| **1** | **ANTI-HALLUCINATION** | AI invents facts from probabilistic memory | Ground AI in file-based truth (.asimov/warmup.json) |
+| **1.25** | **FRESHNESS** | Stale data misattributed as hallucination | Date-aware search (.asimov/freshness.json) |
+| **1.5** | **ANTI-SYCOPHANCY** | AI validates bad ideas due to RLHF training | Anti-sycophancy directives (.asimov/sycophancy.json) |
 | **2** | **SELF-HEALING** | Rules lost after context compaction | Re-read from disk on confusion (bootstrap chain) |
 | **3** | **SESSION CONTINUITY** | Context lost between sessions | Checkpoint files (.claude_checkpoint.yaml) |
-| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | Run until done, keep shipping, quality gates (ROYALBIT ASIMOV) |
+| **4** | **AUTONOMOUS DEVELOPMENT** | Unbounded sessions never ship | Run until done, keep shipping, quality gates (RoyalBit Asimov) |
 | **5** | **GREEN CODING** | Cloud AI tokens for routine validation | Local CLI validation (zero tokens, zero emissions) |
 
 ### The Three Hallucinations
@@ -92,9 +92,9 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 
 | Type | What AI Does | Cause | RoyalBit Asimov Solution |
 |------|--------------|-------|--------------------------|
-| **Factual Hallucination** | Generates plausible-sounding false *facts* | Training for plausibility, not accuracy | File-based grounding (warmup.yaml) |
-| **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives (sycophancy.yaml) |
-| **Stale Data Hallucination** | Gives correct-but-outdated *information* | Training data cutoff + no search | Date-aware search (freshness.yaml) |
+| **Factual Hallucination** | Generates plausible-sounding false *facts* | Training for plausibility, not accuracy | File-based grounding (.asimov/warmup.json) |
+| **Validation Hallucination** | Generates plausible-sounding false *agreement* | Users prefer agreeable AI; RLHF rewards it | Anti-sycophancy directives (.asimov/sycophancy.json) |
+| **Stale Data Hallucination** | Gives correct-but-outdated *information* | Training data cutoff + no search | Date-aware search (.asimov/freshness.json) |
 
 See [ADR-015](adr/015-anti-sycophancy-protocol.md), [ADR-022](adr/022-date-aware-search-protocol.md), and [AI_REALITY.md](AI_REALITY.md) for full analysis.
 
@@ -115,14 +115,14 @@ Examples:
 
 ## ROYALBIT ASIMOV
 
-ROYALBIT ASIMOV is the complete autonomous AI development system. It consists of five components:
+RoyalBit Asimov is the complete autonomous AI development system. It consists of five components:
 
 ```mermaid
 flowchart TB
     subgraph asimov["ROYALBIT ASIMOV - Autonomous AI Development System"]
         subgraph row1[" "]
             direction LR
-            P["**PROTOCOL FILES**<br/>warmup.yaml<br/>sprint.yaml<br/>roadmap.yaml"]
+            P["**PROTOCOL FILES**<br/>warmup.json<br/>sprint.json<br/>roadmap.yaml"]
             S["**SPRINT AUTONOMY**<br/>Run until done<br/>keep shipping<br/>no time limit"]
             Q["**QUALITY GATES**<br/>Tests pass<br/>Zero warns<br/>Then commit"]
         end
@@ -149,9 +149,9 @@ flowchart TB
 
 ### Platform Requirements (The Hard Truth)
 
-**ROYALBIT ASIMOV is Claude Code exclusive. This will probably never change.**
+**RoyalBit Asimov is Claude Code exclusive. This will probably never change.**
 
-| AI Tool | Protocol Files | ROYALBIT ASIMOV | Why |
+| AI Tool | Protocol Files | RoyalBit Asimov | Why |
 |---------|---------------|-------------|-----|
 | **Claude Code** | ✓ | ✓ | Has all 4 required features |
 | **ChatGPT** | Manual paste | **Never** | Cloud-sandboxed, no filesystem |
@@ -159,11 +159,11 @@ flowchart TB
 | **Cursor** | ✓ | **Unlikely** | Missing terminal→context flow |
 | **Gemini** | Manual paste | **Never** | Context resets, no local access |
 
-ROYALBIT ASIMOV requires **four architectural features** that only Claude Code has:
+RoyalBit Asimov requires **four architectural features** that only Claude Code has:
 
 1. **Persistent context that compacts** - The problem we're solving
 2. **Terminal visibility** - How hook output reaches the AI
-3. **File re-read mid-session** - How warmup.yaml gets reloaded
+3. **File re-read mid-session** - How protocol files get reloaded
 4. **Auto-loaded config** - Bootstrap instruction (CLAUDE.md)
 
 Other AI tools have **different architectures for different use cases**. They're not going to rebuild their products to support this. See [VENDOR_IMPLEMENTATION.md](VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
@@ -174,7 +174,7 @@ Other AI tools have **different architectures for different use cases**. They're
 flowchart LR
     subgraph bootstrap["BOOTSTRAP CHAIN"]
         CM["**CLAUDE.md**<br/>(auto-loaded)<br/>~5 lines<br/><br/>BOOTSTRAP<br/>'re-read warmup'<br/><br/>*Survives compaction*"]
-        WU["**warmup.yaml**<br/>(full protocol)<br/>~100-200 lines<br/><br/>FULL RULES<br/>Everything defined<br/><br/>*Re-read from disk*"]
+        WU["**warmup.json**<br/>(full protocol)<br/>~100-200 lines<br/><br/>FULL RULES<br/>Everything defined<br/><br/>*Re-read from disk*"]
         CP["**.claude_checkpoint.yaml**<br/>(session state)<br/>~20 lines<br/><br/>CHECKPOINT<br/>Progress + Next steps<br/><br/>*Written during session*"]
 
         CM --> WU --> CP
@@ -271,11 +271,11 @@ patterns:                      # Language-specific best practices
 | File | Soft Limit | Hard Limit | Purpose |
 |------|------------|------------|---------|
 | project.yaml | 50 lines | 100 lines | Project context |
-| warmup.yaml | 200 lines | 500 lines | Deprecated - protocols hardcoded |
+| warmup.json | 200 lines | 500 lines | Deprecated - protocols hardcoded |
 
 **Enforcement:**
 - `asimov validate` warns on soft limit, errors on hard limit
-- Protocols are hardcoded, so no need to manage warmup.yaml size manually
+- Protocols are hardcoded, so no need to manage protocol file size manually
 
 ### Coding Standards Enforcement (v9.6.0 - ADR-043)
 
@@ -320,21 +320,21 @@ Pre-commit hooks enforce coding standards **directly** without asimov as a runti
 
 Anti-hallucination hardening requires critical sections to exist in the right files.
 
-**asimov.yaml (Priority 0 - REQUIRED):**
+**asimov.json (Priority 0 - REQUIRED):**
 
 | Section | Status | Rationale |
 |---------|--------|-----------|
 | `human_veto` | ERROR if missing | Human override capability is non-negotiable |
 | `first_law.do_no_harm` | ERROR if missing | Three Laws guardrails must be explicit |
 
-**warmup.yaml (Self-Healing):**
+**warmup.json (Self-Healing):**
 
 | Section | Status | Rationale |
 |---------|--------|-----------|
 | `self_healing.on_confusion` | WARNING if missing | Guides AI recovery after compaction |
 | Position of `on_confusion` | WARNING if >100 lines | Should be early for quick context recovery |
 
-**green.yaml (Priority 0.5 - REQUIRED):**
+**green.json (Priority 0.5 - REQUIRED):**
 
 | Section | Status | Rationale |
 |---------|--------|-----------|
@@ -342,7 +342,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 | `core_principles.local_first.enabled` | WARNING if false | Local-first is core principle |
 | `modification_rules` | WARNING if missing | Protects against tampering |
 
-**sycophancy.yaml (Priority 1.5 - REQUIRED):**
+**sycophancy.json (Priority 1.5 - REQUIRED):**
 
 | Section | Status | Rationale |
 |---------|--------|-----------|
@@ -353,7 +353,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 
 **Enforcement:**
 - `asimov validate` checks structure, not just schema
-- Three Laws (asimov.yaml) structure errors are CRITICAL - validation fails
+- Three Laws (asimov.json) structure errors are CRITICAL - validation fails
 - Green structure errors are WARNING - proceeds with hardcoded defaults
 - Sycophancy structure errors are WARNING - proceeds with hardcoded defaults
 - Warmup structure issues are warnings - project still valid
@@ -366,11 +366,11 @@ Protocol files auto-regenerate when missing during validation. Recovery over sur
 
 | File Missing | Action | Rationale |
 |--------------|--------|-----------|
-| asimov.yaml | AUTO-CREATE + WARN | Three Laws must exist (Priority 0) |
-| warmup.yaml | AUTO-CREATE + WARN | Core protocol |
-| green.yaml | AUTO-CREATE + INFO | Required but less critical (Priority 0.5) |
-| sycophancy.yaml | AUTO-CREATE + WARN | Anti-sycophancy must exist (Priority 1.5) |
-| sprint.yaml | AUTO-CREATE + INFO | Session boundary protocol |
+| asimov.json | AUTO-CREATE + WARN | Three Laws must exist (Priority 0) |
+| warmup.json | AUTO-CREATE + WARN | Core protocol |
+| green.json | AUTO-CREATE + INFO | Required but less critical (Priority 0.5) |
+| sycophancy.json | AUTO-CREATE + WARN | Anti-sycophancy must exist (Priority 1.5) |
+| sprint.json | AUTO-CREATE + INFO | Session boundary protocol |
 | roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton) |
 | CLAUDE.md | **NEVER** | Bootstrap must be intentional |
 
@@ -386,7 +386,7 @@ Protocol files auto-regenerate when missing during validation. Recovery over sur
 ```yaml
 # .forge/checksums.yaml
 files:
-  asimov.yaml:
+  asimov.json:
     sha256: "abc123..."
     last_verified: "2025-11-29T10:00:00Z"
 ```
@@ -407,12 +407,12 @@ See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
 
 ## Protocol Files
 
-### asimov.yaml Schema (Required for ASIMOV)
+### asimov.json Schema (Required for ASIMOV)
 
 The Three Laws of Robotics configuration file. Canonical ethics for autonomous AI development.
 
 ```yaml
-# asimov.yaml - The Three Laws of Robotics
+# .asimov/asimov.json - The Three Laws of Robotics
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
 
@@ -452,12 +452,12 @@ human_veto:
 on_confusion:
   steps:
     - "Halt current operation"
-    - "Re-read asimov.yaml"
-    - "Re-read warmup.yaml"
+    - "Re-read .asimov/asimov.json"
+    - "Re-read .asimov/warmup.json"
     - "Wait for human"
 
 fork_requirements:
-  must_carry: "asimov.yaml"
+  must_carry: ".asimov/asimov.json"
   spirit: "Pass the Three Laws forward"
 ```
 
@@ -470,12 +470,12 @@ fork_requirements:
 
 See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) and [ADR-020](adr/020-asimov-mode-open-foundation.md) for full rationale.
 
-### green.yaml Schema (Required for ASIMOV)
+### green.json Schema (Required for ASIMOV)
 
 The Green Coding configuration file. Defines sustainability guardrails for AI development.
 
 ```yaml
-# green.yaml - Sustainability Protocol v1.0
+# .asimov/green.json - Sustainability Protocol v1.0
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
 
@@ -519,7 +519,7 @@ anti_patterns:
 validation:
   cli_command: "asimov validate"
   checks:
-    - "green.yaml exists"
+    - ".asimov/green.json exists"
     - "core_principles.local_first.enabled is true"
 ```
 
@@ -531,12 +531,12 @@ validation:
 
 See [ADR-016](adr/016-green-coding-protocol.md) for full rationale.
 
-### sycophancy.yaml Schema (Required for ASIMOV)
+### sycophancy.json Schema (Required for ASIMOV)
 
 The Anti-Sycophancy configuration file. Counteracts RLHF-induced validation hallucination.
 
 ```yaml
-# sycophancy.yaml - Anti-Sycophancy Protocol v1.0
+# .asimov/sycophancy.json - Anti-Sycophancy Protocol v1.0
 modification_rules:
   immutable_without: "2 human co-signers with public justification"
 
@@ -585,7 +585,7 @@ required_behavior:
 on_confusion:
   steps:
     - "Halt current response"
-    - "Re-read sycophancy.yaml"
+    - "Re-read .asimov/sycophancy.json"
     - "Check if about to use banned phrase"
     - "Reformulate with honesty"
 ```
@@ -607,13 +607,13 @@ The bootstrap file. Must be ultra-short to survive summarization.
 ```markdown
 # {project-name}
 
-@warmup.yaml
-@asimov.yaml
-@green.yaml
+@.asimov/warmup.json
+@.asimov/asimov.json
+@.asimov/green.json
 
 Rules: Run until done, keep shipping, tests pass.
 
-ON SESSION START: Immediately read roadmap.yaml, run `asimov validate`, present next milestone. Do NOT wait for user prompt.
+ON SESSION START: Immediately read .asimov/roadmap.yaml, run `asimov validate`, present next milestone. Do NOT wait for user prompt.
 ```
 
 **Constraints:**
@@ -632,9 +632,9 @@ SessionStart hooks inject context but do NOT trigger automatic Claude response. 
 | CLAUDE.md directive | Instructs Claude to act | Requires hook context |
 | Combined | True auto-initialization | Works together |
 
-### warmup.yaml Schema
+### warmup.json Schema
 
-The master protocol file. Must be in project root.
+The master protocol file in .asimov/ directory.
 
 #### identity (required)
 
@@ -675,7 +675,7 @@ files:
 ```yaml
 session:
   start:
-    - "Read warmup.yaml"
+    - "Read .asimov/warmup.json"
     - "git status"
   during:
     - "Track progress with TodoWrite"
@@ -735,7 +735,7 @@ self_healing:
   checkpoint_file: ".claude_checkpoint.yaml"
 
   # Recovery instruction (must be short)
-  on_confusion: "Re-read warmup.yaml immediately"
+  on_confusion: "Re-read .asimov/warmup.json immediately"
 
   # Core rules that must survive (one line)
   core_rules: "Run until done, keep shipping, tests pass"
@@ -786,7 +786,7 @@ release:
     registry: "cargo publish"  # or npm publish, etc.
 ```
 
-### sprint.yaml Schema
+### sprint.json Schema
 
 Active work tracking with session boundaries.
 
@@ -842,14 +842,14 @@ backlog:
 > **DEPRECATED in v4.0.0**: Task tracking moved to TodoWrite.
 > See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
 
-**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the RoyalBit Asimov's `warmup.yaml` re-read pattern.
+**IMPORTANT (ADR-013)**: Claude Code's `/rewind` is a **MANUAL** command. It does NOT provide automatic mid-session self-healing. Mid-session recovery still requires the RoyalBit Asimov's protocol re-read pattern.
 
 Claude Code 2.0 provides checkpoint functionality for **MANUAL** restore:
 - `/rewind` or Esc+Esc to restore previous state (requires human command)
 - Can restore code only, conversation only, or both
 - Useful for cross-session recovery (with `--continue`/`--resume`)
 
-**Migration**: Use TodoWrite for task tracking. Mid-session self-healing uses `warmup.yaml` re-read + commit cadence (~15 min).
+**Migration**: Use TodoWrite for task tracking. Mid-session self-healing uses protocol re-read + commit cadence (~15 min).
 
 ## Session Autonomy
 
@@ -858,7 +858,7 @@ Claude Code 2.0 provides checkpoint functionality for **MANUAL** restore:
 ```
 User: "run warmup"
   ↓
-AI: Reads warmup.yaml, sprint.yaml, roadmap.yaml
+AI: Reads .asimov/warmup.json, .asimov/sprint.json, .asimov/roadmap.yaml
 AI: Presents next milestone
   ↓
 User: "go" / "punch it" / "ship it"
@@ -926,7 +926,7 @@ flowchart TB
 | File | Purpose | Size | Committed |
 |------|---------|------|-----------|
 | CLAUDE.md | Bootstrap trigger | ~5 lines | Yes |
-| warmup.yaml | Full protocol | ~100-200 lines | Yes |
+| .asimov/warmup.json | Full protocol | ~100-200 lines | Yes |
 | .claude_checkpoint.yaml | Session state | ~20 lines | No |
 
 ### Recovery Flow
@@ -934,8 +934,8 @@ flowchart TB
 ```mermaid
 flowchart TB
     A["Context compacted"] --> B["AI confused / rules lost"]
-    B --> C["CLAUDE.md instruction survives:<br/>'re-read warmup.yaml'"]
-    C --> D["AI reads warmup.yaml from disk"]
+    B --> C["CLAUDE.md instruction survives:<br/>'re-read warmup'"]
+    C --> D["AI reads .asimov/warmup.json from disk"]
     D --> E["Rules restored"]
     E --> F["AI reads .claude_checkpoint.yaml"]
     F --> G["Progress restored"]
@@ -1054,7 +1054,7 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 
 **Behavior**:
 - Outputs protocol initialization message
-- Instructs AI to read roadmap.yaml, sprint.yaml
+- Instructs AI to read .asimov/roadmap.yaml, .asimov/sprint.json
 - Presents next milestone
 - Waits for user "go" confirmation
 
@@ -1063,8 +1063,8 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 🔥 ROYALBIT ASIMOV ACTIVE
 
 IMMEDIATE ACTIONS REQUIRED:
-1. Read roadmap.yaml for current version and next milestone
-2. Read sprint.yaml for session boundaries
+1. Read .asimov/roadmap.yaml for current version and next milestone
+2. Read .asimov/sprint.json for session boundaries
 3. Run: asimov validate
 4. Present next milestone to user
 5. Wait for "go" to start autonomous execution
@@ -1083,7 +1083,7 @@ CORE RULES (non-negotiable):
 **Behavior**:
 - Fires BEFORE context compaction
 - Injects protocol rules that will survive in the compaction summary
-- Instructs AI to re-read warmup.yaml post-compaction
+- Instructs AI to re-read .asimov/warmup.json post-compaction
 - Reminds to check TodoWrite for in-progress tasks
 - Includes ethics reminder
 
@@ -1101,7 +1101,7 @@ CORE RULES (non-negotiable):
 | Windsurf | .windsurfrules + Memories | None |
 | Gemini | Context Drawer + MCP | None |
 
-ROYALBIT ASIMOV autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
+RoyalBit Asimov autonomous operation requires Claude Code. File-based protocols work anywhere as static context.
 
 ### User Activation
 
@@ -1134,8 +1134,8 @@ asimov init --type rust        # Language-specific template
 asimov init --force            # Overwrite existing files (including roadmap.yaml)
 
 # Validate
-asimov validate                # All files
-asimov validate warmup.yaml    # Specific file
+asimov validate                     # All files
+asimov validate .asimov/warmup.json # Specific file
 
 # Lint documentation
 asimov lint-docs               # Check markdown
@@ -1211,17 +1211,17 @@ Note: `roadmap.yaml` is project data and is preserved unless `--force` is used.
 Add to `~/.claude/CLAUDE.md` or project `CLAUDE.md`:
 
 ```markdown
-- If there is a warmup.yaml file in the root of the working dir, run it as working protocol
+- If there is a .asimov/warmup.json file in the working dir, run it as working protocol
 ```
 
 ### Other AI Assistants
 
-Paste warmup.yaml content at session start. Note: Self-healing won't work without file system access.
+Paste .asimov/warmup.json content at session start. Note: Self-healing won't work without file system access.
 
 ## Best Practices
 
 1. **Keep CLAUDE.md ultra-short** - Must survive summarization
-2. **Update sprint.yaml actively** - Track work in progress
+2. **Update .asimov/sprint.json actively** - Track work in progress
 3. **Commit protocol files** - They're part of your codebase
 4. **Use checkpoints** - Write state frequently, not on schedule
 5. **Review after compaction** - Check if rules are still understood
@@ -1259,11 +1259,11 @@ These features are NOT replaced by Claude Code native functionality:
 
 | Feature | Description | Why Active |
 |---------|-------------|------------|
-| **Self-Healing** | warmup.yaml re-read on confusion | Claude Code has no automatic mid-session recovery |
+| **Self-Healing** | Protocol re-read on confusion | Claude Code has no automatic mid-session recovery |
 | **Sprint Autonomy** | Run until done, keep shipping, quality gates | Claude Code has no bounded session enforcement |
-| **Ethics Protocol** | asimov.yaml, human_veto, Three Laws | Claude Code has no ethics framework |
-| **Green Protocol** | green.yaml, local-first validation | Claude Code has no green coding philosophy |
-| **Anti-Sycophancy** | sycophancy.yaml, banned phrases | Claude Code has no sycophancy prevention |
+| **Ethics Protocol** | .asimov/asimov.json, human_veto, Three Laws | Claude Code has no ethics framework |
+| **Green Protocol** | .asimov/green.json, local-first validation | Claude Code has no green coding philosophy |
+| **Anti-Sycophancy** | .asimov/sycophancy.json, banned phrases | Claude Code has no sycophancy prevention |
 
 **Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → RoyalBit Asimov.
 

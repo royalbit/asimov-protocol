@@ -21,9 +21,29 @@ previous:
   goal: "Git pre-commit hook outputs WIP state for context compaction survival"
 
 next:
-  - version: "9.12.0"
+  - version: "9.13.0"
     status: planned
-    summary: "TBD - Next milestone"
+    summary: "Documentation Polish - Cross-consistency, Language & Professionalism"
+    goal: "All documentation consistent, professional, and accurately reflects current v9.12.0 architecture"
+    deliverables:
+      - "[ ] Terminology standardization: Establish 'RoyalBit Asimov' as canonical (not all-caps)"
+      - "[ ] Protocol file references: Update all YAML references to JSON (.asimov/*.json)"
+      - "[ ] Remove outdated session limits: Remove '4-hour max' references (ADR-048)"
+      - "[ ] Version consistency: Update stale version references to 9.12.0"
+      - "[ ] README.md: Polish as primary entry point, verify all links"
+      - "[ ] SPECIFICATION.md: Reorganize/trim (1287 lines → target 800)"
+      - "[ ] MANIFESTO.md: Trim redundant sections, tighten prose"
+      - "[ ] SETUP.md: Update to current CLI commands and file structure"
+      - "[ ] VALUE_PROPOSITION.md: Align stats with current release numbers"
+      - "[ ] ECOSYSTEM.md: Update project stats and consolidate with other docs"
+      - "[ ] ORIGIN_STORY.md: Update timeline to include v9.x developments"
+      - "[ ] VENDOR_IMPLEMENTATION.md: Soften aggressive language while keeping honesty"
+      - "[ ] AI_REALITY.md: Verify all research citations still valid (2025 dates)"
+      - "[ ] Component docs (1-5): Verify consistency with current architecture"
+      - "[ ] ADR index: Verify all ADR links work, update version tags"
+      - "[ ] PRESS_KIT.md: Update verified numbers to current release"
+      - "[ ] Remove redundant emoji usage across all docs"
+      - "[ ] Final cross-reference audit: All internal links resolve correctly"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"

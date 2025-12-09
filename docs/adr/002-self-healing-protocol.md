@@ -6,7 +6,7 @@
 
 ## Context
 
-Multiple autonomous AI sessions (4-hour sprints chained via self-healing) face a fundamental problem: context compaction.
+Multiple autonomous AI sessions (bounded sprints chained via self-healing) face a fundamental problem: context compaction.
 
 ### The Problem
 
@@ -141,7 +141,7 @@ Separation provides defense in depth. If one mechanism fails, others remain.
 
 ### Positive
 
-- **True unattended autonomy**: Multiple 4hr sprints chained via self-healing
+- **True unattended autonomy**: Multiple bounded sprints chained via self-healing
 - **Portable**: Travels with git, works on any machine with Claude Code
 - **File format universal**: warmup.yaml can be used with any AI (paste)
 - **Battle-tested**: Deployed across 9 production projects
@@ -165,7 +165,7 @@ This ADR applies to:
 
 1. **All RoyalBit Asimov projects** - Must include self_healing section
 2. **asimov init** - Templates include self-healing by default
-3. **Documentation** - ASIMOV_MODE.md, component docs, README
+3. **Documentation** - ROYALBIT_ASIMOV.md, component docs, README
 
 ## Verification
 
@@ -194,7 +194,7 @@ grep -q "claude_checkpoint" .gitignore && echo "✓ checkpoint in .gitignore"
 
 ### Internal Documentation
 
-- [ROYALBIT ASIMOV Overview](../ASIMOV_MODE.md) - Complete autonomous AI development system
+- [RoyalBit Asimov Overview](../ROYALBIT_ASIMOV.md) - Complete autonomous AI development system
 - [Self-Healing Component](../components/4-SELF_HEALING.md) - Self-healing specification
 - [Setup Guide](../SETUP.md) - Per-project-type setup
 

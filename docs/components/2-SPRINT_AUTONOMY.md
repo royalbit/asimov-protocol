@@ -1,6 +1,6 @@
 # Component 2: Sprint Autonomy
 
-> **Continuous shipping until done or stopped - the "Off Switch" in ROYALBIT ASIMOV**
+> **Continuous shipping until done or stopped - the "Off Switch" in RoyalBit Asimov**
 
 ## Overview
 
@@ -51,7 +51,7 @@ NEW: Ship 1 → Ship 2 → Ship N → Until done
 
 | Component | Connection |
 |-----------|------------|
-| Protocol Files | sprint.yaml defines boundaries |
+| Protocol Files | sprint.json defines boundaries |
 | Quality Gates | Must pass before each commit |
 | Self-Healing | Commits are natural checkpoints |
 | Release Discipline | Every milestone ends with release |

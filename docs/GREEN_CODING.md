@@ -450,7 +450,7 @@ Confidence: 85-95%
 **Forge Approach:**
 
 ```text
-You: forge validate model.yaml
+You: forge validate model.json
 Forge: <200ms>
 Forge: ✅ All formulas valid OR ❌ Error in revenue[3]: ...
 
@@ -521,7 +521,7 @@ sudo mv forge /usr/local/bin/
 **Start saving money and carbon:**
 
 ```bash
-forge validate your-model.yaml
+forge validate your-model.json
 ```
 
 **That's it.** You're now part of the green coding revolution.

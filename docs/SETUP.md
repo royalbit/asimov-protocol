@@ -10,30 +10,33 @@ curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_6
 sudo mv asimov /usr/local/bin/
 
 # Full ROYALBIT ASIMOV setup
-asimov init --type rust --asimov
+asimov init --type rust
 
-# Launch and go
-claude --dangerously-skip-permissions
-> run warmup
-> punch it
+# Launch session (auto-warmup)
+asimov
 ```
 
 ## What Gets Created
 
 ```
 project/
-├── .asimov/              # Protocol directory (v6.0.0+)
-│   ├── warmup.yaml       # Protocol rules (HOW)
-│   ├── sprint.yaml       # Session boundaries (WHEN)
-│   ├── roadmap.yaml      # Milestones (WHAT)
-│   ├── asimov.yaml       # The Three Laws (canonical ethics)
-│   ├── green.yaml        # Green coding principles
-│   └── sycophancy.yaml   # Anti-sycophancy rules
-├── CLAUDE.md             # Self-healing trigger (@.asimov/warmup.yaml)
-├── .gitignore            # + .claude_checkpoint.yaml
-└── .hooks/               # Pre-commit hooks
-    ├── pre-commit
-    └── install.sh
+├── .asimov/                    # Protocol directory (v9.0.0+)
+│   ├── warmup.json             # Session bootstrap - loads all protocols
+│   ├── sprint.json             # Autonomous execution rules
+│   ├── asimov.json             # The Three Laws (ethics)
+│   ├── freshness.json          # Date-aware WebSearch
+│   ├── sycophancy.json         # Truth over comfort
+│   ├── green.json              # Efficiency standards
+│   ├── exhaustive.json         # Task completion rules
+│   ├── coding-standards.json   # Quality gates
+│   ├── migrations.json         # Functional equivalence
+│   ├── roadmap.yaml            # Milestones (YAML)
+│   └── project.yaml            # Project metadata (YAML)
+├── .claude/                    # Claude Code integration
+│   └── hooks/                  # Git hooks
+│       ├── pre-compact.sh
+│       └── session-start.sh
+└── .gitignore
 ```
 
 ## Setup by Project Type
@@ -41,7 +44,7 @@ project/
 ### Rust
 
 ```bash
-asimov init --type rust --asimov
+asimov init --type rust
 ```
 
 **Hooks:** Uses cargo-husky (add to Cargo.toml dev-dependencies)
@@ -54,10 +57,10 @@ asimov init --type rust --asimov
 ### Python
 
 ```bash
-asimov init --type python --asimov
+asimov init --type python
 ```
 
-**Hooks:** `.hooks/pre-commit` + `.hooks/install.sh`
+**Hooks:** `.claude/hooks/` (installed automatically)
 
 **Quality gates:**
 - `pytest`
@@ -68,10 +71,10 @@ asimov init --type python --asimov
 ### Node.js
 
 ```bash
-asimov init --type node --asimov
+asimov init --type node
 ```
 
-**Hooks:** `.hooks/pre-commit` (or use husky)
+**Hooks:** `.claude/hooks/` (installed automatically)
 
 **Quality gates:**
 - `npm test`
@@ -81,10 +84,10 @@ asimov init --type node --asimov
 ### Go
 
 ```bash
-asimov init --type go --asimov
+asimov init --type go
 ```
 
-**Hooks:** `.hooks/pre-commit`
+**Hooks:** `.claude/hooks/` (installed automatically)
 
 **Quality gates:**
 - `go test ./...`
@@ -94,10 +97,10 @@ asimov init --type go --asimov
 ### Flutter
 
 ```bash
-asimov init --type flutter --asimov
+asimov init --type flutter
 ```
 
-**Hooks:** `.hooks/pre-commit`
+**Hooks:** `.claude/hooks/` (installed automatically)
 
 **Quality gates:**
 - `flutter test`
@@ -107,10 +110,10 @@ asimov init --type flutter --asimov
 ### Documentation
 
 ```bash
-asimov init --type docs --asimov
+asimov init --type docs
 ```
 
-**Hooks:** `.hooks/pre-commit`
+**Hooks:** `.claude/hooks/` (installed automatically)
 
 **Quality gates:**
 - `asimov lint-docs .`
@@ -131,7 +134,11 @@ asimov --version
 
 ### 2. Install Hooks
 
-**Rust (cargo-husky):**
+**All project types:**
+
+Hooks are installed automatically in `.claude/hooks/` during `asimov init`. They are triggered by git operations and session events, not traditional git hooks.
+
+**Rust projects** can optionally use cargo-husky:
 ```bash
 # Add to Cargo.toml [dev-dependencies]
 cargo-husky = { version = "1", features = ["precommit-hook", "run-cargo-clippy", "run-cargo-fmt"] }
@@ -140,17 +147,15 @@ cargo-husky = { version = "1", features = ["precommit-hook", "run-cargo-clippy",
 cargo test
 ```
 
-**Other languages:**
-```bash
-./.hooks/install.sh
-```
-
 ### 3. Edit Protocol Files
 
 ```bash
-# Edit with your project details
-$EDITOR .asimov/warmup.yaml
+# Edit project metadata and roadmap (YAML files)
+$EDITOR .asimov/project.yaml
 $EDITOR .asimov/roadmap.yaml
+
+# Protocol files are JSON (no editing needed for basic setup)
+# .asimov/warmup.json, sprint.json, asimov.json, etc.
 ```
 
 ### 4. Validate
@@ -162,67 +167,95 @@ asimov validate
 ### 5. Launch ROYALBIT ASIMOV
 
 ```bash
-# Terminal 1: Launch Claude Code
-claude --dangerously-skip-permissions
+# Option 1: Launcher mode (auto-warmup)
+asimov
 
-# In Claude Code
-> run warmup
-> punch it
+# Option 2: Manual launch
+claude --dangerously-skip-permissions
+# Then run: asimov warmup
 ```
 
 ## Verification Checklist
 
 ```bash
 # Check files exist
-ls -la .asimov/ CLAUDE.md
+ls -la .asimov/
 
 # Validate protocol
 asimov validate
 
 # Check hooks installed
-ls -la .git/hooks/pre-commit
+ls -la .claude/hooks/
 
-# Test pre-commit
-git commit --allow-empty -m "test" --dry-run
+# Test session
+asimov
 ```
 
 ## Troubleshooting
 
-### "warmup.yaml not found"
+### "Protocol files not found"
 ```bash
-asimov init --type <your-type> --asimov
+asimov init --type <your-type>
 ```
 
 ### "Hooks not running"
 ```bash
-./.hooks/install.sh
-# or for Rust
-cargo test
+# Re-initialize project
+asimov init --type <your-type>
+
+# Check hooks directory
+ls -la .claude/hooks/
 ```
 
-### "Self-healing not working"
-1. Check CLAUDE.md exists
-2. Check CLAUDE.md has "@.asimov/warmup.yaml" import
-3. Check .asimov/warmup.yaml has self_healing section
-
 ### "AI forgets rules"
-Say: "Re-read .asimov/warmup.yaml"
+```bash
+# Run warmup manually
+asimov warmup
+
+# Or use launcher mode
+asimov
+```
+
+### "Validation errors"
+```bash
+# Diagnose issues
+asimov doctor
+
+# Validate protocol files
+asimov validate
+```
 
 ## Requirements Summary
 
 | Component | Required |
 |-----------|----------|
 | Claude Code | Yes |
-| `--dangerously-skip-permissions` | Yes (for autonomy) |
-| .asimov/ directory | Yes (v6.0.0+) |
-| CLAUDE.md | Yes (for self-healing) |
-| Pre-commit hooks | Recommended |
+| Asimov CLI (v9.12.0+) | Yes |
+| .asimov/ directory | Yes (JSON protocols + YAML metadata) |
+| .claude/hooks/ | Recommended |
+| `--dangerously-skip-permissions` | Recommended (for full autonomy) |
+
+## Protocol Files Reference
+
+**JSON Protocols** (in `.asimov/`):
+- `warmup.json` - Session bootstrap and protocol loading
+- `sprint.json` - Autonomous execution rules
+- `asimov.json` - The Three Laws (harm prevention)
+- `freshness.json` - Date-aware WebSearch requirements
+- `sycophancy.json` - Truth over comfort principles
+- `green.json` - Efficiency and sustainability standards
+- `exhaustive.json` - Complete task execution rules
+- `coding-standards.json` - Language-specific quality gates
+- `migrations.json` - Functional equivalence guarantees
+
+**YAML Files** (in `.asimov/`):
+- `project.yaml` - Project metadata and configuration
+- `roadmap.yaml` - Milestones and progress tracking
 
 ## Related Documentation
 
-- [ROYALBIT ASIMOV Overview](ASIMOV_MODE.md)
-- [Component 1: Protocol Files](components/1-PROTOCOL_FILES.md)
-- [Component 4: Self-Healing](components/4-SELF_HEALING.md)
-- [Vendor Implementation](VENDOR_IMPLEMENTATION.md)
+- [README](../README.md) - Project overview
+- [Origin Story](ORIGIN_STORY.md) - How Asimov was built
+- [Value Proposition](VALUE_PROPOSITION.md) - Why use Asimov
 
 ---

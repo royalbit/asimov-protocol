@@ -2,7 +2,7 @@
 
 ## Headline
 
-**Claude Delivers 50-100x Velocity. Asimov Ensures You Don't Destroy Yourself.**
+**Claude Delivers 50-100x Velocity. RoyalBit Asimov Ensures Ethical Guardrails.**
 
 ---
 
@@ -40,7 +40,7 @@ Both Proprietary licensed. Both on GitHub. Both auditable.
 
 ---
 
-## The Verified Numbers (November 2025)
+## The Verified Numbers (December 2025)
 
 | Metric | Value | Verification |
 |--------|-------|--------------|

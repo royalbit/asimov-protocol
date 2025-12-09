@@ -450,7 +450,7 @@ Autonomous development is powerful, but **unbounded sessions** have costs:
 ### Session Flow
 
 ```
-DEFINE (5-10 min) → EXECUTE (2-4 hrs) → SHIP (15-30 min) → STOP (mandatory)
+DEFINE (brief) → EXECUTE (until complete) → SHIP (finalize) → STOP (mandatory)
 ```
 
 ### Anti-Patterns to Avoid

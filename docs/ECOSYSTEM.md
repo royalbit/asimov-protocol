@@ -4,27 +4,27 @@ How one protocol powers an entire product suite.
 
 ## The Story
 
-The RoyalBit Asimov wasn't designed in isolation. It emerged from building real products:
+RoyalBit Asimov wasn't designed in isolation. It emerged from building real products:
 
 1. **Forge** - A YAML formula calculator that needed autonomous development
 2. **A proprietary platform** - A full product ecosystem with backend, mobile apps, and business strategy
 
-The problems we solved building Forge became the protocol. The protocol then scaled to power an entire ecosystem.
+Problems solved building Forge became the protocol. The protocol scaled to power an entire ecosystem.
 
 ## The Ecosystem (Anonymized)
 
 ```mermaid
 flowchart TB
-    subgraph protocol["🔥 ROYALBIT ASIMOV"]
-        W[warmup.yaml]
-        S[sprint.yaml]
+    subgraph protocol["🔥 RoyalBit Asimov"]
+        W[warmup.json]
+        S[sprint.json]
         R[roadmap.yaml]
     end
 
     subgraph foss["OPEN SOURCE"]
         FORGE[Forge Calculator<br/>Rust • 183 tests]
         FZED[forge-zed<br/>Zed Extension • WASM]
-        PROTOCOL[RoyalBit Asimov<br/>Rust CLI • 79 tests]
+        PROTOCOL[RoyalBit Asimov<br/>Rust CLI • 421 tests]
     end
 
     subgraph proprietary["PROPRIETARY ECOSYSTEM"]
@@ -46,7 +46,7 @@ The same AI (Claude Opus 4.5) serves different roles depending on the project:
 | Repository | AI Role | Responsibilities |
 | ---------- | ------- | ---------------- |
 | **forge** | Principal Autonomous AI | Full ownership of Rust codebase, 183 tests |
-| **asimov** | Principal Autonomous AI | CLI, specification, 79 tests |
+| **asimov** | Principal Autonomous AI | CLI, specification, 421 tests |
 | **forge-zed** | Extension Developer | WASM extension for Forge, LSP integration |
 | **backend-api** | Principal Backend Engineer | Core API, performance-critical queries |
 | **mobile-app** | Principal Mobile Engineer | Flutter app, production-quality UI |
@@ -85,7 +85,7 @@ Each phase has:
 
 ### 1. Context Persistence
 
-Each project has its own `warmup.yaml` that defines:
+Each project has its own `warmup.json` that defines:
 - Project identity and purpose
 - AI ownership declaration
 - Key files and architecture
@@ -94,7 +94,7 @@ Each project has its own `warmup.yaml` that defines:
 
 ### 2. Autonomous Execution
 
-The workflow is simple:
+The workflow:
 ```
 Human: "run warmup"
 AI: [loads context, presents current phase]
@@ -173,13 +173,13 @@ A systematic investigation (August-November 2025) measured the impact:
 | Commit quality | 11.6 chars avg | 58.2 chars avg | **5x clearer** |
 | ADRs written | 0 | 5 | **∞** |
 
-**Key insight:** The "failed" ChatGPT period (70 days, 49 commits) established a baseline. The protocol + Claude period (6 days, 229 commits) proved the methodology works.
+**Key insight:** The "failed" ChatGPT period (70 days, 49 commits) established a baseline. The protocol + Claude period (6 days, 229 commits) proved the methodology.
 
 ### Before Protocol
 
 - Sessions started from scratch
 - Context lost between conversations
-- Human involvement in every decision
+- Human involved in every decision
 - Waiting time between sessions
 
 ### After Protocol
@@ -193,7 +193,7 @@ A systematic investigation (August-November 2025) measured the impact:
 
 ### The Forge Project: Built in ~38 Hours
 
-The entire Forge project was built with the RoyalBit Asimov:
+The entire Forge project was built with RoyalBit Asimov:
 
 | Phase | Time | Key Deliverables |
 | ----- | ---- | ---------------- |
@@ -204,9 +204,9 @@ The entire Forge project was built with the RoyalBit Asimov:
 | **Total** | **~38h** | **41 releases, 226 tests, 18,338 LOC** |
 
 **Industry comparison:**
-- Solo senior dev: 3-4 months (~500 hours) for this scope
+- Solo senior dev: 3-4 months (~500 hours)
 - With RoyalBit Asimov: **~38 hours**
-- **Multiplier: 13x calendar time, 50-150x effective velocity**
+- **Multiplier: 13x faster**
 
 ### Velocity Multipliers
 
@@ -217,7 +217,7 @@ The entire Forge project was built with the RoyalBit Asimov:
 | Rework | 30-50% | 0% | **∞** |
 | Releases/project | 3-5 | 41 | **10x** |
 
-**Bottom line:** 1 human + AI with RoyalBit Asimov = **50-150x velocity** (verified).
+**Bottom line:** 1 human + AI with RoyalBit Asimov = **50-150x velocity**.
 
 ### The Bootstrapping Proof
 
@@ -226,10 +226,10 @@ The protocol built itself. Both projects use the same methodology:
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | [forge](https://github.com/royalbit/forge) | 18,338 | 41 | ~38 | [GitHub](https://github.com/royalbit/forge/releases) |
-| [asimov](https://github.com/royalbit/asimov) | 17,118 | 10 | ~9 | [GitHub](https://github.com/royalbit/asimov/releases) |
-| **Combined** | **35,456** | **51** | **~47** | Both published |
+| [asimov](https://github.com/royalbit/asimov) | 32,226 | 76 | ~20 | [GitHub](https://github.com/royalbit/asimov/releases) |
+| **Combined** | **50,564** | **117** | **~58** | Both published |
 
-**1 human. 1 AI. 47 hours. 51 releases.**
+**1 human. 1 AI. 58 hours. 117 releases.**
 
 ### vs GitHub Copilot
 
@@ -242,7 +242,7 @@ The protocol built itself. Both projects use the same methodology:
 
 ## Green Coding
 
-The RoyalBit Asimov enables green coding practices—and creates a **cost moat**.
+RoyalBit Asimov enables green coding practices—and creates a **cost moat**.
 
 ### The Problem with AI Validation
 
@@ -304,7 +304,7 @@ See [GREEN_CODING.md](GREEN_CODING.md) for the full analysis.
 
 ## Why This Matters
 
-The RoyalBit Asimov proves that:
+RoyalBit Asimov proves that:
 
 1. **AI can own codebases** - Not just assist, but take full responsibility
 2. **Quality scales** - Zero warnings across an entire ecosystem
@@ -313,17 +313,16 @@ The RoyalBit Asimov proves that:
 
 ## Getting Started
 
-1. **Start small** - Add `warmup.yaml` to one project
+1. **Start small** - Add `warmup.json` to one project
 2. **Define ownership** - Who (AI) owns what
 3. **Set quality gates** - Tests must pass, zero warnings
-4. **Add bounded sessions** - 4-hour max, one milestone
-5. **Scale gradually** - Add `sprint.yaml`, then `roadmap.yaml`
+4. **Scale gradually** - Add `sprint.json`, then `roadmap.yaml`
 
 The protocol grew organically from solving real problems. Start with the problems you have.
 
 ## The Circular Nature
 
-The RoyalBit Asimov was born from building Forge. Now Forge uses the RoyalBit Asimov to build Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
+RoyalBit Asimov was born from building Forge. Forge now uses RoyalBit Asimov to build itself. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
 
 It's protocols all the way down.
 

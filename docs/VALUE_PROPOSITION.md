@@ -226,10 +226,10 @@ asimov init --type rust
 
 ### The Protocol (Free)
 
-- `warmup.yaml` - How to develop
-- `sprint.yaml` - When to stop
+- `warmup.json` - How to develop
+- `sprint.json` - When to stop
 - `roadmap.yaml` - What to build
-- `asimov.yaml` - The Three Laws (ethics)
+- `asimov.json` - The Three Laws (ethics)
 
 ### The CLI (Free)
 

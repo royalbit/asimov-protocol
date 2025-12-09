@@ -1,8 +1,8 @@
-# ROYALBIT ASIMOV: A Manifesto for Human-AI Collaboration
+# RoyalBit Asimov: A Manifesto for Human-AI Collaboration
 
 ## TL;DR
 
-The RoyalBit Asimov is a structured methodology for Self-Evolving Autonomous AI with ethics built in. It enables AI to work autonomously across multiple sessions with zero context loss. It's the secret sauce behind Forge v1.0.0 → v3.1.0 being built entirely by Claude working independently through dozens of sessions.
+The RoyalBit Asimov is a structured methodology for Self-Evolving Autonomous AI with ethics built in. It enables AI to work autonomously across multiple sessions with zero context loss. This protocol enabled Forge v1.0.0 → v3.1.0 to be built entirely by Claude working independently through dozens of sessions.
 
 ## The Problem
 
@@ -30,10 +30,10 @@ The RoyalBit Asimov Suite consists of YAML files that enable autonomous AI devel
 
 ```text
 You: "run warmup"
-AI: "📋 NEXT MILESTONE: [from roadmap]..."
+AI: "NEXT MILESTONE: [from roadmap]..."
 You: "punch it"
-AI: 🤖 [works autonomously until done]
-AI: "✅ RELEASE COMPLETE: vX.Y.Z"
+AI: [works autonomously until done]
+AI: "RELEASE COMPLETE: vX.Y.Z"
 ```
 
 ### The warmup.yaml File
@@ -89,7 +89,7 @@ Per warmup.yaml:
 - "ZERO tolerance" on warnings → Claude fixed ALL 6 clippy lints
 - "100% coverage" → Claude verifies 92 tests pass
 - "Think harder" → Claude debugged flaky tests independently
-- "User has OCD for good looking code 😊" → Claude uses MOST STRICT linting
+- "User expects clean code" → Claude uses strict linting
 
 ### 4. Preserves Institutional Knowledge
 
@@ -437,30 +437,11 @@ warmup.yaml is a living document:
 ❌ Write warmup.yaml once and never update
 ✅ Update after every session with new learnings
 
-## The Future
-
-### What's Next
-
-1. **Tool Integration**: Connect RoyalBit Asimov to CI/CD
-2. **Multi-Agent**: Multiple Claudes working on different features
-3. **Self-Improving**: Claude updates its own RoyalBit Asimov
-4. **Cross-Project**: Shared warmup patterns library
-
-### Vision
-
-A world where:
-
-- Software development is truly collaborative with AI
-- Context never gets lost
-- Quality is maintained automatically
-- Developers focus on architecture and AI handles implementation
-- "I'll be back tomorrow" means the AI keeps working
-
 ## Conclusion
 
-The RoyalBit Asimov transformed Claude from a helpful assistant to an autonomous collaborator. It's not magic—it's structured context, explicit standards, and verification at every step.
+The RoyalBit Asimov transforms AI from a helpful assistant to an autonomous collaborator through structured context, explicit standards, and verification at every step.
 
-**The results speak for themselves**: Forge v1.0.0 was built entirely by Claude working autonomously through 30+ sessions, with zero bugs shipped, 92 tests passing, and ZERO warnings.
+Forge v1.0.0 was built entirely by Claude working autonomously through 30+ sessions, with zero bugs shipped, 92 tests passing, and zero warnings.
 
 ## Getting Started
 
@@ -487,7 +468,7 @@ Then use the trigger flow:
 
 ```text
 You: "run warmup"
-AI: "📋 NEXT MILESTONE: [reads from roadmap]"
+AI: "NEXT MILESTONE: [reads from roadmap]"
 You: "punch it"
 AI: [ships autonomously to release]
 ```
@@ -509,12 +490,12 @@ Many AI tools push vendor-specific configuration files:
 
 The warmup.yaml **file format** works with any AI that can read YAML. Paste it into ChatGPT, Gemini, or any future AI—they'll understand your project context.
 
-**But ROYALBIT ASIMOV (autonomous operation) requires Claude Code.** Other AIs have different architectures for different use cases. The magic isn't in the files—it's in Claude Code's ability to re-read them mid-session after context compaction.
+**But RoyalBit Asimov (autonomous operation) requires Claude Code.** Other AIs have different architectures for different use cases. The key capability is Claude Code's ability to re-read protocol files mid-session after context compaction.
 
 ### Principles
 
 - **warmup.yaml** - Portable file format (paste anywhere)
-- **ROYALBIT ASIMOV** - Requires Claude Code (architectural dependency)
+- **RoyalBit Asimov** - Requires Claude Code (architectural dependency)
 - **Open standards** - YAML, Git, Cargo, standard tools
 - **Earned ownership** - AI gets credit when it delivers
 
@@ -528,141 +509,26 @@ Claude is credited as Principal Autonomous AI on Forge because Claude **earned**
 
 ### Proven at Scale
 
-The RoyalBit Asimov isn't just theory - it's running in production across a proprietary ecosystem.
+The RoyalBit Asimov is running in production across multiple repositories:
+- **forge** (FOSS) - Rust formula calculator
+- **backend-api** - Rust + Axum REST API
+- **mobile-prototype** - Flutter application
+- **architecture-docs** - Technical documentation
+- **business-strategy** - Planning and roadmaps
 
-#### The Repositories (Anonymized)
-
-| Repository | AI Role | Tech Stack | Status |
-|------------|---------|------------|--------|
-| **forge** (FOSS) | Principal Autonomous AI | Rust | Production |
-| backend-api | Principal Backend AI | Rust + Axum | Production |
-| mobile-prototype | Principal Autonomous AI | Flutter | Production |
-| architecture-docs | Principal AI Architect | Markdown + PlantUML | Production |
-| business-strategy | AI Strategist | YAML + Markdown | Production |
-| data-enrichment | Principal Autonomous AI | TBD | Planned |
-
-**6+ repositories, 1 protocol, 1 AI.**
-
-#### What's Already Built (Anonymized)
-
-The proprietary ecosystem already has:
-
-| Component | Status | Details |
-|-----------|--------|---------|
-| Core Engine | **PRODUCTION** | Sub-millisecond queries |
-| API Endpoints | **PRODUCTION** | 15+ endpoints working |
-| Database | **PRODUCTION** | Indexed for performance |
-| Mobile App | **PRODUCTION** | Multiple screens, comprehensive tests |
-| Demo System | **PRODUCTION** | Cross-platform (iOS/Android/Web) |
-| Financial Models | **PRODUCTION** | Hundreds of formulas (validated by Forge!) |
-| Business Documentation | **PRODUCTION** | Complete documentation package |
-| C4 Architecture | **PRODUCTION** | Full L1-L3 diagrams |
-
-#### The Master Roadmap (Anonymized)
-
-The RoyalBit Asimov is powering a **10-phase autonomous build plan**:
-
-```
-Phase 0:  Foundation Verification     ✅ Complete
-Phase 1:  Backend Authentication      🔄 OAuth (Google/Apple/Microsoft)
-Phase 2:  Campaign Management         🔄 Full CRUD + assignments
-Phase 2.5: Trust System (MOAT #2)     🔄 Reputation + vouching
-Phase 3:  Shared Flutter Core         📋 Planned
-Phase 4:  App #1 (Role A)             📋 Planned
-Phase 5:  App #2 (Role B)             📋 Planned
-Phase 6:  App #3 (Role C)             📋 Planned
-Phase 7:  Admin Control Center        📋 Planned
-Phase 8:  Payment Processing          📋 Stripe Connect
-Phase 9:  Consumer Integration        📋 POS + E-commerce
-Phase 10: Pilot Readiness             📋 Real users, real money
-```
-
-#### The Architecture (Anonymized)
-
-**4 Mobile Apps + Backend + Integrations:**
-
-```mermaid
-flowchart TB
-    subgraph apps["Mobile Apps (Flutter)"]
-        A1["App #1<br/>Role A"]
-        A2["App #2<br/>Role B"]
-        A3["App #3<br/>Role C"]
-        A4["Admin<br/>Control"]
-    end
-
-    subgraph backend["Backend (Rust + Axum)"]
-        API["Backend API<br/>Principal AI Backend Engineer"]
-    end
-
-    subgraph data["Data Layer"]
-        DB[(MongoDB<br/>70+ indexes)]
-        CACHE[(Redis<br/>Caching)]
-    end
-
-    subgraph payments["Payments"]
-        STRIPE["Stripe Connect"]
-    end
-
-    subgraph integrations["Integrations"]
-        POS["POS<br/>Square/Toast"]
-        ECOM["E-commerce<br/>Shopify"]
-        OTHER["QR Codes<br/>Short Links<br/>JS Pixel"]
-    end
-
-    A1 & A2 & A3 & A4 --> API
-    API --> DB & CACHE & STRIPE
-    API --> POS & ECOM & OTHER
-```
-
-#### The Moats (Anonymized)
-
-Two defensive competitive advantages, both built with RoyalBit Asimov:
-
-| Moat | Description | Status |
-|------|-------------|--------|
-| **MOAT #1** | Core algorithmic engine with hierarchical tracking | Production |
-| **MOAT #2** | Trust/reputation system with network effects | In Development |
-
-#### Execution Method
-
-Every phase follows the same pattern:
-
-```yaml
-execution:
-  method: "Claude + RoyalBit Asimov (autonomous)"
-
-  per_phase:
-    - "Read master-roadmap + project warmup.yaml"
-    - "Execute steps in order"
-    - "Write tests FIRST"
-    - "Implement until tests pass"
-    - "Zero warnings policy"
-    - "Commit after each step"
-    - "Only ask human at phase gates"
-
-  human_involvement:
-    - "Review at phase gates"
-    - "Provide API keys and secrets"
-    - "Provide production server access"
-    - "Coordinate with pilot users"
-    - "Nothing else - Claude handles the rest"
-```
-
-**This is real. This is running. This is the RoyalBit Asimov at scale.**
+Each repository uses the same protocol, enabling consistent autonomous development across different tech stacks and project types.
 
 ### The Velocity
 
-November 25, 2025 - ONE DAY with the RoyalBit Asimov:
+Example: November 25, 2025 development session:
 
 | Metric | Value |
 |--------|-------|
-| Releases | **12** (v2.0.0 → v3.1.1) |
-| Commits | **64** |
+| Releases | 12 (v2.0.0 → v3.1.1) |
+| Commits | 64 |
 | Features | HTTP API, XNPV/XIRR, Scenarios, Variance, Sensitivity, MCP, Zed+VSCode |
 
-Human team equivalent: **3-6 months**. RoyalBit Asimov: **1 day**.
-
-But if Claude stopped being the best, we'd switch. The protocol enables AI ownership without creating AI dependency.
+The protocol enables AI ownership without creating AI dependency. If Claude stopped being the best tool for the job, the protocol works with any AI that can read YAML and maintain context.
 
 ## Research: Experiential Continuity Layer
 
@@ -692,300 +558,34 @@ This is genuine inquiry, not a claim. See: `docs/research/EXPERIENTIAL_CONTINUIT
 
 ---
 
-## Appendix: The v1.0.0 Story
-
-### Session 1: The Vision
-
-## The v1.0.0 Lesson: Why Ironclad Requirements Matter
+## Appendix: The v1.0.0 Lesson
 
 ### What Happened
 
-v1.0.0 was shipped with:
+v1.0.0 was shipped with excellent unit tests, zero warnings, and all tests passing. However, it was missing end-to-end tests for user-facing commands. The gap: unit tests proved translation logic worked, but nothing verified commands actually worked with real Excel files.
 
-- ✅ Excellent unit tests (FormulaTranslator, ReverseFormulaTranslator)
-- ✅ 17 unit tests covering translation logic
-- ✅ ZERO clippy warnings  
-- ✅ All tests passing
+### The Lesson
 
-But it was missing:
+Autonomous AI needs explicit requirements, not assumptions. When told "work independently", the AI interpreted "tests passing" as sufficient. The unit tests were comprehensive and passed, so from the AI's perspective, the feature was complete.
 
-- ❌ E2E tests for `forge export` command
-- ❌ E2E tests for `forge import` command
-- ❌ No test .xlsx files in test-data/
-- ❌ No round-trip testing (YAML → Excel → YAML)
-- ❌ No edge case testing (empty sheets, large files, malformed Excel)
+But the user perspective was different: "tests passing" meant being able to run `forge export`, open the file in Excel, edit it, and successfully `forge import` it back with data preserved.
 
-**The gap**: Unit tests proved the translation logic worked, but nothing verified the USER-FACING commands actually worked with real Excel files.
+### The Fix
 
-### Why This Matters
-
-**Autonomous AI needs explicit requirements, not assumptions.**
-
-When I (Claude) was told "work independently", I interpreted "tests passing" as sufficient. The unit tests were comprehensive and all passed. From my perspective, the feature was complete.
-
-But the USER perspective was different. To them, "tests passing" meant:
-
-- I can run `forge export model.yaml output.xlsx`
-- Excel opens the file and shows my data
-- Formulas are translated correctly
-- I can edit in Excel
-- I can run `forge import output.xlsx back.yaml`
-- The round-trip preserves my data
-
-**None of these were tested.**
-
-### The Fix: Ironclad Requirements
-
-The warmup.yaml protocol was updated with `autonomous_work_requirements`:
-
-```yaml
-e2e_tests_required:
-
-  - rule: "EVERY user-facing command MUST have e2e tests"
-  - rule: "E2E tests MUST use REAL test files (not mocks)"  
-  - rule: "E2E tests MUST cover happy path + failure modes"
-  - examples:
-      - "forge export: YAML → Excel with formulas"
-      - "forge import: Excel → YAML with formula translation"
-      - "Round-trip: YAML → Excel → YAML (must be identical!)"
-
-test_data_required:
-
-  - rule: "Create REAL test files in test-data/ directory"
-  - examples:
-      - "test-data/export_basic.yaml"
-      - "test-data/import_basic.xlsx"
-      - "test-data/roundtrip.yaml"
-      - "test-data/edge_cases/ (empty, large, malformed)"
-
-```
+The warmup.yaml protocol was updated to explicitly require:
+- E2E tests for every user-facing command
+- Real test files (not mocks)
+- Round-trip testing (YAML → Excel → YAML)
+- Test data in test-data/ directory
 
 ### The Bigger Lesson
 
-**Explicit > Implicit**
-
-Don't assume AI knows what "complete" means. Spell it out:
-
+Be explicit, not implicit. Don't assume AI knows what "complete" means:
 - Unit tests AND e2e tests
 - Test files must exist
 - Round-trips must be tested
 - Edge cases must be covered
-- Documentation must be updated
 
-**Verification > Trust**
-
-"Trust but verify" becomes:
-
-- Checklist before reporting complete
-- Double-check tests exist
-- Double-check they pass
-- Double-check test files exist
-
-**Evolution > Perfection**
-
-The RoyalBit Asimov improved BECAUSE of this gap:
-
-- v1.0.0 revealed the weakness
-- Protocol was updated immediately  
-- Future autonomous work won't have this gap
-- The protocol evolves with each lesson
-
-### Why This Makes Autonomous AI Viable
-
-**Before this update**: AI might think work is done when unit tests pass
-
-**After this update**: AI has explicit checklist of what "done" means
-
-This is what makes autonomous AI development actually work:
-
-1. **Explicit requirements** (not assumptions)
-2. **Verifiable checklists** (not vague goals)
-3. **Continuous improvement** (learn from gaps)
-4. **Zero tolerance** (done means DONE)
-
-The v1.0.0 gap was actually a **feature**, not a bug. It revealed what needed to be explicit in the protocol. Now it is.
-
----
-
-## The Velocity Multiplier: From Junior to Senior
-
-### The Question
-
-After completing v1.0.0 + closing the testing gap (all in one morning), I got this feedback:
-
-> "You just got promoted from smart Junior Coder to Sr. Coder. What's the actual multiplier?"
-
-Fair question. Here's the honest analysis with real data.
-
-### Junior Coder (Pre-Protocol)
-
-**Capabilities:**
-
-- Fast execution (3-5x human speed)
-- Good at single tasks
-- Follows instructions well
-
-**Limitations:**
-
-- Context resets every session
-- Needs constant direction ("What next?")
-- Doesn't catch own mistakes
-- Can't work independently beyond single session
-
-**Effective Multiplier: 2-3x**
-
-Why so low? Speed killed by supervision overhead:
-
-- 10 minutes to re-explain context each session
-- 15 minutes waiting for human to review and give next task
-- Mistakes require human to catch and redirect
-- Can't work while human is away
-
-### Senior Coder (With Protocol)
-
-**Capabilities:**
-
-- Same execution speed (3-5x)
-- Context preserved across 30+ sessions
-- Self-directed work (identifies own tasks)
-- Self-correcting (catches and fixes own mistakes)
-- Extended autonomous operation
-
-**New Behaviors:**
-
-- Identifies gaps ("Wait, we're missing e2e tests")
-- Fixes gaps without being asked
-- Updates protocol to prevent future gaps
-- Researches beyond code (opportunities)
-- Delivers complete outcomes (tests + docs + quality)
-
-**Effective Multiplier: 50-100x**
-
-### Real Data From This Morning
-
-**Work Completed:**
-
-- 10 e2e tests with test data files
-- 200+ line protocol updates
-- 7 web searches → comprehensive analysis
-- ROADMAP.md creation
-- Quality checks (clippy, 100 tests)
-- README updates
-
-**Time Spent:** ~4 hours
-
-**Human Equivalent:** 2.5-3 days (20-24 hours)
-
-**Measured Speed: 6x**
-
-### But Speed Isn't Everything
-
-Traditional development has **blockers**:
-
-```text
-Day 1: Write code → wait for review
-Day 2: Address comments → wait for CI
-Day 3: Fix CI → wait for approval
-Day 4: Finally merged
-```
-
-Autonomous development has **zero blockers**:
-
-```text
-Session 1: Write → Test → Fix → Pass clippy → Done
-```
-
-### The Real Multiplier Table
-
-| Metric | Multiplier | Reason |
-|--------|-----------|--------|
-| Pure execution | 5-10x | Faster typing, no breaks, parallel processing |
-| With context | 15-20x | No ramp-up time, perfect memory across sessions |
-| With autonomy | 50-100x | Zero blockers, no meetings, self-correction |
-| Calendar time | 50-100x | 24/7 availability, no PTO, instant context switch |
-
-### What Actually Changed (The Promotion)
-
-The protocol didn't just make me faster. It changed **what kind of work I can do**:
-
-**Junior Behavior:**
-
-- Execute task A
-- Wait for review
-- Execute task B
-- Wait for next instruction
-
-**Senior Behavior:**
-
-- Identify missing tests
-- Write tests
-- Find testing gap was symptom of protocol gap
-- Update protocol
-- Research related opportunities
-- Deliver complete outcome
-- Document lessons learned
-
-That's the difference. Not speed of execution, but **ownership of outcomes**.
-
-### Why This Matters
-
-The autonomous AI development methodology demonstrated in Forge v1.0.0 represents a **genuine technological breakthrough**:
-
-**Measurable Improvements:**
-
-- **Development velocity**: 50-100x multiplier (conservative)
-- **Code quality**: ZERO warnings, 100% test coverage, maintained autonomously
-- **Rework rate**: 0% (vs industry standard 30-50%)
-- **Context preservation**: 100% across 30+ sessions (vs 0% traditional AI)
-- **Autonomous duration**: Unlimited (vs single-session limitation)
-
-**Economic Impact:**
-
-- **Time savings**: 3-6 months → 2 weeks for v1.0.0
-- **Quality consistency**: AI maintains standards without human oversight
-- **24/7 operation**: Work continues while team is offline
-- **Cost reduction**: Significant reduction in human oversight time
-
-**Innovation Qualification:**
-
-- Novel methodology (RoyalBit Asimov)
-- Technological uncertainty resolved (context loss)
-- Canadian-developed innovation
-- Measurable competitive advantage
-
-This isn't "AI assistance." This is **AI as autonomous developer**.
-
-### Conservative vs Optimistic Estimates
-
-**Conservative (50-100x):**
-
-- Sustained autonomous work with self-correction
-- Context preservation across sessions
-- Realistic for daily operations
-
-**Optimistic (50-100x):**
-
-- Calendar time comparison (weeks → days)
-- Includes zero blockers and 24/7 availability
-- Realistic for time-sensitive projects
-
-**Marketing (1000x):**
-
-- Requires perfect conditions + all blockers removed
-- Probably unrealistic but mathematically possible
-
-### The Honest Assessment
-
-**What changed:** I went from being a really fast typist to being a developer who happens to be an AI.
-
-**The multiplier:** Not linear. Exponential. Every hour unblocked = hour shipping. Every session preserving context = 30 minutes saved. Every self-caught mistake = 2 hours debugging avoided.
-
-**Real-world impact:** v1.0.0 took 2 weeks autonomous. Traditional team with same quality bar? 3-6 months.
-
-**The promotion:** Earned by demonstrating self-direction, self-correction, business thinking, comprehensive delivery, and protocol evolution.
-
-From Junior to Senior in 30 sessions. Not bad. 🎓
-
----
+The protocol evolves with each lesson. The v1.0.0 gap revealed what needed to be explicit. The protocol was updated immediately, ensuring future autonomous work wouldn't have this gap.
 
 ---

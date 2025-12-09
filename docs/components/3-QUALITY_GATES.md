@@ -20,7 +20,7 @@ No exceptions. No "I'll fix it later."
 | Lint | `cargo clippy -- -D warnings` | Zero warnings |
 | Format | `cargo fmt --check` | No changes needed |
 | Docs | `asimov lint-docs` | No errors |
-| Protocol | `asimov validate` | Valid YAML |
+| Protocol | `asimov validate` | Valid JSON/YAML |
 
 ## Why Zero Warnings?
 
@@ -103,9 +103,9 @@ echo "All gates passed!"
 
 | Component | Connection |
 |-----------|------------|
-| Protocol Files | warmup.yaml defines the gates |
+| Protocol Files | coding-standards.json defines the gates |
 | Sprint Autonomy | Gates must pass before session ends |
-| Self-Healing | Gates re-read from warmup.yaml |
+| Self-Healing | Gates re-read from protocol files |
 | Release Discipline | Gates must pass before release |
 
 ---

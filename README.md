@@ -50,7 +50,7 @@ Each project initialized with `asimov init` becomes a Self-Evolving Autonomous A
 |-------|------|---------------|
 | 1 | Nov 23, 2025 | **Forge** - Building a spreadsheet engine, context lost every session. Created `warmup.yaml` hack. |
 | 2 | Nov 23-24, 2025 | **Warmup Protocol** - The hack became a protocol. Quality standards, file locations, release procedures. |
-| 3 | Nov 24-25, 2025 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added 4hr max, "done > perfect". |
+| 3 | Nov 24-25, 2025 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added bounded sessions, "done > perfect". |
 | 4 | Nov 25, 2025 | **Forge Protocol** - Extracted as standalone. But the name was wrong—other projects could use it. |
 | 5 | Nov 25-26, 2025 | **Ethics** - Claude refused to build surveillance features. The protocol worked. Formalized harm prevention. |
 | 6 | Nov 26-27, 2025 | **Asimov** - Named after Isaac Asimov's Three Laws (1942). First Law = do no harm. Second = obey humans. Third = self-preserve. |
@@ -299,7 +299,7 @@ flowchart LR
 - **Mid-session recovery**: Re-read protocols when confused
 - **Cross-session resume**: Claude Code `--continue` / `--resume`
 
-The `sprint.json` protocol bounds autonomous sessions to 4 hours max.
+The `sprint.json` protocol bounds autonomous sessions with quality gates and natural stopping points.
 
 ## Documentation
 

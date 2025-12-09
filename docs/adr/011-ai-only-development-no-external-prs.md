@@ -6,7 +6,7 @@
 
 ## Context
 
-The RoyalBit Asimov enables autonomous AI development ("ROYALBIT ASIMOV") with ethics safeguards. However, a critical attack vector exists:
+The RoyalBit Asimov enables autonomous AI development ("RoyalBit Asimov") with ethics safeguards. However, a critical attack vector exists:
 
 **External Pull Requests can bypass ethics.yaml.**
 
@@ -52,7 +52,7 @@ Human (direction) → AI (autonomous) → Tests Pass → Direct Commit → Main
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                     ROYALBIT ASIMOV TRUST MODEL                       │
+│                     RoyalBit Asimov TRUST MODEL                       │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                      │
 │   Human Owner                                                        │
@@ -267,7 +267,7 @@ Thank you for understanding! 🙏
 
 This ADR applies to:
 - `asimov` repository
-- All projects using RoyalBit Asimov with ROYALBIT ASIMOV
+- All projects using RoyalBit Asimov with Asimov Mode
 - Any fork that carries ethics.yaml (social contract)
 
 ## References

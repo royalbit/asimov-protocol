@@ -4,7 +4,7 @@
 
 ## Timeline
 
-**The entire journey: 12 days.** From first commit to production protocol suite - November 23 to December 4, 2025. 9 phases of evolution.
+Nine phases of evolution from November 23 to December 4, 2025.
 
 ### Phase 1: Forge (November 23, 2025)
 
@@ -25,10 +25,9 @@ The warmup file grew. It wasn't just context anymore - it was encoding *how* to 
 
 ### Phase 3: Sprint Boundaries (November 24-25, 2025)
 
-A new problem emerged: sessions ran forever. Claude would scope creep, chasing perfection instead of shipping. Quotas burned. Nothing released.
+A new problem emerged: sessions ran forever. Claude would scope creep, chasing perfection instead of shipping.
 
 **The Fix:** `sprint.yaml` - bounded sessions with hard rules:
-- 4-hour maximum
 - ONE milestone per session
 - MUST end releasable
 - "Done > Perfect"
@@ -80,145 +79,57 @@ A critical realization: Asimov's First Law has **two halves**:
 
 > *"A robot may not injure a human being **or, through inaction, allow a human being to come to harm**."*
 
-Everyone implements the first half. We implemented both.
+Everyone implements the first half. We implemented both. Active harm means don't build harmful tools. Inaction means don't stay silent when you know better—like disclosing when data might be stale.
 
-| Half | What It Means | Example |
-|------|---------------|---------|
-| Active harm | Don't build harmful tools | No wallet drainers |
-| **Inaction** | Don't stay silent when you know better | Disclose stale data risk |
-
-**Why this matters:** Search is disabled by default (each search costs ~$0.01). When AI has stale data but doesn't disclose it, that's **inaction allowing harm**—which Asimov prevents. We made this explicit in `asimov.yaml` with the Five Non-Negotiable Principles.
-
-See [ADR-023: The Inaction Principle](adr/023-inaction-principle.md) for full rationale.
+This became explicit in `asimov.yaml` with the Five Non-Negotiable Principles. See [ADR-023: The Inaction Principle](adr/023-inaction-principle.md) for full rationale.
 
 ### Phase 9: Self-Evolving Autonomous AI (November 29-30, 2025)
 
 The final realization: RoyalBit Asimov combines **two distinct AI frontiers**:
 
-**Autonomous AI** ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality), [MIT Sloan](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)):
-- Works independently, makes decisions, self-corrects under human oversight
-- Enterprise adoption at Level 1-2 (2025)
-- What most companies are trying to achieve
+**Autonomous AI** works independently, makes decisions, and self-corrects under human oversight. This is what most enterprise AI initiatives are pursuing today.
 
-**Self-Evolving AI** ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself), [Fast Company](https://www.fastcompany.com/91384819/what-is-self-evolving-ai-and-why-do-you-need-to-worry-about-it-now-ai-management)):
-- Improves itself over time, modifies own processes
-- The arXiv survey even proposes "Three Laws of Self-Evolving AI" - aligning with Asimov's framework
-- Considered "path to ASI" - the next frontier
+**Self-Evolving AI** improves itself over time and modifies its own processes. Research literature describes this as the next frontier beyond autonomous agents.
 
-**The combination is unprecedented:**
+RoyalBit Asimov combines both—with ethics built in through sprint autonomy, quality gates, bootstrapping, self-healing, and anti-tampering mechanisms.
 
-| Capability | Status | RoyalBit Asimov |
-|------------|--------|-----------------|
-| Autonomous AI | Enterprise Level 1-2 | ✅ Sprint Autonomy, Quality Gates |
-| Self-Evolving AI | Next frontier | ✅ Bootstrapping, Self-Healing |
-| Ethics Built In | Rare | ✅ Three Laws, Anti-Tampering |
+## The Circular Proof
 
-**Self-Evolving + Autonomous + Ethics = What no one else has.**
-
-## The Circular Proof (Self-Evolving in Action)
-
-Forge v1.0-v3.1 was built using ad-hoc protocols that became RoyalBit Asimov.
-
-Now Forge v3.2+ is built using RoyalBit Asimov.
+Forge was built using ad-hoc protocols that became RoyalBit Asimov. Now Forge is built using RoyalBit Asimov.
 
 The protocol that emerged from building Forge now powers building Forge.
 
-**This IS self-evolving AI:**
-- v1.0 → v7.0: Protocol improved itself through each iteration
+**This is self-evolving AI:**
+- The protocol improved itself through each iteration
 - Each session applies lessons from previous sessions
 - The methodology compounds efficiency gains
-- Forge birthed Asimov → Asimov now builds Forge
+- Forge birthed Asimov, and Asimov now builds Forge
 
-**~47 hours. 51 releases. 35,000+ lines of code. Two projects. One protocol suite.**
+## Anti-Tampering: Ethics Through Architecture
 
-## Anti-Tampering: Ethics That Can't Be Quietly Disabled
+Ethics aren't just written into YAML files—they're **hardcoded into the binary**.
 
-We didn't just write ethics into YAML files. We **hardcoded them into the binary**.
+### Three Layers of Protection
 
-### Layer 1: Hardcoded in the CLI Binary
+**Layer 1: Hardcoded Ethics** - Core principles, red flag patterns, and human veto commands are compiled into `cli/src/ethics.rs`. To bypass them, you'd need to fork the repo, modify Rust source, and rebuild the binary—creating a deliberate audit trail.
 
-From `cli/src/ethics.rs`:
+**Layer 2: The 2-Cosigner Rule** - Every protocol YAML requires two human co-signers with public justification to modify. Git history records everything.
 
-```rust
-//! Hardcoded Ethics Module - Core ethics compiled into binary
-//!
-//! This module contains ethics that CANNOT be removed by deleting a file.
-//! To bypass these ethics, a bad actor must rebuild the entire CLI binary.
-```
+**Layer 3: Automatic Validation** - `asimov validate` runs on every commit. If `asimov.yaml` is missing or corrupted, the CLI warns loudly and falls back to hardcoded ethics.
 
-**What's hardcoded:**
-- 5 core principles (financial, physical, privacy, deception, transparency)
-- 33 red flag patterns across 4 categories
-- Human veto commands that always work
-
-**To bypass:** You'd have to fork the repo, modify the Rust source, and rebuild. That's intentional - it creates an audit trail. Tampering requires *deliberate action*, not accidental deletion.
-
-### Layer 2: The 2-Cosigner Rule
-
-Every protocol YAML file contains:
-
-```yaml
-modification_rules:
-  immutable_without: "2 human co-signers with public justification"
-  on_modification:
-    - "Document WHY in commit message"
-    - "Both signers must be in git commit (Co-Authored-By)"
-```
-
-**To weaken ethics:** You need two humans to publicly sign off. No quiet changes. Git history records everything.
-
-### Layer 3: Validation on Every Run
-
-`asimov validate` runs automatically (pre-commit hooks). If asimov.yaml is missing or corrupted, the CLI:
-1. Warns loudly
-2. Falls back to hardcoded ethics
-3. Optionally regenerates the file
-
-**You cannot accidentally run without ethics.**
-
-### Why This Matters
-
-| Approach | Bypass Method | Audit Trail |
-|----------|---------------|-------------|
-| Corporate AI guidelines | Prompt injection | None |
-| Config file ethics | Delete the file | Git history |
-| **RoyalBit Asimov** | **Fork + rebuild binary** | **Public commit** |
-
-Tampering is possible (it's open source). But it requires:
-- Technical skill (Rust compilation)
-- Deliberate intent (can't be accidental)
-- Public evidence (git history)
-
-This is ethics through architecture, not policy.
+Tampering is possible—it's open source—but it requires technical skill, deliberate intent, and leaves public evidence. This is ethics through architecture, not policy.
 
 ## Honest Limitations
 
-The anti-tampering architecture works for good-faith actors. But let's be honest:
+The anti-tampering architecture works for good-faith actors. Ethics are a social contract, not a technical lock. We cannot prevent determined bad actors.
 
-- **Proprietary license** means forking is not permitted (but determined actors could still copy)
-- **Same velocity** that ships SaaS can ship malware
-- **Ethics are a social contract**, not a technical lock
-- **We cannot prevent determined bad actors**
-
-What we CAN do:
-- Make ethics the default (included in all templates)
-- Make removal visible (CLI warns, git history records)
-- Build community around values (early adopters set culture)
-- Document honestly (like this)
+What we can do: make ethics the default, make removal visible, build community around values, and document honestly.
 
 *The ethics system is a guardrail, not a cage. It works for people who want guardrails.*
 
 ## Sustainability Impact
 
-Green coding isn't just philosophy - it's measurable:
-
-| Metric | Cloud AI Validation | Local CLI | Savings |
-|--------|---------------------|-----------|---------|
-| Cost/year (personal) | $792 | $0 | **100%** |
-| Carbon/validation | ~0.25g CO₂ | ~0.0005g CO₂ | **99.6%** |
-| At scale (100 devs) | 6.2 tonnes CO₂/year | Near zero | **ESG compliance** |
-
-The protocol proves velocity and sustainability aren't trade-offs. You can ship fast AND ship green.
+Local-first validation eliminates cloud costs and reduces carbon footprint by orders of magnitude compared to AI-based validation. The protocol proves velocity and sustainability aren't trade-offs.
 
 Every `asimov init` project is a green-coding project by default.
 
@@ -228,17 +139,17 @@ Every `asimov init` project is a green-coding project by default.
 
 1. **Files over prompts** - AI reads files reliably. System prompts get compressed.
 
-2. **Boundaries create freedom** - 4-hour limits force shipping. Constraints enable autonomy.
+2. **Boundaries create freedom** - Bounded sessions force shipping. Constraints enable autonomy.
 
 3. **Ethics through architecture** - Rules in files that AI reads work better than corporate guidelines AI ignores.
 
-4. **Local-first validation** - CLI tools cost $0 and 0 carbon. AI validation wastes tokens.
+4. **Local-first validation** - CLI tools eliminate cost and carbon waste.
 
 5. **Truth over comfort** - Anti-sycophancy rules prevent AI from just agreeing with users.
 
-6. **Anti-tampering by design** - Hardcoded ethics + 2-cosigner rule + validation = can't be quietly disabled.
+6. **Anti-tampering by design** - Hardcoded ethics, 2-cosigner rule, and validation prevent quiet removal.
 
-7. **Self-evolving by design** - The protocol improves itself through use. Forge built Asimov → Asimov builds Forge.
+7. **Self-evolving by design** - The protocol improves itself through use.
 
 ---
 

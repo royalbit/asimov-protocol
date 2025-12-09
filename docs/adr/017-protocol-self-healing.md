@@ -45,7 +45,7 @@ When validation runs and detects missing files:
 | roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton template) |
 | CLAUDE.md | NEVER AUTO-CREATE | Bootstrap must be intentional |
 
-**Note on sprint.yaml:** Sprint is a PROTOCOL, not optional data. It defines session boundaries (1 milestone per session, run until complete). Without sprint boundaries, ROYALBIT ASIMOV has no stopping discipline.
+**Note on sprint.yaml:** Sprint is a PROTOCOL, not optional data. It defines session boundaries (1 milestone per session, run until complete). Without sprint boundaries, RoyalBit Asimov has no stopping discipline.
 
 **Note on roadmap.yaml:** Roadmap is DATA, but essential for autonomous operation. Auto-generated as a skeleton template with one placeholder milestone that guides the user/AI to define actual work.
 
@@ -107,7 +107,7 @@ backlog:
 **Why skeleton?** Roadmap is DATA, not RULES. We can't know what milestones make sense for a project. The skeleton:
 - Passes validation (has required fields)
 - Clearly signals "fill this in"
-- Guides bounded thinking (4hr milestone sizing)
+- Guides bounded thinking (milestone sizing for bounded sessions)
 
 ### 5. Checksum Validation (Future)
 

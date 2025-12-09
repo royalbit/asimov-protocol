@@ -112,7 +112,7 @@ events.
 
 2. **Mid-Session Recovery**: PreCompact hook injects protocol rules before compaction,
    ensuring they survive in the summarized context. This is the missing piece for true
-   ROYALBIT ASIMOV autonomy.
+   RoyalBit Asimov autonomy.
 
 3. **Unique Differentiator**: No other AI coding assistant has this capability. Forge
    Protocol on Claude Code offers autonomous operation that competitors cannot match.
@@ -139,7 +139,7 @@ events.
 RoyalBit Asimov remains vendor-neutral at the **file format** level:
 - warmup.yaml, ethics.yaml, sprint.yaml, green.yaml work anywhere as static context
 
-But **autonomous operation** (ROYALBIT ASIMOV) requires Claude Code:
+But **autonomous operation** (RoyalBit Asimov) requires Claude Code:
 - SessionStart hook for auto-initialization
 - PreCompact hook for mid-session survival
 
