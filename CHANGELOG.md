@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.11.0] - 2025-12-09
+
+### WIP Continuity Protocol (ADR-047)
+
+**Claude auto-resumes WIP after context compaction. No user re-prompting needed.**
+
+#### Problem Solved
+- After context compaction, Claude "forgets" what task was in progress
+- User had to re-explain or re-prompt to continue work
+- Broke the "4-hour autonomous session" promise
+
+#### Solution
+- **Git pre-commit as forcing function**: Claude commits → hook fires → WIP reminder output → Claude sees it
+- **roadmap.yaml IS the lock file**: Deliverables with `status: wip` indicate active work
+- **Warmup injection**: Belt-and-suspenders redundancy for session start
+
+#### Changes
+- `warmup.rs`: Added WIP detection from roadmap.yaml deliverables
+- `main.rs`: Output WIP state in warmup (JSON + verbose display)
+- `protocols.rs`: Added `wip_continuity` section to sprint protocol
+- `hooks.rs`: Pre-commit outputs WIP reminder when `status: wip` detected
+- Added `WarmupResult` fields: `wip_active`, `wip_item`, `wip_progress`, `next_milestone`, `next_summary`
+
+#### WIP Workflow
+1. User says "go" → Claude sets first todo to `status: wip`
+2. Work proceeds → Claude commits → pre-commit shows reminder
+3. Context compacts → next commit triggers reminder → Claude resumes
+4. Item done → set to `status: done`, next to `status: wip`
+5. Milestone complete → archive to CHANGELOG.md
+
+#### Test Coverage
+- 3 new unit tests for WIP detection in warmup
+- All 488 tests passing
+
+---
+
 ## [9.2.3] - 2025-12-06
 
 ### Fix: Conditional Migrations Protocol Loading

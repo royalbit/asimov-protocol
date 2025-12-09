@@ -18,6 +18,12 @@ pub struct WarmupResult {
     pub protocols_json: Option<String>,
     pub update_available: Option<String>,
     pub error: Option<String>,
+    // WIP Continuity (ADR-047)
+    pub wip_active: bool,
+    pub wip_item: Option<String>,
+    pub wip_progress: Option<String>,
+    pub next_milestone: Option<String>,
+    pub next_summary: Option<String>,
 }
 
 pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
@@ -32,6 +38,12 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         protocols_json: None,
         update_available: None,
         error: None,
+        // WIP Continuity (ADR-047)
+        wip_active: false,
+        wip_item: None,
+        wip_progress: None,
+        next_milestone: None,
+        next_summary: None,
     };
 
     if check_updates {
@@ -72,6 +84,53 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
             .get("summary")
             .and_then(|v| v.as_str())
             .map(String::from);
+    }
+
+    // WIP Continuity Detection (ADR-047)
+    // Check for next milestone and WIP items
+    if let Some(next) = roadmap.get("next") {
+        // Handle both array format and single object format
+        let next_items: Vec<&serde_yaml::Value> = if next.is_sequence() {
+            next.as_sequence().map(|s| s.iter().collect()).unwrap_or_default()
+        } else {
+            vec![next]
+        };
+
+        for item in next_items {
+            // Get milestone info
+            if result.next_milestone.is_none() {
+                result.next_milestone = item
+                    .get("version")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+                result.next_summary = item
+                    .get("summary")
+                    .and_then(|v| v.as_str())
+                    .map(String::from);
+            }
+
+            // Check deliverables for WIP items
+            if let Some(deliverables) = item.get("deliverables").and_then(|d| d.as_sequence()) {
+                let mut total = 0;
+                let mut done = 0;
+
+                for d in deliverables {
+                    if let Some(status) = d.get("status").and_then(|s| s.as_str()) {
+                        total += 1;
+                        if status == "done" {
+                            done += 1;
+                        } else if status == "wip" && result.wip_item.is_none() {
+                            result.wip_active = true;
+                            result.wip_item = d.get("id").and_then(|i| i.as_str()).map(String::from);
+                        }
+                    }
+                }
+
+                if total > 0 {
+                    result.wip_progress = Some(format!("{}/{}", done, total));
+                }
+            }
+        }
     }
 
     // Load project.yaml if exists
@@ -181,10 +240,110 @@ mod tests {
             protocols_json: Some("{}".to_string()),
             update_available: None,
             error: None,
+            wip_active: true,
+            wip_item: Some("test-item".to_string()),
+            wip_progress: Some("1/3".to_string()),
+            next_milestone: Some("2.0.0".to_string()),
+            next_summary: Some("Next milestone".to_string()),
         };
         assert!(r.success);
         assert_eq!(r.project_name.unwrap(), "Test");
         assert_eq!(r.project_type, ProjectType::Rust);
+        assert!(r.wip_active);
+        assert_eq!(r.wip_item.unwrap(), "test-item");
+    }
+
+    // WIP Continuity tests (ADR-047)
+
+    #[test]
+    fn test_warmup_detects_wip_item() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
+        std::fs::write(
+            asimov_dir.join("roadmap.yaml"),
+            r#"
+current:
+  version: '1.0'
+  status: released
+next:
+  - version: '2.0'
+    summary: 'Next milestone'
+    deliverables:
+      - id: item-1
+        status: done
+      - id: item-2
+        status: wip
+      - id: item-3
+        status: todo
+"#,
+        )
+        .unwrap();
+
+        let result = run_warmup(temp.path(), false);
+        assert!(result.success);
+        assert!(result.wip_active);
+        assert_eq!(result.wip_item, Some("item-2".to_string()));
+        assert_eq!(result.wip_progress, Some("1/3".to_string()));
+        assert_eq!(result.next_milestone, Some("2.0".to_string()));
+        assert_eq!(result.next_summary, Some("Next milestone".to_string()));
+    }
+
+    #[test]
+    fn test_warmup_no_wip_when_all_todo() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
+        std::fs::write(
+            asimov_dir.join("roadmap.yaml"),
+            r#"
+current:
+  version: '1.0'
+next:
+  - version: '2.0'
+    summary: 'Ready to start'
+    deliverables:
+      - id: item-1
+        status: todo
+      - id: item-2
+        status: todo
+"#,
+        )
+        .unwrap();
+
+        let result = run_warmup(temp.path(), false);
+        assert!(result.success);
+        assert!(!result.wip_active);
+        assert!(result.wip_item.is_none());
+        assert_eq!(result.wip_progress, Some("0/2".to_string()));
+        assert_eq!(result.next_milestone, Some("2.0".to_string()));
+    }
+
+    #[test]
+    fn test_warmup_no_wip_when_all_done() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
+        std::fs::write(
+            asimov_dir.join("roadmap.yaml"),
+            r#"
+current:
+  version: '1.0'
+next:
+  - version: '2.0'
+    deliverables:
+      - id: item-1
+        status: done
+      - id: item-2
+        status: done
+"#,
+        )
+        .unwrap();
+
+        let result = run_warmup(temp.path(), false);
+        assert!(result.success);
+        assert!(!result.wip_active);
+        assert_eq!(result.wip_progress, Some("2/2".to_string()));
     }
 
     #[test]

@@ -4,42 +4,26 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "9.8.0"
+  version: "9.11.0"
   status: released
-  summary: "Dependency Health Audit (STRICT)"
-  goal: "GOOD CODE = Fresh deps, zero vulns, license-compliant. Pre-commit FAILS on violations."
-  priority: NORMAL
+  summary: "WIP Continuity Protocol - Survive Context Compaction"
+  goal: "Claude auto-resumes WIP after context compaction. No user re-prompting needed."
   deliverables:
-    - "[x] ADR-045: Dependency Health Protocol"
-    - "[x] LICENSE file detection (MIT, Apache-2.0, GPL, BSD, Proprietary)"
-    - "[x] License compatibility: auto-detect from LICENSE/Cargo.toml/package.json/pyproject.toml"
-    - "[x] Security: FAIL commit on any vulnerability (cargo audit, pip-audit, npm audit, govulncheck)"
-    - "[x] Freshness: FAIL commit on outdated deps (including MAJOR versions)"
-    - "[x] Rust: cargo audit + cargo deny + cargo outdated"
-    - "[x] Python: pip-audit + pip-licenses + pip list --outdated"
-    - "[x] Node: npm audit + license-checker + npm outdated"
-    - "[x] Go: govulncheck + go list -m -u all"
-    - "[x] Flutter: dart pub outdated"
-    - "[x] Pre-commit hooks: direct tool calls (no SPOF), FAIL on issues"
-    - "[x] asimov doctor: full dependency health report with license display"
-    - "[x] Tests passing (488 tests)"
+    - "[x] ADR-047: WIP Continuity Protocol"
+    - "[x] Warmup detects and outputs WIP state from roadmap.yaml"
+    - "[x] Add WIP workflow to sprint protocol"
+    - "[x] Tests for WIP detection (3 new tests)"
 
 previous:
-  version: "9.7.0"
+  version: "9.10.0"
   status: released
-  summary: "Dependency Setup Assistant"
-  goal: "asimov init adds dev dependencies for coding standards tools"
+  summary: "Pre-commit WIP Injection"
+  goal: "Git pre-commit hook outputs WIP state for context compaction survival"
 
 next:
-  - version: "9.10.0"
+  - version: "9.12.0"
     status: planned
-    summary: "Fix identity.name in warmup protocol"
-    goal: "Warmup correctly reads identity.name from project.yaml instead of identity.project"
-    deliverables:
-      - "[ ] Fix warmup.rs to read identity.name"
-      - "[ ] Update warmup schema to use identity.name"
-      - "[ ] Update warmup templates to use identity.name"
-      - "[ ] Update tests"
+    summary: "TBD - Next milestone"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"

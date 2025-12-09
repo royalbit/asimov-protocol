@@ -341,6 +341,66 @@ fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
         }
     }
 
+    // WIP Continuity (ADR-047)
+    if result.wip_active {
+        if verbose {
+            println!("{}", "═".repeat(78).bright_yellow());
+            println!(
+                "{}",
+                "🔥 ACTIVE WIP - RESUME THIS TASK".bold().bright_yellow()
+            );
+            println!("{}", "═".repeat(78).bright_yellow());
+            if let Some(ref item) = result.wip_item {
+                println!("  Current: {}", item.bright_green().bold());
+            }
+            if let Some(ref progress) = result.wip_progress {
+                println!("  Progress: {} items complete", progress);
+            }
+            println!();
+            println!(
+                "  {}",
+                ">>> CONTINUE WORKING - USER CONSENT ALREADY GIVEN <<<".bright_yellow()
+            );
+            println!();
+        }
+        // Output WIP JSON for context injection
+        println!();
+        println!(
+            "{}",
+            serde_json::json!({
+                "wip_continuity": {
+                    "active": true,
+                    "item": result.wip_item,
+                    "progress": result.wip_progress,
+                    "milestone": result.next_milestone,
+                    "rule": "RESUME IMMEDIATELY. User consent given at milestone start."
+                }
+            })
+        );
+    } else if result.next_milestone.is_some() {
+        // Show ready-to-start message
+        if verbose {
+            println!("{}", "NEXT MILESTONE".bold());
+            if let Some(ref ver) = result.next_milestone {
+                print!("  v{}", ver.bright_blue());
+            }
+            if let Some(ref summary) = result.next_summary {
+                println!(" - {}", summary);
+            } else {
+                println!();
+            }
+            if let Some(ref progress) = result.wip_progress {
+                println!("  Progress: {} items complete", progress);
+            }
+            println!();
+            println!(
+                "  {}",
+                "Say \"go\" to start autonomous execution.".bright_cyan()
+            );
+            println!();
+        }
+    }
+
     // Output protocols JSON for context injection
     if let Some(ref json) = result.protocols_json {
         println!();

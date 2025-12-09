@@ -400,6 +400,37 @@ phases:
       - "CHANGELOG.md updated"
       - "roadmap.yaml current"
 
+# WIP Continuity Protocol (ADR-047)
+# Survives context compaction via git pre-commit forcing function
+wip_continuity:
+  trigger: "roadmap.yaml deliverables with status: wip"
+
+  on_go:
+    - "Set first todo deliverable to status: wip"
+    - "Begin work immediately"
+    - "User consent now covers entire milestone"
+
+  during_work:
+    - "Commit code changes frequently"
+    - "Pre-commit hook outputs WIP reminder"
+    - "Continue on current item until done"
+
+  on_item_complete:
+    - "Set current item to status: done"
+    - "Set next todo item to status: wip"
+    - "Continue without asking"
+
+  after_context_compaction:
+    - "Pre-commit fires on next commit"
+    - "WIP reminder shows current task"
+    - "Resume immediately - consent already given"
+    - "DO NOT re-ask for permission"
+
+  on_milestone_complete:
+    - "All items status: done"
+    - "Archive to CHANGELOG.md"
+    - "Move to next milestone if available"
+
 anti_patterns:
   scope_creep: "Note it for NEXT session, don't do it now"
   perfectionism: "Working code > Perfect code. Ship it."
@@ -419,6 +450,7 @@ authority:
   never_stop_for:
     - "Completed a milestone"
     - "Arbitrary time checkpoints"
+    - "Context compaction (WIP continuity handles this)"
   ask_human_only:
     - "Blocked by external dependency"
     - "Fundamental requirement ambiguity"
