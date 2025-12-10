@@ -1,6 +1,6 @@
 # RoyalBit Asimov Specification
 
-Version 9.14.0
+Version 9.16.0
 
 ## Overview
 
@@ -613,7 +613,7 @@ The bootstrap file. Must be ultra-short to survive summarization.
 
 Rules: Run until done, keep shipping, tests pass.
 
-ON SESSION START: Immediately read .asimov/roadmap.yaml, run `asimov validate`, present next milestone. Do NOT wait for user prompt.
+ON SESSION START: Immediately run `asimov warmup` to load all protocols and project context, then present next milestone. Do NOT wait for user prompt.
 ```
 
 **Constraints:**
@@ -621,6 +621,8 @@ ON SESSION START: Immediately read .asimov/roadmap.yaml, run `asimov validate`, 
 - `@import` syntax for protocol files
 - Core rules in one line
 - **ON SESSION START directive** (v4.1.8+): Forces Claude to act immediately
+
+**v9.16.0 Update:** The ON SESSION START directive now recommends running `asimov warmup` instead of reading individual files. The warmup command outputs comprehensive JSON containing all protocols, project configuration (from project.yaml), roadmap (from roadmap.yaml), and WIP status in a single output, eliminating the need for separate file reads.
 
 **Why ON SESSION START is Required (v4.1.8):**
 
@@ -854,8 +856,8 @@ Claude Code 2.0 provides checkpoint functionality for **MANUAL** restore:
 ```
 User: "run warmup"
   ↓
-AI: Reads .asimov/warmup.json, .asimov/sprint.json, .asimov/roadmap.yaml
-AI: Presents next milestone
+AI: Runs `asimov warmup` - receives comprehensive JSON with all protocols, project, roadmap, WIP
+AI: Presents next milestone (all context already loaded)
   ↓
 User: "go" / "punch it" / "ship it"
   ↓
@@ -1054,6 +1056,8 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 - Presents next milestone
 - Waits for user "go" confirmation
 
+**v9.16.0 Improvement**: When Claude runs `asimov warmup` (recommended), it receives all protocols, project, and roadmap data in a single JSON output, eliminating the need for separate file reads.
+
 **Output** (injected into Claude's context when exit 0):
 ```
 🔥 ROYALBIT ASIMOV ACTIVE
@@ -1142,12 +1146,60 @@ asimov refresh                 # Output protocol reminder
 asimov refresh --verbose       # Include quality gates
 
 # Load session protocols
-asimov warmup                  # Display all hardcoded protocols + auto-repair hooks
+asimov warmup                  # Output comprehensive JSON (protocols, project, roadmap, WIP)
+asimov warmup --verbose        # Human-readable output for terminal use
 ```
 
-### Warmup Output (v8.3.0)
+### Warmup Output (v9.16.0)
 
-`asimov warmup` displays comprehensive status and auto-repairs missing hooks:
+`asimov warmup` outputs a comprehensive JSON blob by default containing all project context needed for Claude to start working immediately.
+
+**Default Output (JSON):**
+
+By default, `asimov warmup` outputs a single JSON object containing:
+
+```json
+{
+  "version": "9.16.0",
+  "protocols": {
+    "asimov": { /* full asimov.json content */ },
+    "sprint": { /* full sprint.json content */ },
+    "green": { /* full green.json content */ },
+    "sycophancy": { /* full sycophancy.json content */ },
+    "freshness": { /* full freshness.json content */ },
+    "migrations": { /* full migrations.json content */ },
+    "coding-standards": { /* full coding-standards.json content */ }
+  },
+  "project": {
+    "identity": { "name": "...", "type": "rust", ... },
+    "quality": { "test": "...", "lint": "...", ... },
+    "files": { "source": [...], "config": [...], ... },
+    "patterns": [...]
+  },
+  "roadmap": {
+    "metadata": { "current_version": "...", ... },
+    "current": { "version": "...", "status": "...", ... },
+    "next": [...],
+    "backlog": [...]
+  },
+  "wip": {
+    "active": true,
+    "item": "Feature description",
+    "progress": "2/4"
+  }
+}
+```
+
+**Key Benefits:**
+- **Single source of truth**: All project context in one output
+- **No additional reads needed**: Claude doesn't need to separately read project.yaml or roadmap.yaml
+- **Complete protocol context**: All 7 hardcoded protocols included in full
+- **WIP tracking**: Current work-in-progress status included
+- **Auto-repair**: Missing hooks are automatically recreated before output
+
+**Verbose Mode (Human-Readable):**
+
+For terminal/human use, run `asimov warmup --verbose`:
 
 ```
 PROTOCOLS
@@ -1164,9 +1216,13 @@ HOOKS
   ✓ .claude/hooks/session-start.sh: installed
   ✓ .claude/hooks/pre-compact.sh: installed
   ✓ .git/hooks/pre-commit: installed
+
+PROJECT: my-project (rust v1.0.0)
+CURRENT: v1.0.0 (released)
+NEXT: v1.1.0 - Feature description
 ```
 
-**Auto-repair**: If any hook is missing, warmup automatically recreates it and shows `REPAIRED` status. This ensures hooks are always in place for autonomous mode sessions.
+Use `--verbose` when running warmup manually in a terminal. The default JSON output is optimized for Claude Code consumption.
 
 ### Full Setup (v8.2.0)
 
@@ -1183,7 +1239,7 @@ HOOKS
 
 Note: `roadmap.yaml` is project data and is preserved unless `--force` is used.
 
-### Complete Command Reference (v8.15.0)
+### Complete Command Reference (v9.16.0)
 
 | Command | Description | Key Behavior |
 |---------|-------------|--------------|
@@ -1191,7 +1247,7 @@ Note: `roadmap.yaml` is project data and is preserved unless `--force` is used.
 | `asimov init` | Initialize project | Auto-detects project type, creates .asimov/ + hooks, preserves roadmap.yaml |
 | `asimov validate [path]` | Validate protocol files | Auto-regenerates missing files, --ethics-scan for red flag detection |
 | `asimov check <file>` | Validate single file | Alias for validate, returns error for nonexistent files |
-| `asimov warmup [--path]` | Session startup | Shows milestone, validates protocols, auto-repairs missing hooks |
+| `asimov warmup [--verbose]` | Session startup | Outputs comprehensive JSON with all protocols, project, roadmap, WIP. --verbose shows human-readable format |
 | `asimov refresh [-v]` | Protocol reminder | For git hooks, --verbose shows current milestone |
 | `asimov lint-docs` | Lint markdown | --fix auto-repairs, --semantic checks version consistency |
 | `asimov schema [name]` | Export JSON schemas | For VS Code integration, "all" exports to directory |

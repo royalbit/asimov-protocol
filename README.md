@@ -191,7 +191,7 @@ Stale data ≠ hallucination. The protocol enforces search before answering from
 ```bash
 asimov                  # Launch Claude Code with optimal settings
 asimov init             # Initialize project (creates .asimov/, hooks)
-asimov warmup           # Load protocols, show milestone
+asimov warmup           # Output complete context as JSON (protocols + project + roadmap + WIP)
 asimov validate         # Validate protocol files
 asimov doctor           # Diagnose setup issues
 asimov stats            # Session metrics (commits, lines)
@@ -204,6 +204,29 @@ asimov refresh          # Output protocol reminder (for hooks)
 **Platforms:** Linux (x86_64, ARM64), macOS (Intel, ARM), Windows (x86_64)
 
 **Binary:** 1.5MB (UPX compressed) | **Dependencies:** Zero
+
+## Claude Code Slash Commands
+
+When using `asimov` to launch Claude Code, these slash commands are available:
+
+```bash
+/warmup    # Output complete context JSON (same as asimov warmup)
+/doctor    # Diagnose setup issues (same as asimov doctor)
+```
+
+**Full Context Warmup (v9.16.0):** One `/warmup` call outputs a comprehensive JSON blob containing:
+
+```json
+{
+  "version": "9.16.0",
+  "protocols": { "asimov": {...}, "sprint": {...}, ... },
+  "project": { "identity": {...}, "quality": {...}, "patterns": [...] },
+  "roadmap": { "current": {...}, "next": [...], "backlog": [...] },
+  "wip": { "active": true/false, "item": "...", "progress": "1/3" }
+}
+```
+
+**Token efficiency:** Claude gets complete project context in one Bash call, zero file reads required.
 
 ## Why JSON + YAML?
 
@@ -296,8 +319,8 @@ flowchart LR
 
 **Bounded autonomy with automatic recovery.**
 
-- **Session start**: `asimov warmup` loads all protocols from `.asimov/`
-- **Mid-session recovery**: Re-read protocols when confused
+- **Session start**: `asimov warmup` outputs complete project context as single JSON blob (protocols, project config, roadmap, WIP status)
+- **Mid-session recovery**: Run `/warmup` slash command for full context refresh
 - **Cross-session resume**: Claude Code `--continue` / `--resume`
 
 The `sprint.json` protocol bounds autonomous sessions with quality gates and natural stopping points.

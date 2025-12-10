@@ -45,11 +45,10 @@ As documented by DoltHub:
 flowchart LR
     subgraph healing["SELF-HEALING PROTOCOL - ALL ON DISK (survives compaction)"]
         CM["**CLAUDE.md**<br/>(auto-loaded)<br/><br/>Ultra-short +<br/>'re-read'"]
-        WU["**warmup.json**<br/>(protocol loader)<br/><br/>Loads all<br/>protocols"]
-        PR["**protocols/**<br/>(full rules)<br/><br/>Complete<br/>protocol + gates"]
+        WU["**asimov warmup**<br/>(comprehensive JSON)<br/><br/>Single blob:<br/>protocols + project<br/>+ roadmap + wip"]
         CP["**checkpoint**<br/>(session state)<br/><br/>Progress<br/>+ hints"]
 
-        CM --> WU --> PR --> CP
+        CM --> WU --> CP
     end
 ```
 
@@ -62,37 +61,36 @@ Must survive summarization. Single critical instruction:
 ```markdown
 # Project Name
 
-ON CONFUSION → run warmup (loads all protocols)
+ON CONFUSION → asimov warmup (loads everything as JSON)
 
 Rules: run until done, keep shipping, tests pass.
 ```
 
-### 2. warmup.json (Protocol Loader)
+### 2. asimov warmup (Full Context Loader - v9.16.0+)
 
-Entry point that loads all protocol files. Re-read when confused:
+Run `asimov warmup` to get everything in a single JSON blob. Re-run when confused:
 
+**Output format:**
 ```json
 {
-  "protocol": "warmup",
-  "description": "RoyalBit Asimov - Session warmup entry point",
-  "on_start": [
-    "load_protocols",
-    "load_project",
-    "validate",
-    "read_roadmap",
-    "present_milestone"
-  ],
-  "load": [
-    "asimov.json",
-    "sprint.json",
-    "coding-standards.json",
-    "freshness.json",
-    "green.json",
-    "migrations.json",
-    "sycophancy.json"
-  ]
+  "version": "9.16.0",
+  "protocols": {
+    "asimov": { /* safety rules */ },
+    "sprint": { /* current sprint */ },
+    "coding-standards": { /* quality gates */ },
+    /* all other protocols */
+  },
+  "project": { /* full project.yaml content */ },
+  "roadmap": { /* full roadmap.yaml content */ },
+  "wip": {
+    "active": true,
+    "item": "Current task",
+    "progress": "Status"
+  }
 }
 ```
+
+**Key benefit:** Single command loads everything. No need to read individual files.
 
 ### 3. Session State (WIP Continuity)
 
@@ -126,7 +124,7 @@ Compaction happens every 10-20 minutes with heavy reasoning, so recovery mechani
 
 | Component | Connection |
 |-----------|------------|
-| Protocol Files | warmup.json loads all protocol files |
+| Protocol Files | `asimov warmup` outputs comprehensive JSON (v9.16.0+) |
 | Sprint Autonomy | Recovery aligns with task completion |
 | Quality Gates | Re-read before running gates |
 | Release Discipline | Recovery state before release |

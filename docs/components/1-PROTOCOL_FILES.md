@@ -26,7 +26,7 @@ project/.asimov/
 
 ### warmup.json (Required)
 
-The entry point that loads all other protocols.
+The entry point that defines which protocols to load. As of v9.16.0, `asimov warmup` outputs a **single comprehensive JSON blob** containing all protocols, project config, roadmap, and WIP status.
 
 ```json
 {
@@ -50,6 +50,19 @@ The entry point that loads all other protocols.
   ]
 }
 ```
+
+**Output format (v9.16.0+):**
+```json
+{
+  "version": "9.16.0",
+  "protocols": { /* all loaded protocols */ },
+  "project": { /* full project.yaml content */ },
+  "roadmap": { /* full roadmap.yaml content */ },
+  "wip": { "active": true, "item": "...", "progress": "..." }
+}
+```
+
+This means **Claude no longer needs to read project.yaml or roadmap.yaml** after warmup - everything is in the single JSON output.
 
 ### asimov.json (Required)
 
@@ -194,28 +207,25 @@ asimov validate .asimov/warmup.json
 
 ## How AI Uses These Files
 
-1. **Session Start**: AI reads all protocol files
+1. **Session Start**: AI runs `asimov warmup` - receives comprehensive JSON blob
 2. **During Session**: AI references quality gates, boundaries
 3. **Before Commit**: AI re-reads quality gates, runs checks
-4. **After Compaction**: AI re-reads from disk (self-healing)
+4. **After Compaction**: AI re-runs warmup (self-healing)
 5. **Session End**: AI follows release discipline
 
+**v9.16.0+ Flow:**
 ```mermaid
 flowchart TB
-    subgraph session["AI Session"]
-        RW["'run warmup'"]
-        WU["warmup.json<br/>(Entry Point)"]
-        AS["asimov.json<br/>(Safety)"]
-        SP["sprint.json<br/>(Sprint)"]
-        CS["coding-standards.json<br/>(Quality)"]
-        RM["roadmap.yaml<br/>(Roadmap)"]
-        AI["AI understands:<br/>• Project rules<br/>• Quality gates<br/>• Current task<br/>• Boundaries"]
+    subgraph session["AI Session (v9.16.0+)"]
+        RW["'asimov warmup'"]
+        JSON["**Single JSON Blob**<br/>{version, protocols,<br/>project, roadmap, wip}"]
+        AI["AI understands:<br/>• All protocols loaded<br/>• Project config<br/>• Full roadmap<br/>• WIP status<br/>• Quality gates"]
 
-        RW --> WU
-        WU --> AS & SP & CS & RM
-        AS & SP & CS & RM --> AI
+        RW --> JSON --> AI
     end
 ```
+
+**Key change:** Claude receives everything in one JSON output. No need to read project.yaml or roadmap.yaml separately.
 
 ## Best Practices
 
@@ -240,7 +250,7 @@ flowchart TB
 |-----------|------------------------------|
 | Sprint Autonomy | sprint.json defines boundaries |
 | Quality Gates | coding-standards.json defines checks |
-| Self-Healing | warmup.json orchestrates protocol loading |
+| Self-Healing | `asimov warmup` outputs comprehensive JSON (v9.16.0+) |
 | Release Discipline | roadmap.yaml tracks versions |
 
 ---
