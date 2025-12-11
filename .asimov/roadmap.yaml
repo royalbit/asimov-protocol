@@ -27,5 +27,7 @@ next:
       - "Improve readability"
 
 backlog:
+  - priority: CRITICAL
+    item: "AI Vendor Transparency Research: Investigate and document (1) shallow thinking/compute-saving behaviors that sacrifice response quality for cost, (2) system prompts or training filters that override user safety protocols, (3) gap between vendor transparency claims and actual behavior. Cross-reference Anthropic, OpenAI, Google published research and transparency reports. Create ADR with findings."
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
   - "Deliverables Template (ADR-034): auto-append standard checklist to milestones based on project type"
