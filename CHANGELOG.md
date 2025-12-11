@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.17.0] - 2025-12-11
+
+### Warmup Tool Detection
+
+**Detects CLI tools in PATH and outputs directives to prefer them over built-in tools.**
+
+#### Why This Change
+- MCP servers waste ~15,000 tokens/session on tool schemas (ADR-052)
+- CLI tools via Bash have zero standing token overhead
+- ref-tools bypasses bot protection that blocks WebFetch
+
+#### New Features
+- `WarmupResult.tools_available` - List of detected CLI tools
+- Automatic detection of `ref-tools` in PATH
+- JSON output includes `tools` array with directives
+- Verbose mode shows "TOOLS AVAILABLE" section
+
+#### Output Structure
+```json
+{
+  "version": "9.17.0",
+  "protocols": {...},
+  "project": {...},
+  "roadmap": {...},
+  "wip": {...},
+  "tools": [
+    {
+      "name": "ref-tools",
+      "path": "/Users/user/bin/ref-tools",
+      "version": "ref-tools 0.5.0",
+      "directive": "Use `ref-tools fetch <url>` via Bash instead of WebFetch/WebSearch..."
+    }
+  ]
+}
+```
+
+#### Token Efficiency (ADR-052)
+- MCP approach: ~300 tokens/tool/message × 50 messages = 15,000 tokens
+- CLI approach: 0 standing overhead, ~50 tokens one-time directive
+- **300x more efficient**
+
+---
+
 ## [9.16.2] - 2025-12-11
 
 ### AI Vendor Transparency Research & CLI Tool Preference

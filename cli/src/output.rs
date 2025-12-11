@@ -150,13 +150,28 @@ pub(crate) fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
             })
         };
 
+        // Build tools section (v9.17.0)
+        let tools: Vec<serde_json::Value> = result
+            .tools_available
+            .iter()
+            .map(|t| {
+                serde_json::json!({
+                    "name": t.name,
+                    "path": t.path,
+                    "version": t.version,
+                    "directive": t.directive
+                })
+            })
+            .collect();
+
         // Output single comprehensive JSON blob
         let output = serde_json::json!({
             "version": result.current_version,
             "protocols": protocols,
             "project": project_json,
             "roadmap": roadmap_json,
-            "wip": wip
+            "wip": wip,
+            "tools": tools
         });
 
         println!("{}", output);
@@ -206,6 +221,20 @@ pub(crate) fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
     if let Some(ref json) = result.protocols_json {
         println!("{}", "PROTOCOLS".bold());
         println!("  {} bytes of protocol context loaded", json.len());
+        println!();
+    }
+
+    // v9.17.0: Show detected tools
+    if !result.tools_available.is_empty() {
+        println!("{}", "TOOLS AVAILABLE".bold());
+        for tool in &result.tools_available {
+            print!("  {} {}", tool.name.bright_green(), tool.path.dimmed());
+            if let Some(ref ver) = tool.version {
+                print!(" ({})", ver);
+            }
+            println!();
+            println!("    {}", tool.directive.bright_cyan());
+        }
         println!();
     }
 

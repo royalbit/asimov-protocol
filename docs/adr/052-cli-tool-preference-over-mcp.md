@@ -150,9 +150,13 @@ Execute: ref-tools fetch $ARGUMENTS
 Parse the JSON output and provide a summary of findings.
 ```
 
-### Phase 2: Warmup Detection
+### Phase 2: Warmup Detection (v9.17.0) ✓
 
-Modify `asimov warmup` to detect ref-tools in PATH and include directive.
+Implemented in v9.17.0:
+- `WarmupResult.tools_available` field added
+- `detect_tools()` function checks PATH for ref-tools
+- JSON output includes `tools` array
+- Verbose mode shows "TOOLS AVAILABLE" section
 
 ### Phase 3: Documentation
 

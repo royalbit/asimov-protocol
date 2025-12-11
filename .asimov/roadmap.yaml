@@ -4,28 +4,18 @@
 # See: CHANGELOG.md for release history
 
 current:
+  version: "9.17.0"
+  status: released
+  summary: "Warmup Tool Detection"
+  goal: "Detect ref-tools in PATH, output directive to use CLI instead of WebFetch/WebSearch"
+
+previous:
   version: "9.16.1"
   status: released
   summary: "Coding Standards Protocol Update"
   goal: "Perfect > Done, 100% coverage"
 
-previous:
-  version: "9.16.0"
-  status: released
-  summary: "Full Context Warmup - Zero File Reads"
-  goal: "asimov (and asimov warmup) outputs EVERYTHING in one JSON blob for maximum token efficiency"
-
 next:
-  - version: "9.17.0"
-    status: planned
-    priority: CRITICAL
-    summary: "Warmup Tool Detection"
-    goal: "Detect ref-tools in PATH, output directive to use CLI instead of WebFetch/WebSearch"
-    deliverables:
-      - "Add tool detection to warmup output"
-      - "Include TOOLS_AVAILABLE section in JSON"
-      - "Directive: prefer ref-tools fetch over built-in WebFetch"
-
   - version: "9.18.0"
     status: planned
     summary: "SPECIFICATION.md Trim"
@@ -36,7 +26,6 @@ next:
       - "Improve readability"
 
 backlog:
-  - priority: CRITICAL
-    item: "LLM Harmful Behavior Mitigation: Research and implement countermeasures against (1) economic incentive-driven shallow responses (ADR-050), (2) vendor system prompt overrides of user safety protocols (ADR-051), (3) RLHF-induced sycophancy. Design protocol-level mitigations that work within constraints of training-level controls. Goals: force thoroughness, detect override attempts, verify honest responses, bypass stale training data."
+  - "CRITICAL: LLM Harmful Behavior Mitigation - Research countermeasures against (1) economic incentive-driven shallow responses (ADR-050), (2) vendor system prompt overrides (ADR-051), (3) RLHF sycophancy. Goals: force thoroughness, detect overrides, verify honest responses."
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
   - "Deliverables Template (ADR-034): auto-append standard checklist to milestones based on project type"

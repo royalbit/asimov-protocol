@@ -6,6 +6,15 @@ use crate::{
 };
 use std::path::Path;
 
+/// Information about a detected CLI tool
+#[derive(Debug, Clone)]
+pub struct ToolInfo {
+    pub name: String,
+    pub path: String,
+    pub version: Option<String>,
+    pub directive: String,
+}
+
 #[derive(Debug, Clone)]
 pub struct WarmupResult {
     pub success: bool,
@@ -27,6 +36,45 @@ pub struct WarmupResult {
     // v9.16.0: Full context - include raw file content for zero file reads
     pub project_yaml: Option<serde_yaml::Value>,
     pub roadmap_yaml: Option<serde_yaml::Value>,
+    // v9.17.0: Tool detection
+    pub tools_available: Vec<ToolInfo>,
+}
+
+/// Detect CLI tools available in PATH
+fn detect_tools() -> Vec<ToolInfo> {
+    let mut tools = Vec::new();
+
+    // Check for ref-tools
+    if let Ok(output) = std::process::Command::new("which")
+        .arg("ref-tools")
+        .output()
+    {
+        if output.status.success() {
+            let path = String::from_utf8_lossy(&output.stdout).trim().to_string();
+
+            // Try to get version
+            let version = std::process::Command::new("ref-tools")
+                .arg("--version")
+                .output()
+                .ok()
+                .and_then(|o| {
+                    if o.status.success() {
+                        Some(String::from_utf8_lossy(&o.stdout).trim().to_string())
+                    } else {
+                        None
+                    }
+                });
+
+            tools.push(ToolInfo {
+                name: "ref-tools".to_string(),
+                path,
+                version,
+                directive: "Use `ref-tools fetch <url>` via Bash instead of WebFetch/WebSearch. Bypasses bot protection, outputs structured JSON.".to_string(),
+            });
+        }
+    }
+
+    tools
 }
 
 pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
@@ -50,6 +98,8 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         // v9.16.0: Full context
         project_yaml: None,
         roadmap_yaml: None,
+        // v9.17.0: Tool detection
+        tools_available: Vec::new(),
     };
 
     if check_updates {
@@ -175,6 +225,10 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
     // Migrations protocol only included for migration-type projects
     let _protocols = compile_protocols_for_type(result.project_type);
     result.protocols_json = Some(to_minified_json_for_type(result.project_type));
+
+    // v9.17.0: Detect available CLI tools
+    result.tools_available = detect_tools();
+
     result.success = true;
     result
 }
@@ -263,6 +317,8 @@ mod tests {
             // v9.16.0: Full context fields
             project_yaml: None,
             roadmap_yaml: None,
+            // v9.17.0: Tool detection
+            tools_available: vec![],
         };
         assert!(r.success);
         assert_eq!(r.project_name.unwrap(), "Test");
@@ -536,5 +592,49 @@ next:
         // Python projects should NOT include migrations protocol
         let json = result.protocols_json.unwrap();
         assert!(!json.contains("\"migrations\""));
+    }
+
+    // v9.17.0: Tool detection tests
+
+    #[test]
+    fn test_tool_info_struct() {
+        let tool = ToolInfo {
+            name: "test-tool".to_string(),
+            path: "/usr/bin/test-tool".to_string(),
+            version: Some("1.0.0".to_string()),
+            directive: "Use this tool".to_string(),
+        };
+        assert_eq!(tool.name, "test-tool");
+        assert!(tool.version.is_some());
+    }
+
+    #[test]
+    fn test_detect_tools_returns_vec() {
+        let tools = detect_tools();
+        // Should return a Vec (may be empty if ref-tools not installed)
+        // If ref-tools is installed, should have at least one entry
+        for tool in &tools {
+            assert!(!tool.name.is_empty());
+            assert!(!tool.directive.is_empty());
+        }
+    }
+
+    #[test]
+    fn test_warmup_includes_tools() {
+        let temp = TempDir::new().unwrap();
+        let asimov_dir = temp.path().join(".asimov");
+        std::fs::create_dir_all(&asimov_dir).unwrap();
+        std::fs::write(
+            asimov_dir.join("roadmap.yaml"),
+            "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
+        )
+        .unwrap();
+        let result = run_warmup(temp.path(), false);
+        assert!(result.success);
+        // tools_available should be populated (tests tool detection runs)
+        // Verify structure is correct for any detected tools
+        for tool in &result.tools_available {
+            assert!(!tool.name.is_empty());
+        }
     }
 }

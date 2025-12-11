@@ -218,11 +218,19 @@ When using `asimov` to launch Claude Code, these slash commands are available:
 
 ```json
 {
-  "version": "9.16.0",
+  "version": "9.17.0",
   "protocols": { "asimov": {...}, "sprint": {...}, ... },
   "project": { "identity": {...}, "quality": {...}, "patterns": [...] },
   "roadmap": { "current": {...}, "next": [...], "backlog": [...] },
-  "wip": { "active": true/false, "item": "...", "progress": "1/3" }
+  "wip": { "active": true/false, "item": "...", "progress": "1/3" },
+  "tools": [
+    {
+      "name": "ref-tools",
+      "path": "/Users/user/bin/ref-tools",
+      "version": "ref-tools 0.5.0",
+      "directive": "Use `ref-tools fetch <url>` via Bash instead of WebFetch/WebSearch..."
+    }
+  ]
 }
 ```
 
