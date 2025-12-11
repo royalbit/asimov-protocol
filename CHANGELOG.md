@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.16.1] - 2025-12-10
+
+### Coding Standards Protocol Update
+
+Updated coding standards principles to emphasize quality over speed.
+
+#### Changes
+- Changed principle: "Done > Perfect, but not sloppy" → "Perfect > Done, no sloppy code"
+- Added principle: "Push for 100% test coverage, if possible"
+- Removed `junior_warning` field (redundant with principles)
+- Updated docs: ORIGIN_STORY.md, USE_CASES.md, ADR-041
+
+#### Principles (v9.16.1)
+1. Code is for humans first, machines second
+2. Tests are documentation
+3. No warnings, no exceptions
+4. Perfect > Done, no sloppy code
+5. Push for 100% test coverage, if possible
+
+---
+
 ## [9.16.0] - 2025-12-10
 
 ### Full Context Warmup - Zero File Reads
