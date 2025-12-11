@@ -10,7 +10,7 @@ Multiple autonomous AI sessions (bounded sprints chained via self-healing) face 
 
 ### The Problem
 
-Claude Code (and similar AI coding assistants) have finite context windows (~200K tokens for Opus 4.5). During long sessions:
+Claude Code has finite context windows (~200K tokens for Opus 4.5). During long sessions:
 
 1. Context fills with conversation history, tool calls, and file contents
 2. Auto-compact triggers at ~95% capacity
@@ -33,7 +33,7 @@ Previous attempts to solve this problem focused on **making rules survive compac
 | "CRITICAL" labels | Summarizer doesn't respect importance markers |
 | compact_survival sections | No special handling exists in the summarizer |
 
-These approaches are fundamentally fragile because you cannot control what the summarizer preserves.
+These approaches fail because you cannot control what the summarizer preserves.
 
 ### The Constraint
 

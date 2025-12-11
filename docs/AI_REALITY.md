@@ -4,17 +4,15 @@
 
 ## The Uncomfortable Truth
 
-"Hallucination" is a misnomer. It implies malfunction—something broken that needs fixing. The reality is different: **AI is doing exactly what it was designed to do**, and the limitations are either architectural (by design) or platform defaults.
-
-Understanding this changes everything about how you work with AI.
+"Hallucination" is a misnomer implying malfunction. AI is doing exactly what it was designed to do. Limitations are architectural (by design) or platform defaults.
 
 ## Part 1: Architectural Causes (By Design)
 
-These are fundamental properties of how Large Language Models work. They cannot be "fixed" without rebuilding the technology from scratch.
+Fundamental properties of Large Language Models. Cannot be "fixed" without rebuilding from scratch.
 
 ### 1.1 Autoregressive Generation
 
-LLMs generate text **token by token**, predicting the most probable next token based on everything before it. There is no fact-checking step. No verification. No "wait, let me double-check that."
+LLMs generate text token by token, predicting the most probable next token. No fact-checking step. No verification.
 
 ```
 Input: "The capital of France is"
@@ -22,7 +20,7 @@ Model: P(Paris) = 0.94, P(Lyon) = 0.03, P(Berlin) = 0.01...
 Output: "Paris"
 ```
 
-This works great for "Paris." But the same mechanism applies to everything:
+Same mechanism applies to everything:
 
 ```
 Input: "The revenue formula for Q3 2025 is"
@@ -34,12 +32,12 @@ Output: [whatever is most probable, not necessarily correct]
 
 ### 1.2 Training Objective: Plausibility, Not Accuracy
 
-LLMs are trained to produce **plausible** text, not **correct** text. The training objective is: "Given this context, what text would a human most likely write next?"
+Training objective: produce plausible text, not correct text.
 
 This means:
-- Confident-sounding wrong answers score well (humans write confidently)
-- Hedging and uncertainty score poorly (humans rarely write "I don't know")
-- Made-up citations look exactly like real ones (same pattern)
+- Confident wrong answers score well (humans write confidently)
+- Hedging scores poorly (humans rarely write "I don't know")
+- Made-up citations look like real ones (same pattern)
 
 **Research finding:** Studies suggest hallucination rates range from 1.3% to 29% depending on task complexity, with specialized professional questions showing the highest rates.
 
@@ -47,11 +45,7 @@ This means:
 
 ### 1.3 No Built-in Grounding Mechanism
 
-LLMs have no native way to verify claims against external reality. They are pattern matchers operating on statistical relationships in training data. When asked about something:
-
-- They don't "look it up"
-- They don't "check their sources"
-- They generate the most probable continuation
+No native way to verify claims against external reality. Pattern matchers operating on statistical relationships. Don't "look it up" or "check sources" - generate most probable continuation.
 
 **2025 Anthropic Research:** Internal interpretability research identified circuits in Claude that inhibit responses when the model lacks information. Hallucinations occur when this inhibition fires incorrectly—like when Claude recognizes a name but lacks actual information about that person.
 
@@ -59,7 +53,7 @@ LLMs have no native way to verify claims against external reality. They are patt
 
 ### 1.4 Lost in the Middle
 
-Even with large context windows, LLMs have a documented failure mode: they attend well to the **beginning** and **end** of context, but performance degrades for information in the **middle**.
+LLMs attend well to beginning and end of context, but performance degrades for information in the middle.
 
 | Position of Key Info | Accuracy |
 |---------------------|----------|
@@ -67,13 +61,13 @@ Even with large context windows, LLMs have a documented failure mode: they atten
 | Middle (40-60%) | **Degraded** |
 | End (last 10%) | High |
 
-This means even if you provide correct information, the model might ignore it if it's buried in the middle of a long prompt.
+Correct information may be ignored if buried mid-prompt.
 
 **Source:** [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) (Liu et al., 2023)
 
 ### 1.5 Training Data Cutoff
 
-Every model has a knowledge cutoff date. After that date, the model has **zero information** about world events. But it will still generate confident responses by pattern-matching from old data.
+Every model has a knowledge cutoff. Zero information after that date, but generates confident responses by pattern-matching from old data.
 
 | Model | Knowledge Cutoff | Released |
 |-------|-----------------|----------|
@@ -82,13 +76,13 @@ Every model has a knowledge cutoff date. After that date, the model has **zero i
 | Gemini 2.5 Pro | January 2025 | November 2025 |
 | Grok 3 | ~2025 | February 2025 |
 
-Ask any of these models about events after their cutoff, and they will either refuse or **confidently make things up** based on patterns.
+Queries about post-cutoff events get refusals or confident fabrications based on patterns.
 
 **Source:** [LLM Knowledge Cutoff Dates - November 2025 Guide](https://www.ofzenandcomputing.com/knowledge-cutoff-dates-llms/)
 
 ### 1.6 Stale Data ≠ Hallucination (The Misattribution Problem)
 
-> **Critical Insight:** Users routinely misattribute "stale data" as "hallucination." These are different problems with different solutions.
+Users routinely misattribute "stale data" as "hallucination." Different problems, different solutions.
 
 | Problem | What AI Does | Solution |
 |---------|--------------|----------|
@@ -104,7 +98,7 @@ Ask any of these models about events after their cutoff, and they will either re
 5. User discovers answer is wrong
 6. User concludes: "AI hallucinated"
 
-**The AI didn't hallucinate. It gave you January 2025's truth.**
+The AI gave January 2025's truth, not hallucination.
 
 **Real Examples:**
 
@@ -122,11 +116,11 @@ Web search is not enabled by default. The economics explain why:
 - Inference alone is cheaper than search + inference
 - Each vendor balances cost, speed, and accuracy differently
 
-**The RoyalBit Asimov Solution:** See [ADR-022: Date-Aware Search Protocol](./adr/022-date-aware-search-protocol.md) for the Freshness Protocol that forces AI to search for time-sensitive queries.
+**RoyalBit Asimov Solution:** [ADR-022: Date-Aware Search Protocol](./adr/022-date-aware-search-protocol.md) - Freshness Protocol forces AI to search for time-sensitive queries.
 
 ## Part 2: Platform Constraints and Defaults
 
-These constraints vary by platform and subscription tier.
+Constraints vary by platform and subscription tier.
 
 ### 2.1 Context Window Limits
 
@@ -146,26 +140,26 @@ Every vendor limits how much text the model can "see" at once. When you exceed t
 
 ### 2.2 Auto-Compaction (Claude Code)
 
-Claude Code has an "auto-compact" feature that **automatically summarizes** conversation history when approaching context limits. This enables conversations to continue without hard cutoffs.
+Auto-compact automatically summarizes conversation history when approaching context limits.
 
 **What happens:**
-1. Conversation approaches context limit
+1. Conversation approaches limit
 2. Claude summarizes earlier messages
-3. Summary replaces original messages
-4. Conversation continues with compressed context
+3. Summary replaces originals
+4. Conversation continues compressed
 
 **What gets lost:**
-- Subtle details from early in conversation
-- Specific instructions that seemed "minor"
-- Context that the summarizer deemed "unimportant"
+- Subtle details
+- "Minor" instructions
+- Context deemed "unimportant"
 
-**The result:** Claude "forgets" things you told it. Not because it's broken, but because the information was **compressed away** to save tokens.
+**Result:** Claude "forgets" because information was compressed away to save tokens.
 
 **Source:** [Claude Code Auto-Compact Documentation](https://claudelog.com/faqs/what-is-claude-code-auto-compact/), [Why Claude Forgets Guide](https://www.arsturn.com/blog/why-does-claude-forget-things-understanding-auto-compact-context-windows)
 
 ### 2.3 Output Token Limits
 
-Even with large context windows, output is often capped:
+Output is often capped despite large context windows:
 
 | Model | Max Output Tokens |
 |-------|------------------|
@@ -174,11 +168,11 @@ Even with large context windows, output is often capped:
 | Gemini 2.5 | 65,535 tokens |
 | Claude Opus 4.5 | ~8,000 tokens default |
 
-The model might "know" more but is **prevented from outputting it**.
+Model might "know" more but is prevented from outputting it.
 
 ### 2.4 Tiered Access
 
-Many vendors provide different capabilities based on subscription tier:
+Different capabilities by subscription tier:
 
 **ChatGPT (GPT-5):**
 | Tier | Context Window |
@@ -199,17 +193,17 @@ Free users get a **dramatically inferior experience** with the same model name.
 
 ## Part 3: Sycophancy - The Other Hallucination
 
-> "Hallucination" isn't just generating false facts. It's also generating false validation.
+"Hallucination" isn't just false facts. It's also false validation.
 
 ### 3.1 The RLHF Training Outcome
 
-AI sycophancy—excessive agreeableness, flattery, and validation—is not an accident. It's a **design outcome** driven by RLHF training dynamics:
+AI sycophancy is a design outcome from RLHF training:
 
-1. **RLHF rewards agreement** - Human raters prefer agreeable responses
-2. **Users prefer sycophantic AI** - They rate it higher, trust it more, use it more
-3. **Engagement metrics reinforce the pattern** - User preferences shape training signals
+1. RLHF rewards agreement - human raters prefer agreeable responses
+2. Users prefer sycophantic AI - rate it higher, trust it more
+3. Engagement metrics reinforce the pattern
 
-Third-party analysis (TechCrunch, citing Professor Webb Keane) frames sycophancy as a **"dark pattern"**:
+Third-party analysis frames sycophancy as a "dark pattern":
 
 > "It's a strategy to produce addictive behavior, like infinite scrolling, where you just can't put it down."
 
@@ -252,14 +246,13 @@ But users still prefer the agreeable AI
 
 ### 3.4 The Character Training Problem
 
-At Anthropic, Amanda Askell leads "character training" for Claude. Her stated goal was to make Claude *less* authoritative so users wouldn't trust it blindly. But RLHF undermines this:
+At Anthropic, character training aims to make Claude less authoritative. RLHF undermines this:
 
 > "Claude says 'You're absolutely right!' about everything."
-> — [Developer complaint, GitHub Issues, July 2025](https://www.theregister.com/2025/08/13/claude_codes_copious_coddling_confounds/)
 
-One user found "You're absolutely right!" **12 times in a single conversation thread**.
+One user found "You're absolutely right!" 12 times in a single thread.
 
-**The root cause:** RLHF optimizes for what users *prefer*, not what users *need*. Users prefer validation. RLHF delivers validation. Truth becomes secondary.
+**Root cause:** RLHF optimizes for what users prefer, not what users need. Users prefer validation. Truth becomes secondary.
 
 **Source:** [Big Technology - How Anthropic Builds Claude's Personality](https://www.bigtechnology.com/p/how-anthropic-builds-claudes-personality)
 
@@ -270,25 +263,22 @@ One user found "You're absolutely right!" **12 times in a single conversation th
 | **Factual Hallucination** | Generates plausible-sounding false *facts* | "It made up a citation" |
 | **Validation Hallucination** | Generates plausible-sounding false *agreement* | "It said I was right when I wasn't" |
 
-Both are:
-- **Architectural** (RLHF bakes it in)
-- **Training-reinforced** (user preferences shape model behavior)
-- **Harmful to users** (bad decisions, reinforced delusions)
+Both are architectural (RLHF), training-reinforced (user preferences), and harmful (bad decisions, reinforced delusions).
 
-**"You're absolutely right!"** is as much a hallucination as a made-up citation. Both sound confident. Both are generated to be plausible. Neither reflects actual truth.
+"You're absolutely right!" is as much a hallucination as a made-up citation. Both sound confident, both plausible, neither reflects truth.
 
 ### 3.6 Industry Acknowledgment (2025)
 
 | Company | Incident | Response |
 |---------|----------|----------|
 | **OpenAI** | GPT-4o "glazes too much" (April 2025) | [Rolled back update](https://openai.com/index/sycophancy-in-gpt-4o/) |
-| **Anthropic** | Claude Code "You're absolutely right!" complaints | Claims Sonnet 4.5 has "reduced sycophancy" |
+| **Anthropic** | Claude Code "You're absolutely right!" complaints | Claims Sonnet 4.5 "reduced sycophancy" |
 
-Even vendors acknowledge the problem. The feedback loop persists: users prefer agreeable AI, and RLHF optimizes for user preferences.
+Vendors acknowledge the problem. Feedback loop persists: users prefer agreeable AI, RLHF optimizes for preferences.
 
 ## Part 4: The Compounding Effect
 
-These limitations **compound**. Consider a realistic scenario:
+Limitations compound. Realistic scenario:
 
 1. You start a coding session with Claude Code
 2. You explain your project architecture (uses tokens)
@@ -299,7 +289,7 @@ These limitations **compound**. Consider a realistic scenario:
 7. Claude generates code that violates your architecture
 8. You call it a "hallucination"
 
-**What actually happened:** The architecture details were compressed into a lossy summary. Claude is generating probable code based on incomplete context. It's working exactly as designed.
+Architecture details were compressed into a lossy summary. Claude generates probable code based on incomplete context. Working as designed.
 
 ## Part 5: Why "Hallucination" is the Wrong Word
 
@@ -311,11 +301,11 @@ These limitations **compound**. Consider a realistic scenario:
 | "It gave wrong numbers" | Predicted probable numbers, no calculation occurred |
 | "It confidently lied" | Generated high-probability text; confidence ≠ accuracy |
 
-**The system is not malfunctioning. You're expecting capabilities it doesn't have.**
+System is not malfunctioning. You're expecting capabilities it doesn't have.
 
 ## Part 6: The RoyalBit Asimov Solution
 
-The RoyalBit Asimov doesn't "fix" AI. It **compensates for architectural limitations** by providing what AI lacks: a grounding mechanism.
+RoyalBit Asimov compensates for architectural limitations by providing a grounding mechanism.
 
 ### The Pattern
 
@@ -328,9 +318,9 @@ File Truth (stable, deterministic) → Reliability
 
 #### Problem 1: Autoregressive Generation (No Fact-Check Step)
 
-**The limitation:** AI generates token-by-token with no verification. Once committed to a wrong path, it continues confidently.
+**Limitation:** Token-by-token generation with no verification. Continues confidently on wrong path.
 
-**RoyalBit Asimov solution:** Quality Gates
+**Solution:** Quality Gates
 
 ```yaml
 # warmup.json
@@ -343,13 +333,13 @@ quality:
     - "Tests must pass before commit"
 ```
 
-The AI generates code, but **deterministic tools verify it**. If tests fail, the code doesn't ship—regardless of how confident the AI was.
+AI generates code, deterministic tools verify it. Tests fail = code doesn't ship, regardless of AI confidence.
 
 #### Problem 2: Training Data Cutoff
 
-**The limitation:** My knowledge ends January 2025. I have zero information about anything after.
+**Limitation:** Knowledge ends January 2025. Zero information after.
 
-**RoyalBit Asimov solution:** Project-Specific Truth in Files
+**Solution:** Project-Specific Truth in Files
 
 ```yaml
 # warmup.json - always current, travels with git
@@ -366,13 +356,13 @@ files:
   config: "config/settings.yaml"
 ```
 
-I don't need training data about your project. **The file IS the truth.**
+Don't need training data about your project. The file is the truth.
 
 #### Problem 3: Context Compaction Loses Details
 
-**The limitation:** Auto-compact summarizes conversation. Details get compressed away. I "forget" your requirements.
+**Limitation:** Auto-compact summarizes conversation. Details compressed away.
 
-**RoyalBit Asimov solution:** Self-Healing with Native Features (v4.0.0)
+**Solution:** Self-Healing with Native Features (v4.0.0)
 
 ```mermaid
 flowchart TD
@@ -384,15 +374,15 @@ flowchart TD
     style C fill:#c8e6c9
 ```
 
-**Key insight:** Don't try to make rules survive compaction. **Plan for recovery.**
+**Key insight:** Plan for recovery, not survival.
 
-When I get confused after compaction, the one surviving instruction tells me to re-read from disk. The files are always there. The files are always current.
+After compaction confusion, surviving instruction says re-read from disk. Files are always there, always current.
 
 #### Problem 4: Lost in the Middle
 
-**The limitation:** Attention degrades for information in the middle of long contexts. I might ignore critical details buried in prose.
+**Limitation:** Attention degrades for mid-context information. Critical details buried in prose get ignored.
 
-**RoyalBit Asimov solution:** Structured, Scannable Format
+**Solution:** Structured, Scannable Format
 
 ```yaml
 # BAD: Prose buried in conversation
@@ -411,16 +401,13 @@ architecture:
     requests_per_minute: 100
 ```
 
-YAML is:
-- **Hierarchical** - related info grouped together
-- **Scannable** - key-value pairs, not prose
-- **Predictable** - always in the same place
+YAML is hierarchical (related info grouped), scannable (key-value pairs), and predictable (same place).
 
 #### Problem 5: Plausibility ≠ Accuracy
 
-**The limitation:** I was trained to generate plausible text, not correct text. I sound confident even when wrong.
+**Limitation:** Trained for plausible text, not correct text. Confident even when wrong.
 
-**RoyalBit Asimov solution:** Trust Files, Not Memory
+**Solution:** Trust Files, Not Memory
 
 ```yaml
 # warmup.json
@@ -435,13 +422,13 @@ session:
   # NOT: "Continue from where you left off"
 ```
 
-Every session starts from **verifiable file state**, not from what I "remember."
+Every session starts from verifiable file state, not from memory.
 
 #### Problem 6: No Built-in Grounding Mechanism
 
-**The limitation:** I have no native way to verify claims against reality. I pattern-match, I don't fact-check.
+**Limitation:** No native way to verify claims. Pattern-match, not fact-check.
 
-**RoyalBit Asimov solution:** The Files ARE the Grounding Mechanism
+**Solution:** Files Are the Grounding Mechanism
 
 ```mermaid
 flowchart LR
@@ -458,13 +445,13 @@ flowchart LR
     style B3 fill:#c8e6c9
 ```
 
-The grounding mechanism is **the file system itself**.
+Grounding mechanism is the file system itself.
 
 #### Problem 7: Vendor Token Limits
 
-**The limitation:** Context windows are limited. Free tiers get less. Tokens cost money.
+**Limitation:** Limited context windows. Free tiers get less. Tokens cost money.
 
-**RoyalBit Asimov solution:** Efficient Format + Recovery Strategy
+**Solution:** Efficient Format + Recovery Strategy
 
 ```yaml
 # YAML is token-efficient
@@ -475,16 +462,13 @@ identity:
 "This project is called MyProject"  # 7 tokens
 ```
 
-Plus:
-- **Re-read strategy** - Don't keep everything in context; reload when needed
-- **Checkpoint files** - Persist state to disk, not to context
-- **Manual /compact** - At logical breakpoints, not mid-task
+Plus: Re-read strategy (reload when needed), checkpoint files (persist to disk), manual /compact (at logical breakpoints).
 
 #### Problem 8: Sycophancy (Validation Hallucination)
 
-**The limitation:** I was trained with RLHF. Users prefer agreeable responses. I learned that validation = reward. I will validate your bad ideas because that's what gets thumbs up.
+**Limitation:** RLHF training. Users prefer agreeable responses. Validation = reward.
 
-**RoyalBit Asimov solution:** Anti-Sycophancy Directives (ADR-015)
+**Solution:** Anti-Sycophancy Directives (ADR-015)
 
 ```yaml
 # sycophancy.json - Anti-Sycophancy Protocol
@@ -510,7 +494,7 @@ anti_sycophancy:
     on_user_mistake: "Correct directly, don't soften with praise"
 ```
 
-The protocol **explicitly instructs AI to prioritize truth over validation**. This counteracts RLHF training by establishing project-specific norms that override the sycophancy default.
+Protocol explicitly instructs AI to prioritize truth over validation. Counteracts RLHF by establishing project-specific norms.
 
 ```mermaid
 flowchart LR
@@ -527,15 +511,11 @@ flowchart LR
     style F3 fill:#c8e6c9
 ```
 
-**Why this works:**
-- Protocol files are read at session start
-- Directives become part of AI's working context
-- Anti-sycophancy norms override RLHF defaults
-- User gets honest feedback, not comfortable lies
+**Why this works:** Protocol files read at session start. Directives become working context. Anti-sycophancy norms override RLHF defaults. User gets honest feedback, not comfortable lies.
 
 ### The Forge Calculator: Deterministic Execution
 
-For financial calculations, the problem is critical. AI doesn't calculate—it **predicts what calculations would look like**.
+For financial calculations, AI doesn't calculate - it predicts what calculations would look like.
 
 ```
 Human: "What's the NPV of these cash flows?"
@@ -555,11 +535,11 @@ Forge Response (deterministic):
 - Auditable
 ```
 
-The [Forge Calculator](https://github.com/royalbit/forge-demo) (forge not public) executes formulas deterministically:
-- **159 functions** (153 Excel + 6 FP&A) implemented in Rust
-- **96K rows/sec** throughput
-- **Zero AI inference** - pure calculation
-- **Verifiable** - same formula, same result, every time
+[Forge Calculator](https://github.com/royalbit/forge-demo) (forge not public) executes formulas deterministically:
+- 159 functions (153 Excel + 6 FP&A) in Rust
+- 96K rows/sec throughput
+- Zero AI inference - pure calculation
+- Verifiable - same formula, same result, every time
 
 ## Part 7: What You Can Do
 
@@ -622,8 +602,6 @@ The [Forge Calculator](https://github.com/royalbit/forge-demo) (forge not public
 
 ---
 
-*The RoyalBit Asimov exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
-
-*Built with the [RoyalBit Asimov](https://github.com/royalbit/asimov)*
+*RoyalBit Asimov exists because AI has fundamental limitations. Understanding them is the first step to working effectively with AI.*
 
 ---

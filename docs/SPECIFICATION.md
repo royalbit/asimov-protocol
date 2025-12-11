@@ -4,19 +4,17 @@ Version 9.16.0
 
 ## Overview
 
-**RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.**
+RoyalBit Asimov creates Self-Evolving Autonomous AI projects with built-in ethics. Each project initialized with `asimov init` becomes an independent autonomous AI with The Three Laws, ethics, green coding, and sprint autonomy.
 
-Each project initialized with `asimov init` becomes an **independent** Self-Evolving Autonomous AI with The Three Laws, ethics, green coding, and sprint autonomy. The methodology propagates through the ecosystem.
+See [ADR-024](adr/024-creator-protocol-architecture.md) for architectural rationale.
 
-See [ADR-024](adr/024-creator-protocol-architecture.md) for the full architectural rationale.
+**v4.0.0: Claude Code Native Integration** - Integrates with Claude Code's checkpoints, session resume, and CLAUDE.md memory. See [ADR-009](adr/009-claude-code-native-integration.md).
 
-**v4.0.0: Claude Code Native Integration** - RoyalBit Asimov now integrates with Claude Code's native features (checkpoints, session resume, CLAUDE.md memory). See [ADR-009](adr/009-claude-code-native-integration.md).
+**Ethics is the highest priority.** See [ADR-008](adr/008-ethics-protocol-humanist-mode.md).
 
-**Ethics is the highest priority.** Autonomous AI requires ethical guardrails. See [ADR-008](adr/008-ethics-protocol-humanist-mode.md).
+**All projects are green-coding by default.** See [ADR-001](adr/001-green-coding-by-default.md).
 
-**All RoyalBit Asimov projects are green-coding projects by default.** See [ADR-001](adr/001-green-coding-by-default.md).
-
-**Mid-session self-healing is NOT replaced by Claude Code native features** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL commands. Mid-session recovery uses protocol re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
+**Mid-session self-healing is NOT replaced by Claude Code** (ADR-013). Native `/rewind`, `--continue`, `--resume` are MANUAL. Mid-session recovery uses protocol re-read + commit cadence (~15 min). See [ADR-013](adr/013-self-healing-not-replaced.md).
 
 ## Design Principles
 
@@ -31,7 +29,7 @@ See [ADR-024](adr/024-creator-protocol-architecture.md) for the full architectur
 
 ## Claude Code Native Integration (v4.0.0)
 
-RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead of duplicating them.
+RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features.
 
 ### What Claude Code Provides Natively
 
@@ -56,7 +54,7 @@ RoyalBit Asimov v4.0.0 integrates with Claude Code 2.0's native features instead
 
 ### CLAUDE.md Integration
 
-The new CLAUDE.md template uses Claude Code's native `@import` syntax:
+The CLAUDE.md template uses Claude Code's `@import` syntax:
 
 ```markdown
 # {project-name}
@@ -69,11 +67,11 @@ The new CLAUDE.md template uses Claude Code's native `@import` syntax:
 Rules: Run until done, keep shipping, tests pass.
 ```
 
-This imports the full protocol files into Claude's memory hierarchy automatically.
+This imports protocol files into Claude's memory hierarchy.
 
 ## Core Principles
 
-The RoyalBit Asimov exists to solve seven specific problems. **Features that don't serve these principles don't belong in the protocol.**
+RoyalBit Asimov solves seven specific problems. Features that don't serve these principles don't belong.
 
 | Priority | Principle | Problem | Solution |
 |----------|-----------|---------|----------|
@@ -88,7 +86,7 @@ The RoyalBit Asimov exists to solve seven specific problems. **Features that don
 
 ### The Three Hallucinations
 
-"Hallucination" has three forms with different root causes:
+Three forms of "hallucination" with different root causes:
 
 | Type | What AI Does | Cause | RoyalBit Asimov Solution |
 |------|--------------|-------|--------------------------|
@@ -115,7 +113,7 @@ Examples:
 
 ## ROYALBIT ASIMOV
 
-RoyalBit Asimov is the complete autonomous AI development system. It consists of five components:
+Complete autonomous AI development system with five components:
 
 ```mermaid
 flowchart TB
@@ -147,9 +145,9 @@ flowchart TB
 
 **Remove any component and the system breaks.**
 
-### Platform Requirements (The Hard Truth)
+### Platform Requirements
 
-**RoyalBit Asimov is Claude Code exclusive. This will probably never change.**
+**RoyalBit Asimov is Claude Code exclusive.**
 
 | AI Tool | Protocol Files | RoyalBit Asimov | Why |
 |---------|---------------|-------------|-----|
@@ -166,7 +164,7 @@ RoyalBit Asimov requires **four architectural features** that only Claude Code h
 3. **File re-read mid-session** - How protocol files get reloaded
 4. **Auto-loaded config** - Bootstrap instruction (CLAUDE.md)
 
-Other AI tools have **different architectures for different use cases**. They're not going to rebuild their products to support this. See [VENDOR_IMPLEMENTATION.md](VENDOR_IMPLEMENTATION.md) for the full uncomfortable truth.
+Other AI tools have different architectures for different use cases. See [VENDOR_IMPLEMENTATION.md](VENDOR_IMPLEMENTATION.md) for details.
 
 ## The Bootstrap Chain
 
@@ -185,7 +183,7 @@ flowchart LR
 
 ### v8.14.0 Architecture (ADR-031 + ADR-032)
 
-**Behavior protocols are HARDCODED in the binary** and written to `.asimov/` as individual JSON files on warmup.
+Behavior protocols are hardcoded in the binary and written to `.asimov/` as individual JSON files on warmup.
 
 ```
 project/
@@ -318,7 +316,7 @@ Pre-commit hooks enforce coding standards **directly** without asimov as a runti
 
 ### Structure Validation (v3.2.0)
 
-Anti-hallucination hardening requires critical sections to exist in the right files.
+Critical sections must exist in the right files for anti-hallucination hardening.
 
 **asimov.json (Priority 0 - REQUIRED):**
 
@@ -360,7 +358,7 @@ Anti-hallucination hardening requires critical sections to exist in the right fi
 
 ### Self-Healing Behavior (v4.1.5+)
 
-Protocol files auto-regenerate when missing during validation. Recovery over surveillance.
+Protocol files auto-regenerate when missing during validation.
 
 **Auto-Regeneration Rules:**
 
@@ -374,7 +372,7 @@ Protocol files auto-regenerate when missing during validation. Recovery over sur
 | roadmap.yaml | AUTO-CREATE + INFO | Milestone data (skeleton) |
 | CLAUDE.md | **NEVER** | Bootstrap must be intentional |
 
-**Note:** Sprint is a PROTOCOL (defines WHEN to stop), not optional data. Roadmap regenerates as a skeleton template with one placeholder milestone.
+Sprint is a protocol (defines when to stop), not optional data. Roadmap regenerates as a skeleton template.
 
 **Why CLAUDE.md is Never Auto-Created:**
 - CLAUDE.md is the "on switch" - human must add it intentionally
@@ -409,7 +407,7 @@ See [ADR-017](adr/017-protocol-self-healing.md) for full rationale.
 
 ### asimov.json Schema (Required for ASIMOV)
 
-The Three Laws of Robotics configuration file. Canonical ethics for autonomous AI development.
+Three Laws of Robotics configuration. Canonical ethics for autonomous AI development.
 
 ```json
 # .asimov/asimov.json - The Three Laws of Robotics
@@ -462,8 +460,7 @@ fork_requirements:
 ```
 
 **Key Points:**
-- This is a **social contract**, not a technical lock
-- Good-faith AIs will follow it; bad actors will ignore it
+- Social contract, not a technical lock
 - Based on Isaac Asimov's Three Laws (1942)
 - `human_veto` command halts everything immediately
 - Replaces deprecated `ethics.yaml` (v7.0.8+)
@@ -472,7 +469,7 @@ See [ADR-008](adr/008-ethics-protocol-humanist-mode.md) and [ADR-020](adr/020-as
 
 ### green.json Schema (Required for ASIMOV)
 
-The Green Coding configuration file. Defines sustainability guardrails for AI development.
+Green Coding configuration. Defines sustainability guardrails for AI development.
 
 ```json
 # .asimov/green.json - Sustainability Protocol v1.0
@@ -533,7 +530,7 @@ See [ADR-016](adr/016-green-coding-protocol.md) for full rationale.
 
 ### sycophancy.json Schema (Required for ASIMOV)
 
-The Anti-Sycophancy configuration file. Counteracts RLHF-induced validation hallucination.
+Anti-Sycophancy configuration. Counteracts RLHF-induced validation hallucination.
 
 ```json
 # .asimov/sycophancy.json - Anti-Sycophancy Protocol v1.0
@@ -591,18 +588,16 @@ on_confusion:
 ```
 
 **Key Points:**
-- This is a **core protocol**, not optional configuration
-- Hardcoded in CLI binary - cannot be bypassed by deleting file
+- Core protocol, not optional configuration
+- Hardcoded in CLI binary
 - Auto-regenerates if missing (WARN level)
-- Session validation at step_0c (after ethics and green)
 - 9 banned phrases across 3 categories
-- Required behaviors define how to respond honestly
 
 See [ADR-015](adr/015-anti-sycophancy-protocol.md) for full rationale.
 
 ### CLAUDE.md Schema (Required for ASIMOV)
 
-The bootstrap file. Must be ultra-short to survive summarization.
+Bootstrap file. Must be ultra-short to survive summarization.
 
 ```markdown
 # {project-name}
@@ -622,11 +617,11 @@ ON SESSION START: Immediately run `asimov warmup` to load all protocols and proj
 - Core rules in one line
 - **ON SESSION START directive** (v4.1.8+): Forces Claude to act immediately
 
-**v9.16.0 Update:** The ON SESSION START directive now recommends running `asimov warmup` instead of reading individual files. The warmup command outputs comprehensive JSON containing all protocols, project configuration (from project.yaml), roadmap (from roadmap.yaml), and WIP status in a single output, eliminating the need for separate file reads.
+**v9.16.0:** ON SESSION START directive recommends `asimov warmup`, which outputs comprehensive JSON with all protocols, project configuration, roadmap, and WIP status in a single output.
 
 **Why ON SESSION START is Required (v4.1.8):**
 
-SessionStart hooks inject context but do NOT trigger automatic Claude response. Claude still waits for user input. The `ON SESSION START` directive in CLAUDE.md explicitly instructs Claude to act immediately when it sees the hook output, without waiting for user prompt.
+SessionStart hooks inject context but don't trigger automatic Claude response. The `ON SESSION START` directive explicitly instructs Claude to act immediately without waiting for user prompt.
 
 | Component | What It Does | Limitation |
 |-----------|--------------|------------|
@@ -636,7 +631,7 @@ SessionStart hooks inject context but do NOT trigger automatic Claude response. 
 
 ### warmup.json Schema
 
-The master protocol file in .asimov/ directory.
+Master protocol file in .asimov/.
 
 #### identity (required)
 
@@ -877,7 +872,7 @@ AI: Report results
 
 ### Checkpoint Triggers
 
-Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compaction-data.md)):
+Based on real compaction data ([ADR-003](adr/003-self-healing-real-compaction-data.md)):
 
 | Trigger | Rationale |
 |---------|-----------|
@@ -887,7 +882,7 @@ Based on real compaction data (see [ADR-003](adr/003-self-healing-real-compactio
 | Before any commit | Quality gate |
 | On any confusion | Recovery signal |
 
-**NOT "every 2 hours"** - compaction happens every 10-20 minutes with heavy reasoning.
+Compaction happens every 10-20 minutes with heavy reasoning, not "every 2 hours".
 
 ### Anti-Patterns (Reject)
 
@@ -963,7 +958,7 @@ quality:
 
 ## Release Discipline
 
-Every session ends with a release. No "work in progress" commits.
+Every session ends with a release.
 
 ### Release Checklist
 
@@ -992,7 +987,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 ## Claude Code Hooks (v4.1.7+)
 
-Claude Code lifecycle hooks enable true autonomous operation by auto-initializing the protocol on session start and injecting context before compaction.
+Lifecycle hooks enable autonomous operation by auto-initializing the protocol on session start and injecting context before compaction.
 
 ### Why Hooks Are Required
 
@@ -1044,7 +1039,7 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 }
 ```
 
-**Note**: v4.1.6 used incorrect `.claude/hooks.json` with wrong event names. v4.1.7 fixed the schema.
+v4.1.6 used incorrect `.claude/hooks.json`. v4.1.7 fixed the schema.
 
 ### SessionStart Hook
 
@@ -1056,7 +1051,7 @@ Claude Code lifecycle hooks enable true autonomous operation by auto-initializin
 - Presents next milestone
 - Waits for user "go" confirmation
 
-**v9.16.0 Improvement**: When Claude runs `asimov warmup` (recommended), it receives all protocols, project, and roadmap data in a single JSON output, eliminating the need for separate file reads.
+**v9.16.0:** `asimov warmup` outputs all protocols, project, and roadmap in a single JSON, eliminating separate file reads.
 
 **Output** (injected into Claude's context when exit 0):
 ```
@@ -1087,11 +1082,11 @@ CORE RULES (non-negotiable):
 - Reminds to check TodoWrite for in-progress tasks
 - Includes ethics reminder
 
-**Why this is critical**: Compaction happens every ~15 minutes with MAX_THINKING_TOKENS=200000. The PreCompact hook injects rules into the context right before summarization, increasing their chances of survival.
+Compaction happens every ~15 minutes with MAX_THINKING_TOKENS=200000. PreCompact hook injects rules before summarization, increasing survival chances.
 
 ### Vendor Exclusivity
 
-**These hooks only work with Claude Code.** No other AI coding assistant provides lifecycle hooks:
+Hooks only work with Claude Code. No other AI coding assistant provides lifecycle hooks:
 
 | AI | Session Init | Pre-Compact |
 |----|-------------|-------------|
@@ -1152,11 +1147,9 @@ asimov warmup --verbose        # Human-readable output for terminal use
 
 ### Warmup Output (v9.16.0)
 
-`asimov warmup` outputs a comprehensive JSON blob by default containing all project context needed for Claude to start working immediately.
+`asimov warmup` outputs comprehensive JSON with all project context.
 
 **Default Output (JSON):**
-
-By default, `asimov warmup` outputs a single JSON object containing:
 
 ```json
 {
@@ -1222,7 +1215,7 @@ CURRENT: v1.0.0 (released)
 NEXT: v1.1.0 - Feature description
 ```
 
-Use `--verbose` when running warmup manually in a terminal. The default JSON output is optimized for Claude Code consumption.
+Use `--verbose` for terminal/human use. Default JSON is optimized for Claude Code.
 
 ### Full Setup (v8.2.0)
 
@@ -1280,7 +1273,7 @@ Paste .asimov/warmup.json content at session start. Note: Self-healing won't wor
 
 ## Context Window Optimization (ADR-010)
 
-**Proven velocity: 50-150x** (Forge project: 45K LOC, 2,486 tests, 159 functions)
+Proven velocity: 50-150x (Forge project: 45K LOC, 2,486 tests, 159 functions)
 
 Context window size affects self-healing overhead:
 
@@ -1290,7 +1283,7 @@ Context window size affects self-healing overhead:
 | Enterprise | 500K | Every ~40 min | Medium |
 | API Tier 4 | **1M** | Every ~90 min | **Low** |
 
-**Hardware is NOT the bottleneck.** API latency dominates. Optimize subscription tier, not workstation.
+Hardware is not the bottleneck. API latency dominates. Optimize subscription tier, not workstation.
 
 See [ADR-010: Context Window Optimization](adr/010-velocity-constraints-tier-analysis.md) for full analysis.
 
@@ -1317,7 +1310,7 @@ These features are NOT replaced by Claude Code native functionality:
 | **Green Protocol** | .asimov/green.json, local-first validation | Claude Code has no green coding philosophy |
 | **Anti-Sycophancy** | .asimov/sycophancy.json, banned phrases | Claude Code has no sycophancy prevention |
 
-**Key distinction:** Cross-session features → Claude Code native. Mid-session self-healing → RoyalBit Asimov.
+Cross-session features use Claude Code native. Mid-session self-healing uses RoyalBit Asimov.
 
 See [ADR-013](adr/013-self-healing-not-replaced.md) for full analysis.
 

@@ -8,7 +8,7 @@
 
 ADR-002 introduced the Self-Healing Protocol with a "2-hour checkpoint" interval. This was **fiction** - a reasonable-sounding number not based on empirical data.
 
-This ADR documents **real compaction patterns** observed from building asimov itself, and proposes a corrected self-healing mechanism.
+This ADR documents **real compaction patterns** from building asimov and proposes a corrected mechanism.
 
 ### The Problem with ADR-002
 

@@ -1,12 +1,12 @@
 # Vendor Implementation Guide
 
-> **AI Tool Compatibility Assessment**
+AI Tool Compatibility Assessment
 
 ## Executive Summary
 
-**RoyalBit Asimov works with Claude Code. Due to architectural requirements, it is unlikely to work with other AI tools.**
+RoyalBit Asimov works with Claude Code. Due to architectural requirements, it is unlikely to work with other AI tools.
 
-This document provides a technical explanation of compatibility requirements and limitations.
+This document provides technical explanation of compatibility requirements and limitations.
 
 ## Core Requirements
 
@@ -35,28 +35,26 @@ flowchart TB
 | **Gemini** | ✗ (resets) | ✗ | ✗ | ✗ | **Never** |
 | **Cody** | ✗ | ✗ | Limited | ✗ | **Never** |
 
-**"Never" indicates:** These tools would require fundamental architectural changes. Current product strategies do not align with these requirements.
+**"Never":** These tools would require fundamental architectural changes.
 
 ### The Architecture Problem
 
-**ChatGPT, Gemini, etc.:**
+**ChatGPT, Gemini:**
 - No persistent filesystem access
-- Context doesn't "compact" - it resets or truncates
-- No way to execute hooks or see terminal output
-- Cloud-based, sandboxed, no local integration
+- Context resets or truncates (no compaction)
+- No hook execution or terminal output visibility
+- Cloud-based, sandboxed
 
 **GitHub Copilot:**
-- Not a conversation - it's autocomplete
-- No context to compact in the first place
-- No session state, no memory
-- Completely different use case
+- Autocomplete, not conversation
+- No context, session state, or memory
+- Different use case
 
 **Cursor:**
 - Has `.cursorrules` (auto-config) ✓
 - Has some file access ✓
-- But: Does terminal output flow into AI context? **Unclear**
-- But: Can it re-read files after compaction? **Unlikely**
-- Even if partial, hook refresh mechanism probably won't work
+- Terminal output flow into AI context? Unclear
+- Re-read files after compaction? Unlikely
 
 ### The Hook Refresh Mechanism (ADR-006)
 
@@ -72,13 +70,13 @@ flowchart TB
     F --> G["AI knows to re-read warmup.json"]
 ```
 
-**Why this CAN'T work for other AIs:**
+**Why this can't work for other AIs:**
 
-1. **No terminal visibility**: ChatGPT/Gemini can't see what your local terminal prints
-2. **No local execution**: They can't run hooks because they're cloud-sandboxed
-3. **No file re-read**: Even if they saw "re-read warmup.json", they can't do it
+1. No terminal visibility - ChatGPT/Gemini can't see local terminal output
+2. No local execution - cloud-sandboxed, can't run hooks
+3. No file re-read - can't access filesystem mid-session
 
-The hook mechanism exploits **Claude Code's unique architecture**: a local CLI that runs in your terminal with full filesystem access and persistent conversational context.
+The hook mechanism requires Claude Code's unique architecture: local CLI with terminal access, filesystem access, and persistent conversational context.
 
 ## What Other AIs CAN Use
 
@@ -112,45 +110,29 @@ The CLI is just a Rust binary. It doesn't need AI integration.
 
 ### Q: Will other vendors implement these features?
 
-**Unlikely.** Here's why:
+Unlikely:
 
-1. **No business case**: Anthropic built Claude Code for autonomous coding. OpenAI/Google are focused on chat interfaces and API access. Different products, different goals.
-
-2. **Architecture would need rebuild**: Adding persistent filesystem access and terminal integration to ChatGPT would require rebuilding from scratch. It's not a feature request - it's a different product.
-
-3. **Security model conflicts**: ChatGPT's value is being sandboxed and safe. Giving it filesystem access creates liability.
-
-4. **Market positioning**: Copilot is autocomplete. Cursor is IDE integration. Claude Code is autonomous agent. They solve different problems.
+1. **No business case**: Different products, different goals (chat vs autonomous coding)
+2. **Architecture rebuild**: Would require rebuilding from scratch, not a feature request
+3. **Security conflicts**: Filesystem access creates liability for sandboxed tools
+4. **Market positioning**: Each tool solves different problems
 
 ### Q: What if I prefer ChatGPT/Copilot?
 
 Each tool has distinct strengths:
-- **ChatGPT**: Brainstorming, research, explanations, one-off code generation
-- **Copilot**: Autocomplete, inline suggestions, small completions
+- **ChatGPT**: Brainstorming, research, explanations
+- **Copilot**: Autocomplete, inline suggestions
 - **Claude Code**: Autonomous extended coding sessions
-
-Different tools serve different purposes. RoyalBit Asimov is specifically designed for **autonomous development**, which currently only Claude Code supports.
 
 ### Q: Is this vendor lock-in?
 
-**Yes, for the full RoyalBit Asimov system.**
+Yes, for the full system. Protocol files are vendor-neutral. Self-healing mechanism requires Claude Code's architecture.
 
-The protocol files are vendor-neutral and can be used with any AI tool. The self-healing mechanism is exclusive to Claude Code due to architectural requirements.
-
-If another vendor builds a tool with:
-- Local CLI execution
-- Terminal output visibility
-- Persistent context with compaction
-- Filesystem access mid-session
-- Auto-loaded config files
-
-...then RoyalBit Asimov would work there too. But as of November 2025, only Claude Code has all five.
+If another vendor builds a tool with local CLI execution, terminal visibility, persistent context with compaction, filesystem access, and auto-loaded config files, RoyalBit Asimov would work there too.
 
 ### Q: Should I wait for other tools to add support?
 
-**Not recommended.** Claude Code is available now and fully functional. Delaying adoption while waiting for uncertain future developments may impact productivity.
-
-The protocol is designed for portability. If alternatives emerge, migration is straightforward (the protocol uses standard JSON files). However, there is currently no indication that other vendors are pursuing this architecture.
+Not recommended. Claude Code is available now. The protocol uses standard JSON files, making migration straightforward if alternatives emerge.
 
 ## Compatibility Matrix
 
@@ -166,21 +148,17 @@ The protocol is designed for portability. If alternatives emerge, migration is s
 
 ## Summary
 
-**RoyalBit Asimov has two layers:**
+RoyalBit Asimov has two layers:
 
 1. **Protocol Files** (warmup.json, sprint.json, roadmap.json)
-   - Universal compatibility
-   - Any AI can read them (via manual paste)
+   - Universal compatibility via manual paste
    - Useful but requires manual management
 
 2. **RoyalBit Asimov System** (Self-healing, hooks, autonomous sessions)
    - Claude Code exclusive
    - Requires specific architectural capabilities
-   - Other vendors would need significant architectural changes
 
-**Recommendation:** Each tool is optimized for different use cases. For full RoyalBit Asimov functionality, Claude Code is currently required. For other AI tools, the protocol files remain usable with manual management and accepted limitations.
-
-This assessment reflects current technical capabilities and architectural constraints.
+For full functionality, Claude Code is required. Protocol files remain usable with other AI tools via manual management.
 
 ---
 

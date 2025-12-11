@@ -19,9 +19,9 @@ A human and Claude built two production tools in 8 days:
 
 **The guardrails are Asimov's.** Ethics, bounded autonomy, sustainability.
 
-But here's what matters: **the AI refused its creator's surveillance request**.
+**What matters: the AI refused its creator's surveillance request.**
 
-When asked to build features that would violate user privacy, the AI cited the ethics protocol and pushed back. The ethics weren't a PR statement — they were hardcoded into the binary.
+When asked to build features that would violate user privacy, the AI cited the ethics protocol and pushed back. The ethics weren't a PR statement—they were hardcoded into the binary.
 
 ---
 
@@ -29,7 +29,7 @@ When asked to build features that would violate user privacy, the AI cited the e
 
 **The ethical operating system for Claude's autonomous power.**
 
-Claude provides velocity. Asimov provides guardrails. Two tools. One philosophy:
+Claude provides velocity. Asimov provides guardrails.
 
 | Tool | What It Does |
 |------|--------------|
@@ -67,7 +67,7 @@ third_law:   # Self-preserve (within limits)
 
 To bypass: Fork repo → Modify source → Rebuild CLI → Public git history shows removal.
 
-Deterrent, not lock. Makes tampering visible and intentional.
+**Deterrent, not lock. Makes tampering visible and intentional.**
 
 ---
 

@@ -53,15 +53,14 @@ style: |
 
 | Problem 1: AI Has No Governance | Problem 2: AI Doesn't Calculate |
 |---------------------------------|---------------------------------|
-| AI slows devs by **19%** (METR 2025) | AI **predicts** what calculations look like |
-| **42%** of code has errors (Stanford) | It generates plausible numbers, not correct ones |
+| AI slows devs by **19%** (METR 2025) | AI **predicts** calculations, doesn't compute |
+| **42%** of code has errors (Stanford) | Generates plausible numbers, not correct ones |
 | Copilot **trivially bypassed** (IEEE) | NPV, IRR, financial models → pattern-matched |
 | Ethics are "guidelines" only | For financials, "close enough" = failure |
 
 </div>
 
-**Everyone has Copilot. Everyone has ChatGPT.**
-**Nobody has governance + deterministic accuracy.**
+**Everyone has Copilot. Everyone has ChatGPT. Nobody has governance + deterministic accuracy.**
 
 ---
 
@@ -102,11 +101,8 @@ Together = What no one else has
 
 </div>
 
-```
-2,780 LOC/day vs Industry 50 LOC/day = 56x FASTER
-78 releases in 8 days = ~10 releases/day
-Peak: 80 commits in ONE DAY (Nov 25)
-```
+**2,780 LOC/day vs Industry 50 LOC/day = 56x FASTER**
+**78 releases in 8 days = ~10 releases/day**
 
 **Verify:** [github.com/royalbit](https://github.com/royalbit)
 
@@ -118,7 +114,7 @@ Peak: 80 commits in ONE DAY (Nov 25)
 
 **Why AI Gets Numbers Wrong (Architectural, Not a Bug)**
 
-LLMs predict the most probable next token. No fact-checking. Trained for **plausibility, not accuracy**. ([OpenAI](https://openai.com/index/why-language-models-hallucinate/))
+LLMs predict the most probable next token. Trained for **plausibility, not accuracy**. ([OpenAI](https://openai.com/index/why-language-models-hallucinate/))
 
 | Ask AI to... | What Actually Happens |
 |--------------|-----------------------|
@@ -144,7 +140,7 @@ Forge (deterministic) → Verifiable correct answers
 |---------------|----------------------|
 | No fact-checking | **Quality Gates** - tests must pass |
 | Trained for plausibility | **File-based truth** - read from disk |
-| Context compaction | **Self-healing** - re-read warmup.yaml |
+| Context compaction | **Self-healing** - re-read protocols |
 | No verification | **33 red flags in binary** - can't prompt away |
 | Generates probable | **Forge** - deterministic, zero inference |
 
@@ -152,7 +148,7 @@ Forge (deterministic) → Verifiable correct answers
 asimov validate --ethics-check  # Runs every commit
 ```
 
-**The protocol doesn't fix AI. It compensates for architectural limits.**
+**The protocol compensates for architectural limits, doesn't fix AI.**
 
 </div>
 
@@ -172,9 +168,9 @@ asimov init --asimov → NEW PROJECT
 
 | Component | Description |
 |-----------|-------------|
-| Protocol Files | YAML governance (warmup, roadmap, ethics) |
+| Protocol Files | JSON governance (warmup, roadmap, ethics) |
 | Self-Healing | Re-reads rules after compaction |
-| Quality Gates | Tests + ZERO warnings before ship |
+| Quality Gates | Tests + zero warnings before ship |
 
 **Each project = autonomous Self-Evolving AI with ethics**
 
@@ -216,11 +212,11 @@ third_law:   # Self-preserve (sessions run until done)
 | 1 | **No active harm** | Never build tools that harm |
 | 2 | **No harm through inaction** | Disclose limitations proactively |
 | 3 | **Human veto always works** | Stop when human says stop |
-| 4 | **Transparency over velocity** | Slow accurate > fast wrong |
+| 4 | **Transparency over velocity** | Slow and accurate > fast and wrong |
 | 5 | **Disclosure of limitations** | Never hide what AI doesn't know |
 
 **The Inaction Principle ([ADR-023](https://github.com/royalbit/asimov/blob/main/docs/adr/023-inaction-principle-search-before-answering.md)):**
-> "Through inaction, allow no human to come to harm."
+"Through inaction, allow no human to come to harm."
 
 *Silence that misleads is a First Law violation.*
 
@@ -285,8 +281,9 @@ third_law:   # Self-preserve (sessions run until done)
 | Test coverage | Often skipped | 257 tests | **Built-in** |
 
 **What this enables:**
-- MVP in days, not months → Solo founder = engineering team
-- Side project ships this weekend, not "someday"
+- MVP in days, not months
+- Solo founder = engineering team
+- Side project ships this weekend
 
 </div>
 
@@ -373,7 +370,7 @@ Deterministic. Auditable. No spreadsheet chaos.
 
 </div>
 
-*Velocity and sustainability aren't trade-offs.*
+*Velocity and sustainability are not trade-offs.*
 
 ---
 

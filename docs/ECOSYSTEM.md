@@ -4,12 +4,12 @@ How one protocol powers an entire product suite.
 
 ## The Story
 
-RoyalBit Asimov wasn't designed in isolation. It emerged from building real products:
+RoyalBit Asimov emerged from building real products:
 
-1. **Forge** - A YAML formula calculator that needed autonomous development
-2. **A proprietary platform** - A full product ecosystem with backend, mobile apps, and business strategy
+1. **Forge** - YAML formula calculator requiring autonomous development
+2. **Proprietary platform** - Full ecosystem with backend, mobile apps, and business strategy
 
-Problems solved building Forge became the protocol. The protocol scaled to power an entire ecosystem.
+Problems solved building Forge became the protocol, which then scaled to power the entire ecosystem.
 
 ## The Ecosystem (Anonymized)
 
@@ -85,54 +85,49 @@ Each phase has:
 
 ### 1. Context Persistence
 
-Each project has its own `warmup.json` that defines:
+Each project's `warmup.json` defines:
 - Project identity and purpose
 - AI ownership declaration
 - Key files and architecture
-- Session workflow
-- Quality standards
+- Session workflow and quality standards
 
 ### 2. Autonomous Execution
 
-The workflow:
 ```
-Human: "run warmup"
-AI: [loads context, presents current phase]
-Human: "punch it" or "go"
-AI: [executes autonomously until milestone complete]
-AI: [pauses at phase gate for human review]
+"run warmup" → AI loads context, presents phase
+"punch it" or "go" → AI executes until milestone complete
+Phase gate → Human reviews
 ```
 
 ### 3. Cross-Repo Consistency
 
 All repositories follow the same protocol:
-- Same session initialization pattern
-- Same quality standards (zero warnings)
-- Same commit conventions
-- Same phase gate structure
+- Session initialization pattern
+- Quality standards (zero warnings)
+- Commit conventions
+- Phase gate structure
 
 ### 4. Master Roadmap Orchestration
 
-The `master-roadmap.yaml` coordinates across repositories:
-- Defines what's already complete
-- Specifies dependencies between phases
-- Lists what to reuse from existing code
-- Sets acceptance criteria for the entire system
+`master-roadmap.yaml` coordinates across repositories:
+- What's already complete
+- Dependencies between phases
+- What to reuse from existing code
+- Acceptance criteria for the entire system
 
 ## Real Numbers
 
-### Open Source (Forge) — Built Entirely with the Protocol
+### Open Source (Forge)
 
 | Metric | Value |
 | ------ | ----- |
-| Lines of Rust | **45,700** |
-| Tests passing | **2,486** |
-| Functions | **159** (153 Excel + 6 FP&A) |
+| Lines of Rust | 45,700 |
+| Tests passing | 2,486 |
+| Functions | 159 (153 Excel + 6 FP&A) |
 | Demo | forge-demo (forge not public) |
+| Velocity | 50-150x (verified via git logs) |
 
-**Velocity multiplier: 50-150x** (verified via git logs, zero rework, production quality from first iteration)
-
-**vs GitHub Copilot:** Research shows Copilot delivers 1.1-1.6x productivity gains. RoyalBit Asimov delivers **50-150x**.
+**vs GitHub Copilot:** Copilot delivers 1.1-1.6x gains. RoyalBit Asimov delivers 50-150x.
 
 ### Proprietary Ecosystem
 
@@ -187,8 +182,6 @@ A systematic investigation (August-November 2025) measured the impact:
 
 ### The Forge Project: Built in ~38 Hours
 
-The entire Forge project was built with RoyalBit Asimov:
-
 | Phase | Time | Key Deliverables |
 | ----- | ---- | ---------------- |
 | v1.0-v1.2 | ~23.5h | Core engine, 50+ Excel functions |
@@ -197,10 +190,7 @@ The entire Forge project was built with RoyalBit Asimov:
 | v4.0-v4.1 | ~4h | Rich metadata, UNIQUE/COUNTUNIQUE |
 | **Total** | **~38h** | **2,486 tests, 45,700 LOC, 159 functions** |
 
-**Industry comparison:**
-- Solo senior dev: 3-4 months (~500 hours)
-- With RoyalBit Asimov: **~38 hours**
-- **Multiplier: 13x faster**
+Solo senior dev: 3-4 months (~500 hours) → With RoyalBit Asimov: ~38 hours = **13x faster**
 
 ### Velocity Multipliers
 
@@ -215,15 +205,11 @@ The entire Forge project was built with RoyalBit Asimov:
 
 ### The Bootstrapping Proof
 
-The protocol built itself. Both projects use the same methodology:
-
 | Project | LOC | Releases | Hours | Verified |
 |---------|-----|----------|-------|----------|
 | forge (not public) | 45,700 | 41 | ~38 | [demo](https://github.com/royalbit/forge-demo/releases) |
 | [asimov](https://github.com/royalbit/asimov) | 32,226 | 76 | ~20 | [GitHub](https://github.com/royalbit/asimov/releases) |
 | **Combined** | **50,564** | **117** | **~58** | Both published |
-
-**1 human. 1 AI. 58 hours. 117 releases.**
 
 ### vs GitHub Copilot
 
@@ -236,18 +222,15 @@ The protocol built itself. Both projects use the same methodology:
 
 ## Green Coding
 
-RoyalBit Asimov enables green coding practices—and creates a **cost moat**.
+RoyalBit Asimov enables green coding practices and creates a cost moat.
 
-### The Problem with AI Validation
+### The Problem
 
-Every AI API call has a carbon footprint:
-- GPU power for inference
-- Data center cooling
-- Network transmission
+AI API calls have carbon footprint (GPU power, data center cooling, network transmission).
 
 **Per validation request:** ~0.25g CO2
 
-### The Protocol's Solution
+### The Solution
 
 Local validation + deterministic execution:
 - **Per validation:** ~0.0005g CO2
@@ -261,8 +244,6 @@ Local validation + deterministic execution:
 | Team (3) | 3.75 kg/year | 0.007 kg/year | 99.6% |
 | Enterprise (20) | 62.5 kg/year | 0.125 kg/year | 99.6% |
 
-**Enterprise savings:** Equivalent to removing 13 cars from the road for 1 day.
-
 ### Cost Savings
 
 | User Type | AI Tokens | Local | Savings |
@@ -270,8 +251,6 @@ Local validation + deterministic execution:
 | Personal | $792/year | $0 | $792/year |
 | Team (3) | $40K/year | $0 | $40K/year |
 | Hedge Fund (5) | $132K/year | $0 | $132K/year |
-
-**Why?** The protocol emphasizes deterministic validation over probabilistic AI inference.
 
 ### The Infrastructure Moat
 
@@ -285,14 +264,14 @@ The proprietary ecosystem uses Rust + UPX compression for backend services:
 | Annual infra cost | $180-240K | $90-120K | **$90K+ savings** |
 
 **Why this is a moat:**
-1. **Hard to replicate:** Requires complete backend rewrite (12-18 months)
-2. **Rust expertise:** Scarce, expensive engineers
-3. **Production validation:** TRL 7 (system prototype in operational environment)
+1. Requires complete backend rewrite (12-18 months)
+2. Rust expertise: scarce, expensive engineers
+3. Production validation: TRL 7
 
 **Strategic options with $90K+/year savings:**
-- Undercut competitors on pricing (20-30% cheaper)
-- Invest in R&D (faster feature velocity)
-- Fund customer acquisition (lower CAC)
+- Undercut competitors 20-30%
+- Invest in R&D
+- Fund customer acquisition
 
 See [GREEN_CODING.md](GREEN_CODING.md) for the full analysis.
 
@@ -307,18 +286,14 @@ RoyalBit Asimov proves that:
 
 ## Getting Started
 
-1. **Start small** - Add `warmup.json` to one project
-2. **Define ownership** - Who (AI) owns what
-3. **Set quality gates** - Tests must pass, zero warnings
-4. **Scale gradually** - Add `sprint.json`, then `roadmap.yaml`
-
-The protocol grew organically from solving real problems. Start with the problems you have.
+1. Add `warmup.json` to one project
+2. Define ownership - who (AI) owns what
+3. Set quality gates - tests pass, zero warnings
+4. Scale gradually - add `sprint.json`, then `roadmap.yaml`
 
 ## The Circular Nature
 
-RoyalBit Asimov was born from building Forge. Forge now uses RoyalBit Asimov to build itself. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
-
-It's protocols all the way down.
+Forge birthed Asimov. Asimov now builds Forge. The proprietary ecosystem uses the same protocol. The protocol itself uses the protocol.
 
 ---
 

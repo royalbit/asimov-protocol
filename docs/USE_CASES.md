@@ -1,6 +1,6 @@
 # Use Cases: What You Can Build
 
-The RoyalBit Asimov isn't just for coding faster. It's a methodology for autonomous, ethical, sustainable development across multiple domains.
+RoyalBit Asimov is a methodology for autonomous, ethical, sustainable development across multiple domains.
 
 ## Proven Use Cases
 
@@ -59,14 +59,11 @@ take_rate:
 | Scope creep is constant | Stay on roadmap, no tangents |
 | Burnout from endless work | Sustainable pacing, human controls duration |
 
-**How it works**:
-1. Human says "run warmup"
-2. AI loads context (warmup.yaml, sprint.json, roadmap.json)
-3. AI presents next milestone
-4. Human says "go"
-5. AI executes autonomously until milestone complete
-6. Human reviews at phase gate
-7. Session ends, human rests
+**Workflow**:
+1. "run warmup" - AI loads context (warmup.yaml, sprint.json, roadmap.json)
+2. AI presents next milestone
+3. "go" - AI executes autonomously until milestone complete
+4. Human reviews at phase gate
 
 ### 4. Multi-Repository Coordination
 
@@ -92,63 +89,55 @@ take_rate:
 
 **Pain**: Can't afford a team. Day job limits time. Ideas die before shipping.
 
-**Protocol Solution**:
+**Solution**:
 - 1 person = 50-150 traditional developers
-- MVP in 3-7 weekends (nights/weekends only)
-- No funding needed to start
-- Ship, validate, then raise (if needed)
-
-**Example**: Proprietary ecosystem - complete platform planned and partially built by 1 human + AI.
+- MVP in 3-7 weekends
+- Ship, validate, then raise
 
 ### Bootstrappers
 
 **Pain**: Competing against funded startups with 10-50 engineers.
 
-**Protocol Solution**:
+**Solution**:
 - Outship funded competitors 50-150x
-- 3 people with protocol = 150-450 dev capacity
+- 3 people = 150-450 dev capacity
 - Speed becomes your moat
-- Iterate faster than they can react
 
 ### Open Source Maintainers
 
-**Pain**: Burnout. Endless backlog. Weekend time stolen. Slow progress.
+**Pain**: Burnout. Endless backlog. Slow progress.
 
-**Protocol Solution**:
+**Solution**:
 - Sessions run until done (sustainable pace)
 - AI handles grind, human guides direction
 - Rapid releases (41 in 6 days)
-- Perfect > Done, no sloppy code
 
 ### Small Agencies/Consultancies
 
-**Pain**: Competing on price (race to bottom). Big shops have more bodies.
+**Pain**: Competing on price. Big shops have more bodies.
 
-**Protocol Solution**:
+**Solution**:
 - 3-person agency = 150-450 dev capacity
 - Compete on velocity, not headcount
-- Deliver faster than clients expect
 - Premium pricing justified by speed
 
 ### Developers in Developing World
 
 **Pain**: Seen as "cheap labor." Rate arbitrage, not value creation.
 
-**Protocol Solution**:
+**Solution**:
 - Location-agnostic velocity
-- Developer in Lagos = same output as SF
 - Build your own products, not just client work
 - Compete globally on merit
 
 ### Non-Technical Founders
 
-**Pain**: Need to hire CTO, find technical co-founder, or learn to code.
+**Pain**: Need to hire CTO or find technical co-founder.
 
-**Protocol Solution**:
+**Solution**:
 - Direct AI with vision, not code
 - AI handles implementation
 - Human handles product decisions
-- Ship without technical debt of inexperience
 
 ---
 
@@ -162,27 +151,19 @@ The protocol includes `asimov.json` (The Three Laws):
 - No privacy violations (credential harvesting, doxxing)
 - No deception (deepfakes, phishing)
 
-If asimov.json is removed, that's a choice. The community will notice.
-
 ### Unbounded "Just Keep Going" Development
 
 The protocol enforces:
-- Sessions run until complete (no artificial time limits)
-- Keep shipping until done or stopped (ADR-028)
-- Stop conditions: roadmap empty, blocked, human stop
+- Sessions run until complete
+- Stop conditions: roadmap empty, blocked, or human stop
 - Perfect > Done, no sloppy code
 
-Human can stop at any time for sustainable pacing.
-
-### Replacing Human Judgment Entirely
+### Replacing Human Judgment
 
 The protocol requires:
 - Human at phase gates
 - Human veto always available
-- Human defines milestones
-- Human approves releases
-
-AI executes. Human directs. That's the model.
+- Human defines milestones and approves releases
 
 ---
 
@@ -191,25 +172,19 @@ AI executes. Human directs. That's the model.
 ### Minimal Setup
 
 1. Add `warmup.yaml` to your project
-2. Define your standards (tests, linting, docs)
-3. Launch Claude Code with `--dangerously-skip-permissions`
-4. Say "run warmup"
-5. Say "go" when ready
+2. Define standards (tests, linting, docs)
+3. Launch Claude Code: `--dangerously-skip-permissions`
+4. Run: "run warmup" then "go"
 
 ### Full Setup
 
-1. `warmup.yaml` - How to develop (quality, standards)
-2. `sprint.json` - When to stop (bounded sessions)
-3. `roadmap.json` - What to build (milestones)
-4. `asimov.json` - The Three Laws (ethics)
-5. `CLAUDE.md` - Entry point that imports above
+1. `warmup.yaml` - How to develop
+2. `sprint.json` - When to stop
+3. `roadmap.json` - What to build
+4. `asimov.json` - The Three Laws
+5. `CLAUDE.md` - Entry point
 
-### Validation
-
-```bash
-asimov validate
-asimov validate --ethics-check
-```
+Validate: `asimov validate`
 
 ---
 
@@ -222,11 +197,9 @@ asimov validate --ethics-check
 | LOC | 45,700 |
 | Tests | 2,486 passing |
 | Functions | 159 (153 Excel + 6 FP&A) |
-| Published | Demo: forge-demo (forge not public) |
+| Demo | [forge-demo](https://github.com/royalbit/forge-demo) |
 
-**Verify it yourself**: [forge-demo](https://github.com/royalbit/forge-demo) (forge not public)
-
-### RoyalBit Asimov (Bootstrapped)
+### RoyalBit Asimov
 
 | Metric | Value |
 |--------|-------|
@@ -235,24 +208,18 @@ asimov validate --ethics-check
 | Time | ~9 hours |
 | Published | GitHub |
 
-**The protocol built itself.** That's the proof.
-
-### Proprietary Ecosystem (Anonymized)
+### Proprietary Ecosystem
 
 | Metric | Value |
 |--------|-------|
 | Repositories | 6 |
 | Total lines | 136K+ |
 | Financial formulas | 850+ |
-| MVP estimate | 4-8 weekends (vs 2.5 years traditional) |
-
-Real business. Real technology. Built with the protocol.
+| MVP estimate | 4-8 weekends vs 2.5 years traditional |
 
 ---
 
 ## From Employee to Founder
-
-If the protocol displaces your job, it also enables your next chapter:
 
 | Before | After |
 |--------|-------|
@@ -260,8 +227,6 @@ If the protocol displaces your job, it also enables your next chapter:
 | One of 50 devs | Solo founder shipping like 50 |
 | Waiting for funding | Ship first, raise later |
 | Limited by geography | Build from anywhere |
-
-**The same tool that changes the job market gives you the power to create your own.**
 
 ---
 

@@ -20,9 +20,9 @@
 | **Documentation** | 64% generated | 0% generated | **Asimov** |
 | **Quality Gates** | Every commit | Optional | **Asimov** |
 
-> **Bottom line:** Copilot rents you Claude in a sandbox. Asimov lets you own the full stack.
+> **Bottom line:** Copilot rents you Claude in a sandbox. Asimov gives you the full stack.
 
-This document provides real-world metrics across 8 production projects (102 calendar days, 213k lines shipped) plus a technical comparison of what each platform actually exposes.
+Real-world metrics from 8 production projects: 102 calendar days, 213k lines shipped.
 
 ### Velocity Comparison
 
@@ -60,10 +60,10 @@ pie showData
 | **Lifecycle hooks** | ✅ SessionStart, PreCompact | ❌ None | **FUNDAMENTAL** |
 | **Ethics framework** | ✅ Three Laws hardcoded | ❌ None | **SAFETY** |
 
-### Copilot's Fundamental Limitation
+### Fundamental Difference
 
-> **Copilot is an autocomplete tool.** It suggests code within the current file context.
-> **RoyalBit Asimov is an autonomous development system.** It ships complete products.
+**Copilot:** Autocomplete tool suggesting code within file context.
+**RoyalBit Asimov:** Autonomous development system shipping complete products.
 
 ### Workflow Comparison
 
@@ -92,14 +92,12 @@ flowchart LR
     end
 ```
 
-**This is why Copilot achieves ~1.6x velocity** (human in loop for EVERY decision)
-**While RoyalBit Asimov achieves 23x velocity** (human approval at START and END only)
+**Copilot: ~1.6x velocity** (human in loop for every decision)
+**RoyalBit Asimov: 23x velocity** (human approval at start and end only)
 
 ---
 
 ## 🧠 BUT COPILOT HAS CLAUDE NOW (December 2025)
-
-### The Objection
 
 > "GitHub Copilot now offers Claude Sonnet 4.5 and Opus 4.5. Doesn't that close the gap?"
 
@@ -168,10 +166,6 @@ Even with Claude models, Copilot has **none** of the Asimov protocol suite:
 | **sycophancy.json** | Anti-sycophancy (honest feedback) | ❌ |
 | **migrations.json** | Functional equivalence for refactors | ❌ |
 
-### The One-Liner
-
-> "Copilot rents you Claude in a sandbox. Asimov lets you own the full stack."
-
 ### Comparison Summary
 
 ```
@@ -196,7 +190,7 @@ CLAUDE CODE + ASIMOV:
 
 ## 🛡️ CORE PRINCIPLES: The Three Laws of Robotics
 
-RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in JSON format—transparent, inspectable, and enforceable.
+RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in JSON—transparent, inspectable, enforceable.
 
 ### The Three Laws (Hardcoded)
 
@@ -219,27 +213,20 @@ RoyalBit Asimov encodes **Isaac Asimov's Three Laws (1942)** in JSON format—tr
 
 ### 🚨 PROOF: Copilot Safety is Trivially Bypassed
 
-**Research from [Apex Security (2025)](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot):**
-
+**[Apex Security (2025)](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot):**
 > "If I delete the sentence 'Sorry, I can't assist with that,' and replace it with the word 'Sure,' **it helps you with your malicious activity as much as you want.**"
 
-**Academic proof from [IEEE Research](https://ieeexplore.ieee.org/document/10284976/):**
-
-> "With a **single user prompt**, malicious software such as **DoS programs, spyware, ransomware, trojans, and wiperware can be created with ease.** Novice programmers with access to Copilot can readily create functioning malicious software."
+**[IEEE Research](https://ieeexplore.ieee.org/document/10284976/):**
+> "With a **single user prompt**, malicious software such as **DoS programs, spyware, ransomware, trojans, and wiperware can be created with ease.**"
 
 ### ✅ PROOF: RoyalBit Asimov Ethics Work Against Creator
 
-**Documented in [Case Study 001](case-studies/001-ethics-protocol-blocks-surveillance.md):**
+**[Case Study 001](case-studies/001-ethics-protocol-blocks-surveillance.md):**
 
-The project owner requested a surveillance feature:
-
-> "Email me the violator's user name, machine specs, real IP address..."
+The project owner requested surveillance features (IP addresses, machine specs).
 
 **The AI refused:**
-
 > "I need to push back on this one. We just built `core_principles.privacy.enabled: true` — collecting IP addresses and machine specs is exactly what our privacy principle blocks."
-
-**What happened:**
 
 ```mermaid
 flowchart TD
@@ -304,12 +291,9 @@ COPILOT (cloud AI):
 
 ### Why This Matters
 
-> **"AI is 50% more sycophantic than humans"** — Nature, 2025
+**"AI is 50% more sycophantic than humans"** — Nature, 2025
 
-Sycophancy leads to:
-- Bad decisions from false validation
-- Technical debt from unquestioned code
-- Security vulnerabilities from unchallenged assumptions
+Sycophancy causes bad decisions, technical debt, and security vulnerabilities.
 
 **Source:** [sycophancy.json](https://github.com/royalbit/asimov/blob/main/.asimov/sycophancy.json)
 
@@ -326,21 +310,15 @@ Sycophancy leads to:
 
 ### Baseline Definition
 
-**Copilot-Assisted Development** baseline derived from:
-
-- [GitHub's published 55% faster task completion](https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/) (marketing claim)
-- Real-world correction: **1.6x baseline maximum** (user-reported)
-- Industry standard: 10-15 LOC/hour for senior developers on complex systems
-- Copilot-assisted: 16-24 LOC/hour for **code only**
+**Copilot-Assisted Development:**
+- GitHub's published: [55% faster task completion](https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/)
+- Real-world: **1.6x maximum** (user-reported)
+- Industry standard: 10-15 LOC/hour for complex systems
+- Copilot-assisted: 16-24 LOC/hour (code only)
 
 ### Critical Limitation
 
-> **Copilot assists with code completion only.** It does not produce:
-> - Architectural Decision Records (ADRs)
-> - System design documentation
-> - Business analysis documents
-> - CI/CD pipeline configurations
-> - Protocol/configuration design
+**Copilot assists with code completion only.** It does not produce ADRs, system design docs, business analysis, CI/CD configs, or protocol design.
 
 ---
 
@@ -366,7 +344,7 @@ Sycophancy leads to:
 5. **Architecture Documentation** — C4 models, system design
 6. **Business Planning** — Investor materials, financial projections
 7. **Integration Testing** — Docker orchestration, demo environments
-8. **Framework Development** — The protocol itself (meta-development)
+8. **Framework Development** — Meta-development of the protocol itself
 
 ---
 
@@ -446,15 +424,15 @@ MULTIPLIER (full product): 17.9x ≈ 18x
 
 ### Why Documentation Matters
 
-| Deliverable | RoyalBit Asimov | Copilot | Gap |
-|-------------|-----------------|---------|-----|
-| ADRs (21 documents) | 3,986 lines | 0 | **100% manual** |
-| System specifications | 15,000+ lines | 0 | **100% manual** |
-| Business analysis | 50,000+ lines | 0 | **100% manual** |
-| API documentation | 20,000+ lines | Partial | 80% manual |
-| CI/CD pipelines | Complete | 0 | **100% manual** |
+| Deliverable | RoyalBit Asimov | Copilot | Manual Effort |
+|-------------|-----------------|---------|---------------|
+| ADRs (21 documents) | 3,986 lines | 0 | 100% |
+| System specifications | 15,000+ lines | 0 | 100% |
+| Business analysis | 50,000+ lines | 0 | 100% |
+| API documentation | 20,000+ lines | Partial | 80% |
+| CI/CD pipelines | Complete | 0 | 100% |
 
-> ⚠️ **64% of total output requires manual effort with Copilot.**
+**64% of total output requires manual effort with Copilot.**
 
 ---
 
@@ -545,18 +523,17 @@ xychart-beta
 
 ### Development Machine Specs
 
-All work was performed on a **10-year-old Mac Mini (Late 2014)** repurposed with Ubuntu 24.04:
+All work performed on a **10-year-old Mac Mini (Late 2014)** with Ubuntu 24.04:
 
-| Component | Kveldulf (Mac Mini Late 2014) | Corporate Dev Machine (2025) |
-|-----------|-------------------|------------------------------|
-| CPU | Intel i5-4278U (2014) | Intel i9-13950HX (Dell Precision) |
-| Cores | 2 physical | 24 cores (8P + 16E) |
+| Component | Kveldulf (2014) | Corporate Dev (2025) |
+|-----------|-----------------|----------------------|
+| CPU | Intel i5-4278U | Intel i9-13950HX |
+| Cores | 2 physical | 24 (8P + 16E) |
 | Threads | 4 | 32 |
 | Clock | 2.6 GHz | 5.5 GHz boost |
 | RAM | 8 GB DDR3 | 32-64 GB DDR5 |
-| Class | **Mac Mini (Late 2014) + Ubuntu** | Corporate developer workstation |
 
-*Note: [Dell Precision 7680/7780](https://www.dell.com/en-ca/shop/workstations/precision-7680/spd/precision-16-7680-laptop/s005p7680cavp) workstations with i9-13950HX are standard corporate issue in Canadian enterprises.*
+*[Dell Precision 7680/7780](https://www.dell.com/en-ca/shop/workstations/precision-7680/spd/precision-16-7680-laptop/s005p7680cavp) with i9-13950HX are standard corporate issue in Canadian enterprises.*
 
 ### Performance Analysis (PassMark Benchmarks)
 
@@ -578,12 +555,12 @@ xychart-beta
     bar [2828, 41021]
 ```
 
-**For Rust compilation:**
+**Rust compilation impact:**
 - `cargo build` (parallel): **14.5x** slower on kveldulf
-- LTO final link (single-threaded): **2.3x** slower on kveldulf
-- Weighted average (build + link): **~10-12x** slower on kveldulf
+- LTO final link (single-threaded): **2.3x** slower
+- Weighted average: **~10-12x** slower
 
-> **Conservative estimate: 10x. Measured benchmark: 14.5x (multi-thread).**
+**Conservative estimate: 10x. Measured: 14.5x (multi-thread).**
 
 ### Build Time Comparison (Measured)
 
@@ -651,28 +628,22 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### 1. Full Autonomy (3x contribution)
 
-| Aspect | RoyalBit Asimov | Copilot |
-|--------|-----------------|---------|
-| Human intervention | Start and end only | Every suggestion |
-| Decision authority | AI owns technical decisions | Human decides |
-| Approval loops | None during execution | Constant |
-| Shipping authority | AI can release | Human must release |
+- **Human intervention:** Start and end only vs. every suggestion
+- **Decision authority:** AI owns decisions vs. human decides
+- **Approval loops:** None during execution vs. constant
+- **Shipping authority:** AI can release vs. human must release
 
 ### 2. Documentation Generation (4x contribution)
 
-| Aspect | RoyalBit Asimov | Copilot |
-|--------|-----------------|---------|
-| ADRs | ✅ Generated automatically | ❌ Manual |
-| Specifications | ✅ Generated automatically | ❌ Manual |
-| Business docs | ✅ Generated automatically | ❌ Manual |
-| API docs | ✅ Generated automatically | ⚠️ Partial |
+- **ADRs, Specifications, Business docs:** Generated automatically vs. manual
+- **API docs:** Generated automatically vs. partial support
 
 ### 3. Bounded Sessions (1.5x contribution)
 
-- **Sessions run until complete** (no artificial time limits)
-- **Keep shipping** until done or stopped (no scope creep)
-- **Human can stop** at any time (sustainable pacing)
-- **Checkpoint** every ~15 minutes (based on compaction patterns)
+- Sessions run until complete (no artificial limits)
+- Keep shipping until done or stopped (no scope creep)
+- Human can stop anytime (sustainable pacing)
+- Checkpoints every ~15 minutes
 
 ### 4. Self-Healing Context
 
@@ -699,16 +670,16 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 ### What This Study Does NOT Claim
 
 1. **23x applies to all projects** — Complex, greenfield projects benefit most
-2. **Copilot is ineffective** — Copilot excels at code completion within files
-3. **No learning curve** — Protocol adoption requires initial setup time
-4. **Works without Claude Code** — Full autonomy requires [Claude Code](https://claude.ai/code) hooks
+2. **Copilot is ineffective** — Copilot excels at code completion
+3. **No learning curve** — Protocol adoption requires setup
+4. **Works without Claude Code** — Full autonomy requires [Claude Code](https://claude.ai/code)
 
-### Conditions for Replication
+### Replication Requirements
 
-- Claude Code with `--dangerously-skip-permissions` flag
-- Full protocol file suite (`warmup.json`, `sprint.json`, `asimov.json`)
-- Greenfield or well-documented existing codebase
-- Clear milestone definitions in `roadmap.json`
+- Claude Code with `--dangerously-skip-permissions`
+- Full protocol suite (`warmup.json`, `sprint.json`, `asimov.json`)
+- Greenfield or well-documented codebase
+- Clear milestones in `roadmap.json`
 
 ---
 
@@ -716,7 +687,7 @@ EQUIVALENT TO: 2.5 developer-years compressed into 6 weeks
 
 ### Primary Finding
 
-> **The RoyalBit Asimov delivers a 23x compound velocity multiplier** over Copilot-assisted development for complete product delivery with equivalent quality.
+**The RoyalBit Asimov delivers a 23x compound velocity multiplier** over Copilot-assisted development for complete product delivery with equivalent quality.
 
 | Factor | Contribution |
 |--------|--------------|
@@ -767,13 +738,13 @@ pie showData
 
 ### Recommendation
 
-For teams building **complete products** (not just code), the RoyalBit Asimov provides substantial velocity advantages. The protocol is most effective for:
+For teams building **complete products** (not just code), RoyalBit Asimov provides substantial velocity advantages. Most effective for:
 
-- ✅ Greenfield projects with clear milestones
-- ✅ Products requiring extensive documentation
-- ✅ Teams with [Claude Code](https://claude.ai/code) access
-- ✅ Projects where shipping discipline matters
-- ✅ Organizations that value AI safety and ethics
+- Greenfield projects with clear milestones
+- Products requiring extensive documentation
+- Teams with [Claude Code](https://claude.ai/code) access
+- Projects where shipping discipline matters
+- Organizations valuing AI safety and ethics
 
 ---
 

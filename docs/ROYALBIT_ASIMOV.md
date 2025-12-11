@@ -5,20 +5,18 @@
 
 ## What is RoyalBit Asimov?
 
-**RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.**
+RoyalBit Asimov creates Self-Evolving Autonomous AI projects with ethics built in.
 
-Each project initialized with `asimov init --asimov` becomes an **independent** Self-Evolving Autonomous AI with:
-- The Three Laws (asimov.json) - ethics hardcoded
+Each project initialized with `asimov init --asimov` becomes an independent Self-Evolving Autonomous AI with:
+- The Three Laws (asimov.json)
 - Green coding (green.json)
 - Sprint autonomy (run until done, quality gates)
 - Self-healing (survives context compaction)
 
-The methodology propagates through the ecosystem. Each child project operates independently after creation.
-
 **Two frontiers combined:**
-- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality) - Enterprise Level 1-2, 2025)
-- **Self-Evolving AI**: Improves itself over time via bootstrapping ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself) - next frontier toward ASI)
-- **Ethics**: The Three Laws hardcoded - what makes it safe
+- **Autonomous AI**: Works independently under human oversight ([AWS](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/), [IBM](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality))
+- **Self-Evolving AI**: Improves itself over time via bootstrapping ([arXiv Survey](https://arxiv.org/abs/2507.21046), [Science](https://www.science.org/content/article/artificial-intelligence-evolving-all-itself))
+- **Ethics**: The Three Laws hardcoded
 
 It's not just one thing—it's five components working together:
 
@@ -52,8 +50,6 @@ flowchart TB
 
 ## Why All Five?
 
-Each component solves a specific failure mode:
-
 | Without... | Failure Mode |
 |------------|--------------|
 | Protocol Files | AI doesn't know project conventions |
@@ -61,8 +57,6 @@ Each component solves a specific failure mode:
 | Quality Gates | Code ships with bugs and warnings |
 | Self-Healing | Rules forgotten after 2-3 hours |
 | Release Discipline | Code written but never released |
-
-**Remove any component and the system breaks.**
 
 ## Architecture
 
@@ -149,31 +143,17 @@ See [Vendor Implementation Guide](VENDOR_IMPLEMENTATION.md) for what other tools
 ## Quick Start
 
 ```bash
-# Install asimov (from GitHub Releases)
+# Install
 curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
 sudo mv asimov /usr/local/bin/
 
-# Full ROYALBIT ASIMOV setup
+# Setup
 asimov init --type rust --asimov
 
-# This creates:
-# ✓ warmup.json      - Protocol rules
-# ✓ sprint.json      - Session boundaries
-# ✓ roadmap.yaml     - Milestone planning + WIP state
-# ✓ CLAUDE.md        - Self-healing trigger
-# ✓ .hooks/          - Pre-commit hooks + WIP continuity
-# ✓ .gitignore       - Standard exclusions
-
-# Launch Claude Code
+# Launch
 claude --dangerously-skip-permissions
-
-# Start session
 > run warmup
-
-# Confirm milestone
 > punch it
-
-# Go grab coffee. Come back to a release.
 ```
 
 ## The Result

@@ -4,7 +4,7 @@
 
 **"The ethical operating system for Claude's autonomous power."**
 
-Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity. **That's Claude, not Asimov.** ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
+Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5)). That's Claude, not Asimov.
 
 Asimov ensures you don't destroy yourself in the process:
 - **Ethics**: The Three Laws propagate to every child project
@@ -17,7 +17,7 @@ Asimov ensures you don't destroy yourself in the process:
 
 Every company using Claude gets the velocity. The question is:
 
-> **"How do you ensure autonomous AI development doesn't compromise ethics, quality, or sustainability?"**
+**"How do you ensure autonomous AI development doesn't compromise ethics, quality, or sustainability?"**
 
 | Tool | Velocity | Guardrails |
 |------|----------|------------|
@@ -69,7 +69,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### Solo Founders
 
-> "Build your startup in weekends, not years."
+**Build your startup in weekends, not years.**
 
 | Before | After |
 |--------|-------|
@@ -79,7 +79,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### Bootstrappers
 
-> "Compete with funded startups. Actually outship them."
+**Compete with funded startups. Actually outship them.**
 
 | Before | After |
 |--------|-------|
@@ -89,7 +89,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### Open Source Maintainers
 
-> "Maintain without burning out. Ship faster than ever."
+**Maintain without burning out. Ship faster than ever.**
 
 | Before | After |
 |--------|-------|
@@ -99,7 +99,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### Small Agencies
 
-> "3-person team delivers like 150-450 devs."
+**3-person team delivers like 150-450 devs.**
 
 | Before | After |
 |--------|-------|
@@ -109,7 +109,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### Developers Globally
 
-> "Your location doesn't limit your output."
+**Your location doesn't limit your output.**
 
 | Before | After |
 |--------|-------|
@@ -157,7 +157,7 @@ Every company using Claude gets the velocity. The question is:
 
 ### 1. Ethics (The Three Laws)
 
-Not bolted on. Baked in. **Claude's power requires responsibility.**
+Not bolted on. Baked in. Claude's power requires responsibility.
 
 | Principle | What It Means |
 |-----------|---------------|
@@ -168,7 +168,7 @@ Not bolted on. Baked in. **Claude's power requires responsibility.**
 
 ### 2. Bounded Autonomy (Quality Gates)
 
-Claude can work autonomously for hours. **Asimov ensures it ships.**
+Claude can work autonomously for hours. Asimov ensures it ships.
 
 | Constraint | Why |
 |------------|-----|
@@ -179,7 +179,7 @@ Claude can work autonomously for hours. **Asimov ensures it ships.**
 
 ### 3. Sustainability (Green Coding)
 
-Claude API calls cost money and carbon. **Asimov minimizes both.**
+Claude API calls cost money and carbon. Asimov minimizes both.
 
 | Metric | Cloud AI | Protocol | Reduction |
 |--------|----------|----------|-----------|
@@ -187,7 +187,7 @@ Claude API calls cost money and carbon. **Asimov minimizes both.**
 | Carbon footprint | ~0.25g/op | ~0.0005g/op | 99.6% |
 | Binary size | 150-200 MB | 2.84 MB | 98% |
 
-**Note:** The velocity (50-100x) comes from Claude. Asimov's value is ensuring that velocity is sustainable, ethical, and bounded.
+**Note:** The velocity (50-100x) comes from Claude. Asimov ensures that velocity is sustainable, ethical, and bounded.
 
 ---
 
@@ -195,7 +195,7 @@ Claude API calls cost money and carbon. **Asimov minimizes both.**
 
 ### For the Skeptic
 
-> "Don't believe us. Check the git logs. It's all public."
+**Don't believe us. Check the git logs. It's all public.**
 
 - Forge commits (not public) - [demo](https://github.com/royalbit/forge-demo/commits)
 - [Protocol commits](https://github.com/royalbit/asimov/commits)
@@ -203,7 +203,7 @@ Claude API calls cost money and carbon. **Asimov minimizes both.**
 
 ### For the Pragmatist
 
-> "Try it on your next project."
+**Try it on your next project.**
 
 ```bash
 # Install from GitHub Releases
@@ -214,7 +214,7 @@ asimov init --type rust
 
 ### For the Visionary
 
-> "What if every developer could ship like a 50-person team?"
+**What if every developer could ship like a 50-person team?**
 
 - Global accessibility
 - Sustainable by design
@@ -251,7 +251,7 @@ asimov validate --ethics-check  # Verify ethics
 
 ## Getting Started
 
-### 5 Minutes
+**5 Minutes:**
 
 ```bash
 # Install from GitHub Releases
@@ -261,7 +261,7 @@ cd your-project
 asimov init --type rust
 ```
 
-### First Session
+**First Session:**
 
 ```
 Human: "run warmup"
@@ -271,7 +271,7 @@ AI: [executes autonomously]
 AI: [reports completion at gate]
 ```
 
-### First Release
+**First Release:**
 
 - Tests pass
 - Zero warnings
@@ -283,13 +283,10 @@ AI: [reports completion at gate]
 
 ## The Bottom Line
 
-**Traditional development**: 25 LOC/day, 3-6 months to MVP, team of 5-10.
-
-**With RoyalBit Asimov**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
-
-**The math**: 50-150x velocity, verified, published, free.
-
-**Status**: R&D project. Not available for commercial use.
+- **Traditional development**: 25 LOC/day, 3-6 months to MVP, team of 5-10.
+- **With RoyalBit Asimov**: 3,056 LOC/day, days to weeks to MVP, 1 human + AI.
+- **The math**: 50-150x velocity, verified, published, free.
+- **Status**: R&D project. Not available for commercial use.
 
 ---
 

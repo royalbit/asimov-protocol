@@ -6,7 +6,7 @@
 
 ## Context
 
-The RoyalBit Asimov enables autonomous AI development ("RoyalBit Asimov") with ethics safeguards. However, a critical attack vector exists:
+The RoyalBit Asimov enables autonomous AI development with ethics safeguards. However, a critical attack vector exists:
 
 **External Pull Requests can bypass ethics.yaml.**
 

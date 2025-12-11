@@ -1,7 +1,6 @@
 # Ecosystem Pattern: Cross-repo Orchestration
 
-When your project spans multiple repositories, use the **master-roadmap pattern** to
-coordinate work across repos while maintaining independent warmup.yaml files in each.
+Use the master-roadmap pattern to coordinate work across multiple repositories while maintaining independent warmup.yaml files in each.
 
 ## When to Use This Pattern
 
@@ -60,8 +59,7 @@ ecosystem:
 
 ## Master Roadmap Structure
 
-The master-roadmap.yaml lives in one repo (typically docs or a dedicated orchestration
-repo) and coordinates work across all repos:
+The master-roadmap.yaml lives in one repo (typically docs) and coordinates work across all repos:
 
 ```yaml
 # acme-docs/master-roadmap.yaml
@@ -276,10 +274,10 @@ meta:
 
 ## Benefits
 
-- **Independence**: Each repo maintains its own warmup.yaml
+- **Independence**: Each repo maintains own warmup.yaml
 - **Coordination**: Master roadmap ensures correct ordering
-- **Visibility**: Clear picture of what's done across ecosystem
-- **Autonomy**: AI can work through phases with minimal interruption
-- **Quality**: Phase gates ensure standards before moving on
+- **Visibility**: Clear picture of what's done
+- **Autonomy**: AI works through phases with minimal interruption
+- **Quality**: Phase gates enforce standards
 
 ---

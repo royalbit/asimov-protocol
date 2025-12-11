@@ -1,6 +1,6 @@
-# ROYALBIT ASIMOV Setup Guide
+# Setup Guide
 
-> **One command to full autonomous session capability**
+One command to full autonomous session capability.
 
 ## Quick Start
 
@@ -121,58 +121,35 @@ asimov init --type docs
 
 ## Post-Setup Steps
 
-### 1. Install Asimov CLI (Required for Hooks)
-
-The pre-commit hooks use asimov for protocol validation and documentation linting.
+### 1. Install Asimov CLI
 
 Download from [GitHub Releases](https://github.com/royalbit/asimov/releases/latest).
 
-**Verify installation:**
-```bash
-asimov --version
-```
+Verify: `asimov --version`
 
 ### 2. Install Hooks
 
-**All project types:**
-
-Hooks are installed automatically in `.claude/hooks/` during `asimov init`. They are triggered by git operations and session events, not traditional git hooks.
+Hooks are installed automatically in `.claude/hooks/` during `asimov init`.
 
 **Rust projects** can optionally use cargo-husky:
 ```bash
 # Add to Cargo.toml [dev-dependencies]
 cargo-husky = { version = "1", features = ["precommit-hook", "run-cargo-clippy", "run-cargo-fmt"] }
-
-# Install
-cargo test
 ```
 
 ### 3. Edit Protocol Files
 
 ```bash
-# Edit project metadata and roadmap (YAML files)
+# Edit YAML files
 $EDITOR .asimov/project.yaml
 $EDITOR .asimov/roadmap.yaml
-
-# Protocol files are JSON (no editing needed for basic setup)
-# .asimov/warmup.json, sprint.json, asimov.json, etc.
 ```
 
-### 4. Validate
+### 4. Validate and Launch
 
 ```bash
 asimov validate
-```
-
-### 5. Launch ROYALBIT ASIMOV
-
-```bash
-# Option 1: Launcher mode (auto-warmup)
-asimov
-
-# Option 2: Manual launch
-claude --dangerously-skip-permissions
-# Then run: asimov warmup
+asimov  # Launcher mode (auto-warmup)
 ```
 
 ## Verification Checklist
@@ -193,37 +170,12 @@ asimov
 
 ## Troubleshooting
 
-### "Protocol files not found"
-```bash
-asimov init --type <your-type>
-```
-
-### "Hooks not running"
-```bash
-# Re-initialize project
-asimov init --type <your-type>
-
-# Check hooks directory
-ls -la .claude/hooks/
-```
-
-### "AI forgets rules"
-```bash
-# Run warmup manually
-asimov warmup
-
-# Or use launcher mode
-asimov
-```
-
-### "Validation errors"
-```bash
-# Diagnose issues
-asimov doctor
-
-# Validate protocol files
-asimov validate
-```
+| Issue | Solution |
+|-------|----------|
+| "Protocol files not found" | `asimov init --type <your-type>` |
+| "Hooks not running" | Re-run `asimov init` and check `.claude/hooks/` |
+| "AI forgets rules" | Run `asimov warmup` or use launcher mode |
+| "Validation errors" | Run `asimov doctor` and `asimov validate` |
 
 ## Requirements Summary
 

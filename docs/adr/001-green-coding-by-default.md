@@ -6,7 +6,7 @@
 
 ## Context
 
-The RoyalBit Asimov provides session continuity for AI-assisted development. As AI tools become more prevalent, the environmental and financial costs of cloud AI usage are growing:
+Cloud AI usage has growing environmental and financial costs:
 
 - **Cost**: AI API calls cost $0.002-0.04+ per validation (input + output tokens)
 - **Carbon**: Each API call produces ~0.5g CO₂ (data center compute + network)

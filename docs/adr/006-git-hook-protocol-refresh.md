@@ -16,7 +16,7 @@ CLAUDE.md → "re-read warmup.yaml" → full rules restored
     └── If this gets compacted/lost, recovery fails
 ```
 
-**Observation:** Context compaction happens every **~10-20 minutes** with heavy reasoning (ADR-003). Git commits happen frequently during RoyalBit Asimov sessions (5-20 commits per session, roughly every ~15 minutes). Each commit triggers pre-commit hooks, which produce **fresh terminal output** that enters the AI's context window.
+**Observation:** Context compaction happens every **~10-20 minutes** with heavy reasoning (ADR-003). Git commits happen frequently (roughly every ~15 minutes), and each commit triggers pre-commit hooks that produce **fresh terminal output** entering the AI's context window.
 
 **Key Insight:** Hook output is *external* to the AI's memory - it comes from the filesystem execution, not from compacted context. It cannot be compacted because it hasn't happened yet when compaction occurs.
 

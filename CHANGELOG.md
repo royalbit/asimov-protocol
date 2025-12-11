@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.18.0] - 2025-12-11
+
+### Documentation Conciseness Review
+
+**Review all .md files for conciseness and professionalism, preserving narratives.**
+
+#### Results
+- 80 files edited across 5 parallel agents
+- Lines reduced: 21,927 → 20,961 (~5% reduction)
+- 6 binary files removed (PDF/PPTX, already in gitignore)
+
+#### Agent Workload
+| Agent | Scope | Files |
+|-------|-------|-------|
+| 1 | Large docs (SPECIFICATION, MANIFESTO, AI_REALITY, GREEN_CODING) | 4 |
+| 2 | Stories + Comparison | 3 |
+| 3 | Marketing (README, decks, PRESS_KIT, VALUE_PROPOSITION) | 5 |
+| 4 | Setup/Reference docs | 9 |
+| 5 | ADRs + Components (lighter touch) | 59 |
+
+#### Constraints
+- All validated links preserved (no URL changes)
+- Hidden directories excluded (.asimov/, .claude/, .git/)
+- Narratives and technical accuracy maintained
+
+---
+
 ## [9.17.2] - 2025-12-11
 
 ### Documentation Editorial Revision

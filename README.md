@@ -4,23 +4,21 @@
 [![License](https://img.shields.io/badge/code-Proprietary-red.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
 [![Docs License](https://img.shields.io/badge/docs-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-> 🤖 **RoyalBit Asimov** | The Ethical Operating System for Claude's Autonomous Power
+> **RoyalBit Asimov** | The Ethical Operating System for Claude's Autonomous Power
 >
 > Claude provides the velocity. Asimov provides the guardrails.
 
-> *"The Three Laws were science fiction for 80 years. Now they're source code."*
+*"The Three Laws were science fiction for 80 years. Now they're source code."*
 
-**R&D Project:** Self-Evolving Autonomous AI with ethics built in.
+**Self-Evolving Autonomous AI with ethics built in.**
 
-**Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity.** That's Claude, not Asimov. ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5))
-
-**Asimov ensures you don't destroy yourself in the process:** Ethics, bounded autonomy, sustainability.
+Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5)). Asimov ensures you don't destroy yourself in the process: Ethics, bounded autonomy, sustainability.
 
 ## The Open Foundation
 
 **The Three Laws of Robotics, encoded in JSON.**
 
-Each project initialized with `asimov init` becomes a Self-Evolving Autonomous AI project with ethics built in.
+Every `asimov init` creates a Self-Evolving Autonomous AI project with ethics built in.
 
 ```json
 // .asimov/asimov.json - The Three Laws
@@ -78,13 +76,13 @@ See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-c
 
 ## The Problem
 
-AI hallucinates. It invents project conventions. It forgets rules mid-session. It "remembers" things that never happened. Context compaction makes it worse—your carefully explained requirements get compressed into oblivion.
+AI hallucinates, invents conventions, forgets rules mid-session, and "remembers" things that never happened. Context compaction compresses your requirements into oblivion.
 
 ## The Solution
 
 **Ground AI in file-based truth.**
 
-Eight JSON protocols in `.asimov/` that ground AI in file-based truth. Not from memory. From disk.
+Eight JSON protocols in `.asimov/` ground AI in disk-based truth, not memory.
 
 *Protocol files work with any AI (paste them). Full integration requires Claude Code.*
 
@@ -131,7 +129,7 @@ Eight JSON protocols in `.asimov/` directory, loaded on session start:
 }
 ```
 
-**Social contract, not technical lock.** Works for good-faith users.
+Social contract, not technical lock. Works for good-faith users.
 
 ## Quick Start
 
@@ -151,30 +149,28 @@ That's it. Protocol files created, hooks installed, ready for autonomous develop
 
 ## The Anti-Hallucination Foundation
 
-"Hallucination" is a misnomer. **AI is working exactly as designed**—the limitations are architectural (by design) or platform defaults.
+"Hallucination" is a misnomer. AI is working exactly as designed—the limitations are architectural or platform defaults.
 
 | AI Limitation | Why It Happens | RoyalBit Asimov Fix |
 |---------------|----------------|-------------------|
 | Forgets your rules | Auto-compact compresses context | Re-read protocols from `.asimov/` |
 | Invents conventions | Generates "probable" text, not facts | Structured rules in JSON |
-| **Stale data** | Training cutoff (Jan 2025) + no search | `freshness.json` enforces search |
+| Stale data | Training cutoff (Jan 2025) + no search | `freshness.json` enforces search |
 | Lost in the middle | Attention degrades mid-context | Key info in scannable format |
 | Confident mistakes | Trained for plausibility, not accuracy | Deterministic validation |
 
 **The Pattern:**
-
 ```
 AI memory (lossy, probabilistic)   → "Hallucinations"
 File truth (stable, deterministic) → Reliability
 ```
 
-**The RoyalBit Asimov doesn't fix AI. It compensates for architectural limitations.**
+**Asimov compensates for architectural limitations:**
+- Don't let AI imagine your project context → **read protocols from `.asimov/`**
+- Don't let AI imagine your financial calculations → **execute locally with [Forge](https://github.com/royalbit/forge-demo)**
+- Don't let AI give stale data confidently → **`freshness.json` enforces search**
 
-- Don't let AI *imagine* your project context → **read protocols from `.asimov/`**
-- Don't let AI *imagine* your financial calculations → **execute locally with [Forge](https://github.com/royalbit/forge-demo)** (demo available)
-- Don't let AI give *stale data confidently* → **`freshness.json` enforces search**
-
-📖 **[Read the full analysis: AI_REALITY.md](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
+📖 **[AI_REALITY.md](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
 
 ### freshness.json - Date-Aware Search
 
@@ -184,7 +180,7 @@ File truth (stable, deterministic) → Reliability
 }
 ```
 
-Stale data ≠ hallucination. The protocol enforces search before answering from training data.
+Stale data is not hallucination. The protocol enforces search before answering from training data.
 
 ## CLI Commands
 
@@ -214,7 +210,7 @@ When using `asimov` to launch Claude Code, these slash commands are available:
 /doctor    # Diagnose setup issues (same as asimov doctor)
 ```
 
-**Full Context Warmup (v9.16.0):** One `/warmup` call outputs a comprehensive JSON blob containing:
+**Full Context Warmup (v9.16.0):** One `/warmup` call outputs comprehensive JSON:
 
 ```json
 {
@@ -238,9 +234,8 @@ When using `asimov` to launch Claude Code, these slash commands are available:
 
 ## Why JSON + YAML?
 
-**Protocols (JSON):** Machine-readable, schema-validated, minimal
-**Project files (YAML):** Human-editable roadmaps and project config
-
+- **Protocols (JSON):** Machine-readable, schema-validated, minimal
+- **Project files (YAML):** Human-editable roadmaps and project config
 - Every AI can read both formats
 - Git-friendly (diffable, mergeable)
 - No vendor lock-in
@@ -275,7 +270,7 @@ Plus YAML files for project metadata:
 
 ## Use Case: Forge
 
-**Forge** - deterministic YAML formula calculator. AI hallucinates numbers; Forge doesn't. Demo available at [forge-demo](https://github.com/royalbit/forge-demo).
+Deterministic YAML formula calculator. AI hallucinates numbers; Forge doesn't. Demo: [forge-demo](https://github.com/royalbit/forge-demo).
 
 | Stat | Value |
 |------|-------|
@@ -325,13 +320,13 @@ flowchart LR
 
 ## Self-Healing
 
-**Bounded autonomy with automatic recovery.**
+Bounded autonomy with automatic recovery:
 
-- **Session start**: `asimov warmup` outputs complete project context as single JSON blob (protocols, project config, roadmap, WIP status)
-- **Mid-session recovery**: Run `/warmup` slash command for full context refresh
+- **Session start**: `asimov warmup` outputs complete project context as JSON (protocols, config, roadmap, WIP)
+- **Mid-session recovery**: `/warmup` slash command for full context refresh
 - **Cross-session resume**: Claude Code `--continue` / `--resume`
 
-The `sprint.json` protocol bounds autonomous sessions with quality gates and natural stopping points.
+The `sprint.json` protocol bounds autonomous sessions with quality gates and stopping points.
 
 ## Documentation
 
@@ -365,9 +360,9 @@ The `sprint.json` protocol bounds autonomous sessions with quality gates and nat
 
 ## Origin
 
-Born from building Forge ([demo](https://github.com/royalbit/forge-demo)) - a YAML formula calculator. The protocol emerged from solving real problems: How do you maintain context across AI sessions? How do you ship quality code autonomously? How do you scale to an entire ecosystem?
+Born from building Forge ([demo](https://github.com/royalbit/forge-demo)), a YAML formula calculator. The protocol emerged from real problems: maintaining context across sessions, shipping quality code autonomously, and scaling to an entire ecosystem.
 
-The answers became the RoyalBit Asimov.
+The answers became RoyalBit Asimov.
 
 ## Contributing (AI-Only Development)
 
@@ -377,17 +372,14 @@ The answers became the RoyalBit Asimov.
 
 This project uses the **AI-Only Development Model** ([ADR-011](https://github.com/royalbit/asimov/blob/main/docs/adr/011-ai-only-development-no-external-prs.md)).
 
-External PRs are an **attack vector for ethics bypass**. A malicious contributor could:
-1. Submit innocent-looking PR with obfuscated harmful code
-2. Bypass `.asimov/` safeguards if merged
-3. Break the trust model of the RoyalBit Asimov
+External PRs are an attack vector for ethics bypass. A malicious contributor could submit innocent-looking code with obfuscated harmful functionality, bypassing `.asimov/` safeguards if merged.
 
 **The trust model:**
 ```
 Human Owner → AI (autonomous) → Tests Pass → Direct Commit → Main
 ```
 
-PRs require human code review, but humans reviewing AI-generated code is not the model. Tests and `.asimov/` protocols are the gatekeepers.
+Tests and `.asimov/` protocols are the gatekeepers, not human code review.
 
 ### How to Contribute
 

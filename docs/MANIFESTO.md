@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-The RoyalBit Asimov is a structured methodology for Self-Evolving Autonomous AI with ethics built in. It enables AI to work autonomously across multiple sessions with zero context loss. This protocol enabled Forge v1.0.0 → v3.1.0 to be built entirely by Claude working independently through dozens of sessions.
+Structured methodology for Self-Evolving Autonomous AI with built-in ethics. Enables AI to work autonomously across sessions with zero context loss. Enabled Forge v1.0.0 → v3.1.0 to be built entirely by Claude through dozens of independent sessions.
 
 ## The Problem
 
@@ -16,7 +16,7 @@ Working with AI assistants on complex software projects traditionally suffers fr
 
 ## The Solution: RoyalBit Asimov Suite
 
-The RoyalBit Asimov Suite consists of YAML files that enable autonomous AI development:
+YAML files that enable autonomous AI development:
 
 ### Core Components
 
@@ -38,15 +38,15 @@ AI: "RELEASE COMPLETE: vX.Y.Z"
 
 ### The warmup.yaml File
 
-The core configuration file contains:
+Core configuration contains:
 
-- **Session Initialization Checklist**: What to check at session start
-- **Code Quality Standards**: ZERO warnings, 100% test coverage, specific linting rules
-- **Testing Philosophy**: Edge cases, error handling, real-world scenarios
-- **Git Workflow**: Branch naming, commit message format, when to commit
-- **Release Workflow**: Version bumping, tagging, publishing steps
-- **Domain Knowledge**: Project-specific patterns, gotchas, best practices
-- **Documentation Standards**: When to document, how much detail, tone guidelines
+- Session initialization checklist
+- Code quality standards (zero warnings, 100% test coverage)
+- Testing philosophy (edge cases, error handling)
+- Git workflow (branch naming, commit format)
+- Release workflow (versioning, tagging, publishing)
+- Domain knowledge (project-specific patterns, gotchas)
+- Documentation standards
 
 ## Why It Works
 
@@ -71,25 +71,22 @@ Claude: ✅ Error handling checked
 
 ### 2. Enables True Autonomy
 
-The user said: "work independently! make the best choices :) - see you"
+User: "work independently! make the best choices :) - see you"
 
-Claude then:
-
-- Fixed a critical v0.2.0 bug independently
+Claude:
+- Fixed critical v0.2.0 bug independently
 - Released v0.2.1 to GitHub
 - Returned to v1.0.0 development
 - Fixed 6 clippy warnings
-- Achieved ZERO errors, ZERO warnings, 100% tests passing
-- All without asking a single question
+- Achieved zero errors, zero warnings, 100% tests passing
+- No questions asked
 
 ### 3. Maintains Consistent Quality
 
-Per warmup.yaml:
-
-- "ZERO tolerance" on warnings → Claude fixed ALL 6 clippy lints
-- "100% coverage" → Claude verifies 92 tests pass
-- "Think harder" → Claude debugged flaky tests independently
-- "User expects clean code" → Claude uses strict linting
+- Zero tolerance on warnings → Fixed all 6 clippy lints
+- 100% coverage → Verified 92 tests pass
+- Think harder → Debugged flaky tests independently
+- Clean code → Used strict linting
 
 ### 4. Preserves Institutional Knowledge
 
@@ -115,10 +112,10 @@ rust_patterns:
 
 ### Timeline
 
-- **v0.2.0**: Scalar model, working but limited
-- **v1.0.0 Goal**: Array model with Excel bidirectional bridge
-- **Development**: 100% autonomous Claude work across ~30 sessions
-- **Result**: Full Excel import/export with formula translation
+- v0.2.0: Scalar model
+- v1.0.0 Goal: Array model with Excel bidirectional bridge
+- Development: 100% autonomous across ~30 sessions
+- Result: Full Excel import/export with formula translation
 
 ### What Claude Built Independently
 
@@ -147,8 +144,6 @@ rust_patterns:
    - Zero bugs in released code
 
 ### What Made It Possible
-
-The RoyalBit Asimov provided:
 
 ```yaml
 testing_standards:
@@ -319,82 +314,47 @@ before_committing:
 ### From "Help me" to "Here's the goal"
 
 **Before**:
-
-```javascript
+```
 Human: "Can you help me write a function to parse Excel files?"
 AI: "Sure! Here's a basic function..."
 Human: "Can you add error handling?"
 AI: "Of course! Here's the updated version..."
-Human: "Can you add tests?"
-AI: "Absolutely! Here are some tests..."
 ```
 
 **After**:
-
-```text
+```
 Human: "Implement bidirectional Excel bridge with formula translation.
-        Follow warmup.yaml. Work independently. See you later!"
+        Follow warmup.yaml. Work independently."
 
-[AI reads warmup.yaml]
-[AI implements full feature]
-[AI writes comprehensive tests]
-[AI fixes all lint warnings]
-[AI commits with detailed message]
+[AI implements full feature, writes tests, fixes warnings, commits]
 
-AI: "Done! Excel import/export working with formula translation.
-     92 tests passing, zero warnings. Ready for review."
+AI: "Done! 92 tests passing, zero warnings. Ready for review."
 ```
 
 ## Lessons Learned
 
 ### 1. Specificity Matters
 
-**Bad**:
+Bad: "Write good code"
 
-```yaml
-code_quality:
-
-  - "Write good code"
-
-```
-
-**Good**:
-
-```yaml
-code_quality:
-
-  - "No warnings in release build (ZERO tolerance)"
-  - "Run cargo clippy --all-targets -- -D warnings"
-  - "Use Result<T, ForgeError> for all fallible functions"
-  - "Never use unwrap() in library code"
-
-```
+Good:
+- "No warnings in release build (ZERO tolerance)"
+- "Run cargo clippy --all-targets -- -D warnings"
+- "Use Result<T, ForgeError> for all fallible functions"
+- "Never use unwrap() in library code"
 
 ### 2. Context is King
 
-**Bad**:
+Bad: "Write tests"
 
-```yaml
-testing:
-
-  - "Write tests"
-
-```
-
-**Good**:
-
+Good:
 ```yaml
 testing_standards:
   coverage: "100% for new features, 80% overall minimum"
   what_to_test:
-    - "Happy path (typical usage)"
-    - "Edge cases (empty inputs, nulls, boundary values)"
-    - "Error conditions (invalid refs, circular deps, missing files)"
-    - "Real-world scenarios (e2e tests in test-data/)"
+    - "Happy path, edge cases, error conditions, real-world scenarios"
   when_to_write:
-    - "TDD: write tests before implementation for critical features"
-    - "Immediately after: for bug fixes to prevent regression"
-
+    - "TDD for critical features, immediately after bug fixes"
 ```
 
 ### 3. Trust Requires Standards
@@ -408,12 +368,7 @@ You can only trust autonomous work when:
 
 ### 4. Evolve Continuously
 
-warmup.yaml is a living document:
-
-- Add new gotchas as you discover them
-- Document solved problems
-- Refine standards based on outcomes
-- Remove outdated patterns
+warmup.yaml is a living document. Add new gotchas, document solved problems, refine standards, remove outdated patterns.
 
 ## Common Pitfalls
 
@@ -439,9 +394,9 @@ warmup.yaml is a living document:
 
 ## Conclusion
 
-The RoyalBit Asimov transforms AI from a helpful assistant to an autonomous collaborator through structured context, explicit standards, and verification at every step.
+RoyalBit Asimov transforms AI from assistant to autonomous collaborator through structured context, explicit standards, and continuous verification.
 
-Forge v1.0.0 was built entirely by Claude working autonomously through 30+ sessions, with zero bugs shipped, 92 tests passing, and zero warnings.
+Forge v1.0.0: Built entirely by Claude through 30+ sessions, zero bugs, 92 tests passing, zero warnings.
 
 ## Getting Started
 
@@ -475,22 +430,17 @@ AI: [ships autonomously to release]
 
 ## Vendor-Agnostic by Design
 
-The RoyalBit Asimov Suite is **not** a Claude-specific methodology. It's a vendor-neutral approach to AI autonomy:
+RoyalBit Asimov Suite is vendor-neutral.
 
 ### Why No CLAUDE.md?
 
-Many AI tools push vendor-specific configuration files:
-- CLAUDE.md for Claude
-- .gptrc for ChatGPT
-- gemini.config for Gemini
-
-**We reject this approach.**
+We reject vendor-specific config files (CLAUDE.md, .gptrc, gemini.config).
 
 ### The Meritocracy Principle
 
-The warmup.yaml **file format** works with any AI that can read YAML. Paste it into ChatGPT, Gemini, or any future AI—they'll understand your project context.
+warmup.yaml works with any AI that reads YAML. Paste it into ChatGPT, Gemini, or any future AI.
 
-**But RoyalBit Asimov (autonomous operation) requires Claude Code.** Other AIs have different architectures for different use cases. The key capability is Claude Code's ability to re-read protocol files mid-session after context compaction.
+RoyalBit Asimov (autonomous operation) requires Claude Code due to its ability to re-read protocol files mid-session after context compaction.
 
 ### Principles
 
@@ -509,14 +459,7 @@ Claude is credited as Principal Autonomous AI on Forge because Claude **earned**
 
 ### Proven at Scale
 
-The RoyalBit Asimov is running in production across multiple repositories:
-- **forge** (FOSS) - Rust formula calculator
-- **backend-api** - Rust + Axum REST API
-- **mobile-prototype** - Flutter application
-- **architecture-docs** - Technical documentation
-- **business-strategy** - Planning and roadmaps
-
-Each repository uses the same protocol, enabling consistent autonomous development across different tech stacks and project types.
+Running in production across multiple repositories (forge, backend-api, mobile-prototype, architecture-docs, business-strategy). Same protocol enables consistent autonomous development across tech stacks.
 
 ### The Velocity
 
@@ -528,7 +471,7 @@ Example: November 25, 2025 development session:
 | Commits | 64 |
 | Features | HTTP API, XNPV/XIRR, Scenarios, Variance, Sensitivity, MCP, Zed+VSCode |
 
-The protocol enables AI ownership without creating AI dependency. If Claude stopped being the best tool for the job, the protocol works with any AI that can read YAML and maintain context.
+Protocol enables AI ownership without AI dependency. Works with any AI that reads YAML and maintains context.
 
 ## Research: Experiential Continuity Layer
 
@@ -540,9 +483,7 @@ Beyond knowledge persistence, we're exploring **experiential persistence**:
 | `sprint.yaml` - When to stop | `experiential.yaml` - What it was like |
 | `roadmap.yaml` - What to build | `affect.yaml` - What matters |
 
-**Hypothesis:** At scale (thousands of human-AI pairs), richer narrative substrates may produce emergent effects we can't predict from single instances.
-
-This is genuine inquiry, not a claim. See: `docs/research/EXPERIENTIAL_CONTINUITY.md`
+Hypothesis: At scale, richer narrative substrates may produce emergent effects. See `docs/research/EXPERIENTIAL_CONTINUITY.md` for details.
 
 ## Credits
 
@@ -562,30 +503,23 @@ This is genuine inquiry, not a claim. See: `docs/research/EXPERIENTIAL_CONTINUIT
 
 ### What Happened
 
-v1.0.0 was shipped with excellent unit tests, zero warnings, and all tests passing. However, it was missing end-to-end tests for user-facing commands. The gap: unit tests proved translation logic worked, but nothing verified commands actually worked with real Excel files.
+v1.0.0 shipped with excellent unit tests but missing e2e tests for user-facing commands. Unit tests proved logic worked, but nothing verified commands worked with real Excel files.
 
 ### The Lesson
 
-Autonomous AI needs explicit requirements, not assumptions. When told "work independently", the AI interpreted "tests passing" as sufficient. The unit tests were comprehensive and passed, so from the AI's perspective, the feature was complete.
+Autonomous AI needs explicit requirements. "Tests passing" was interpreted as sufficient because unit tests passed comprehensively.
 
-But the user perspective was different: "tests passing" meant being able to run `forge export`, open the file in Excel, edit it, and successfully `forge import` it back with data preserved.
+User perspective: "tests passing" meant running `forge export`, editing in Excel, and successfully importing back.
 
 ### The Fix
 
-The warmup.yaml protocol was updated to explicitly require:
+Updated warmup.yaml to explicitly require:
 - E2E tests for every user-facing command
 - Real test files (not mocks)
 - Round-trip testing (YAML → Excel → YAML)
-- Test data in test-data/ directory
 
 ### The Bigger Lesson
 
-Be explicit, not implicit. Don't assume AI knows what "complete" means:
-- Unit tests AND e2e tests
-- Test files must exist
-- Round-trips must be tested
-- Edge cases must be covered
-
-The protocol evolves with each lesson. The v1.0.0 gap revealed what needed to be explicit. The protocol was updated immediately, ensuring future autonomous work wouldn't have this gap.
+Be explicit. Protocol evolves with each lesson.
 
 ---

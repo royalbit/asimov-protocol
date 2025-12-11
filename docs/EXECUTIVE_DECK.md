@@ -83,7 +83,8 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 </div>
 
-**Everyone has Copilot. Everyone has ChatGPT. Nobody has governance + accuracy.**
+**Everyone has Copilot. Everyone has ChatGPT.**
+**Nobody has governance + deterministic accuracy.**
 
 ---
 
@@ -102,7 +103,6 @@ Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 
 **Asimov governs HOW** (ethics, velocity, autonomy)
 **Forge guarantees WHAT** (zero hallucinations in numbers)
-
 **Both Proprietary licensed. Both on [GitHub](https://github.com/royalbit). Both auditable.**
 
 ---
@@ -203,7 +203,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 | Rework rate | **30-50% → ~0%** |
 | Velocity | **56x** proven (git logs) |
 
-### The math:
+**The math:**
 - 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
 - RoyalBit Asimov: **$0 protocol + Claude subscription**
 - Payback: **Immediate**
@@ -255,7 +255,7 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 <div class="smaller">
 
-### 30-day pilot to prove ROI
+**30-day pilot to prove ROI:**
 
 | Week | Activity |
 |------|----------|

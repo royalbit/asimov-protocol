@@ -1,10 +1,8 @@
 # RoyalBit Asimov Examples
 
-Real-world configurations for different project types.
+Real-world configurations by project type.
 
-## Minimal (Any Project)
-
-The simplest possible configuration:
+## Minimal
 
 ```yaml
 # warmup.yaml
@@ -235,8 +233,6 @@ quality:
 
 ## Flutter/Dart Project
 
-Mobile-first projects with iOS/Android considerations:
-
 ```yaml
 # warmup.yaml
 identity:
@@ -282,8 +278,6 @@ style:
 
 ## Business Documentation Project
 
-Non-code projects with financial models or validated YAML:
-
 ```yaml
 # warmup.yaml
 identity:
@@ -324,12 +318,8 @@ dynamic_data:
 
 ## Multi-repo Ecosystem
 
-When your project spans multiple repositories that work together:
-
 ```yaml
 # In each repo: warmup.yaml
-# Coordinates with sibling repos via shared conventions
-
 # === repo: acme-api/warmup.yaml ===
 identity:
   project: "acme-api"

@@ -1,10 +1,8 @@
 # RoyalBit Asimov Goals
 
-Core values and strategic direction for the RoyalBit Asimov.
+Core values and strategic direction.
 
 ## Core Values (Priority Order)
-
-Every feature must serve one of these goals. Features that don't serve these goals don't belong in the protocol.
 
 | Priority | Goal | Problem | Solution |
 |----------|------|---------|----------|
@@ -18,14 +16,10 @@ Every feature must serve one of these goals. Features that don't serve these goa
 
 ### The Two Hallucinations
 
-"Hallucination" has two forms, both caused by RLHF training:
-
-| Type | What AI Does | Forge Solution |
-|------|--------------|----------------|
+| Type | What AI Does | Solution |
+|------|--------------|----------|
 | **Factual Hallucination** | Generates false *facts* | File-based grounding (warmup.json) |
 | **Validation Hallucination** | Generates false *agreement* | Anti-sycophancy directives (sycophancy.json) |
-
-See [AI_REALITY.md](AI_REALITY.md) for full analysis.
 
 ## Scope Filter
 
@@ -44,34 +38,26 @@ When evaluating features or changes, ask:
 
 ## Strategic Pivot (v4.0.0)
 
-Claude Code 2.0 (Nov 2025) has native features for cross-session continuity:
-- `/rewind` checkpoints (MANUAL command)
-- `--continue`/`--resume` (MANUAL CLI start)
-- `CLAUDE.md` memory hierarchy
-- Auto-compact at 95% capacity
+Claude Code 2.0 has native cross-session features (`/rewind`, `--continue`, `CLAUDE.md`).
 
 **RoyalBit Asimov's unique value:**
-- Ethics Protocol (asimov.json - Three Laws)
+- Ethics Protocol (asimov.json)
 - Green Protocol (green.json)
 - Anti-Sycophancy Protocol (sycophancy.json)
 - Sprint Autonomy (run until done, keep shipping)
 - Mid-session self-healing (warmup.json re-read)
 - Schema Validation (`asimov validate`)
 
-**Key insight:** Native features require MANUAL intervention. Mid-session self-healing during RoyalBit Asimov sessions is NOT replaced.
-
-See [ADR-009](adr/009-claude-code-native-integration.md) and [ADR-013](adr/013-self-healing-not-replaced.md).
+Native features require manual intervention. Mid-session self-healing is not replaced.
 
 ## Self-Healing Commit Cadence
 
-Compaction happens every ~15 minutes with heavy reasoning (not every 2 hours as originally assumed).
+Compaction happens every ~15 minutes with heavy reasoning.
 
 **Strategy:** Recovery over survival
-- Don't try to make rules survive compaction (they won't)
+- Don't make rules survive compaction (they won't)
 - Re-read from disk when confused (files always exist)
-- Commit at least every 15 minutes to trigger protocol refresh
-
-See [ADR-003](adr/003-self-healing-real-compaction-data.md) and [ADR-006](adr/006-git-hook-protocol-refresh.md).
+- Commit every 15 minutes to trigger protocol refresh
 
 ---
 
