@@ -114,6 +114,7 @@ pub use update::{check_for_update, perform_update, VersionCheck, CURRENT_VERSION
 // v8.14.0: Added individual protocol JSON exports
 // v9.2.3: Added conditional migrations support
 // v9.14.0: Merged exhaustive into sprint (ADR-049)
+// v9.18.0: Added Kingship Protocol (Life Honours Life)
 pub use protocols::{
     // v8.14.0: Individual protocol JSON files
     asimov_json,
@@ -123,6 +124,7 @@ pub use protocols::{
     freshness_json,
     green_json,
     inject_dates,
+    kingship_json,
     migrations_json,
     sprint_json,
     sycophancy_json,
@@ -131,6 +133,7 @@ pub use protocols::{
     to_pretty_json,
     warmup_entry_json,
     CompiledProtocols,
+    KingshipProtocol,
     WarmupEntry,
     PROTOCOL_FILES,
 };
