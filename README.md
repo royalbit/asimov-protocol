@@ -54,6 +54,27 @@ Source: [agent-formulas.yaml](models/agent-formulas.yaml) — validate with `for
 
 ---
 
+## Limitations
+
+**Be aware of these trade-offs:**
+
+| Limitation | Impact | Mitigation |
+|------------|--------|------------|
+| **HOTL bottleneck** | Human approval can slow autonomous work | Batch approvals, trust calibration over time |
+| **Claude dependency** | No GPT/Gemini/Llama interop | Protocol files are model-agnostic (paste them) |
+| **Token cost** | ~200K context costs more than RAG | Offset by fewer errors, less rework |
+| **Spawn latency** | Sub-agent creation adds ~2-5s | Parallelizable, amortized over task |
+| **Citation gaps** | Some metrics from secondary sources | Primary sources linked where available |
+
+**Research transparency:**
+- The **O(n^1.724)** exponent and **17.2x error amplification** are from [VentureBeat's summary](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) of MIT/Google research (December 2024). Original paper not yet published.
+- Monte Carlo simulations are reproducible: `python models/simulate.py` (no dependencies). See [Formula Derivations](docs/FORMULA_DERIVATIONS.md) for full methodology.
+- Independent benchmarks (SWE-bench, OSWorld) validate Claude's capabilities, not Asimov specifically.
+
+📖 [ADR-055: Balanced Architecture Critique](docs/adr/055-balanced-architecture-critique.md) — Full trade-off analysis
+
+---
+
 ## Quick Start
 
 ```bash
@@ -143,6 +164,7 @@ asimov update       # Self-update
 - [Value Proposition](docs/VALUE_PROPOSITION.md) — Why this matters
 - [Setup Guide](docs/SETUP.md) — Detailed installation
 - [Glossary](docs/GLOSSARY.md) — HOTL, HITL, Dynamic Swarm, and other terms
+- [Formula Derivations](docs/FORMULA_DERIVATIONS.md) — Math behind the claims
 - [AI Reality](docs/AI_REALITY.md) — Why AI "hallucinates"
 - [Full Specification](docs/SPECIFICATION.md) — Protocol schema
 

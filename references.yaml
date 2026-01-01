@@ -1,10 +1,17 @@
 # References Database - RoyalBit Asimov
 # Verified sources for ADRs and documentation
 # Format: category → sources with metadata
+#
+# Citation Standards (v10.4.0):
+# - arXiv papers: Include DOI format 10.48550/arXiv.XXXX.XXXXX
+# - Published papers: Include DOI from publisher
+# - Secondary sources: Mark as "secondary_source: true"
+# - Derived claims: Link to derivation in models/ or docs/
 
 rag_vs_long_context:
   - title: "Retrieval Augmented Generation or Long-Context LLMs? A Comprehensive Study and Hybrid Approach"
     url: https://arxiv.org/abs/2407.16833
+    doi: "10.48550/arXiv.2407.16833"
     authors: ["Zhuowan Li", "Cheng Li", "Mingyang Zhang", "Qiaozhu Mei", "Michael Bendersky"]
     organization: Google DeepMind / University of Michigan
     date: 2024-07
@@ -113,7 +120,10 @@ agentic_frameworks:
     url: https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai
     organization: VentureBeat
     date: 2025-12-23
-    key_finding: "17.2x error amplification with independent agents, max 3-4 agents effective"
+    secondary_source: true
+    primary_research: "MIT/Google study - original paper not yet published as of 2026-01"
+    key_finding: "17.2x error amplification with independent agents, max 3-4 agents effective, O(n^1.724) communication overhead"
+    citation_note: "Metrics from journalism summary; primary paper pending publication"
 
   - title: "Don't Build Multi-Agents"
     url: https://cognition.ai/blog/dont-build-multi-agents
@@ -1179,12 +1189,14 @@ extended_thinking_documentation:
 agentic_evaluation_benchmarks:
   - title: "RLI: A Real-World Benchmark for LLM Agents"
     url: https://arxiv.org/abs/2504.02189
+    doi: "10.48550/arXiv.2504.02189"
     authors: ["Saurav Kadavath", "et al."]
     date: 2025-04
     key_finding: "97.5% failure rate on real-world tasks despite 70%+ on SWE-bench; reveals benchmark-production gap"
 
   - title: "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?"
     url: https://arxiv.org/abs/2310.06770
+    doi: "10.48550/arXiv.2310.06770"
     authors: ["Carlos E. Jimenez", "John Yang", "Alexander Wettig", "et al."]
     organization: Princeton
     date: 2023-10
@@ -1336,9 +1348,12 @@ dynamic_swarm_vs_fixed_agentic:
 
   - title: "Google/MIT - More Agents Isn't Reliable"
     url: https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai
-    organization: Google / MIT
+    organization: Google / MIT (via VentureBeat)
     date: 2024-12
+    secondary_source: true
+    primary_research: "MIT/Google study - original paper not yet published"
     key_finding: "17.2x error amplification with independent agents; exponent 1.724 on communication overhead; max 3-4 effective agents"
+    citation_note: "Metrics from journalism summary; primary paper pending publication"
 
 human_in_the_middle:
   - title: "Human-in-the-Loop AI Systems"
