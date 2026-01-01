@@ -103,19 +103,38 @@ pub fn get_template_by_name(name: &str) -> Option<String> {
 }
 ```
 
-### 3. Runtime Override Hierarchy
+### 3. Template Lifecycle
+
+```
+                    INIT TIME                         RUNTIME
+                    ─────────                         ───────
+Template (rust.yaml)  ──[asimov init]──>  .asimov/project.yaml  ──[asimov warmup]──>  JSON
+     ↑                                           ↑
+   embedded                                 user-editable
+   (compile-time)                           (source of truth)
+```
+
+**Flow:**
+1. `asimov init -t rust -n myproject` loads rust.yaml template
+2. Replaces `{PROJECT_NAME}` and `{PROJECT_TAGLINE}` placeholders
+3. Writes result to `.asimov/project.yaml`
+4. `asimov warmup` reads `.asimov/project.yaml` (NOT the template)
+
+Templates are **one-time generators**. After init, project.yaml is the source of truth.
+
+### 4. Runtime Override Hierarchy
 
 ```
 .asimov/templates/rust.yaml     ← User override (highest priority)
 cli/templates/rust.yaml         ← Embedded fallback (compile-time)
 ```
 
-**Loading logic:**
+**Override logic (at init time):**
 1. Check `.asimov/templates/{name}.yaml`
 2. If not found, use embedded default
-3. Validate against schema (both sources)
+3. Generate project.yaml from template
 
-### 4. Template Format
+### 5. Template Format
 
 All templates use **YAML** (not `.tpl` pseudo-format):
 
@@ -147,7 +166,7 @@ deliverables_template:
   - "[ ] GitHub release (if applicable)"
 ```
 
-### 5. Deprecation of .asimov/templates/
+### 6. Deprecation of .asimov/templates/
 
 The 21 enterprise templates currently in `.asimov/templates/` will be:
 1. Moved to `cli/templates/enterprise/`
