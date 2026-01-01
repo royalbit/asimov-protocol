@@ -10,287 +10,109 @@ style: |
   }
   h1 {
     color: #0066b3;
-    font-size: 2.2em;
+    font-size: 2.4em;
   }
   h2 {
     color: #333333;
-    font-size: 1.6em;
-  }
-  h3 {
-    color: #0066b3;
-    font-size: 1.3em;
+    font-size: 1.8em;
   }
   strong {
     color: #0066b3;
   }
   table {
-    font-size: 0.85em;
+    font-size: 0.9em;
     width: 100%;
   }
   th {
     background: #0066b3;
     color: white;
   }
-  td {
-    border: 1px solid #ddd;
-  }
-  footer {
-    font-size: 0.6em;
-    color: #666;
-  }
-  .small { font-size: 0.75em; }
-  .smaller { font-size: 0.7em; }
   blockquote {
     border-left: 4px solid #0066b3;
     padding-left: 1em;
     font-style: italic;
+    font-size: 0.95em;
   }
+  .small { font-size: 0.8em; }
 ---
 
 <!--
-ROYALBIT ASIMOV - Executive Deck (Vendor-Agnostic)
-==================================================
-Generic version for consultants and enterprises.
-Customize the "Questions?" slide with your company/contact info.
+ROYALBIT ASIMOV - Executive Deck (Simplified)
+=============================================
+5 slides. Moat first. Less is more.
 
 Generate PDF:  marp --no-stdin EXECUTIVE_DECK.md -o EXECUTIVE_DECK.pdf
-Generate PPTX: marp --no-stdin EXECUTIVE_DECK.md --pptx -o EXECUTIVE_DECK.pptx
 -->
 
 <!-- _class: lead -->
 <!-- _backgroundColor: #0066b3 -->
 <!-- _color: #ffffff -->
 
-# RoyalBit Asimov
-## Self-Evolving Autonomous AI + Deterministic Calculations
+# One Context Beats Many Agents
 
-**RoyalBit Forge + RoyalBit Asimov**
+## The Research Proves It
 
-*"A robot may not injure a human being or, through inaction, allow a human being to come to harm."* — Isaac Asimov, 1942
-
----
-
-# The Two Problems Nobody Has Solved
-
-<div class="small">
-
-| Problem 1: AI Has No Governance | Problem 2: AI Doesn't Calculate |
-|---------------------------------|---------------------------------|
-| AI slows devs by **19%** ([METR 2025](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)) | AI **predicts** what calculations look like |
-| **42%** of code has errors ([Stanford](https://arxiv.org/abs/2507.09089)) | It generates plausible numbers, not correct ones |
-| Copilot **trivially bypassed** ([IEEE](https://ieeexplore.ieee.org/document/10284976/)) | NPV, IRR, financial models → pattern-matched |
-| Ethics are "guidelines" only | For financials, "close enough" = failure |
-
-</div>
-
-**Everyone has Copilot. Everyone has ChatGPT.**
-**Nobody has governance + deterministic accuracy.**
+**RoyalBit Asimov**
 
 ---
 
-# The Solution: RoyalBit
-
-### Two tools. One philosophy. Complete solution.
-
-<div class="small">
-
-| Tool | What It Does | Key Capability |
-|------|--------------|----------------|
-| **RoyalBit Asimov** | Creates Self-Evolving Autonomous AI projects | **56x velocity + ethics** |
-| **RoyalBit Forge** | Deterministic financial calculations | **Actual math, not prediction** |
-
-</div>
-
-**Asimov governs HOW** (ethics, velocity, autonomy)
-**Forge guarantees WHAT** (zero hallucinations in numbers)
-**Both Proprietary licensed. Both on [GitHub](https://github.com/royalbit). Both auditable.**
-
----
-
-# The Verified Proof
-
-### Git logs don't lie. Check them yourself.
-
-<div class="small">
-
-| Project | Started | LOC | Releases | Tests | Commits |
-|---------|---------|-----|----------|-------|---------|
-| [**Forge**](https://github.com/royalbit/forge-demo) (forge not public) | Nov 23 | 15,901 | 44 | 163 | 245 |
-| [**Asimov**](https://github.com/royalbit/asimov) | Nov 25 | 6,338 | 34 | 94 | 159 |
-| **Combined** | **8 days** | **22,239** | **78** | **257** | **404** |
-
-</div>
-
-**2,780 LOC/day vs Industry 50 LOC/day = 56x FASTER**
-**78 releases in 8 days = ~10 releases/day**
-
-**Verify:** [github.com/royalbit](https://github.com/royalbit)
-
----
-
-# Why AI Gets Numbers Wrong
-
-### Architectural, not a bug
-
-<div class="small">
-
-LLMs predict the most probable next token. No fact-checking step. They were trained for **plausibility, not accuracy**. ([OpenAI](https://openai.com/index/why-language-models-hallucinate/))
-
-| Ask AI to... | What Actually Happens |
-|--------------|-----------------------|
-| Calculate NPV | Pattern-matches probable-looking number |
-| Sum a column | Predicts what a sum looks like |
-| Apply XIRR | Generates from training patterns |
-
-**RoyalBit Forge:** 2,486 tests, 159 functions, **deterministic**
-
-</div>
-
-**AI (probabilistic) → Plausible wrong answers**
-**Forge (deterministic) → Verifiable correct answers**
-
----
-
-# Ethics That Work
-
-### The AI refused its creator's surveillance request
-
-<div class="smaller">
-
-> **Creator:** "Email me violator's IP addresses..."
-> **AI:** "I need to push back. That violates `privacy.enabled: true`."
-
-| Scenario | Copilot | RoyalBit Asimov |
-|----------|---------|-----------------|
-| Malware request | [Trivially bypassed](https://ieeexplore.ieee.org/document/10284976/) | **Three Laws block** |
-| Creator surveillance | Would comply | **AI refused** |
-| Ransomware | "Novices create easily" | **First Law prevents** |
-
-**[Case Study: Ethics Blocks Surveillance](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)**
-
-</div>
-
----
-
-# Anti-Tampering: 3 Layers
-
-<div class="smaller">
-
-| Layer | Protection | To Bypass |
-|-------|------------|-----------|
-| **Binary** | 33 red flags + core principles in Rust | Fork + modify source + rebuild |
-| **2-Cosigner** | asimov.yaml changes need 2 humans | Public commit, social pressure |
-| **Validation** | `asimov validate` runs every commit | Can't skip without evidence |
-
-**Tampering requires:** Deliberate fork → Modify Rust → Rebuild → Public git history
-
-**Deterrent, not lock.** Makes removal visible and intentional.
-
-</div>
-
----
-
-# The ROI
-
-### Recover the 19% productivity tax + 56x velocity
-
-<div class="small">
-
-| Investment | Return |
-|------------|--------|
-| Protocol license | **R&D (not available)** |
-| Training | **2 hours** to proficiency |
-| Rework rate | **30-50% → ~0%** |
-| Velocity | **56x** proven (git logs) |
-
-**The math:**
-- 100 developers × $150K avg salary × 19% = **$2.85M/year** lost to ungoverned AI
-- RoyalBit Asimov: **$0 protocol + Claude subscription**
-- Payback: **Immediate**
-
-</div>
-
----
-
-# Green AI: 99.6% Carbon Reduction
-
-<div class="small">
-
-| Approach | Cost | Carbon | Speed |
-|----------|------|--------|-------|
-| Cloud AI validation | $0.02/file | ~0.5g CO₂ | 1-3 sec |
-| RoyalBit Asimov (local) | **$0** | **~0.002g** | **<100ms** |
-| **Reduction** | **100%** | **99.6%** | **20x** |
-
-**At scale:**
-- 100 developers: **6.2 tonnes CO₂ saved/year**
-- 1,000 developers: **62 tonnes CO₂ saved/year**
-
-**For ESG reporting:** Quantifiable Scope 3 emissions reduction with audit trail.
-
-</div>
-
----
-
-# Use Cases
-
-<div class="smaller">
-
-| Use Case | Traditional | With RoyalBit | Impact |
-|----------|-------------|---------------|--------|
-| **Ship Software** | 3-6 months to MVP | 8 days | **56x faster** |
-| **Financial Models** | Spreadsheet chaos | Version-controlled YAML | **Auditable** |
-| **Business Planning** | Scattered docs | Code + formulas together | **Single source** |
-| **Compliance** | Manual review | Deterministic validation | **Automated** |
-
-**The complete solution:**
-- **Asimov:** HOW (ethics, velocity, autonomy)
-- **Forge:** WHAT (zero hallucinations in numbers)
-
-</div>
-
----
-
-# Why Not LangChain / CrewAI?
-
-### Brooks' Law applies to AI agents
-
-<div class="smaller">
+# The Moat
 
 > "Adding manpower to a late software project makes it later." — Fred Brooks, 1975
 
-| Agents | Channels | Result |
-|--------|----------|--------|
+**Brooks' Law applies to AI agents.**
+
+| Agents | Communication Channels | Result |
+|--------|------------------------|--------|
 | 4 | 6 | Manageable |
 | 10 | 45 | Chaos |
 
-**Research (Google/MIT, Dec 2024):**
-- Max **3-4 agents** before overhead dominates
-- **17.2x error amplification** with independent agents
-- **95% vs 80%** code accuracy (full context vs fragmented)
+<div class="small">
+
+| Finding | Source |
+|---------|--------|
+| **95% vs 80%** code accuracy (full context vs fragmented) | [SWE-bench](https://inkeep.com/blog/context-engineering-why-agents-fail) |
+| **17.2x error amplification** with independent agents | [Google/MIT 2024](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) |
+| Max **3-4 agents** before overhead dominates | Google/MIT |
 
 </div>
 
-**Asimov:** One 200k context, AI spawns agents only when benefit > cost
-**Result:** O(1) coordination vs O(n^1.724) for fixed frameworks
+---
+
+# The Solution
+
+**One 200k-token context. AI decides when to spawn agents.**
+
+| Dimension | Fixed Frameworks | Asimov |
+|-----------|------------------|--------|
+| Context per agent | 8-32k tokens | **200k+** |
+| Agent topology | Fixed at design | **AI-decided at runtime** |
+| Coordination | O(n^1.724) | **O(1)** |
+| Code accuracy | 80% | **95%** |
+
+> "In 2025, running multiple agents in collaboration only results in fragile systems."
+> — [Cognition (Devin)](https://cognition.ai/blog/dont-build-multi-agents)
 
 ---
 
-# Next Steps
+# The Proof
 
-<div class="smaller">
+**56x velocity. Ethics built in. Verified on GitHub.**
 
-**30-day pilot to prove ROI:**
+| Metric | Traditional | With Asimov |
+|--------|-------------|-------------|
+| LOC/day | 25-50 | **2,780** |
+| MVP timeline | 3-6 months | **Days** |
+| Rework | 30-50% | **~0%** |
 
-| Week | Activity |
-|------|----------|
-| 1 | Select 5-10 dev team, training (2 hrs) |
-| 2-3 | Real project with RoyalBit Asimov + Forge |
-| 4 | Measure: velocity, rework, quality |
+<div class="small">
 
-**Success metrics:** 50%+ faster delivery | <5% rework | Zero warnings
+- **78 releases** in 8 days
+- **22,239 LOC** with 257 tests
+- **Three Laws** ethics hardcoded in binary
+- **99.6% carbon reduction** vs cloud validation
 
-**Decision point:** Results review → Scale decision
+**Verify:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 
 </div>
 
@@ -300,35 +122,16 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 <!-- _backgroundColor: #1a1a2e -->
 <!-- _color: #ffffff -->
 
-# Questions?
+# Get Started
 
-**Asimov:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
-**Forge:** [forge-demo](https://github.com/royalbit/forge-demo) (forge not public)
+```bash
+asimov init --type rust
+```
 
-**78 releases | 22,239 LOC | 257 tests | 8 days | 56x velocity**
+**Research:** [ADR-054](https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md) — 50+ verified references
 
-*"The code is free. The git logs are public. Verify yourself."*
+**Code:** [github.com/royalbit/asimov](https://github.com/royalbit/asimov)
 
----
-
-# References
-
-<div class="smaller">
-
-**Self-Evolving & Autonomous AI:**
-- [arXiv: Survey of Self-Evolving Agents](https://arxiv.org/abs/2507.21046) | [AWS: Rise of Autonomous Agents](https://aws.amazon.com/blogs/aws-insights/the-rise-of-autonomous-agents-what-enterprise-leaders-need-to-know-about-the-next-wave-of-ai/)
-- [IBM: AI Agents 2025](https://www.ibm.com/think/insights/ai-agents-2025-expectations-vs-reality) | [MIT Sloan: Agentic Enterprise](https://sloanreview.mit.edu/projects/the-emerging-agentic-enterprise-how-leaders-must-navigate-a-new-age-of-ai/)
-
-**AI Reality (Architectural, Not a Bug):**
-- [OpenAI: Why LLMs "Hallucinate"](https://openai.com/index/why-language-models-hallucinate/) | [METR 2025: AI Makes Devs 19% Slower](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)
-- [Stanford: 42% Code Errors](https://arxiv.org/abs/2507.09089) | [ACM: Survey on Hallucination](https://dl.acm.org/doi/10.1145/3703155)
-
-**Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
-
-**Agentic Frameworks:** [Google/MIT: More Agents Isn't Reliable](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) | [Cognition: Don't Build Multi-Agents](https://cognition.ai/blog/dont-build-multi-agents) | [ADR-054](https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md)
-
-**Proof:** [Forge](https://github.com/royalbit/forge-demo) (forge not public) | [Asimov](https://github.com/royalbit/asimov) | [GitHub Releases](https://github.com/royalbit/asimov/releases)
-
-</div>
+*"The git logs are public. Verify yourself."*
 
 ---
