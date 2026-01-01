@@ -424,7 +424,8 @@ fn check_coding_tools(project_type: ProjectType, result: &mut DoctorResult) {
             check_command("flutter", &["--version"], result);
         }
         ProjectType::Docs | ProjectType::Arch => {
-            check_command("markdownlint-cli2", &["--help"], result);
+            // Note: --help exits 2, --version exits 0
+            check_command("markdownlint-cli2", &["--version"], result);
         }
         _ => {}
     }

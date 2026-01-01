@@ -5,9 +5,6 @@
 
 # current: (none - see CHANGELOG.md for v10.2.5)
 
-bugs:
-  - "doctor: markdownlint-cli2 detection uses --help (exits 2) instead of --version (exits 0), reports 'not found' even when installed"
-
 next:
   version: "10.3.0"
   summary: "External Project Templates (ADR-057)"
