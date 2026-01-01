@@ -28,7 +28,7 @@ posts:
 
     The pattern that works: One large context where AI decides when to spawn agents.
 
-    O(1) coordination vs O(n^1.724).
+    O[1] coordination vs O[n^1.724].
 
     We documented this with 50+ verified references:
     https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -67,6 +67,7 @@ posts:
     #AI #Agents #SoftwareEngineering #MultiAgent
   posted:
     x: 2026-01-01T03:08:05.106085793+00:00
+    linkedin: 2026-01-01T03:12:08.476997874+00:00
 - id: adr-054-cognition-quote
   title: Devin's Creators on Multi-Agent
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -120,6 +121,7 @@ posts:
     #AI #Agents #Devin #SoftwareEngineering
   posted:
     x: 2026-01-01T03:08:17.430472176+00:00
+    linkedin: 2026-01-01T03:12:21.547383580+00:00
 - id: adr-054-accuracy-gap
   title: 95% vs 80% - The Coherence Gap
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -195,6 +197,7 @@ posts:
     #AI #SWEbench #Coding #SoftwareEngineering
   posted:
     x: 2026-01-01T03:08:21.328331535+00:00
+    linkedin: 2026-01-01T03:12:25.114257906+00:00
 - id: adr-054-research-summary
   title: Multi-Agent Research Summary
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -206,7 +209,7 @@ posts:
     The findings:
 
     1. Brooks' Law applies to AI agents
-    Communication overhead = N × (N-1) / 2
+    Communication overhead = N × [N-1] / 2
     Google/MIT measured: exponent 1.724
 
     2. Full context crushes fragmented
@@ -230,7 +233,7 @@ posts:
 
     The pattern that works: One large context. AI decides when to spawn agents.
 
-    O(1) coordination vs O(n^1.724).
+    O[1] coordination vs O[n^1.724].
 
     Full research:
     https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -242,7 +245,7 @@ posts:
     The findings:
 
     1. Brooks' Law applies to AI agents
-    Communication overhead = N × (N-1) / 2
+    Communication overhead = N × [N-1] / 2
     Google/MIT measured: exponent 1.724 - worse than quadratic
 
     2. Full context crushes fragmented
@@ -266,7 +269,7 @@ posts:
 
     The pattern that works: One large context. AI decides when to spawn agents. Context IS the coordination layer.
 
-    O(1) coordination vs O(n^1.724).
+    O[1] coordination vs O[n^1.724].
 
     Full research:
     https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -274,6 +277,7 @@ posts:
     #AI #Agents #SoftwareEngineering #Research #MultiAgent
   posted:
     x: 2026-01-01T03:08:26.156896489+00:00
+    linkedin: 2026-01-01T03:13:45.818740628+00:00
 - id: adr-054-rag-vs-context
   title: RAG vs Long Context - The Data
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -354,6 +358,7 @@ posts:
     #AI #RAG #LLM #SoftwareEngineering #Research
   posted:
     x: 2026-01-01T03:08:32.274924506+00:00
+    linkedin: 2026-01-01T03:12:34.855363470+00:00
 - id: error-compounding-math
   title: 5,391x - Error Compounding
   url: https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
@@ -364,7 +369,7 @@ posts:
 
     The 95% vs 80% accuracy gap isn't 15 percentage points. Errors compound multiplicatively.
 
-    The formula: P(success after N steps) = accuracy^N
+    The formula: P[success after N steps] = accuracy^N
 
     At 1 step:
     → 80%: 80% success | 95%: 95% success | Gap: 1.2x
@@ -399,7 +404,7 @@ posts:
 
     Errors compound multiplicatively.
 
-    The formula: P(success after N steps) = accuracy^N
+    The formula: P[success after N steps] = accuracy^N
 
     Here's what that means in practice:
 
@@ -435,6 +440,7 @@ posts:
     #AI #Agents #Math #SoftwareEngineering
   posted:
     x: 2026-01-01T03:08:39.603405351+00:00
+    linkedin: 2026-01-01T03:13:23.805716199+00:00
 - id: error-compounding-89-percent
   title: 89% Failure Rate
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
@@ -507,3 +513,4 @@ posts:
     #AI #Agents #MultiAgent #SoftwareEngineering
   posted:
     x: 2026-01-01T03:08:48.000743448+00:00
+    linkedin: 2026-01-01T03:12:48.773723454+00:00
