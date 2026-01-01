@@ -514,3 +514,197 @@ posts:
   posted:
     x: 2026-01-01T03:08:48.000743448+00:00
     linkedin: 2026-01-01T03:12:48.773723454+00:00
+- id: adr-056-monte-carlo-39x
+  title: 39x Advantage - Monte Carlo Proof
+  url: https://github.com/royalbit/asimov/blob/main/docs/adr/056-extended-thinking-vs-rag-agentic.md
+  x: |
+    We ran 10,000 Monte Carlo simulations.
+
+    Dynamic Swarm + Human-in-the-Middle vs Fixed Multi-Agent at 10 steps:
+
+    → Dynamic Swarm: 90.7% success
+    → Fixed Multi-Agent: 2.3% success
+    → Advantage: 39x
+
+    At 20 steps:
+    → Dynamic Swarm: 82.2% success
+    → Fixed Multi-Agent: 0.05% success
+    → Advantage: 1,502x
+
+    Not a typo. One thousand five hundred times better.
+
+    The key insight: base accuracy matters 5x more than error correction.
+
+    Full context [200K tokens] gives 97% base accuracy.
+    Fragmented context gives 80% base accuracy.
+
+    That 17% gap compounds exponentially.
+
+    Validated with Forge [Rust] against R and Gnumeric:
+    forge calculate models/agent-formulas.yaml
+
+    Full research:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/056-extended-thinking-vs-rag-agentic.md
+
+    #AI #MonteCarlo #Agents
+  linkedin: |
+    We ran 10,000 Monte Carlo simulations comparing AI agent architectures.
+
+    Dynamic Swarm + Human-in-the-Middle vs Fixed Multi-Agent:
+
+    At 10 steps:
+    - Dynamic Swarm: 90.7% success
+    - Fixed Multi-Agent: 2.3% success
+    - Advantage: 39x
+
+    At 20 steps:
+    - Dynamic Swarm: 82.2% success
+    - Fixed Multi-Agent: 0.05% success
+    - Advantage: 1,502x
+
+    The key insight from sensitivity analysis: base accuracy matters 5x more than error correction.
+
+    Full context (200K tokens) gives 97% base accuracy.
+    Fragmented context gives 80% base accuracy.
+
+    That 17% gap compounds exponentially over steps.
+
+    We validated this with Forge (Rust) - matches R and Gnumeric to 6 decimal places.
+
+    Run it yourself:
+    forge calculate models/agent-formulas.yaml
+    forge tornado models/agent-tornado.yaml
+    forge simulate models/agent-simulate.yaml
+
+    Full research with code:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/056-extended-thinking-vs-rag-agentic.md
+
+    #AI #MonteCarlo #Agents #SoftwareEngineering #Research
+  posted: null
+- id: adr-056-hitm-oversight
+  title: Human-in-the-Middle - The Missing Layer
+  url: https://github.com/royalbit/asimov/blob/main/docs/adr/056-extended-thinking-vs-rag-agentic.md
+  x: |
+    The missing layer in AI agent architectures: Human-in-the-Middle [HITM].
+
+    Google/MIT 2024:
+    → Independent agents: 17.2x error amplification
+    → With validation gate: 4.4x error containment
+    → Reduction: 74%
+
+    Human oversight isn't a bottleneck. It's error prevention.
+
+    The Dynamic Swarm architecture:
+
+    Human [HITM]
+        ↓ oversight
+    Orchestrator [~200K tokens]
+        ↓ spawns dynamically
+        ├── Agent 1 [~200K tokens]
+        ├── Agent 2 [~200K tokens]
+        └── Agent N [~200K tokens]
+
+    Each agent has full context. Human catches cascading errors. AI decides when to spawn.
+
+    Result: 39x advantage over fixed multi-agent at 10 steps.
+
+    The math:
+    https://github.com/royalbit/asimov/blob/main/models/agent-formulas.yaml
+
+    #AI #Agents #HITM
+  linkedin: |
+    The missing layer in AI agent architectures: Human-in-the-Middle (HITM).
+
+    Google/MIT research (2024):
+    - Independent agents: 17.2x error amplification
+    - With validation gate: 4.4x error containment
+    - Error reduction: 74%
+
+    Human oversight isn't a bottleneck. It's error prevention.
+
+    The Dynamic Swarm architecture:
+
+    Human (HITM)
+        ↓ oversight
+    Orchestrator (~200K tokens, extended thinking)
+        ↓ spawns dynamically at runtime
+        ├── Sub-Agent 1 (~200K tokens)
+        ├── Sub-Agent 2 (~200K tokens)
+        └── Sub-Agent N (~200K tokens)
+
+    Key differences from fixed multi-agent:
+    - Each agent has FULL context (~200K), not fragmented
+    - Human catches cascading errors between spawns
+    - AI decides when to spawn, not pre-defined topology
+
+    Result: 39x advantage over fixed multi-agent at 10 steps.
+
+    Validated with Forge (Rust):
+    https://github.com/royalbit/asimov/blob/main/models/agent-formulas.yaml
+
+    Full research:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/056-extended-thinking-vs-rag-agentic.md
+
+    #AI #Agents #SoftwareEngineering #Research
+  posted: null
+- id: forge-tornado-sensitivity
+  title: Tornado Analysis - What Actually Matters
+  url: https://github.com/royalbit/asimov/blob/main/models/agent-tornado.yaml
+  x: |
+    We ran tornado sensitivity analysis on agent success rates.
+
+    Which parameter matters most?
+
+    base_accuracy    |██████████████████████████████| ±0.25
+    steps            |███████████████| ±0.13
+    detection_rate   |███████████| ±0.10
+    fix_rate         |██████| ±0.05
+
+    Base accuracy is 5x more impactful than fix rate.
+
+    Translation: Don't optimize error correction. Optimize for not making errors.
+
+    Full context [200K tokens] gives 97% base accuracy.
+    Fragmented context gives 80% base accuracy.
+
+    That's the lever.
+
+    Run it yourself:
+    forge tornado models/agent-tornado.yaml
+
+    Full model:
+    https://github.com/royalbit/asimov/blob/main/models/agent-tornado.yaml
+
+    #AI #Sensitivity #DataScience
+  linkedin: |
+    We ran tornado sensitivity analysis on agent success rates.
+
+    Which parameter matters most for AI agent success?
+
+    base_accuracy    |██████████████████████████████| ±0.25
+    steps            |███████████████| ±0.13
+    detection_rate   |███████████| ±0.10
+    fix_rate         |██████| ±0.05
+
+    Base accuracy is 5x more impactful than fix rate.
+
+    Translation: Don't invest in better error correction. Invest in not making errors in the first place.
+
+    How do you increase base accuracy?
+    - Full context (200K tokens) vs fragmented
+    - Proper prompting and examples
+    - Human oversight (HITM) to catch errors early
+
+    Full context gives 97% base accuracy.
+    Fragmented context gives 80% base accuracy.
+
+    That 17% gap is the lever. Everything else is secondary.
+
+    Run it yourself:
+    forge tornado models/agent-tornado.yaml
+
+    Full model and research:
+    https://github.com/royalbit/asimov/blob/main/models/agent-tornado.yaml
+
+    #AI #DataScience #SensitivityAnalysis #SoftwareEngineering
+  posted: null
