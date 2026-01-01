@@ -5,16 +5,35 @@ posts:
   x: |
     Brooks' Law applies to AI agents.
 
+    "Adding manpower to a late software project makes it later." — Fred Brooks, 1975
+
+    The formula: Communication channels = N × (N-1) / 2
+
+    2 agents = 1 channel
     4 agents = 6 channels
+    7 agents = 21 channels
     10 agents = 45 channels
+    20 agents = 190 channels
 
-    Google/MIT measured it: exponent 1.724.
+    Google/MIT measured this for AI agents in December 2024:
+    → Communication overhead scales with exponent 1.724
+    → Maximum effective team size: 3-4 agents
+    → Independent agents: 17.2x error amplification vs single-agent
 
-    Worse than quadratic.
+    This is why LangChain, CrewAI, and other multi-agent frameworks hit a wall.
 
-    We gathered 50+ references on this.
+    They fragment context across agents. Each agent gets 8-32k tokens. They coordinate through external infrastructure—state machines, message queues, databases.
 
-    #AI #Agents
+    Every handoff loses information. Every coordination point adds latency. Every agent has a different view of the problem.
+
+    The pattern that works: One large context where AI decides when to spawn agents.
+
+    O(1) coordination vs O(n^1.724).
+
+    We documented this with 50+ verified references:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #Agents #SoftwareEngineering
   linkedin: |
     Brooks' Law applies to AI agents.
 
@@ -47,21 +66,35 @@ posts:
 
     #AI #Agents #SoftwareEngineering #MultiAgent
   posted:
-    x: 2026-01-01T03:00:22.376510508+00:00
+    x: 2026-01-01T03:08:05.106085793+00:00
 - id: adr-054-cognition-quote
   title: Devin's Creators on Multi-Agent
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    Last year, Cognition - Devin's creators wrote:
+    Last year, Cognition—the team behind Devin, the most hyped AI coding agent—published this:
 
-    "Running multiple agents only results in fragile systems."
+    "In 2025, running multiple agents in collaboration only results in fragile systems. The decision-making ends up being too dispersed and context isn't able to be shared thoroughly enough between the agents."
 
-    They built the hype.
-    Then said don't.
+    They built the hype. Then said don't.
 
-    2026: Still true.
+    Their recommendation:
+    1. All agents should read from the same context
+    2. All agents should write to the same context
 
-    #AI #Devin
+    As we enter 2026, this still holds. The research confirms it:
+    → Full-file context: 95% accuracy
+    → Fragmented retrieval: 80% accuracy
+
+    That 15% gap compounds over steps. By step 10, fragmented systems have an 89% failure rate.
+
+    Cognition learned it the hard way. Google/MIT confirmed it. The math proves it.
+
+    Source: https://cognition.ai/blog/dont-build-multi-agents
+
+    We compiled the research with 50+ verified refs:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #Devin #Agents
   linkedin: |
     Last year, the team behind Devin—the most hyped AI coding agent—published this:
 
@@ -86,22 +119,44 @@ posts:
 
     #AI #Agents #Devin #SoftwareEngineering
   posted:
-    x: 2026-01-01T03:01:10.906569446+00:00
+    x: 2026-01-01T03:08:17.430472176+00:00
 - id: adr-054-accuracy-gap
   title: 95% vs 80% - The Coherence Gap
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    Full context: 95% accuracy.
-    Fragmented: 80% accuracy.
+    The number that should change how you think about AI agents.
 
-    SWE-bench finding.
+    On SWE-bench-Verified:
+    → Full-file context: 95% accuracy
+    → Fragmented retrieval: 80% accuracy
 
-    The difference? Coherence.
+    15 percentage points. Same task. Same model. Different architecture.
 
-    Full files = relationships intact.
-    Fragments = stitching pieces together.
+    The difference comes from coherence.
 
-    #AI #SWEbench
+    With full files, the model sees relationships across the entire document. Variable definitions. Function calls. Import statements. The whole picture.
+
+    With fragmented retrieval, the model stitches together disjointed pieces. Context is lost at every boundary.
+
+    Agent A sees the function signature.
+    Agent B sees the implementation.
+    Agent C sees the tests.
+
+    None of them see the whole.
+
+    The "Rule of 4" from Google/MIT:
+    → Maximum effective team size: 3-4 agents
+    → Beyond that, coordination overhead dominates
+    → 17.2x error amplification with independent agents
+
+    The fix isn't better coordination infrastructure.
+
+    The fix is not fragmenting context in the first place.
+
+    Research with 50+ verified refs:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #SWEbench #Coding
   linkedin: |
     The number that should change how you think about AI agents.
 
@@ -139,22 +194,48 @@ posts:
 
     #AI #SWEbench #Coding #SoftwareEngineering
   posted:
-    x: 2026-01-01T03:01:12.433027691+00:00
+    x: 2026-01-01T03:08:21.328331535+00:00
 - id: adr-054-research-summary
   title: Multi-Agent Research Summary
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    We spent a week on multi-agent research.
+    We spent a week gathering hard data on multi-agent AI architectures.
 
-    50+ verified refs. Here's what we found:
+    50+ verified references. Real benchmarks. Peer-reviewed research.
 
-    - 95% vs 80% accuracy - SWE-bench
-    - 17.2x error amplification - Google/MIT
-    - Max 3-4 effective agents
+    The findings:
 
-    The pattern that works? One context.
+    1. Brooks' Law applies to AI agents
+    Communication overhead = N × (N-1) / 2
+    Google/MIT measured: exponent 1.724
 
-    #AI #Agents
+    2. Full context crushes fragmented
+    SWE-bench: 95% vs 80% accuracy
+    The 15% gap is coherence
+
+    3. The Rule of 4
+    Max effective team: 3-4 agents
+    Beyond that, coordination overhead dominates
+
+    4. Multi-agent token overhead
+    Anthropic's research: 15x more tokens than single-agent
+    Token usage explains 80% of performance variance
+
+    5. Cognition agrees
+    "Running multiple agents only results in fragile systems."
+
+    The implication:
+
+    Fixed agent frameworks are engineering complexity around a fundamental limitation. They fragment context to work within smaller windows.
+
+    The pattern that works: One large context. AI decides when to spawn agents.
+
+    O(1) coordination vs O(n^1.724).
+
+    Full research:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #Agents #Research
   linkedin: |
     We spent a week gathering hard data on multi-agent AI architectures. 50+ verified references. Real benchmarks. Peer-reviewed research.
 
@@ -192,22 +273,42 @@ posts:
 
     #AI #Agents #SoftwareEngineering #Research #MultiAgent
   posted:
-    x: 2026-01-01T03:01:13.979791210+00:00
+    x: 2026-01-01T03:08:26.156896489+00:00
 - id: adr-054-rag-vs-context
   title: RAG vs Long Context - The Data
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    Long context outperforms RAG by 7-13%.
+    RAG was a workaround for small context windows. The workaround is becoming obsolete.
 
     Google DeepMind, July 2024:
-    - GPT-4O: +13.1%
-    - Gemini-1.5-Pro: +7.6%
+    → Long context outperforms RAG by 7-13% on average
+    → GPT-4O: +13.1% with full context
+    → Gemini-1.5-Pro: +7.6% with full context
 
-    RAG is 25x cheaper.
+    RAG failure patterns:
+    1. Multi-step reasoning: Query requires previous step results
+    2. General queries: Too vague for effective retrieval
+    3. Implicit queries: Requires holistic context understanding
+    4. Long/complex queries: Challenging for retriever to parse
 
-    But it fails on multi-step reasoning.
+    The cost trade-off:
+    → RAG: 4% of long-context cost
+    → Long context: 25x more expensive
 
-    When accuracy matters, use the full context.
+    But for code understanding, the accuracy gap is 95% vs 80%.
+
+    That 15% is the difference between shipping and debugging for hours.
+
+    For high-value tasks—code generation, complex reasoning, multi-step analysis—the 25x cost premium pays for itself.
+
+    RAG still wins for dynamic data and simple lookups.
+
+    But for reasoning? For code? Use the context window.
+
+    Original research: https://arxiv.org/abs/2407.16833
+
+    Our analysis with 50+ refs:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
     #AI #RAG #LLM
   linkedin: |
@@ -252,24 +353,47 @@ posts:
 
     #AI #RAG #LLM #SoftwareEngineering #Research
   posted:
-    x: 2026-01-01T03:01:15.481214089+00:00
+    x: 2026-01-01T03:08:32.274924506+00:00
 - id: error-compounding-math
   title: 5,391x - Error Compounding
   url: https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
   x: |
     5,391x. Not a typo.
 
-    That's the gap at 50 steps.
+    That's the gap between full context and fragmented at 50 steps.
 
-    Errors compound: accuracy^steps
+    The 95% vs 80% accuracy gap isn't 15 percentage points. Errors compound multiplicatively.
 
-    10 steps:
-    - 80% per step → 10.7% success
-    - 95% per step → 59.9% success
+    The formula: P(success after N steps) = accuracy^N
 
-    We modeled this deterministically.
+    At 1 step:
+    → 80%: 80% success | 95%: 95% success | Gap: 1.2x
 
-    #AI #Math
+    At 5 steps:
+    → 80%: 32.8% success | 95%: 77.4% success | Gap: 2.4x
+
+    At 10 steps:
+    → 80%: 10.7% success | 95%: 59.9% success | Gap: 5.6x
+
+    At 20 steps:
+    → 80%: 1.2% success | 95%: 35.8% success | Gap: 31x
+
+    At 50 steps:
+    → 80%: 0.001% success | 95%: 7.7% success | Gap: 5,391x
+
+    This is why multi-agent systems collapse on complex tasks.
+
+    Each agent handoff is a step. Each step compounds the error.
+
+    We modeled this deterministically with Forge:
+    https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
+
+    Full research:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    The math doesn't lie.
+
+    #AI #Math #Agents
   linkedin: |
     The 95% vs 80% accuracy gap isn't 15 percentage points.
 
@@ -310,22 +434,46 @@ posts:
 
     #AI #Agents #Math #SoftwareEngineering
   posted:
-    x: 2026-01-01T03:01:17.051890725+00:00
+    x: 2026-01-01T03:08:39.603405351+00:00
 - id: error-compounding-89-percent
   title: 89% Failure Rate
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
     89% failure rate.
 
-    That's multi-agent at 10 steps.
+    That's fragmented context at 10 steps—a typical complex coding task.
 
-    Full context? 40% failure.
+    Full context? 40% failure rate.
 
-    Same task. Different architecture.
+    Same steps. Same task. Different architecture.
 
-    Each handoff compounds the error.
+    The difference is error compounding.
 
-    #AI #Agents
+    When accuracy is 80% per step:
+    → Step 1: 80% success
+    → Step 5: 32.8% success
+    → Step 10: 10.7% success ← 89% failure
+
+    When accuracy is 95% per step:
+    → Step 1: 95% success
+    → Step 5: 77.4% success
+    → Step 10: 59.9% success ← 40% failure
+
+    This explains why multi-agent frameworks hit a wall on complex tasks.
+
+    They fragment context. Each agent handoff is a step. Each step compounds the 20% error rate.
+
+    By step 10, you're essentially guaranteed to fail.
+
+    The pattern that works: One large context. AI decides when to spawn agents. Context IS the coordination layer.
+
+    Deterministic model:
+    https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
+
+    Research with 50+ verified refs:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #Agents #MultiAgent
   linkedin: |
     At 10 steps—a typical complex coding task—fragmented context systems have an 89% failure rate.
 
@@ -358,4 +506,4 @@ posts:
 
     #AI #Agents #MultiAgent #SoftwareEngineering
   posted:
-    x: 2026-01-01T03:01:18.546107552+00:00
+    x: 2026-01-01T03:08:48.000743448+00:00
