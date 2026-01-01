@@ -1,0 +1,43 @@
+# Enterprise Template: admin-dashboard
+# Migrated from asimov-plus v2.1.0
+# React Admin dashboard with Refine, Auth, and RBAC
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: frontend
+  tagline: "Admin dashboard with Refine"
+
+stack:
+  framework: "Refine + React + Auth + RBAC"
+  language: "TypeScript"
+  ui: "Ant Design"
+  runtime: "Node.js 20+"
+
+quality:
+  test: "npm test"
+  lint: "eslint src/"
+  build: "npm install && npm run build"
+
+structure:
+  - src/main.tsx                           # Entry point
+  - src/App.tsx                            # Refine configuration
+  - src/providers/authProvider.ts          # Authentication
+  - src/providers/accessControlProvider.ts # RBAC
+  - src/providers/dataProvider.ts          # Data fetching
+  - src/pages/dashboard/                   # Dashboard page
+  - src/pages/users/                       # User CRUD pages
+  - src/pages/login/                       # Login page
+  - src/components/                        # Shared components
+  - src/types/                             # TypeScript types
+  - vite.config.ts
+  - vitest.config.ts
+
+features:
+  - Refine admin framework
+  - Ant Design components
+  - Role-based access control
+  - Authentication flow
+  - CRUD operations
+  - Data tables with pagination
+  - Form validation
+  - Kbar command palette

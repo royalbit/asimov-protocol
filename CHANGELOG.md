@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.3.0] - 2026-01-01
+
+### Added
+
+- **External Project Templates (ADR-057)**: Templates now live in `cli/templates/` with runtime override via `.asimov/templates/`
+  - 8 project templates: rust, python, node, go, flutter, docs, arch, generic
+  - 13 enterprise templates: api-rust, api-go, api-fastapi, api-nestjs, api-spring, web-nextjs, web-react, web-vue, web-angular, mono-turbo, mono-nx, mono-pnpm, admin-dashboard
+  - Same pattern as protocols: embedded fallback + external override
+  - All templates include `deliverables_template` field (ADR-034)
+- **warmup**: Now outputs `templates_available` listing all 21 templates
+- **lib.rs exports**: `list_templates()` and `get_enterprise_template()` now public
+
+### Changed
+
+- Deleted old `.tpl` template files from `cli/src/templates/`
+
+---
+
 ## [10.2.6] - 2026-01-01
 
 ### Fixed

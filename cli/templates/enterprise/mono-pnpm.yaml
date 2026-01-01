@@ -1,0 +1,40 @@
+# Enterprise Template: mono-pnpm
+# Migrated from asimov-plus v2.1.0
+# pnpm workspaces monorepo with apps and packages
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: monorepo
+  tagline: "pnpm workspaces monorepo"
+
+stack:
+  framework: "pnpm workspaces + apps + packages"
+  language: "TypeScript"
+  package_manager: "pnpm"
+
+quality:
+  test: "pnpm test"
+  lint: "pnpm -r lint"
+  build: "pnpm install && pnpm build"
+
+structure:
+  - package.json             # Root package
+  - pnpm-workspace.yaml      # Workspace configuration
+  - tsconfig.json            # Base TypeScript config
+  - .npmrc                   # pnpm configuration
+  - apps/web/                # Vite + React app
+  - apps/cli/                # Node.js CLI
+  - packages/ui/             # Shared React components
+  - packages/utils/          # Shared utilities
+  - packages/types/          # Shared TypeScript types
+  - scripts/                 # Build scripts
+
+features:
+  - pnpm efficient disk usage
+  - Strict peer dependencies
+  - Workspace protocol
+  - Parallel development
+  - Shared utilities
+  - Shared types
+  - CLI application
+  - Vite for frontend

@@ -1,0 +1,40 @@
+# Enterprise Template: web-react
+# Migrated from asimov-plus v2.1.0
+# React with Vite, React Query, and Zustand
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: frontend
+  tagline: "React application with Vite"
+
+stack:
+  framework: "React + Vite + React Query + Zustand"
+  language: "TypeScript"
+  runtime: "Node.js 20+"
+
+quality:
+  test: "npm test"
+  lint: "eslint . --ext ts,tsx"
+  build: "npm install && npm run build"
+
+structure:
+  - src/main.tsx             # Entry point
+  - src/App.tsx              # Root component
+  - src/index.css            # Global styles
+  - src/components/          # React components
+  - src/hooks/               # Custom hooks
+  - src/store/               # Zustand stores
+  - src/api/                 # API client
+  - src/types/               # TypeScript types
+  - vite.config.ts
+  - vitest.config.ts
+
+features:
+  - React 18 with hooks
+  - Vite for fast development
+  - React Query for data fetching
+  - Zustand for state management
+  - React Router for navigation
+  - Axios HTTP client
+  - Vitest testing
+  - Path aliases

@@ -1,20 +1,41 @@
 //! Project-related template generators
-//! v10.0.0: Templates loaded from .asimov/templates/ with embedded fallback (ADR-053)
+//! v10.3.0: Templates in cli/templates/ with .asimov/templates/ override (ADR-057)
 
 use super::ProjectType;
 use std::path::PathBuf;
 
-// ========== Embedded Fallback Templates (compile-time) ==========
-// These are only used if external files are missing
+// ========== Embedded Project Templates (compile-time from cli/templates/) ==========
+// Single source of truth: cli/templates/project/*.yaml
+// Runtime override: .asimov/templates/*.yaml takes priority
 
-const PROJECT_RUST_TEMPLATE: &str = include_str!("project-rust.yaml.tpl");
-const PROJECT_PYTHON_TEMPLATE: &str = include_str!("project-python.yaml.tpl");
-const PROJECT_NODE_TEMPLATE: &str = include_str!("project-node.yaml.tpl");
-const PROJECT_GO_TEMPLATE: &str = include_str!("project-go.yaml.tpl");
-const PROJECT_FLUTTER_TEMPLATE: &str = include_str!("project-flutter.yaml.tpl");
-const PROJECT_DOCS_TEMPLATE: &str = include_str!("project-docs.yaml.tpl");
-const PROJECT_GENERIC_TEMPLATE: &str = include_str!("project-generic.yaml.tpl");
-const PROJECT_ARCH_TEMPLATE: &str = include_str!("project-arch.yaml.tpl");
+const PROJECT_RUST_TEMPLATE: &str = include_str!("../../templates/project/rust.yaml");
+const PROJECT_PYTHON_TEMPLATE: &str = include_str!("../../templates/project/python.yaml");
+const PROJECT_NODE_TEMPLATE: &str = include_str!("../../templates/project/node.yaml");
+const PROJECT_GO_TEMPLATE: &str = include_str!("../../templates/project/go.yaml");
+const PROJECT_FLUTTER_TEMPLATE: &str = include_str!("../../templates/project/flutter.yaml");
+const PROJECT_DOCS_TEMPLATE: &str = include_str!("../../templates/project/docs.yaml");
+const PROJECT_GENERIC_TEMPLATE: &str = include_str!("../../templates/project/generic.yaml");
+const PROJECT_ARCH_TEMPLATE: &str = include_str!("../../templates/project/arch.yaml");
+
+// ========== Embedded Enterprise Templates (compile-time from cli/templates/) ==========
+// API templates
+const ENTERPRISE_API_RUST: &str = include_str!("../../templates/enterprise/api-rust.yaml");
+const ENTERPRISE_API_GO: &str = include_str!("../../templates/enterprise/api-go.yaml");
+const ENTERPRISE_API_FASTAPI: &str = include_str!("../../templates/enterprise/api-fastapi.yaml");
+const ENTERPRISE_API_NESTJS: &str = include_str!("../../templates/enterprise/api-nestjs.yaml");
+const ENTERPRISE_API_SPRING: &str = include_str!("../../templates/enterprise/api-spring.yaml");
+// Web templates
+const ENTERPRISE_WEB_NEXTJS: &str = include_str!("../../templates/enterprise/web-nextjs.yaml");
+const ENTERPRISE_WEB_REACT: &str = include_str!("../../templates/enterprise/web-react.yaml");
+const ENTERPRISE_WEB_VUE: &str = include_str!("../../templates/enterprise/web-vue.yaml");
+const ENTERPRISE_WEB_ANGULAR: &str = include_str!("../../templates/enterprise/web-angular.yaml");
+// Monorepo templates
+const ENTERPRISE_MONO_TURBO: &str = include_str!("../../templates/enterprise/mono-turbo.yaml");
+const ENTERPRISE_MONO_NX: &str = include_str!("../../templates/enterprise/mono-nx.yaml");
+const ENTERPRISE_MONO_PNPM: &str = include_str!("../../templates/enterprise/mono-pnpm.yaml");
+// Admin template
+const ENTERPRISE_ADMIN_DASHBOARD: &str =
+    include_str!("../../templates/enterprise/admin-dashboard.yaml");
 
 /// Get the templates directory path
 pub fn templates_dir() -> PathBuf {
@@ -58,6 +79,50 @@ fn get_template(project_type: ProjectType) -> String {
     }
 }
 
+/// All embedded enterprise template names
+const ENTERPRISE_TEMPLATES: &[&str] = &[
+    "api-rust",
+    "api-go",
+    "api-fastapi",
+    "api-nestjs",
+    "api-spring",
+    "web-nextjs",
+    "web-react",
+    "web-vue",
+    "web-angular",
+    "mono-turbo",
+    "mono-nx",
+    "mono-pnpm",
+    "admin-dashboard",
+];
+
+/// Get an enterprise template by name
+/// v10.3.0: Tries external file first, falls back to embedded
+pub fn get_enterprise_template(name: &str) -> Option<String> {
+    // Try external file first
+    if let Some(content) = try_read_template(name) {
+        return Some(content);
+    }
+
+    // Fall back to embedded template
+    match name {
+        "api-rust" => Some(ENTERPRISE_API_RUST.to_string()),
+        "api-go" => Some(ENTERPRISE_API_GO.to_string()),
+        "api-fastapi" => Some(ENTERPRISE_API_FASTAPI.to_string()),
+        "api-nestjs" => Some(ENTERPRISE_API_NESTJS.to_string()),
+        "api-spring" => Some(ENTERPRISE_API_SPRING.to_string()),
+        "web-nextjs" => Some(ENTERPRISE_WEB_NEXTJS.to_string()),
+        "web-react" => Some(ENTERPRISE_WEB_REACT.to_string()),
+        "web-vue" => Some(ENTERPRISE_WEB_VUE.to_string()),
+        "web-angular" => Some(ENTERPRISE_WEB_ANGULAR.to_string()),
+        "mono-turbo" => Some(ENTERPRISE_MONO_TURBO.to_string()),
+        "mono-nx" => Some(ENTERPRISE_MONO_NX.to_string()),
+        "mono-pnpm" => Some(ENTERPRISE_MONO_PNPM.to_string()),
+        "admin-dashboard" => Some(ENTERPRISE_ADMIN_DASHBOARD.to_string()),
+        _ => None,
+    }
+}
+
 /// List all available templates (external + embedded)
 pub fn list_templates() -> Vec<String> {
     let mut templates = vec![
@@ -67,7 +132,10 @@ pub fn list_templates() -> Vec<String> {
     .map(|s| s.to_string())
     .collect::<Vec<_>>();
 
-    // Add enterprise templates from .asimov/templates/ if they exist
+    // Add embedded enterprise templates
+    templates.extend(ENTERPRISE_TEMPLATES.iter().map(|s| s.to_string()));
+
+    // Add custom templates from .asimov/templates/ if they exist
     if let Ok(entries) = std::fs::read_dir(templates_dir()) {
         for entry in entries.flatten() {
             let name = entry.file_name();
@@ -251,5 +319,40 @@ mod tests {
                 pt
             );
         }
+    }
+
+    #[test]
+    fn test_enterprise_templates_valid_yaml() {
+        for name in ENTERPRISE_TEMPLATES {
+            let template = get_enterprise_template(name);
+            assert!(
+                template.is_some(),
+                "Enterprise template {} should exist",
+                name
+            );
+            let yaml: Result<serde_yaml_ng::Value, _> = serde_yaml_ng::from_str(&template.unwrap());
+            assert!(
+                yaml.is_ok(),
+                "Enterprise template {} should be valid YAML",
+                name
+            );
+        }
+    }
+
+    #[test]
+    fn test_list_templates_includes_enterprise() {
+        let templates = list_templates();
+        // Should include base project templates
+        assert!(templates.contains(&"rust".to_string()));
+        assert!(templates.contains(&"python".to_string()));
+        // Should include enterprise templates
+        assert!(templates.contains(&"api-rust".to_string()));
+        assert!(templates.contains(&"web-nextjs".to_string()));
+        assert!(templates.contains(&"admin-dashboard".to_string()));
+    }
+
+    #[test]
+    fn test_get_enterprise_template_unknown() {
+        assert!(get_enterprise_template("nonexistent").is_none());
     }
 }

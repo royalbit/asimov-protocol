@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "10.2.6"
+version = "10.3.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Autonomous AI <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "Ethical guardrails for Claude Code. Dynamic Swarm + HOTL beats Fixed Agentic (39x at 10 steps, 1502x at 20). Three Laws hardcoded."

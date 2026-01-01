@@ -1,0 +1,42 @@
+# Enterprise Template: api-fastapi
+# Migrated from asimov-plus v2.1.0
+# Python API with FastAPI, Pydantic, SQLAlchemy, and Alembic
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: backend-api
+  tagline: "FastAPI application with Clean Architecture"
+
+stack:
+  framework: "FastAPI + Pydantic + SQLAlchemy + Alembic"
+  language: "Python 3.11+"
+  database: "PostgreSQL"
+
+quality:
+  test: "pytest"
+  lint: "ruff check ."
+  build: "pip install -e ."
+
+structure:
+  - src/main.py          # Application entry point
+  - src/config.py        # Configuration
+  - src/api/routes.py    # API routes
+  - src/api/deps.py      # Dependencies
+  - src/models/          # SQLAlchemy models
+  - src/schemas/         # Pydantic schemas
+  - src/services/        # Business logic
+  - src/db/              # Database configuration
+  - alembic/             # Database migrations
+  - tests/               # Test suite
+  - Dockerfile           # Container
+  - docker-compose.yml   # Local development
+
+features:
+  - Async SQLAlchemy with PostgreSQL
+  - Pydantic v2 for validation
+  - Alembic migrations
+  - CORS middleware
+  - Health check endpoint
+  - Swagger/ReDoc API docs
+  - JWT authentication ready
+  - Clean architecture patterns

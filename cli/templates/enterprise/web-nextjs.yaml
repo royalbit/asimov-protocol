@@ -1,0 +1,41 @@
+# Enterprise Template: web-nextjs
+# Migrated from asimov-plus v2.1.0
+# Next.js 15 with React Server Components, Tailwind, and shadcn/ui
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: frontend
+  tagline: "Next.js 15 application with React Server Components"
+
+stack:
+  framework: "Next.js 15 + RSC + Tailwind + shadcn/ui"
+  language: "TypeScript"
+  runtime: "Node.js 20+"
+
+quality:
+  test: "npm test"
+  lint: "next lint"
+  build: "npm install && npm run build"
+
+structure:
+  - src/app/layout.tsx       # Root layout
+  - src/app/page.tsx         # Home page
+  - src/app/globals.css      # Global styles
+  - src/app/api/             # API routes
+  - src/components/          # React components
+  - src/components/ui/       # shadcn/ui components
+  - src/lib/utils.ts         # Utilities
+  - src/types/               # TypeScript types
+  - tailwind.config.ts
+  - components.json          # shadcn/ui config
+  - Dockerfile
+
+features:
+  - React 19 with Server Components
+  - App Router with typed routes
+  - Tailwind CSS with dark mode
+  - shadcn/ui component library
+  - API routes
+  - Loading and error states
+  - Jest testing
+  - Docker support

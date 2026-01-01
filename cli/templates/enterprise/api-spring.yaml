@@ -1,0 +1,43 @@
+# Enterprise Template: api-spring
+# Migrated from asimov-plus v2.1.0
+# Java API with Spring Boot, JPA, OpenAPI, and Security
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: backend-api
+  tagline: "Spring Boot API with Clean Architecture"
+
+stack:
+  framework: "Spring Boot 3.2 + JPA + OpenAPI + Security"
+  language: "Java 21"
+  database: "PostgreSQL"
+  build_tool: "Maven"
+
+quality:
+  test: "./mvnw test"
+  lint: "# Use IDE or Checkstyle"
+  build: "./mvnw package -DskipTests"
+
+structure:
+  - src/main/java/com/{package}/Application.java
+  - src/main/java/com/{package}/config/
+  - src/main/java/com/{package}/controller/
+  - src/main/java/com/{package}/entity/
+  - src/main/java/com/{package}/repository/
+  - src/main/java/com/{package}/service/
+  - src/main/java/com/{package}/dto/
+  - src/main/resources/application.yml
+  - src/test/java/
+  - pom.xml
+  - Dockerfile
+  - docker-compose.yml
+
+features:
+  - Spring Data JPA with PostgreSQL
+  - SpringDoc OpenAPI (Swagger UI)
+  - Spring Security configuration
+  - Bean validation
+  - Records for DTOs
+  - MockMvc integration tests
+  - Layered architecture
+  - Docker support

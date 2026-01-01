@@ -3,17 +3,10 @@
 # WHAT to build - milestones only
 # See: CHANGELOG.md for release history
 
-# current: (none - see CHANGELOG.md for v10.2.5)
+# current: (none - see CHANGELOG.md for v10.3.0)
 
 next:
-  version: "10.3.0"
-  summary: "External Project Templates (ADR-057)"
-  tasks:
-    - "Move templates to cli/templates/ (same pattern as protocols)"
-    - "Embed 9 project templates + 21 enterprise templates"
-    - "Runtime override via .asimov/templates/"
-    - "Complete ADR-034: deliverables_template + auto-inheritance"
-    - "Surface templates in warmup output"
-
-backlog:
+  - "ADR-034 auto-inheritance: Support ~inherit~ marker in roadmap deliverables"
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
+
+backlog: []

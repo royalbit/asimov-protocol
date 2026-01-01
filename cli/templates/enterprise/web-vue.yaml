@@ -1,0 +1,39 @@
+# Enterprise Template: web-vue
+# Migrated from asimov-plus v2.1.0
+# Vue 3 with Nuxt, Pinia, and VueUse
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: frontend
+  tagline: "Vue 3 application with Nuxt"
+
+stack:
+  framework: "Vue 3 + Nuxt + Pinia + VueUse"
+  language: "TypeScript"
+  runtime: "Node.js 20+"
+
+quality:
+  test: "npm test"
+  lint: "eslint ."
+  build: "npm install && npm run build"
+
+structure:
+  - app.vue                  # App entry
+  - pages/                   # Route pages
+  - layouts/                 # Page layouts
+  - components/              # Vue components
+  - composables/             # Composition functions
+  - stores/                  # Pinia stores
+  - server/api/              # Server API routes
+  - types/                   # TypeScript types
+  - nuxt.config.ts
+
+features:
+  - Vue 3 Composition API
+  - Nuxt 3 with SSR/SSG
+  - Pinia state management
+  - VueUse composables
+  - Auto-imports
+  - File-based routing
+  - Server API routes
+  - Vitest testing

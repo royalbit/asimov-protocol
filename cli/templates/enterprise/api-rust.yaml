@@ -1,0 +1,43 @@
+# Enterprise Template: api-rust
+# Migrated from asimov-plus v2.1.0
+# Rust API with Axum, SQLx, Tower, and OpenAPI
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: backend-api
+  tagline: "Rust API with Axum and Clean Architecture"
+
+stack:
+  framework: "Axum + SQLx + Tower + OpenAPI"
+  language: "Rust"
+  database: "PostgreSQL"
+
+quality:
+  test: "cargo test"
+  lint: "cargo clippy"
+  build: "cargo build --release"
+
+structure:
+  - src/main.rs              # Entry point
+  - src/lib.rs               # Library root
+  - src/config.rs            # Configuration
+  - src/error.rs             # Error handling
+  - src/routes/              # HTTP handlers
+  - src/models/              # Domain models
+  - src/services/            # Business logic
+  - src/db/                  # Database layer
+  - migrations/              # SQLx migrations
+  - tests/                   # Integration tests
+  - Cargo.toml
+  - Dockerfile
+  - docker-compose.yml
+
+features:
+  - Axum web framework
+  - SQLx async database
+  - Tower middleware (tracing, CORS)
+  - utoipa OpenAPI/Swagger
+  - thiserror for errors
+  - Async PostgreSQL
+  - Type-safe queries
+  - Docker support

@@ -79,9 +79,13 @@ pub use templates::{
     // v8.1.0: Project type detection (ADR-032)
     detect_project_type,
     ethics_template,
+    // v10.3.0: Enterprise templates (ADR-057)
+    get_enterprise_template,
     git_precommit_hook,
     green_template,
     hook_installer_template,
+    // v10.3.0: List all templates (ADR-057)
+    list_templates,
     precommit_hook_template,
     // v8.1.0: Project context file (ADR-032)
     project_template,

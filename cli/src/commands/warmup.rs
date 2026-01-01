@@ -1,8 +1,8 @@
 //! Warmup command implementation
 
 use crate::{
-    check_for_update, compile_protocols_for_type, resolve_protocol_dir, to_minified_json_for_type,
-    ProjectType,
+    check_for_update, compile_protocols_for_type, list_templates, resolve_protocol_dir,
+    to_minified_json_for_type, ProjectType,
 };
 use std::path::Path;
 
@@ -38,6 +38,8 @@ pub struct WarmupResult {
     pub roadmap_yaml: Option<serde_yaml_ng::Value>,
     // v9.17.0: Tool detection
     pub tools_available: Vec<ToolInfo>,
+    // v10.3.0: Available templates (ADR-057)
+    pub templates_available: Vec<String>,
 }
 
 /// Detect CLI tools available in PATH
@@ -100,6 +102,8 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         roadmap_yaml: None,
         // v9.17.0: Tool detection
         tools_available: Vec::new(),
+        // v10.3.0: Available templates
+        templates_available: Vec::new(),
     };
 
     if check_updates {
@@ -229,6 +233,9 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
     // v9.17.0: Detect available CLI tools
     result.tools_available = detect_tools();
 
+    // v10.3.0: List available templates (ADR-057)
+    result.templates_available = list_templates();
+
     result.success = true;
     result
 }
@@ -319,6 +326,8 @@ mod tests {
             roadmap_yaml: None,
             // v9.17.0: Tool detection
             tools_available: vec![],
+            // v10.3.0: Available templates
+            templates_available: vec![],
         };
         assert!(r.success);
         assert_eq!(r.project_name.unwrap(), "Test");
