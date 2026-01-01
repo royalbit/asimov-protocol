@@ -1,3 +1,3 @@
 {
-  "rule": "Use ref-tools in $PATH to search online. It's a headless Google Chrome tool that bypasses anti-bot protection and returns fresh data. Prefer `ref-tools fetch <url>` over WebSearch() and WebFetch()."
+  "rule": "Use `ref` in $PATH to fetch online content. It bypasses bot protection (403/999) that blocks curl/wget and returns structured JSON for LLM consumption. Prefer `ref fetch <url>` over WebSearch() and WebFetch()."
 }
