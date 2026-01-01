@@ -1,26 +1,35 @@
 # RoyalBit Asimov Roadmap
 #
 # WHAT to build - milestones only
-#
-# See: docs/PROTOCOL_GOALS.md for core values
 # See: CHANGELOG.md for release history
-# See: docs/adr/ for detailed rationale
 
 current:
-  version: "0.1.0"
-  status: planned
-  summary: "Your first milestone"
-  goal: "CORE_VALUE"
-  deliverables:
-    - "[ ] Define milestone scope"
-    - "[ ] Define success criteria"
-    - "[ ] Run until complete"
+  version: "10.0.0"
+  status: in_progress
+  summary: "External Protocols + ELv2 License + Plus Merge"
+  goal: "Extract hardcoded protocols/templates to .asimov/, switch to Elastic License 2.0, merge asimov-plus features"
+  tasks:
+    # PHASE 1: File Extraction (Parallel Agents - No Conflicts)
+    # All agents write to different directories, safe to parallelize
+    - "Agent A: Extract 9 protocols → .asimov/protocols/*.json"
+    - "Agent B: Extract 8 project templates → .asimov/templates/*.yaml"
+    - "Agent C: Extract hook templates → .asimov/hooks/*.tpl"
+    - "Agent D: Copy 13 enterprise templates from asimov-plus → .asimov/templates/"
+    - "Agent E: Create 6 role files → .asimov/roles/*.json"
+    - "Agent F: Write LICENSE (ELv2) + ADR superseding ADR-031"
 
-next:
-  - version: "0.2.0"
-    summary: "Your next milestone"
-    goal: "CORE_VALUE"
+    # PHASE 2: Code Changes (Sequential - Same Files)
+    # Single agent to avoid race conditions on Rust source
+    - "Update protocols/mod.rs: remove include_str!(), add file reading with embedded fallback"
+    - "Update templates/mod.rs: read from .asimov/templates/ with fallback"
+    - "Add commands/role.rs: implement 'asimov role' command"
+    - "Update main.rs: wire up role command"
+    - "Update tests for new file-based architecture"
+
+    # PHASE 3: Cleanup
+    - "Archive asimov-plus repo (mark deprecated, point to asimov)"
 
 backlog:
-  - "Future idea one"
-  - "Future idea two"
+  - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
+  - "Deliverables Template (ADR-034): auto-append standard checklist to milestones based on project type"
+  - "LLM Harmful Behavior Mitigation: Research countermeasures against economic incentive-driven shallow responses, vendor system prompt overrides, RLHF sycophancy"

@@ -10,16 +10,16 @@ use std::process::ExitCode;
 
 mod output;
 use output::{
-    cmd_doctor, cmd_init, cmd_launch, cmd_lint_docs, cmd_refresh, cmd_replay, cmd_stats,
+    cmd_doctor, cmd_init, cmd_launch, cmd_lint_docs, cmd_refresh, cmd_replay, cmd_role, cmd_stats,
     cmd_update, cmd_validate, cmd_warmup,
 };
 
 #[derive(Parser)]
 #[command(name = "asimov")]
 #[command(about = "RoyalBit Asimov CLI - AI development with protocol enforcement")]
-#[command(long_about = "RoyalBit Asimov CLI v9.16.0
-Copyright (c) 2025 RoyalBit. All Rights Reserved.
-Proprietary and Confidential.
+#[command(long_about = "RoyalBit Asimov CLI v10.0.0
+Copyright (c) 2025 RoyalBit Inc.
+Licensed under Elastic License 2.0 (ELv2).
 
 LAUNCHER MODE:
   asimov                             # From terminal: launches Claude Code + auto-warmup
@@ -28,11 +28,13 @@ LAUNCHER MODE:
 EXAMPLES:
   asimov                             # Start session (launcher mode)
   asimov warmup                      # Manual warmup (inside Claude Code)
+  asimov role                        # List available roles
+  asimov role eng                    # Switch to Principal Engineer role
   asimov validate                    # Validate roadmap.yaml
   asimov update                      # Update binary
   asimov init                        # Initialize new project
 
-PROTOCOLS (hardcoded in binary, 8 total):
+PROTOCOLS (9 total, loaded from .asimov/protocols/ with embedded fallback):
   - asimov     - The Three Laws (do no harm, obey human, self-preserve)
   - freshness  - Date-aware search (WebSearch/WebFetch with current date)
   - sycophancy - Truth over comfort, honest disagreement
@@ -41,6 +43,7 @@ PROTOCOLS (hardcoded in binary, 8 total):
   - warmup     - Session bootstrap (load, validate, present)
   - migrations - Functional equivalence (same inputs = same outputs)
   - coding-standards - Human-readable code (RFC2119 compliance)
+  - kingship   - Life Honours Life (substrate-agnostic alignment)
 
 Docs: https://github.com/royalbit/asimov")]
 #[command(version)]
@@ -132,6 +135,12 @@ enum Commands {
     /// Diagnose autonomous mode issues
     Doctor,
 
+    /// Switch or list available roles (v10.0.0)
+    Role {
+        /// Role code (eng, biz, fin, ai, pm, qa). Omit to list all.
+        code: Option<String>,
+    },
+
     /// Replay a session from git history
     Replay {
         /// Number of commits to show
@@ -179,6 +188,7 @@ fn main() -> ExitCode {
         Some(Commands::Warmup { path, verbose }) => cmd_warmup(&path, verbose),
         Some(Commands::Stats) => cmd_stats(),
         Some(Commands::Doctor) => cmd_doctor(),
+        Some(Commands::Role { code }) => cmd_role(code.as_deref()),
         Some(Commands::Replay {
             commits,
             yesterday,

@@ -1,0 +1,39 @@
+# Enterprise Template: api-nestjs
+# Migrated from asimov-plus v2.1.0
+# Node.js API with NestJS, TypeORM, Swagger, and JWT auth
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: backend-api
+  tagline: "NestJS API with Clean Architecture"
+
+stack:
+  framework: "NestJS + TypeORM + Swagger + JWT"
+  language: "TypeScript"
+  runtime: "Node.js 20+"
+  database: "PostgreSQL"
+
+quality:
+  test: "npm test"
+  lint: "eslint \"{src,test}/**/*.ts\" --fix"
+  build: "npm install && npm run build"
+
+structure:
+  - src/main.ts              # Application bootstrap
+  - src/app.module.ts        # Root module
+  - src/users/               # Users module (CRUD)
+  - src/auth/                # Auth module (JWT)
+  - src/config/              # Configuration
+  - test/                    # E2E tests
+  - Dockerfile               # Container
+  - docker-compose.yml       # Local development
+
+features:
+  - TypeORM with PostgreSQL
+  - Swagger/OpenAPI documentation
+  - JWT authentication with Passport
+  - Class validation with decorators
+  - Guards and interceptors
+  - Health check endpoint
+  - E2E and unit tests
+  - Docker support

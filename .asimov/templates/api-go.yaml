@@ -1,0 +1,42 @@
+# Enterprise Template: api-go
+# Migrated from asimov-plus v2.1.0
+# Go API with Gin, Clean Architecture, and GORM
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: backend-api
+  tagline: "Go API with Clean Architecture"
+
+stack:
+  framework: "Gin + Clean Architecture + GORM"
+  language: "Go 1.22+"
+  database: "PostgreSQL"
+
+quality:
+  test: "go test ./..."
+  lint: "golangci-lint run"
+  build: "go build -o bin/api ./cmd/api"
+
+structure:
+  - cmd/api/main.go              # Entry point
+  - internal/config/             # Configuration
+  - internal/domain/             # Domain models
+  - internal/repository/         # Data access layer
+  - internal/service/            # Business logic
+  - internal/handler/            # HTTP handlers
+  - internal/router/             # Route definitions
+  - internal/database/           # Database setup
+  - internal/dto/                # Data transfer objects
+  - Makefile                     # Build commands
+  - Dockerfile
+  - docker-compose.yml
+
+features:
+  - Gin web framework
+  - GORM ORM with auto-migrate
+  - Clean architecture layers
+  - Interface-based dependencies
+  - Testify for testing
+  - Environment configuration
+  - Health check endpoint
+  - Docker support

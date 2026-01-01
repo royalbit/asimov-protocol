@@ -5,8 +5,8 @@
 use colored::Colorize;
 use royalbit_asimov::commands::{
     check_launch_conditions, run_doctor, run_init, run_lint_docs, run_refresh_with_options,
-    run_replay, run_stats, run_update, run_validate, run_warmup, LaunchResult, RefreshOptions,
-    UpdateResult,
+    run_replay, run_role, run_stats, run_update, run_validate, run_warmup, LaunchResult,
+    RefreshOptions, RoleError, RoleResult, UpdateResult,
 };
 use std::process::ExitCode;
 
@@ -638,6 +638,62 @@ pub(crate) fn cmd_doctor() -> ExitCode {
         ExitCode::SUCCESS
     } else {
         ExitCode::FAILURE
+    }
+}
+
+/// Role switching command (v10.0.0)
+#[cfg_attr(feature = "coverage", coverage(off))]
+pub(crate) fn cmd_role(role_code: Option<&str>) -> ExitCode {
+    match run_role(role_code) {
+        Ok(RoleResult::List(roles)) => {
+            println!("{}", "RoyalBit Asimov - ROLES".bold().green());
+            println!();
+            println!("Available roles:");
+            println!();
+            for role in &roles {
+                println!("  {} - {}", role.code.bright_cyan().bold(), role.name);
+                println!("      {}", role.description.dimmed());
+            }
+            println!();
+            println!("Usage: {} <code>", "asimov role".bold());
+            ExitCode::SUCCESS
+        }
+        Ok(RoleResult::Selected(role)) => {
+            println!("{}", "RoyalBit Asimov - ROLE ACTIVE".bold().green());
+            println!();
+            println!("  Role: {} ({})", role.name.bright_cyan().bold(), role.code);
+            println!("  {}", role.description);
+            println!();
+            println!("{}", "FOCUS AREAS:".bold());
+            for area in &role.focus {
+                println!("  • {}", area.bright_green());
+            }
+            println!();
+            println!("{}", "PROMPT PREFIX:".bold());
+            println!("  {}", role.prompt_prefix.bright_yellow());
+            println!();
+            if !role.avoid.is_empty() {
+                println!("{}", "AVOID (defer to others):".bold());
+                for topic in &role.avoid {
+                    println!("  • {}", topic.dimmed());
+                }
+                println!();
+            }
+            ExitCode::SUCCESS
+        }
+        Err(RoleError::NoRolesFound) => {
+            eprintln!("{} No roles found", "Error:".bold().red());
+            eprintln!("  Create role files in .asimov/roles/*.json");
+            eprintln!();
+            eprintln!("Example role JSON:");
+            eprintln!(r#"  {{"name": "Engineer", "code": "eng", ...}}"#);
+            ExitCode::FAILURE
+        }
+        Err(RoleError::RoleNotFound(code)) => {
+            eprintln!("{} Role '{}' not found", "Error:".bold().red(), code);
+            eprintln!("  Use {} to list available roles", "asimov role".bold());
+            ExitCode::FAILURE
+        }
     }
 }
 

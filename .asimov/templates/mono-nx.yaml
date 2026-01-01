@@ -1,0 +1,37 @@
+# Enterprise Template: mono-nx
+# Migrated from asimov-plus v2.1.0
+# Nx monorepo with React/Next.js, NestJS, and shared types
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: monorepo
+  tagline: "Nx monorepo with full-stack apps"
+
+stack:
+  framework: "Nx + React/Next + NestJS + shared"
+  language: "TypeScript"
+  package_manager: "npm workspaces"
+
+quality:
+  test: "npx nx test"
+  lint: "npx nx lint"
+  build: "npm install && npx nx build"
+
+structure:
+  - package.json             # Root package
+  - nx.json                  # Nx configuration
+  - tsconfig.base.json       # Base TypeScript config
+  - apps/web/                # Next.js frontend
+  - apps/api/                # NestJS API
+  - libs/ui/                 # Shared React components
+  - libs/types/              # Shared TypeScript types
+
+features:
+  - Nx computation caching
+  - Dependency graph visualization
+  - Affected commands
+  - Task orchestration
+  - Code generators
+  - Shared component library
+  - Path aliases for imports
+  - Jest testing integration

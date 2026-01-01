@@ -1,0 +1,9 @@
+{
+  "on_start": [
+    "load_protocols",
+    "load_project",
+    "validate",
+    "read_roadmap",
+    "present_milestone"
+  ]
+}

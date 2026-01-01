@@ -4,13 +4,32 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "9.19.0"
+  version: "10.0.0"
   status: in_progress
-  summary: "LLM Harmful Behavior Mitigation + Build Fixes"
-  goal: "Research countermeasures against economic incentive-driven shallow responses, vendor system prompt overrides, RLHF sycophancy"
+  summary: "External Protocols + ELv2 License + Plus Merge"
+  goal: "Extract hardcoded protocols/templates to .asimov/, switch to Elastic License 2.0, merge asimov-plus features"
   tasks:
-    - "[DONE] Switch Linux builds from glibc to musl for truly static, portable binaries"
+    # PHASE 1: File Extraction (Parallel Agents - No Conflicts)
+    # All agents write to different directories, safe to parallelize
+    - "Agent A: Extract 9 protocols → .asimov/protocols/*.json"
+    - "Agent B: Extract 8 project templates → .asimov/templates/*.yaml"
+    - "Agent C: Extract hook templates → .asimov/hooks/*.tpl"
+    - "Agent D: Copy 13 enterprise templates from asimov-plus → .asimov/templates/"
+    - "Agent E: Create 6 role files → .asimov/roles/*.json"
+    - "Agent F: Write LICENSE (ELv2) + ADR superseding ADR-031"
+
+    # PHASE 2: Code Changes (Sequential - Same Files)
+    # Single agent to avoid race conditions on Rust source
+    - "Update protocols/mod.rs: remove include_str!(), add file reading with embedded fallback"
+    - "Update templates/mod.rs: read from .asimov/templates/ with fallback"
+    - "Add commands/role.rs: implement 'asimov role' command"
+    - "Update main.rs: wire up role command"
+    - "Update tests for new file-based architecture"
+
+    # PHASE 3: Cleanup
+    - "Archive asimov-plus repo (mark deprecated, point to asimov)"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
   - "Deliverables Template (ADR-034): auto-append standard checklist to milestones based on project type"
+  - "LLM Harmful Behavior Mitigation: Research countermeasures against economic incentive-driven shallow responses, vendor system prompt overrides, RLHF sycophancy"

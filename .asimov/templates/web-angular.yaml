@@ -1,0 +1,40 @@
+# Enterprise Template: web-angular
+# Migrated from asimov-plus v2.1.0
+# Angular 18 with NgRx and Material
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: frontend
+  tagline: "Angular application with NgRx and Material"
+
+stack:
+  framework: "Angular 18 + NgRx + Material"
+  language: "TypeScript"
+  runtime: "Node.js 20+"
+
+quality:
+  test: "npm test -- --no-watch --no-progress --browsers=ChromeHeadless"
+  lint: "ng lint"
+  build: "npm install && npm run build"
+
+structure:
+  - src/main.ts                        # Bootstrap
+  - src/app/app.component.ts           # Root component
+  - src/app/app.config.ts              # App configuration
+  - src/app/app.routes.ts              # Route definitions
+  - src/app/components/                # Shared components
+  - src/app/pages/                     # Page components
+  - src/app/store/                     # NgRx store
+  - src/app/services/                  # Services
+  - angular.json
+  - karma.conf.js
+
+features:
+  - Angular 18 standalone components
+  - NgRx for state management
+  - Angular Material UI
+  - Reactive forms
+  - Lazy loading routes
+  - Jasmine/Karma testing
+  - Strict TypeScript
+  - SCSS styling

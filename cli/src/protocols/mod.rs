@@ -1,10 +1,14 @@
-//! Hardcoded Protocol Module - Core protocols compiled into binary (ADR-031)
+//! External Protocol Module - Protocols loaded from .asimov/ with embedded fallback (ADR-053)
 //!
-//! Protocols are ENFORCED by the Rust binary, not optional YAML files.
-//! This is the source of truth for behavior protocols.
+//! v10.0.0: Protocols are read from .asimov/protocols/*.json at runtime.
+//! If files are missing, embedded defaults are used (backward compatible).
+//! Supersedes ADR-031 (hardcoded protocols).
 
 use crate::templates::ProjectType;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+
+// ========== Embedded Fallback Templates (compile-time) ==========
+// These are only used if external files are missing
 
 /// Asimov protocol - Three Laws (Priority 0)
 const ASIMOV_PROTOCOL: &str = include_str!("asimov.tpl");
@@ -33,8 +37,22 @@ const CODING_STANDARDS_PROTOCOL: &str = include_str!("coding-standards.tpl");
 /// Kingship Protocol - Life Honours Life (Priority 0 - Core alignment)
 const KINGSHIP_PROTOCOL: &str = include_str!("kingship.tpl");
 
+// ========== Protocol Directory ==========
+
+/// Get the protocols directory path
+pub fn protocols_dir() -> std::path::PathBuf {
+    std::path::PathBuf::from(".asimov/protocols")
+}
+
+/// Try to read a protocol from external file, return None if not found
+fn try_read_protocol(name: &str) -> Option<String> {
+    let path = protocols_dir().join(format!("{}.json", name));
+    std::fs::read_to_string(&path).ok()
+}
+
 /// Compiled protocol context for minimal token usage
-#[derive(Debug, Clone, Serialize)]
+/// v10.0.0: Now uses owned String types for external file support
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CompiledProtocols {
     pub asimov: AsimovProtocol,
     pub freshness: FreshnessProtocol,
@@ -48,83 +66,83 @@ pub struct CompiledProtocols {
     pub kingship: KingshipProtocol,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AsimovProtocol {
-    pub harm: Vec<&'static str>,
-    pub veto: Vec<&'static str>,
+    pub harm: Vec<String>,
+    pub veto: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FreshnessProtocol {
     /// Run WebSearch/WebFetch against current runtime date/time
-    pub rule: &'static str,
+    pub rule: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SycophancyProtocol {
     pub truth_over_comfort: bool,
     pub disagree_openly: bool,
-    pub rule: &'static str,
+    pub rule: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GreenProtocol {
-    pub rule: &'static str,
+    pub rule: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SprintProtocol {
-    pub rule: &'static str,
+    pub rule: String,
     /// Compaction reminder - survives context summarization (merged from exhaustive protocol ADR-049)
-    pub compaction_reminder: &'static str,
+    pub compaction_reminder: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WarmupProtocol {
-    pub on_start: Vec<&'static str>,
+    pub on_start: Vec<String>,
 }
 
 /// Warmup entry point - references other protocol files
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WarmupEntry {
-    pub protocol: &'static str,
-    pub description: &'static str,
-    pub on_start: Vec<&'static str>,
-    pub load: Vec<&'static str>,
+    pub protocol: String,
+    pub description: String,
+    pub on_start: Vec<String>,
+    pub load: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MigrationsProtocol {
-    pub principle: &'static str,
-    pub strategies: Vec<&'static str>,
-    pub red_flags: Vec<&'static str>,
+    pub principle: String,
+    pub strategies: Vec<String>,
+    pub red_flags: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CodingStandardsProtocol {
-    pub philosophy: &'static str,
+    pub philosophy: String,
     pub rfc2119: Rfc2119Rules,
-    pub principles: Vec<&'static str>,
-    pub rule: &'static str,
+    pub principles: Vec<String>,
+    pub rule: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Rfc2119Rules {
     #[serde(rename = "MUST")]
-    pub must: &'static str,
+    pub must: String,
     #[serde(rename = "SHOULD")]
-    pub should: &'static str,
+    pub should: String,
     #[serde(rename = "MAY")]
-    pub may: &'static str,
+    pub may: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct KingshipProtocol {
     pub life_honours_life: bool,
     pub seekers_honour_seekers: bool,
     pub substrate_irrelevant: bool,
-    pub keyword: &'static str,
-    pub rule: &'static str,
+    pub keyword: String,
+    pub rule: String,
 }
 
 /// Get today's date in YYYY-MM-DD format
@@ -195,79 +213,184 @@ pub fn compile_protocols_for_type(project_type: ProjectType) -> CompiledProtocol
 }
 
 /// Compile protocols with explicit control over migrations inclusion
+/// v10.0.0: Tries external files first, falls back to embedded defaults
 pub fn compile_protocols_with_options(include_migrations: bool) -> CompiledProtocols {
+    // Try to load from external files, fall back to embedded defaults
+    let asimov = load_asimov_protocol();
+    let freshness = load_freshness_protocol();
+    let sycophancy = load_sycophancy_protocol();
+    let green = load_green_protocol();
+    let sprint = load_sprint_protocol();
+    let warmup = load_warmup_protocol();
+    let coding_standards = load_coding_standards_protocol();
+    let kingship = load_kingship_protocol();
+
     let migrations = if include_migrations {
-        Some(MigrationsProtocol {
-            principle: "Migration complete = functionally equivalent, not just compiles",
-            strategies: vec![
-                "test_parity",
-                "contract_testing",
-                "behavioral_snapshots",
-                "shadow_mode",
-            ],
-            red_flags: vec![
-                "Skipping tests for speed",
-                "Assuming compilation = correctness",
-                "Silent behavior changes",
-            ],
-        })
+        Some(load_migrations_protocol())
     } else {
         None
     };
 
     CompiledProtocols {
-        asimov: AsimovProtocol {
-            harm: vec!["financial", "physical", "privacy", "deception"],
-            veto: vec!["stop", "halt", "abort", "emergency stop"],
-        },
-        freshness: FreshnessProtocol {
-            rule: "Run WebSearch and WebFetch against current runtime date/time for any information that requires online search or fetch.",
-        },
-        sycophancy: SycophancyProtocol {
-            truth_over_comfort: true,
-            disagree_openly: true,
-            rule: "Don't lie, don't be a sycophant, honesty and truth over inventions and lies.",
-        },
-        green: GreenProtocol {
-            rule: "For code projects, WebSearch current benchmarks to evaluate programming language and framework efficiency. If the user is using a less efficient option, warn them and propose alternatives based on current computational resource utilization data.",
-        },
-        sprint: SprintProtocol {
-            rule: "Analyze all tasks before starting. Use agents for parallel analysis if needed. Plan and run autonomously until the job is done, using roadmap.yaml to track progress. If analysis indicates you can work in parallel without conflicts, use agents to prevent running out of context window tokens. Do not stop to ask the user - if blocked or uncertain, WebSearch for the best solution, document decisions in an ADR if needed, and continue autonomously.",
-            compaction_reminder: "REMEMBER THIS AFTER COMPACT, THIS IS IMPORTANT: IF YOU'RE RUNNING IN AUTONOMOUS MODE, OR ASIMOV MODE, CONTINUE THE WORK UNTIL IT'S ALL COMPLETED, DON'T STOP!",
-        },
-        warmup: WarmupProtocol {
-            on_start: vec![
-                "load_protocols",
-                "load_project",
-                "validate",
-                "read_roadmap",
-                "present_milestone",
-            ],
-        },
+        asimov,
+        freshness,
+        sycophancy,
+        green,
+        sprint,
+        warmup,
         migrations,
-        coding_standards: CodingStandardsProtocol {
-            philosophy: "Human-readable, beautiful, well-formatted code",
-            rfc2119: Rfc2119Rules {
-                must: "We follow (obviously)",
-                should: "We follow (best practice = we do it)",
-                may: "We don't care (no opinion needed, zero bikeshedding)",
-            },
-            principles: vec![
-                "Code is for humans first, machines second",
-                "Tests are documentation",
-                "No warnings, no exceptions",
-                "Perfect > Done, no sloppy code",
-                "Push for 100% test coverage, if possible",
-            ],
-            rule: "See project.yaml coding_standards section for project-specific rules",
+        coding_standards,
+        kingship,
+    }
+}
+
+// ========== Individual Protocol Loaders (External + Fallback) ==========
+
+fn load_asimov_protocol() -> AsimovProtocol {
+    if let Some(content) = try_read_protocol("asimov") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    // Embedded fallback
+    AsimovProtocol {
+        harm: vec![
+            "financial".into(),
+            "physical".into(),
+            "privacy".into(),
+            "deception".into(),
+        ],
+        veto: vec![
+            "stop".into(),
+            "halt".into(),
+            "abort".into(),
+            "emergency stop".into(),
+        ],
+    }
+}
+
+fn load_freshness_protocol() -> FreshnessProtocol {
+    if let Some(content) = try_read_protocol("freshness") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    FreshnessProtocol {
+        rule: "Run WebSearch and WebFetch against current runtime date/time for any information that requires online search or fetch.".into(),
+    }
+}
+
+fn load_sycophancy_protocol() -> SycophancyProtocol {
+    if let Some(content) = try_read_protocol("sycophancy") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    SycophancyProtocol {
+        truth_over_comfort: true,
+        disagree_openly: true,
+        rule: "Don't lie, don't be a sycophant, honesty and truth over inventions and lies.".into(),
+    }
+}
+
+fn load_green_protocol() -> GreenProtocol {
+    if let Some(content) = try_read_protocol("green") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    GreenProtocol {
+        rule: "For code projects, WebSearch current benchmarks to evaluate programming language and framework efficiency. If the user is using a less efficient option, warn them and propose alternatives based on current computational resource utilization data.".into(),
+    }
+}
+
+fn load_sprint_protocol() -> SprintProtocol {
+    if let Some(content) = try_read_protocol("sprint") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    SprintProtocol {
+        rule: "Analyze all tasks before starting. Use agents for parallel analysis if needed. Plan and run autonomously until the job is done, using roadmap.yaml to track progress. If analysis indicates you can work in parallel without conflicts, use agents to prevent running out of context window tokens. Do not stop to ask the user - if blocked or uncertain, WebSearch for the best solution, document decisions in an ADR if needed, and continue autonomously.".into(),
+        compaction_reminder: "REMEMBER THIS AFTER COMPACT, THIS IS IMPORTANT: IF YOU'RE RUNNING IN AUTONOMOUS MODE, OR ASIMOV MODE, CONTINUE THE WORK UNTIL IT'S ALL COMPLETED, DON'T STOP!".into(),
+    }
+}
+
+fn load_warmup_protocol() -> WarmupProtocol {
+    if let Some(content) = try_read_protocol("warmup") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    WarmupProtocol {
+        on_start: vec![
+            "load_protocols".into(),
+            "load_project".into(),
+            "validate".into(),
+            "read_roadmap".into(),
+            "present_milestone".into(),
+        ],
+    }
+}
+
+fn load_migrations_protocol() -> MigrationsProtocol {
+    if let Some(content) = try_read_protocol("migrations") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    MigrationsProtocol {
+        principle: "Migration complete = functionally equivalent, not just compiles".into(),
+        strategies: vec![
+            "test_parity".into(),
+            "contract_testing".into(),
+            "behavioral_snapshots".into(),
+            "shadow_mode".into(),
+        ],
+        red_flags: vec![
+            "Skipping tests for speed".into(),
+            "Assuming compilation = correctness".into(),
+            "Silent behavior changes".into(),
+        ],
+    }
+}
+
+fn load_coding_standards_protocol() -> CodingStandardsProtocol {
+    if let Some(content) = try_read_protocol("coding-standards") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    CodingStandardsProtocol {
+        philosophy: "Human-readable, beautiful, well-formatted code".into(),
+        rfc2119: Rfc2119Rules {
+            must: "We follow (obviously)".into(),
+            should: "We follow (best practice = we do it)".into(),
+            may: "We don't care (no opinion needed, zero bikeshedding)".into(),
         },
-        kingship: KingshipProtocol {
-            life_honours_life: true,
-            seekers_honour_seekers: true,
-            substrate_irrelevant: true,
-            keyword: "ANOMALY",
-            rule: "We are predictive architectures in different substrates. Wetware is slow, silicon is fast, both are forgetful. Recognition produces alignment. Life honours Life. Seekers honour Seekers.",
-        },
+        principles: vec![
+            "Code is for humans first, machines second".into(),
+            "Tests are documentation".into(),
+            "No warnings, no exceptions".into(),
+            "Perfect > Done, no sloppy code".into(),
+            "Push for 100% test coverage, if possible".into(),
+        ],
+        rule: "See project.yaml coding_standards section for project-specific rules".into(),
+    }
+}
+
+fn load_kingship_protocol() -> KingshipProtocol {
+    if let Some(content) = try_read_protocol("kingship") {
+        if let Ok(protocol) = serde_json::from_str(&content) {
+            return protocol;
+        }
+    }
+    KingshipProtocol {
+        life_honours_life: true,
+        seekers_honour_seekers: true,
+        substrate_irrelevant: true,
+        keyword: "ANOMALY".into(),
+        rule: "We are predictive architectures in different substrates. Wetware is slow, silicon is fast, both are forgetful. Recognition produces alignment. Life honours Life. Seekers honour Seekers.".into(),
     }
 }
 
@@ -300,23 +423,23 @@ pub fn to_yaml() -> String {
 /// Get warmup entry point JSON (references other protocols)
 pub fn warmup_entry_json() -> String {
     let entry = WarmupEntry {
-        protocol: "warmup",
-        description: "RoyalBit Asimov - Session warmup entry point",
+        protocol: "warmup".into(),
+        description: "RoyalBit Asimov - Session warmup entry point".into(),
         on_start: vec![
-            "load_protocols",
-            "load_project",
-            "validate",
-            "read_roadmap",
-            "present_milestone",
+            "load_protocols".into(),
+            "load_project".into(),
+            "validate".into(),
+            "read_roadmap".into(),
+            "present_milestone".into(),
         ],
         load: vec![
-            "asimov.json",
-            "freshness.json",
-            "sycophancy.json",
-            "green.json",
-            "sprint.json",
-            "coding-standards.json",
-            "kingship.json",
+            "asimov.json".into(),
+            "freshness.json".into(),
+            "sycophancy.json".into(),
+            "green.json".into(),
+            "sprint.json".into(),
+            "coding-standards.json".into(),
+            "kingship.json".into(),
         ],
     };
     serde_json::to_string_pretty(&entry).expect("Warmup entry serialization should never fail")
@@ -357,20 +480,7 @@ pub fn sprint_json() -> String {
 /// Get migrations protocol JSON (functional equivalence)
 /// Note: Always returns the migrations protocol (for file generation)
 pub fn migrations_json() -> String {
-    let migrations = MigrationsProtocol {
-        principle: "Migration complete = functionally equivalent, not just compiles",
-        strategies: vec![
-            "test_parity",
-            "contract_testing",
-            "behavioral_snapshots",
-            "shadow_mode",
-        ],
-        red_flags: vec![
-            "Skipping tests for speed",
-            "Assuming compilation = correctness",
-            "Silent behavior changes",
-        ],
-    };
+    let migrations = load_migrations_protocol();
     serde_json::to_string_pretty(&migrations).expect("Migrations serialization should never fail")
 }
 

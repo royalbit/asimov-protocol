@@ -1,0 +1,37 @@
+# Enterprise Template: mono-turbo
+# Migrated from asimov-plus v2.1.0
+# Turborepo monorepo with Next.js, API, and shared packages
+
+identity:
+  name: "{PROJECT_NAME}"
+  type: monorepo
+  tagline: "Turborepo monorepo with full-stack apps"
+
+stack:
+  framework: "Turborepo + Next.js + API + shared"
+  language: "TypeScript"
+  package_manager: "npm workspaces"
+
+quality:
+  test: "npx turbo test"
+  lint: "npx turbo lint"
+  build: "npm install && npx turbo build"
+
+structure:
+  - package.json             # Root package
+  - turbo.json               # Turbo configuration
+  - apps/web/                # Next.js frontend
+  - apps/api/                # Express API
+  - packages/ui/             # Shared React components
+  - packages/types/          # Shared TypeScript types
+  - packages/config-typescript/  # Shared TS configs
+
+features:
+  - Turborepo task caching
+  - Parallel builds
+  - Incremental builds
+  - Shared component library
+  - Shared TypeScript types
+  - Shared configurations
+  - Workspace dependencies
+  - Next.js with transpilePackages
