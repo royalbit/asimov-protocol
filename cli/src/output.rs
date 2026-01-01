@@ -1041,9 +1041,9 @@ mod tests {
             .output()
             .unwrap();
 
-        std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_replay(Some(10), false, None);
-        assert_eq!(result, ExitCode::SUCCESS);
+        // Use run_replay directly to avoid global set_current_dir race conditions
+        let result = run_replay(temp.path(), Some(10), false, None);
+        assert!(result.success, "replay should succeed: {:?}", result.error);
     }
 
     #[test]
@@ -1275,9 +1275,9 @@ mod tests {
             .current_dir(temp.path())
             .output()
             .unwrap();
-        std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_replay(Some(5), false, None);
-        assert_eq!(result, ExitCode::SUCCESS);
+        // Use run_replay directly to avoid global set_current_dir race conditions
+        let result = run_replay(temp.path(), Some(5), false, None);
+        assert!(result.success, "replay should succeed: {:?}", result.error);
     }
 
     #[test]
