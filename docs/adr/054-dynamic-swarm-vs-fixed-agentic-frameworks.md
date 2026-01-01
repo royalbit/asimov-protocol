@@ -4,6 +4,7 @@
 **Date:** 2025-12-31
 **Author:** Claude (Opus 4.5) - Principal Engineer
 **References:** All links verified via ref-tools (headless Chrome) on 2025-12-31
+**Supplemented by:** [ADR-055: Balanced Architecture Critique](./055-balanced-architecture-critique.md)
 
 ---
 
@@ -255,6 +256,21 @@ Source: [Forge Model - error-compounding.yaml](../../models/error-compounding.ya
 At 50 steps (system integration), fragmented is essentially guaranteed to fail (**99.999% failure**) while full context still has a fighting chance (**92% failure**, but 5,391x better odds).
 
 **This is why multi-agent systems collapse on complex tasks.** Each agent handoff is a step. Each step compounds the error. The math doesn't lie.
+
+---
+
+## Known Limitations
+
+> **See [ADR-055](./055-balanced-architecture-critique.md) for comprehensive treatment.**
+
+| Limitation | Impact | Mitigation |
+|------------|--------|------------|
+| **10-20% effective context utilization** (Chroma 2025) | Most of 200k tokens may be underutilized | Warmup protocol places critical context at beginning |
+| **35% accuracy decline** without memory optimization | Performance degradation at scale | Prompt caching, structured context |
+| **Primacy/recency bias** | Middle-positioned information degraded | Explicit chunking, position-aware retrieval |
+| **RAG necessary for 10M+ docs** | Context windows insufficient for enterprise KBs | Hybrid approach valid for scale |
+| **Self-correction mitigates error compounding** | 17.2x error amp assumes no correction | Agent-R, MATC show 15%+ improvement with self-correction |
+| **SLMs 10-30x cheaper** for narrow tasks | Cost advantage for fixed agentic workflows | SLM-default/LLM-fallback valid pattern |
 
 ---
 

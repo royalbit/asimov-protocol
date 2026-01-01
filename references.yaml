@@ -968,3 +968,143 @@ database_comparison:
     url: https://www.yugabyte.com/yugabytedb-vs-cockroachdb/
     organization: Yugabyte
     key_finding: "YugabyteDB 85% PostgreSQL compatible vs CockroachDB 53%, Apache 2.0 license"
+
+# ============================================================================
+# BALANCED PERSPECTIVES (ADR-055)
+# Added: 2025-12-31
+# Addresses blind spots per Grok analysis - RAG advantages, agentic benefits,
+# long-context limitations, and enterprise adoption realities
+# ============================================================================
+
+rag_hybrid_advantages:
+  - title: "SELF-ROUTE: Hybrid RAG with Query Routing"
+    url: https://arxiv.org/abs/2407.16833
+    authors: ["Zhuowan Li", "Cheng Li", "Mingyang Zhang", "Qiaozhu Mei", "Michael Bendersky"]
+    organization: Google DeepMind / University of Michigan
+    date: 2024-07
+    key_finding: "Self-Route hybrid reduces cost by 65% (Gemini) / 39% (GPT-4o) while matching LC performance; 63% of queries have identical RAG/LC predictions"
+
+  - title: "LongRAG: Enhancing Retrieval with Long-context LLMs"
+    url: https://arxiv.org/abs/2406.15319
+    authors: ["Ziyan Jiang", "Xueguang Ma", "Wenhu Chen"]
+    organization: TIGER-AI Lab / University of Waterloo
+    date: 2024-06
+    key_finding: "30x longer retrieval units (4K tokens), corpus 22M→600K units, answer recall@1 from 52%→71%, EM 62.7% NQ / 64.3% HotpotQA matching SoTA"
+
+  - title: "LOFT: Can Long-Context LLMs Subsume Retrieval?"
+    url: https://arxiv.org/abs/2406.13121
+    authors: ["Jinhyuk Lee", "Anthony Chen", "Zhuyun Dai", "et al."]
+    organization: Google DeepMind
+    date: 2024-06
+    key_finding: "LCLMs rival Gecko retrieval at 128k tokens, surpass CLIP on visual retrieval; prefix-caching compatible for RAG-like efficiency"
+
+  - title: "Anthropic Prompt Caching"
+    url: https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+    organization: Anthropic
+    date: 2024
+    key_finding: "90% cost reduction, 85% latency reduction for cached prefixes; enables RAG-like efficiency with long contexts"
+
+agentic_enterprise_adoption:
+  - title: "Gartner: 40% of Enterprise Apps Will Feature AI Agents by 2026"
+    url: https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025
+    organization: Gartner
+    date: 2025-08-26
+    key_finding: "40% enterprise apps with AI agents by 2026 (up from <5% in 2025); $450B+ (30%) enterprise software revenue by 2035"
+
+  - title: "Over 40% of Agentic AI Projects Will Be Scrapped by 2027"
+    url: https://www.reuters.com/business/over-40-agentic-ai-projects-will-be-scrapped-by-2027-gartner-says-2025-06-25/
+    organization: Reuters / Gartner
+    date: 2025-06-25
+    key_finding: "40%+ agentic AI projects will be canceled by 2027 due to escalating costs and unclear business value"
+
+  - title: "The State of Agentic AI in 2025: A Year-End Reality Check"
+    url: https://www.arionresearch.com/blog/the-state-of-agentic-ai-in-2025-a-year-end-reality-check
+    author: Michael Fauscette
+    organization: Arion Research
+    date: 2025-12-30
+    key_finding: "60-70% experimented with agentic AI in 2025; only 15-20% deployed to production; tool calling error rates dropped from 40% to 10%"
+
+  - title: "Multi-Agent AI Systems: Enterprise Benefits"
+    url: https://www.mayhemcode.com/2025/12/multi-agent-ai-systems-architecture.html
+    organization: Mayhemcode
+    date: 2025-12-13
+    key_finding: "40-60% reduction in manual decision-making tasks; 30-50% faster task resolution; IDC projects $184.8B market by 2034"
+
+  - title: "Small Language Models are the Future of Agentic AI"
+    url: https://arxiv.org/abs/2506.02153
+    authors: ["Peter Belcak", "Greg Heinrich", "Shizhe Diao", "et al."]
+    organization: NVIDIA
+    date: 2025-06-03
+    key_finding: "SLMs enable 10-30x cost reduction vs LLMs for agentic workloads; SLM-default/LLM-fallback optimal"
+
+  - title: "How Small Language Models Are Key to Scalable Agentic AI"
+    url: https://developer.nvidia.com/blog/how-small-language-models-are-key-to-scalable-agentic-ai/
+    organization: NVIDIA
+    date: 2025-08-29
+    key_finding: "SLMs 10-30x cheaper than LLMs; Nemotron Nano 2 (9B) achieves 6x throughput with 128k context"
+
+agent_self_correction:
+  - title: "Agent-R: Training Language Model Agents to Reflect via Iterative Self-Training"
+    url: https://arxiv.org/abs/2501.11425
+    authors: ["Siyu Yuan", "Zehui Chen", "Zhiheng Xi", "et al."]
+    organization: Fudan University / ByteDance Seed
+    date: 2025-01
+    key_finding: "MCTS-based reflection enables real-time error correction; training on revision trajectories surpasses expert trajectories"
+
+  - title: "Multi-Agent Taskforce: Self-Correction of Compounding Errors"
+    url: https://arxiv.org/abs/2508.04306
+    authors: ["Zhi Zhang", "Yan Liu", "Zhejing Hu", "et al."]
+    organization: Hong Kong Polytechnic University
+    date: 2025-08
+    key_finding: "+15.7% citation recall via three taskforces; experience-based self-correction before error propagation"
+
+  - title: "Where LLM Agents Fail and How They can Learn From Failures"
+    url: https://arxiv.org/abs/2509.25370
+    authors: ["Kunlun Zhu", "Zijia Liu", "et al."]
+    organization: UIUC / Stanford
+    date: 2025-09
+    key_finding: "AgentDebug framework for systematic failure analysis and learning from agent errors"
+
+  - title: "LLM API Retry Logic: 90% Failure Rate Reduction"
+    url: https://markaicode.com/llm-api-retry-logic-implementation/
+    author: Mark
+    organization: Markaicode
+    date: 2025-05
+    key_finding: "Exponential backoff with jitter reduces API failure rates by up to 90%; circuit breaker prevents cascading failures"
+
+long_context_limitations:
+  - title: "Context Rot: How Increasing Input Tokens Impacts LLM Performance"
+    url: https://research.trychroma.com/context-rot
+    authors: ["Kelly Hong", "Anton Troynikov", "Jeff Huber"]
+    organization: Chroma
+    date: 2025-07-14
+    key_finding: "18 LLMs tested show 10-20% effective context utilization; token reproduction fails at 2,500-5,000 words"
+
+  - title: "Advancing Long-Context LLM Performance in 2025"
+    url: https://www.flow-ai.com/blog/advancing-long-context-llm-performance-in-2025
+    organization: Flow AI
+    date: 2025
+    key_finding: "Up to 35% accuracy decline without memory optimization; 0.5% degradation per million tokens unoptimized"
+
+  - title: "Recency Bias in LLM-Based Reranking"
+    url: https://arxiv.org/abs/2509.11353
+    organization: ACM SIGIR-AP 2025
+    date: 2025-09
+    key_finding: "LLMs promote 'fresh' passages up to 4.78 years forward, moving items up to 95 ranks; 25% preference reversible via date injection"
+
+  - title: "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval"
+    url: https://arxiv.org/abs/2510.05381
+    date: 2025-10
+    key_finding: "Even with perfect retrieval, context volume degrades problem-solving ability; explains RAG saturation effect"
+
+  - title: "Enterprise-Grade RAG Systems"
+    url: https://www.harvey.ai/blog/enterprise-grade-rag-systems
+    organization: Harvey AI
+    date: 2025
+    key_finding: "Even 10M token contexts face scalability issues with terabyte-scale enterprise KBs; vector search required"
+
+  - title: "Enterprise RAG at Scale"
+    url: https://www.nexgencloud.com/blog/thought-leadership/enterprise-rag-at-scale-why-businesses-can-t-afford-to-stay-small
+    organization: NexGen Cloud
+    date: 2025
+    key_finding: "73.34% of RAG implementations in large organizations by 2025; 80%+ enterprises augment LLMs with RAG"
