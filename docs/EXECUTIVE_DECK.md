@@ -251,6 +251,31 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 
 ---
 
+# Why Not LangChain / CrewAI?
+
+### Brooks' Law applies to AI agents
+
+<div class="smaller">
+
+> "Adding manpower to a late software project makes it later." — Fred Brooks, 1975
+
+| Agents | Channels | Result |
+|--------|----------|--------|
+| 4 | 6 | Manageable |
+| 10 | 45 | Chaos |
+
+**Research (Google/MIT, Dec 2024):**
+- Max **3-4 agents** before overhead dominates
+- **17.2x error amplification** with independent agents
+- **95% vs 80%** code accuracy (full context vs fragmented)
+
+</div>
+
+**Asimov:** One 200k context, AI spawns agents only when benefit > cost
+**Result:** O(1) coordination vs O(n^1.724) for fixed frameworks
+
+---
+
 # Next Steps
 
 <div class="smaller">
@@ -299,6 +324,8 @@ LLMs predict the most probable next token. No fact-checking step. They were trai
 - [Stanford: 42% Code Errors](https://arxiv.org/abs/2507.09089) | [ACM: Survey on Hallucination](https://dl.acm.org/doi/10.1145/3703155)
 
 **Ethics:** [IEEE: Copilot Malware](https://ieeexplore.ieee.org/document/10284976/) | [Case Study](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md)
+
+**Agentic Frameworks:** [Google/MIT: More Agents Isn't Reliable](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) | [Cognition: Don't Build Multi-Agents](https://cognition.ai/blog/dont-build-multi-agents) | [ADR-054](https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md)
 
 **Proof:** [Forge](https://github.com/royalbit/forge-demo) (forge not public) | [Asimov](https://github.com/royalbit/asimov) | [GitHub Releases](https://github.com/royalbit/asimov/releases)
 
