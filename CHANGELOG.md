@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.2.5] - 2026-01-01
+
+### Changed
+
+- **crates.io metadata**: Updated description, added keywords and categories
+  - Description: "Ethical guardrails for Claude Code. Dynamic Swarm + HOTL beats Fixed Agentic (39x at 10 steps, 1502x at 20). Three Laws hardcoded."
+  - Keywords: claude, ai, ethics, autonomous, guardrails
+  - Categories: command-line-utilities, development-tools
+
+---
+
+## [10.2.4] - 2026-01-01
+
+### Fixed
+
+- **crates.io packaging**: Moved protocol JSONs into `cli/protocols/` so they're included in the crate tarball. The `include_str!()` paths previously referenced `../../../.asimov/protocols/` which is outside the crate directory and wasn't packaged.
+
+---
+
+## [10.2.3] - 2026-01-01
+
+### Fixed
+
+- **Documentation install URLs**: Changed `linux-gnu` to `linux-musl` in 8 documentation files (README, SETUP, SPECIFICATION, TECHNICAL_DECK, MARKDOWN_STANDARDS, VENDOR_IMPLEMENTATION, ROYALBIT_ASIMOV, VALUE_PROPOSITION). The install commands were pointing to non-existent `gnu` binaries when only `musl` binaries are released.
+
+---
+
 ## [10.2.2] - 2026-01-01
 
 ### Fixed
