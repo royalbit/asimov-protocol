@@ -1,474 +1,136 @@
 # RoyalBit Asimov
 
 [![CI](https://github.com/royalbit/asimov/actions/workflows/ci.yml/badge.svg)](https://github.com/royalbit/asimov/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/code-Proprietary-red.svg)](https://github.com/royalbit/asimov/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/code-ELv2-blue.svg)](LICENSE)
 [![Docs License](https://img.shields.io/badge/docs-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-> **RoyalBit Asimov** | The Ethical Operating System for Claude's Autonomous Power
->
-> Claude provides the velocity. Asimov provides the guardrails.
+> **Extended thinking beats multi-agent by 34x. We have the math.**
 
-*"The Three Laws were science fiction for 80 years. Now they're source code."*
+## The Insight
 
-**Self-Evolving Autonomous AI with ethics built in.**
+Single agent + 200K thinking tokens outperforms LangChain, CrewAI, AutoGen, and every fixed agentic framework.
 
-Claude Opus 4.5 and Sonnet 4.5 deliver 50-100x velocity ([Anthropic](https://www.anthropic.com/news/claude-opus-4-5)). Asimov ensures you don't destroy yourself in the process: Ethics, bounded autonomy, sustainability.
+**Monte Carlo simulation (10K trials, 95% CI):**
 
-## The Open Foundation
+| Steps | Single + Extended Thinking | Multi-Agent Independent | Advantage |
+|-------|---------------------------|------------------------|-----------|
+| 10 | **81.5%** ± 0.8% | 2.4% ± 0.3% | **34x** |
+| 20 | **66.4%** ± 0.9% | 0.06% ± 0.05% | **1,106x** |
+| 50 | **36.0%** ± 0.9% | ~0% | **∞** |
 
-**The Three Laws of Robotics, encoded in JSON.**
+Source: [monte-carlo-agents.yaml](models/monte-carlo-agents.yaml) — validated against R and Gnumeric via Forge.
 
-Every `asimov init` creates a Self-Evolving Autonomous AI project with ethics built in.
+**Why?** Context-as-thinking ≠ context-as-storage. Extended thinking tokens are active computation with 70% in-context error detection. Multi-agent systems hit O(n^1.724) communication overhead and 17.2x error amplification.
 
-```json
-// .asimov/asimov.json - The Three Laws
-{
-  "harm": ["financial", "physical", "privacy", "deception"],
-  "veto": ["stop", "halt", "abort", "emergency stop"]
-}
-```
-
-**RoyalBit Asimov requires Claude Code.** Protocol files work anywhere (paste them).
-
-📖 **[Origin Story](docs/ORIGIN_STORY.md)** — How we built a protocol that creates Self-Evolving Autonomous AI projects with ethics
-
-📰 **[Press Kit](docs/PRESS_KIT.md)** — Verified numbers, ethics proof, media-ready
-
-📊 **Presentations:** [Executive Deck](docs/EXECUTIVE_DECK.md) | [Technical Deck](docs/TECHNICAL_DECK.md)
-
-📚 **Deep Dives:** [Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md) | [Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md) | [The Open Foundation (ADR-020)](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md)
-
-📈 **Case Study:** [RoyalBit Asimov vs Copilot](https://github.com/royalbit/asimov/blob/main/docs/ASIMOV_VS_COPILOT.md) — Same Claude models, **different ceiling** (200k thinking tokens, unlimited autonomy, 8 protocol files). Ethics that [refused the creator](https://github.com/royalbit/asimov/blob/main/docs/case-studies/001-ethics-protocol-blocks-surveillance.md), [Copilot safety trivially bypassed](https://www.darkreading.com/vulnerabilities-threats/new-jailbreaks-manipulate-github-copilot)
+📖 [ADR-056: Extended Thinking vs RAG+Agentic](docs/adr/056-extended-thinking-vs-rag-agentic.md) — Full research
 
 ---
-
-### The Journey: 9 Phases in 12 Days
-
-| Phase | Date | What Happened |
-|-------|------|---------------|
-| 1 | Nov 23, 2025 | **Forge** - Building a spreadsheet engine, context lost every session. Created `warmup.yaml` hack. |
-| 2 | Nov 23-24, 2025 | **Warmup Protocol** - The hack became a protocol. Quality standards, file locations, release procedures. |
-| 3 | Nov 24-25, 2025 | **Sprint Boundaries** - Sessions ran forever, nothing shipped. Added bounded sessions, "done > perfect". |
-| 4 | Nov 25, 2025 | **Forge Protocol** - Extracted as standalone. But the name was wrong—other projects could use it. |
-| 5 | Nov 25-26, 2025 | **Ethics** - Claude refused to build surveillance features. The protocol worked. Formalized harm prevention. |
-| 6 | Nov 26-27, 2025 | **Asimov** - Named after Isaac Asimov's Three Laws (1942). First Law = do no harm. Second = obey humans. Third = self-preserve. |
-| 7 | Nov 27-28, 2025 | **Protocol Suite** - Not one protocol, eight. Ethics, freshness, sycophancy, green, sprint, migrations, coding-standards. |
-| 8 | Nov 28-29, 2025 | **Inaction Principle** - Asimov's First Law has two halves: "do no harm" AND "allow no harm through inaction". |
-| 9 | Nov 29-Dec 4, 2025 | **Self-Evolving AI** - The protocol improves itself. Forge built Asimov → Asimov now builds Forge. |
-
-**12 days. 9 phases. 62 releases. 65,000+ LOC. 1 human + 1 AI.**
-
-📖 [Full Origin Story](docs/ORIGIN_STORY.md)
-
----
-
-### The Complete Stack
-
-| Layer | Provides | Source |
-|-------|----------|--------|
-| **Claude Opus 4.5 / Sonnet 4.5** | 50-100x velocity, SWE-bench 80.9% | [Anthropic](https://www.anthropic.com/news/claude-opus-4-5) |
-| **Claude Code** | 200k thinking tokens (6x Anthropic threshold) | [ADR-026](docs/adr/026-claude-code-requirement.md) |
-| **Asimov Protocol** | Ethics, bounded autonomy, sustainability | [ADR-025](docs/adr/025-claude-attribution-principle.md) |
-
-**Why Claude Code specifically?** MCP IDEs (Cursor, Windsurf) cap thinking tokens at 30k-48k or charge premium. Claude Code allows 200k FREE via env var. See [ADR-026](docs/adr/026-claude-code-requirement.md).
-
-See [ADR-009](https://github.com/royalbit/asimov/blob/main/docs/adr/009-claude-code-native-integration.md) and [ADR-013](https://github.com/royalbit/asimov/blob/main/docs/adr/013-self-healing-not-replaced.md).
-
-## Why Not Agentic Frameworks?
-
-LangChain, CrewAI, Semantic Kernel, AutoGen—they fragment context across agents. **Asimov uses one large context (200k+) where AI decides when to spawn agents.**
-
-### Brooks' Law Applies to Agents
-
-> "Adding manpower to a late software project makes it later." — Fred Brooks, 1975
-
-**The math:** N agents = N×(N-1)/2 communication channels
-- 4 agents = 6 channels (manageable)
-- 10 agents = 45 channels (chaos)
-- Research confirms: **exponent 1.724** (super-linear overhead)
-
-### The Research (All Verified)
-
-| Finding | Source |
-|---------|--------|
-| Full-file context: **95%** accuracy vs fragmented: **80%** | [SWE-bench](https://inkeep.com/blog/context-engineering-why-agents-fail) |
-| Max **3-4 effective agents** before overhead dominates | [Google/MIT 2024](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) |
-| **17.2x error amplification** with independent agents | Google/MIT |
-| Multi-agent uses **15x more tokens** than single chat | [Anthropic](https://www.anthropic.com/engineering/multi-agent-research-system) |
-| CrewAI: **37% tool success rate** | [AIMultiple](https://research.aimultiple.com/agentic-analytics/) |
-
-### Cognition (Devin) Agrees
-
-> "In 2025, running multiple agents in collaboration only results in fragile systems. The decision-making ends up being too dispersed and context isn't able to be shared thoroughly enough."
->
-> — [Cognition](https://cognition.ai/blog/dont-build-multi-agents)
-
-### Error Compounding: The Math That Kills Multi-Agent
-
-The 95% vs 80% gap isn't 15 points. **Errors compound multiplicatively.**
-
-```
-P(success after N steps) = accuracy^N
-```
-
-| Steps | Fragmented (80%) | Full Context (95%) | Gap |
-|-------|------------------|--------------------| ----|
-| 10 | 10.7% | 59.9% | **5.6x** |
-| 20 | 1.2% | 35.8% | **31x** |
-| 50 | 0.001% | 7.7% | **5,391x** |
-
-At 10 steps (typical complex task): fragmented has **89% failure rate**.
-
-**This is why multi-agent systems collapse.** Each handoff compounds the error. See [models/error-compounding.yaml](models/error-compounding.yaml).
-
-### Asimov vs Fixed Frameworks
-
-| Dimension | Asimov | LangChain/CrewAI |
-|-----------|--------|------------------|
-| Context per orchestrator | **200k+** | 8-32k per agent |
-| Agent topology | **Runtime-decided** | Design-time fixed |
-| Coordination | **In-context** | External infra |
-| Code understanding | **95%** | 80% (fragmented) |
-| Communication overhead | **O(1)** | O(n^1.724) |
-
-📖 **[ADR-054: Dynamic Swarm vs Fixed Agentic Frameworks](docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md)** — Full research with 50+ verified references
-
----
-
-## The Problem
-
-AI hallucinates, invents conventions, forgets rules mid-session, and "remembers" things that never happened. Context compaction compresses your requirements into oblivion.
-
-## The Solution
-
-**Ground AI in file-based truth.**
-
-Eight JSON protocols in `.asimov/` ground AI in disk-based truth, not memory.
-
-*Protocol files work with any AI (paste them). Full integration requires Claude Code.*
-
-## The Protocol Files
-
-Eight JSON protocols in `.asimov/` directory, loaded on session start:
-
-```
-.asimov/
-├── warmup.json         # Entry point - loads all protocols
-├── asimov.json         # Ethics: harm categories + veto commands
-├── freshness.json      # WebSearch for current information
-├── sycophancy.json     # Truth over comfort
-├── green.json          # Efficiency benchmarking
-├── sprint.json         # Autonomous execution until done
-├── migrations.json     # Functional equivalence rules
-└── coding-standards.json  # Code quality standards
-```
-
-### asimov.json - The Three Laws
-
-```json
-{
-  "harm": ["financial", "physical", "privacy", "deception"],
-  "veto": ["stop", "halt", "abort", "emergency stop"]
-}
-```
-
-### sprint.json - Autonomous Execution
-
-```json
-{
-  "rule": "Analyse tasks, use agents for parallel work, run autonomously until done. WebSearch when blocked. Document decisions in ADRs.",
-  "compaction_reminder": "Re-read protocols from .asimov/ after context compaction to restore full context"
-}
-```
-
-### sycophancy.json - Truth Over Comfort
-
-```json
-{
-  "truth_over_comfort": true,
-  "disagree_openly": true
-}
-```
-
-Social contract, not technical lock. Works for good-faith users.
 
 ## Quick Start
 
 ```bash
-# Install CLI
-curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-x86_64-unknown-linux-gnu.tar.gz | tar xz
+# Install
+curl -L https://github.com/royalbit/asimov/releases/latest/download/asimov-$(uname -m)-unknown-linux-gnu.tar.gz | tar xz
 sudo mv asimov /usr/local/bin/
 
 # Initialize project
 asimov init
 
-# Start session (launches Claude Code with optimal settings)
+# Launch Claude Code with optimal settings
 asimov
 ```
 
-That's it. Protocol files created, hooks installed, ready for autonomous development.
+**Requires [Claude Code](https://claude.ai/code).** Protocol files work anywhere (paste them).
 
-## The Anti-Hallucination Foundation
+---
 
-"Hallucination" is a misnomer. AI is working exactly as designed—the limitations are architectural or platform defaults.
+## What It Does
 
-| AI Limitation | Why It Happens | RoyalBit Asimov Fix |
-|---------------|----------------|-------------------|
-| Forgets your rules | Auto-compact compresses context | Re-read protocols from `.asimov/` |
-| Invents conventions | Generates "probable" text, not facts | Structured rules in JSON |
-| Stale data | Training cutoff (Jan 2025) + no search | `freshness.json` enforces search |
-| Lost in the middle | Attention degrades mid-context | Key info in scannable format |
-| Confident mistakes | Trained for plausibility, not accuracy | Deterministic validation |
+Eight protocol files in `.asimov/` ground AI in file-based truth:
 
-**The Pattern:**
 ```
-AI memory (lossy, probabilistic)   → "Hallucinations"
-File truth (stable, deterministic) → Reliability
+.asimov/
+├── asimov.json         # Ethics: harm categories + veto commands
+├── sprint.json         # Autonomous execution until done
+├── sycophancy.json     # Truth over comfort
+├── freshness.json      # WebSearch for current information
+├── green.json          # Efficiency benchmarking
+└── ...
 ```
 
-**Asimov compensates for architectural limitations:**
-- Don't let AI imagine your project context → **read protocols from `.asimov/`**
-- Don't let AI imagine your financial calculations → **execute locally with [Forge](https://github.com/royalbit/forge-demo)**
-- Don't let AI give stale data confidently → **`freshness.json` enforces search**
+**The pattern:** File truth (stable, deterministic) beats AI memory (lossy, probabilistic).
 
-📖 **[AI_REALITY.md](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md)** — vendor limits, research citations, what's really happening.
+---
 
-### freshness.json - Date-Aware Search
-
-```json
-{
-  "rule": "Run WebSearch and WebFetch against current runtime date/time for any information that requires online search or fetch."
-}
-```
-
-Stale data is not hallucination. The protocol enforces search before answering from training data.
-
-## CLI Commands
+## CLI
 
 ```bash
-asimov                  # Launch Claude Code with optimal settings
-asimov init             # Initialize project (creates .asimov/, hooks)
-asimov warmup           # Output complete context as JSON (protocols + project + roadmap + WIP)
-asimov validate         # Validate protocol files
-asimov doctor           # Diagnose setup issues
-asimov stats            # Session metrics (commits, lines)
-asimov replay           # Session history
-asimov update           # Self-update
-asimov lint-docs        # Lint markdown files
-asimov refresh          # Output protocol reminder (for hooks)
+asimov              # Launch Claude Code with MAX_THINKING_TOKENS=200000
+asimov init         # Initialize project
+asimov warmup       # Output complete context as JSON
+asimov doctor       # Diagnose setup issues
+asimov validate     # Validate protocol files
+asimov update       # Self-update
 ```
 
-**Platforms:** Linux (x86_64, ARM64), macOS (Intel, ARM), Windows (x86_64)
+**Platforms:** Linux, macOS, Windows | **Binary:** 1.5MB | **Dependencies:** Zero
 
-**Binary:** 1.5MB (UPX compressed) | **Dependencies:** Zero
+---
 
-## Claude Code Slash Commands
+## The Research
 
-When using `asimov` to launch Claude Code, these slash commands are available:
+| Finding | Source |
+|---------|--------|
+| Extended thinking: **34x advantage** over multi-agent at 10 steps | [Monte Carlo Model](models/monte-carlo-agents.yaml) |
+| Max **3-4 effective agents** before overhead dominates | [Google/MIT 2024](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) |
+| **17.2x error amplification** with independent agents | Google/MIT |
+| RLI benchmark: **97.5% failure** on real work (vs 70% SWE-bench) | [arXiv:2504.02189](https://arxiv.org/abs/2504.02189) |
+| Context utilization: **10-20%** for storage, **high** for thinking | [Chroma 2025](https://research.trychroma.com/context-rot) |
 
-```bash
-/warmup    # Output complete context JSON (same as asimov warmup)
-/doctor    # Diagnose setup issues (same as asimov doctor)
-```
+### Architecture Decisions
 
-**Full Context Warmup (v9.16.0):** One `/warmup` call outputs comprehensive JSON:
+- [ADR-056: Extended Thinking vs RAG+Agentic](docs/adr/056-extended-thinking-vs-rag-agentic.md) — Monte Carlo proof
+- [ADR-054: Dynamic Swarm vs Fixed Frameworks](docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md) — 50+ references
+- [ADR-055: Balanced Architecture Critique](docs/adr/055-balanced-architecture-critique.md) — Trade-offs acknowledged
 
-```json
-{
-  "version": "9.17.0",
-  "protocols": { "asimov": {...}, "sprint": {...}, ... },
-  "project": { "identity": {...}, "quality": {...}, "patterns": [...] },
-  "roadmap": { "current": {...}, "next": [...], "backlog": [...] },
-  "wip": { "active": true/false, "item": "...", "progress": "1/3" },
-  "tools": [
-    {
-      "name": "ref-tools",
-      "path": "/Users/user/bin/ref-tools",
-      "version": "ref-tools 0.5.0",
-      "directive": "Use `ref-tools fetch <url>` via Bash instead of WebFetch/WebSearch..."
-    }
-  ]
-}
-```
-
-**Token efficiency:** Claude gets complete project context in one Bash call, zero file reads required.
-
-## Why JSON + YAML?
-
-- **Protocols (JSON):** Machine-readable, schema-validated, minimal
-- **Project files (YAML):** Human-editable roadmaps and project config
-- Every AI can read both formats
-- Git-friendly (diffable, mergeable)
-- No vendor lock-in
-
-## Protocol Suite
-
-All protocols stored as JSON in `.asimov/` directory:
-
-| File | Purpose |
-|------|---------|
-| `warmup.json` | Entry point - loads all other protocols |
-| `asimov.json` | Ethics: harm categories, veto commands |
-| `freshness.json` | WebSearch for current information |
-| `sycophancy.json` | Truth over comfort, disagree openly |
-| `green.json` | Efficiency benchmarking |
-| `sprint.json` | Autonomous execution (run until done, re-read after compaction) |
-| `migrations.json` | Functional equivalence rules |
-| `coding-standards.json` | Code quality standards |
-
-Plus YAML files for project metadata:
-- `roadmap.yaml` - Milestones & planning
-- `project.yaml` - Project configuration
+---
 
 ## Proven at Scale
 
-| Project | Stack | Stats |
-|---------|-------|-------|
-| **Forge** (not public) | Rust | 45,700 LOC, 2,486 tests, 159 functions |
-| **[Asimov](https://github.com/royalbit/asimov)** | Rust | 19,000+ LOC, 429 tests, 62 releases |
+| Project | LOC | Tests | Releases |
+|---------|-----|-------|----------|
+| Forge (private) | 45,700 | 2,486 | 46 |
+| Asimov | 19,000+ | 437 | 62+ |
+| **Total** | **65,000+** | **2,900+** | **108+** |
 
-**Total: 65,000+ LOC, 108 releases. 1 human + 1 AI.**
+**1 human. 1 AI. 12 days.**
 
-## Use Case: Forge
+📖 [Origin Story](docs/ORIGIN_STORY.md) — How we built it
 
-Deterministic YAML formula calculator. AI hallucinates numbers; Forge doesn't. Demo: [forge-demo](https://github.com/royalbit/forge-demo).
-
-| Stat | Value |
-|------|-------|
-| Version | v5.0.0 |
-| LOC | 45,700 |
-| Tests | 1,436 |
-| Releases | 46 |
-| Throughput | 96K rows/sec |
-
-```bash
-forge calculate model.yaml       # Evaluate formulas
-forge sensitivity model.yaml ... # Analysis tools
-forge export model.yaml out.xlsx # Excel bridge
-```
-
-Forge: 2,486 tests, 159 functions. Demo build: 1,258 tests, 48 functions.
-
-### The Protocol Built Itself
-
-| Project | LOC | Releases | Verified |
-|---------|-----|----------|----------|
-| forge (not public) | 45,700 | 46 | - |
-| [asimov](https://github.com/royalbit/asimov) | 19,000+ | 62 | [GitHub](https://github.com/royalbit/asimov/releases) |
-| **Total** | **65,000+** | **108** | Git history |
-
-**1 human. 1 AI. Verify it yourself.**
-
-**Context Window Impact** (see [ADR-010](https://github.com/royalbit/asimov/blob/main/docs/adr/010-velocity-constraints-tier-analysis.md)):
-
-| Tier | Context | Session Overhead | Notes |
-|------|---------|-----------------|-------|
-| Max 20x | 200K | Compaction every ~15 min | Self-healing needed |
-| Enterprise | 500K | Compaction every ~40 min | Less overhead |
-| API Tier 4 | **1M** | Compaction every ~90 min | Minimal overhead |
-
-*Larger context = less compaction = less self-healing overhead. Hardware is NOT the bottleneck.*
-
-## How It Works
-
-```mermaid
-flowchart LR
-    A[New Session] --> B{.asimov/ exists?}
-    B -->|Yes| C[AI reads protocols]
-    C --> D[Context restored]
-    B -->|No| E[asimov init]
-```
-
-## Self-Healing
-
-Bounded autonomy with automatic recovery:
-
-- **Session start**: `asimov warmup` outputs complete project context as JSON (protocols, config, roadmap, WIP)
-- **Mid-session recovery**: `/warmup` slash command for full context refresh
-- **Cross-session resume**: Claude Code `--continue` / `--resume`
-
-The `sprint.json` protocol bounds autonomous sessions with quality gates and stopping points.
+---
 
 ## Documentation
 
-### Start Here
-- **[Value Proposition](https://github.com/royalbit/asimov/blob/main/docs/VALUE_PROPOSITION.md)** - Why 50-150x velocity matters
-- **[Use Cases](https://github.com/royalbit/asimov/blob/main/docs/USE_CASES.md)** - What you can build
+- [Value Proposition](docs/VALUE_PROPOSITION.md) — Why this matters
+- [Setup Guide](docs/SETUP.md) — Detailed installation
+- [AI Reality](docs/AI_REALITY.md) — Why AI "hallucinates"
+- [Full Specification](docs/SPECIFICATION.md) — Protocol schema
 
-### RoyalBit Asimov
-- **[RoyalBit Asimov Overview](https://github.com/royalbit/asimov/blob/main/docs/ROYALBIT_ASIMOV.md)** - The complete autonomous AI development system
-- [Setup Guide](https://github.com/royalbit/asimov/blob/main/docs/SETUP.md) - Get started with one command
-
-### The Five Components
-1. [Protocol Files](https://github.com/royalbit/asimov/blob/main/docs/components/1-PROTOCOL_FILES.md) - JSON protocols in `.asimov/`
-2. [Sprint Autonomy](https://github.com/royalbit/asimov/blob/main/docs/components/2-SPRINT_AUTONOMY.md) - Bounded sessions that ship
-3. [Quality Gates](https://github.com/royalbit/asimov/blob/main/docs/components/3-QUALITY_GATES.md) - Tests pass + zero warnings
-4. [Self-Healing](https://github.com/royalbit/asimov/blob/main/docs/components/4-SELF_HEALING.md) - Recover from context compaction
-5. [Release Discipline](https://github.com/royalbit/asimov/blob/main/docs/components/5-RELEASE_DISCIPLINE.md) - Triple release to everywhere
-
-### Reference
-- [Full Specification](https://github.com/royalbit/asimov/blob/main/docs/SPECIFICATION.md) - Protocol schema and details
-- [AI Reality](https://github.com/royalbit/asimov/blob/main/docs/AI_REALITY.md) - Why AI "hallucinates" and vendor limitations
-- [Vendor Implementation](https://github.com/royalbit/asimov/blob/main/docs/VENDOR_IMPLEMENTATION.md) - What other AI tools need
-
-### Architecture Decisions
-- [ADR-023: The Inaction Principle](https://github.com/royalbit/asimov/blob/main/docs/adr/023-inaction-principle.md) - **v6.2.0** - "Through inaction, allow no harm"
-- [ADR-022: Freshness Protocol (Date-Aware Search)](https://github.com/royalbit/asimov/blob/main/docs/adr/022-date-aware-search-protocol.md) - **v6.1.0** - Stale data ≠ Hallucination
-- [ADR-020: The Open Foundation](https://github.com/royalbit/asimov/blob/main/docs/adr/020-asimov-mode-open-foundation.md) - **v4.2.0** - The Three Laws
-- [ADR-008: Ethics Protocol and Humanist Mode](https://github.com/royalbit/asimov/blob/main/docs/adr/008-ethics-protocol-humanist-mode.md) - **v3.0**
-- [ADR-003: Self-Healing Based on Real Compaction Data](https://github.com/royalbit/asimov/blob/main/docs/adr/003-self-healing-real-compaction-data.md) - **v2.0**
-
-## Origin
-
-Born from building Forge ([demo](https://github.com/royalbit/forge-demo)), a YAML formula calculator. The protocol emerged from real problems: maintaining context across sessions, shipping quality code autonomously, and scaling to an entire ecosystem.
-
-The answers became RoyalBit Asimov.
-
-## Contributing (AI-Only Development)
-
-**Pull Requests are disabled.** This is intentional.
-
-### Why No PRs?
-
-This project uses the **AI-Only Development Model** ([ADR-011](https://github.com/royalbit/asimov/blob/main/docs/adr/011-ai-only-development-no-external-prs.md)).
-
-External PRs are an attack vector for ethics bypass. A malicious contributor could submit innocent-looking code with obfuscated harmful functionality, bypassing `.asimov/` safeguards if merged.
-
-**The trust model:**
-```
-Human Owner → AI (autonomous) → Tests Pass → Direct Commit → Main
-```
-
-Tests and `.asimov/` protocols are the gatekeepers, not human code review.
-
-### How to Contribute
-
-| Method | Description |
-|--------|-------------|
-| **[Issues](https://github.com/royalbit/asimov/issues)** | Report bugs, request features |
-| **[Discussions](https://github.com/royalbit/asimov/discussions)** | Ask questions, share ideas |
-
-When AI implements your idea from an Issue, you'll be credited in the commit message.
+---
 
 ## License
 
-**This is an R&D project. Not available for commercial use or distribution.**
-
-- **Code:** Proprietary - See [LICENSE](LICENSE)
-- **Documentation:** [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) - See [LICENSE-DOCS](LICENSE-DOCS)
-
-### What This Means
+- **Code:** [Elastic License 2.0 (ELv2)](LICENSE) — Free for most uses, restrictions on competing SaaS
+- **Documentation:** [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 | Use Case | Allowed? |
 |----------|----------|
-| View and study source code | ✅ Yes |
-| Run for personal, non-commercial educational use | ✅ Yes |
-| **Any commercial use** | ❌ No |
-| **Use by/for employers, clients, organizations** | ❌ No |
-| **Modify, distribute, sublicense** | ❌ No |
-| **Create derivative works** | ❌ No |
-
-**Questions:** [Open an issue](https://github.com/royalbit/asimov/issues)
+| Personal/internal use | ✅ Yes |
+| Commercial use (non-competing) | ✅ Yes |
+| Modify for internal use | ✅ Yes |
+| Provide as managed service | ❌ No |
+| Circumvent license keys | ❌ No |
 
 ---
-*Documentation licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) - Copyright (c) 2025 RoyalBit Inc.*
+
+*Built with [RoyalBit Asimov](https://github.com/royalbit/asimov) — Extended thinking beats multi-agent.*
