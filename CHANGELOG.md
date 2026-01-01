@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### References Database
 
-Added 170+ verified sources to `.asimov/references.yaml`:
+Added 170+ verified sources to `references.yaml`:
 - 6 parallel agents verified 131 URLs via ref-tools
 - Organized into 16 categories
 - Fixed 8 broken URLs across documentation
@@ -53,7 +53,7 @@ Added 170+ verified sources to `.asimov/references.yaml`:
 #### Files Changed
 - ADR-050: Economic Incentives in LLM Inference (countermeasures added)
 - ADR-051: System Prompt Hierarchy and Training Override (countermeasures added)
-- `.asimov/references.yaml`: +541 lines (170+ sources)
+- `references.yaml`: +541 lines (170+ sources)
 - 6 docs with broken URL fixes
 
 ---
