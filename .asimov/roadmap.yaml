@@ -4,9 +4,9 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "10.2.3"
+  version: "10.2.4"
   status: in_progress
-  summary: "Hotfix: Update docs install URLs from gnu to musl"
+  summary: "Hotfix: Docs URLs + crates.io packaging fix"
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
