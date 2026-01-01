@@ -8,11 +8,11 @@ posts:
     4 agents = 6 channels
     10 agents = 45 channels
 
-    Google/MIT: overhead exponent 1.724.
+    Google/MIT measured it: exponent 1.724.
 
     Worse than quadratic.
 
-    One context beats many agents.
+    We gathered 50+ references on this.
 
     #AI #Agents
   linkedin: |
@@ -30,43 +30,38 @@ posts:
     - Maximum effective team size: 3-4 agents
     - Independent agents show 17.2x error amplification vs single-agent baseline
 
-    This is why LangChain, CrewAI, and other "agentic frameworks" hit a wall.
+    This explains why multi-agent frameworks hit a wall.
 
     They fragment context across agents. Each agent gets 8-32k tokens. They coordinate through external infrastructure—state machines, message queues, databases.
 
     Every handoff loses information. Every coordination point adds latency. Every agent has a different view of the problem.
 
-    The alternative: One large context (200k+ tokens) where AI decides when to spawn agents.
+    The pattern that works: One large context (200k+ tokens) where the AI decides when to spawn agents.
 
     Context IS the coordination layer.
 
     No serialization. No translation errors. No "telephone game" between agents.
 
-    The research is clear. We documented it with 50+ verified references.
-
+    We spent a week documenting this with 50+ verified references:
     https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
-    #AI #Agents #SoftwareEngineering #LangChain #MultiAgent
+    #AI #Agents #SoftwareEngineering #MultiAgent
   posted: {}
 
 - id: adr-054-cognition-quote
-  title: Cognition Agrees
+  title: Devin's Creators on Multi-Agent
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
     "In 2025, running multiple agents only results in fragile systems."
 
-    — Cognition (Devin team)
+    — Cognition (Devin's creators)
 
     They built the hype.
-    They're saying don't.
-
-    One context beats many agents.
+    Now they're saying don't.
 
     #AI #Devin
   linkedin: |
-    When your competitor validates your thesis.
-
-    Cognition—the team behind Devin, the most hyped AI coding agent—published this:
+    The team behind Devin—the most hyped AI coding agent—published this:
 
     "In 2025, running multiple agents in collaboration only results in fragile systems. The decision-making ends up being too dispersed and context isn't able to be shared thoroughly enough between the agents."
 
@@ -74,30 +69,24 @@ posts:
     1. All agents should read from the same context
     2. All agents should write to the same context
 
-    This is exactly what we've been building with RoyalBit Asimov.
-
-    Not fixed agent topologies. Not pre-defined roles.
-
-    One large context (200k+ tokens) where the AI sees everything and decides when parallelization benefit exceeds coordination cost.
-
-    The research backs it up:
+    This aligns with what the research shows:
     - Full-file context: 95% accuracy
     - Fragmented retrieval: 80% accuracy
 
-    That 15% gap is the difference between shipping and debugging.
+    That 15% gap compounds over steps. By step 10, it's the difference between shipping and debugging.
 
-    Cognition learned it the hard way. The research confirms it. The math proves it.
-
-    One context beats many agents.
+    Cognition learned it the hard way. Google/MIT confirmed it. The math proves it.
 
     Source: https://cognition.ai/blog/dont-build-multi-agents
-    Our research: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
-    #AI #Agents #Devin #SoftwareEngineering #MultiAgent
+    We compiled the research (50+ refs):
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+
+    #AI #Agents #Devin #SoftwareEngineering
   posted: {}
 
 - id: adr-054-accuracy-gap
-  title: 95% vs 80%
+  title: 95% vs 80% - The Coherence Gap
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
     Full context: 95% accuracy.
@@ -107,10 +96,8 @@ posts:
 
     The difference? Coherence.
 
-    Full = relationships.
-    Fragments = stitching.
-
-    One context beats many agents.
+    Full files = relationships intact.
+    Fragments = stitching pieces together.
 
     #AI #SWEbench
   linkedin: |
@@ -141,35 +128,33 @@ posts:
     - Beyond that, coordination overhead dominates
     - 17.2x error amplification with independent agents
 
-    The solution isn't better coordination infrastructure.
+    The fix isn't better coordination infrastructure.
 
-    The solution is not fragmenting context in the first place.
+    The fix is not fragmenting context in the first place.
 
-    One 200k-token context. AI decides when to spawn agents. Context IS the coordination layer.
-
+    Research (50+ verified refs):
     https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
-    #AI #SWEbench #Coding #SoftwareEngineering #Agents
+    #AI #SWEbench #Coding #SoftwareEngineering
   posted: {}
 
-- id: adr-054-one-liner
-  title: One Context Beats Many Agents
+- id: adr-054-research-summary
+  title: Multi-Agent Research Summary
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    One context beats many agents.
+    We spent a week on multi-agent research.
 
-    Research:
-    - 95% vs 80% (SWE-bench)
-    - 17.2x error rate (Google/MIT)
-    - Max 3-4 agents (Rule of 4)
+    50+ verified refs. Here's what we found:
 
-    50+ references in ADR-054.
+    - 95% vs 80% accuracy (SWE-bench)
+    - 17.2x error amplification (Google/MIT)
+    - Max 3-4 effective agents
+
+    The pattern that works? One context.
 
     #AI #Agents
   linkedin: |
-    One context beats many agents. The research proves it.
-
-    We spent a week gathering hard data on agentic AI architectures. 50+ verified references. Real benchmarks. Peer-reviewed research.
+    We spent a week gathering hard data on multi-agent AI architectures. 50+ verified references. Real benchmarks. Peer-reviewed research.
 
     The findings:
 
@@ -194,21 +179,20 @@ posts:
 
     The implication:
 
-    LangChain, CrewAI, AutoGen—they're engineering complexity around a fundamental limitation. Fragmenting context to work within smaller windows. Building coordination infrastructure to reconnect what should never have been separated.
+    Fixed agent frameworks are engineering complexity around a fundamental limitation. They fragment context to work within smaller windows. They build coordination infrastructure to reconnect what should never have been separated.
 
-    The alternative: One large context (200k+ tokens). AI decides when to spawn agents. Context IS the coordination layer.
+    The pattern that works: One large context. AI decides when to spawn agents. Context IS the coordination layer.
 
     O(1) coordination vs O(n^1.724).
 
-    The math doesn't lie.
+    Full research:
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
-    Full research: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
-
-    #AI #Agents #SoftwareEngineering #Research #LangChain #MultiAgent
+    #AI #Agents #SoftwareEngineering #Research #MultiAgent
   posted: {}
 
 - id: adr-054-rag-vs-context
-  title: RAG is Losing
+  title: RAG vs Long Context - The Data
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
     Long context outperforms RAG by 7-13%.
@@ -218,9 +202,10 @@ posts:
     - Gemini-1.5-Pro: +7.6%
 
     RAG is 25x cheaper.
-    But loses on multi-step reasoning, implicit queries, general questions.
 
-    When accuracy matters, use the context window.
+    But it fails on multi-step reasoning.
+
+    When accuracy matters, use the full context.
 
     #AI #RAG #LLM
   linkedin: |
@@ -258,29 +243,29 @@ posts:
 
     Use the context window.
 
-    Research: https://arxiv.org/abs/2407.16833
-    Our analysis: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+    Original research: https://arxiv.org/abs/2407.16833
+
+    Our analysis (50+ refs):
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
     #AI #RAG #LLM #SoftwareEngineering #Research
   posted: {}
 
 - id: error-compounding-math
-  title: Error Compounding Math
+  title: 5,391x - Error Compounding
   url: https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
   x: |
-    95% vs 80% isn't 15 points.
+    5,391x. Not a typo.
+
+    That's the gap at 50 steps.
 
     Errors compound: accuracy^steps
 
     10 steps:
-    - 80%: 10.7% success
-    - 95%: 59.9% success
+    - 80% per step → 10.7% success
+    - 95% per step → 59.9% success
 
-    That's 5.6x better odds.
-
-    At 50 steps? 5,391x.
-
-    Multi-agent collapses on complex tasks.
+    We modeled this deterministically.
 
     #AI #Math
   linkedin: |
@@ -293,51 +278,50 @@ posts:
     Here's what that means in practice:
 
     At 1 step:
-    - Fragmented (80%): 80% success
-    - Full context (95%): 95% success
+    - 80% accuracy: 80% success
+    - 95% accuracy: 95% success
     - Gap: 1.2x
 
     At 10 steps (typical complex task):
-    - Fragmented: 10.7% success
-    - Full context: 59.9% success
+    - 80% accuracy: 10.7% success
+    - 95% accuracy: 59.9% success
     - Gap: 5.6x
 
     At 20 steps (large feature):
-    - Fragmented: 1.2% success
-    - Full context: 35.8% success
+    - 80% accuracy: 1.2% success
+    - 95% accuracy: 35.8% success
     - Gap: 31x
 
     At 50 steps (system integration):
-    - Fragmented: 0.001% success
-    - Full context: 7.7% success
+    - 80% accuracy: 0.001% success
+    - 95% accuracy: 7.7% success
     - Gap: 5,391x
 
     This is why multi-agent systems collapse on complex tasks.
 
     Each agent handoff is a step. Each step compounds the error.
 
-    We built a deterministic Forge model to prove it:
+    We modeled this deterministically:
     https://github.com/royalbit/asimov/blob/main/models/error-compounding.yaml
 
     The math doesn't lie.
 
-    #AI #Agents #Math #SoftwareEngineering #MultiAgent
+    #AI #Agents #Math #SoftwareEngineering
   posted: {}
 
 - id: error-compounding-89-percent
   title: 89% Failure Rate
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    At 10 steps:
+    89% failure rate.
 
-    Fragmented context: 89% failure
-    Full context: 40% failure
+    That's multi-agent at 10 steps.
 
-    That's a typical complex coding task.
+    Full context? 40% failure.
 
-    Multi-agent collapses because each handoff compounds the error.
+    Same task. Different architecture.
 
-    One context beats many agents.
+    Each handoff compounds the error.
 
     #AI #Agents
   linkedin: |
@@ -359,15 +343,16 @@ posts:
     - Step 5: 77.4% success
     - Step 10: 59.9% success ← 40% failure
 
-    This is why LangChain, CrewAI, and other multi-agent frameworks hit a wall on complex tasks.
+    This explains why multi-agent frameworks hit a wall on complex tasks.
 
     They fragment context. Each agent handoff is a step. Each step compounds the 20% error rate.
 
     By step 10, you're essentially guaranteed to fail.
 
-    The solution: One large context (200k+ tokens). AI decides when to spawn agents. Context IS the coordination layer.
+    The pattern that works: One large context (200k+ tokens). AI decides when to spawn agents. Context IS the coordination layer.
 
-    Research: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
+    Research (50+ verified refs):
+    https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
 
-    #AI #Agents #MultiAgent #SoftwareEngineering #LangChain
+    #AI #Agents #MultiAgent #SoftwareEngineering
   posted: {}
