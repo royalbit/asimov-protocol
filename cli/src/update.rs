@@ -28,10 +28,10 @@ pub struct VersionCheck {
 /// Get the appropriate asset name for the current platform
 pub fn get_platform_asset() -> Option<&'static str> {
     #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
-    return Some("asimov-x86_64-unknown-linux-gnu.tar.gz");
+    return Some("asimov-x86_64-unknown-linux-musl.tar.gz");
 
     #[cfg(all(target_os = "linux", target_arch = "aarch64"))]
-    return Some("asimov-aarch64-unknown-linux-gnu.tar.gz");
+    return Some("asimov-aarch64-unknown-linux-musl.tar.gz");
 
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     return Some("asimov-aarch64-apple-darwin.tar.gz");
@@ -544,8 +544,8 @@ mod tests {
             "name": "Release 9.0.0",
             "assets": [
                 {
-                    "name": "asimov-x86_64-unknown-linux-gnu.tar.gz",
-                    "browser_download_url": "https://github.com/royalbit/asimov/releases/download/v9.0.0/asimov-x86_64-unknown-linux-gnu.tar.gz"
+                    "name": "asimov-x86_64-unknown-linux-musl.tar.gz",
+                    "browser_download_url": "https://github.com/royalbit/asimov/releases/download/v9.0.0/asimov-x86_64-unknown-linux-musl.tar.gz"
                 },
                 {
                     "name": "checksums.txt",
@@ -581,16 +581,16 @@ mod tests {
         let response = r#"{
             "assets": [
                 {
-                    "name": "asimov-x86_64-unknown-linux-gnu.tar.gz",
-                    "browser_download_url": "https://github.com/royalbit/asimov/releases/download/v9.0.0/asimov-x86_64-unknown-linux-gnu.tar.gz"
+                    "name": "asimov-x86_64-unknown-linux-musl.tar.gz",
+                    "browser_download_url": "https://github.com/royalbit/asimov/releases/download/v9.0.0/asimov-x86_64-unknown-linux-musl.tar.gz"
                 }
             ]
         }"#;
-        let url = find_asset_url(response, "asimov-x86_64-unknown-linux-gnu.tar.gz");
+        let url = find_asset_url(response, "asimov-x86_64-unknown-linux-musl.tar.gz");
         assert!(url.is_some());
         assert!(url
             .unwrap()
-            .contains("asimov-x86_64-unknown-linux-gnu.tar.gz"));
+            .contains("asimov-x86_64-unknown-linux-musl.tar.gz"));
     }
 
     #[test]
@@ -624,10 +624,10 @@ mod tests {
 
     #[test]
     fn test_parse_checksums() {
-        let checksums = r#"abc123def456  asimov-x86_64-unknown-linux-gnu.tar.gz
+        let checksums = r#"abc123def456  asimov-x86_64-unknown-linux-musl.tar.gz
 789xyz000111  asimov-aarch64-apple-darwin.tar.gz"#;
 
-        let checksum = parse_checksums(checksums, "asimov-x86_64-unknown-linux-gnu.tar.gz");
+        let checksum = parse_checksums(checksums, "asimov-x86_64-unknown-linux-musl.tar.gz");
         assert_eq!(checksum, Some("abc123def456".to_string()));
 
         let checksum2 = parse_checksums(checksums, "asimov-aarch64-apple-darwin.tar.gz");
@@ -853,7 +853,7 @@ mod tests {
             "tag_name": "v99.0.0",
             "assets": [
                 {
-                    "name": "asimov-x86_64-unknown-linux-gnu.tar.gz",
+                    "name": "asimov-x86_64-unknown-linux-musl.tar.gz",
                     "browser_download_url": "https://example.com/asimov.tar.gz"
                 }
             ]

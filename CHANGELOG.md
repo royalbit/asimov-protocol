@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.0.1] - 2025-12-31
+
+### Fixed
+
+- **Self-update on Linux**: Changed platform asset from `gnu` to `musl` to match actual release binaries. The update command was failing with "Checksum not found" because it looked for `asimov-x86_64-unknown-linux-gnu.tar.gz` but releases only provide `asimov-x86_64-unknown-linux-musl.tar.gz`.
+
 ## [10.0.0] - 2025-12-31
 
 ### Docs: LLM Harmful Behavior Countermeasures Research
