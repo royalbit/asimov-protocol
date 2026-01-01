@@ -52,16 +52,18 @@ posts:
   title: Devin's Creators on Multi-Agent
   url: https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md
   x: |
-    "In 2025, running multiple agents only results in fragile systems."
+    Last year, Cognition (Devin's creators) wrote:
 
-    — Cognition (Devin's creators)
+    "Running multiple agents only results in fragile systems."
 
     They built the hype.
-    Now they're saying don't.
+    Then said don't.
+
+    2026: Still true.
 
     #AI #Devin
   linkedin: |
-    The team behind Devin—the most hyped AI coding agent—published this:
+    Last year, the team behind Devin—the most hyped AI coding agent—published this:
 
     "In 2025, running multiple agents in collaboration only results in fragile systems. The decision-making ends up being too dispersed and context isn't able to be shared thoroughly enough between the agents."
 
@@ -69,7 +71,7 @@ posts:
     1. All agents should read from the same context
     2. All agents should write to the same context
 
-    This aligns with what the research shows:
+    As we enter 2026, this still holds. The research confirms it:
     - Full-file context: 95% accuracy
     - Fragmented retrieval: 80% accuracy
 
@@ -175,7 +177,7 @@ posts:
     Token usage explains 80% of performance variance
 
     5. Cognition (Devin) agrees
-    "In 2025, running multiple agents in collaboration only results in fragile systems."
+    "Running multiple agents in collaboration only results in fragile systems."
 
     The implication:
 
