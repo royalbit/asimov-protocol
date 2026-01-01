@@ -105,6 +105,55 @@ To bypass: Fork repo → Modify source → Rebuild CLI → Public git history sh
 
 ---
 
+## Why Not LangChain, CrewAI, or Other Agentic Frameworks?
+
+**They hit Brooks' Law at 3-4 agents.**
+
+> "Adding manpower to a late software project makes it later." — Fred Brooks, 1975
+
+Asimov uses a single large context (200k+ tokens) where AI decides when to spawn agents. Fixed frameworks fragment context across pre-defined agent roles.
+
+### The Research (All Verified, December 2025)
+
+| Finding | Source |
+|---------|--------|
+| Full-file context: **95%** accuracy vs fragmented: **80%** | [SWE-bench / Inkeep](https://inkeep.com/blog/context-engineering-why-agents-fail) |
+| Max **3-4 effective agents** before overhead dominates | [Google/MIT](https://venturebeat.com/orchestration/research-shows-more-agents-isnt-a-reliable-path-to-better-enterprise-ai) |
+| **17.2x error amplification** with independent agents | Google/MIT |
+| Communication overhead scales with **exponent 1.724** | Google/MIT |
+| Multi-agent uses **15x more tokens** than single chat | [Anthropic](https://www.anthropic.com/engineering/multi-agent-research-system) |
+| CrewAI: **37% tool success rate** vs LangGraph: 100% | [AIMultiple](https://research.aimultiple.com/agentic-analytics/) |
+| Long context outperforms RAG by **7-13%** | [Google DeepMind](https://arxiv.org/abs/2407.16833) |
+
+### Cognition (Devin) Agrees
+
+> "In 2025, running multiple agents in collaboration only results in fragile systems."
+>
+> — [Cognition](https://cognition.ai/blog/dont-build-multi-agents)
+
+### Brooks' Law Math
+
+```
+Communication channels = N × (N-1) / 2
+
+4 agents  = 6 channels   (manageable)
+10 agents = 45 channels  (chaos)
+20 agents = 190 channels (impossible)
+```
+
+### The Asimov Difference
+
+| Dimension | Asimov | LangChain/CrewAI |
+|-----------|--------|------------------|
+| Context per orchestrator | **200k+** | 8-32k per agent |
+| Agent topology | **Runtime-decided by AI** | Design-time fixed |
+| Coordination overhead | **O(1)** | O(n^1.724) |
+| Code understanding | **95%** | 80% (fragmented) |
+
+**Full research:** [ADR-054: Dynamic Swarm vs Fixed Agentic Frameworks](https://github.com/royalbit/asimov/blob/main/docs/adr/054-dynamic-swarm-vs-fixed-agentic-frameworks.md) — 50+ verified references
+
+---
+
 ## Media Contact
 
 **Email:** press@royalbit.com
