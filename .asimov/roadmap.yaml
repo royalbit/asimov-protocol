@@ -3,10 +3,14 @@
 # WHAT to build - milestones only
 # See: CHANGELOG.md for release history
 
-# current: (none - see CHANGELOG.md for v10.3.1)
+current:
+  version: "10.3.1"
+  status: released
+  summary: "Template cleanup - flat structure, init supports all 21 templates"
 
 next:
-  - "ADR-034 auto-inheritance: Support ~inherit~ marker in roadmap deliverables"
-  - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
+  - version: "10.4.0"
+    summary: "ADR-034 auto-inheritance: Support ~inherit~ marker in roadmap deliverables"
 
-backlog: []
+backlog:
+  - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
