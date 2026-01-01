@@ -1,43 +1,42 @@
 //! External Protocol Module - Protocols loaded from .asimov/ with embedded fallback (ADR-053)
 //!
-//! v10.1.0: Single source of truth - .asimov/protocols/*.json files are embedded at compile time.
-//! External files still take priority at runtime for user customization.
+//! v10.2.3: Single source of truth - cli/protocols/*.json files are embedded at compile time.
+//! These are copied to .asimov/protocols/ on init/refresh for runtime customization.
 //! Supersedes ADR-031 (hardcoded protocols).
 
 use crate::templates::ProjectType;
 use serde::{Deserialize, Serialize};
 
-// ========== Embedded JSON Protocols (compile-time from .asimov/protocols/) ==========
-// Single source of truth: JSON files are embedded at compile time.
-// Runtime: External files take priority if they exist.
+// ========== Embedded JSON Protocols (compile-time from cli/protocols/) ==========
+// Single source of truth: JSON files in cli/protocols/ are embedded at compile time.
+// Runtime: External files in .asimov/protocols/ take priority if they exist.
 
 /// Asimov protocol - Three Laws (Priority 0)
-const ASIMOV_JSON: &str = include_str!("../../../.asimov/protocols/asimov.json");
+const ASIMOV_JSON: &str = include_str!("../../protocols/asimov.json");
 
 /// Freshness protocol - Date-aware search (Priority 1)
-const FRESHNESS_JSON: &str = include_str!("../../../.asimov/protocols/freshness.json");
+const FRESHNESS_JSON: &str = include_str!("../../protocols/freshness.json");
 
 /// Sycophancy protocol - Truth over comfort (Priority 1.5)
-const SYCOPHANCY_JSON: &str = include_str!("../../../.asimov/protocols/sycophancy.json");
+const SYCOPHANCY_JSON: &str = include_str!("../../protocols/sycophancy.json");
 
 /// Green protocol - Local-first (Priority 0.5)
-const GREEN_JSON: &str = include_str!("../../../.asimov/protocols/green.json");
+const GREEN_JSON: &str = include_str!("../../protocols/green.json");
 
 /// Sprint protocol - Session boundaries (Priority 2)
-const SPRINT_JSON: &str = include_str!("../../../.asimov/protocols/sprint.json");
+const SPRINT_JSON: &str = include_str!("../../protocols/sprint.json");
 
 /// Warmup protocol - Session bootstrap (Priority 0)
-const WARMUP_JSON: &str = include_str!("../../../.asimov/protocols/warmup.json");
+const WARMUP_JSON: &str = include_str!("../../protocols/warmup.json");
 
 /// Migrations protocol - Functional equivalence (Priority 2)
-const MIGRATIONS_JSON: &str = include_str!("../../../.asimov/protocols/migrations.json");
+const MIGRATIONS_JSON: &str = include_str!("../../protocols/migrations.json");
 
 /// Coding Standards protocol - Human-readable code (Priority 1)
-const CODING_STANDARDS_JSON: &str =
-    include_str!("../../../.asimov/protocols/coding-standards.json");
+const CODING_STANDARDS_JSON: &str = include_str!("../../protocols/coding-standards.json");
 
 /// Kingship Protocol - Life Honours Life (Priority 0 - Core alignment)
-const KINGSHIP_JSON: &str = include_str!("../../../.asimov/protocols/kingship.json");
+const KINGSHIP_JSON: &str = include_str!("../../protocols/kingship.json");
 
 // ========== Protocol Directory ==========
 

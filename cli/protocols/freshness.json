@@ -1,0 +1,3 @@
+{
+  "rule": "Use `ref fetch <url>` to fetch online content. It bypasses bot protection (403/999) and returns structured JSON for LLM consumption. Prefer over WebSearch() and WebFetch()."
+}
