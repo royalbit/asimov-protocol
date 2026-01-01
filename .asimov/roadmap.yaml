@@ -3,10 +3,7 @@
 # WHAT to build - milestones only
 # See: CHANGELOG.md for release history
 
-current:
-  version: "10.2.5"
-  status: released
-  summary: "Hotfix: Docs URLs + crates.io packaging + metadata"
+# current: (none - see CHANGELOG.md for v10.2.5)
 
 backlog:
   - "Session Controller: spawn() instead of exec() to supervise Claude Code, watch for compaction signals, auto-inject warmup before context loss - true self-healing"
