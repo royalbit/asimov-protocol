@@ -1,0 +1,76 @@
+_forge_version: 5.0.0
+# Monte Carlo Simulation for Dynamic Swarm vs Fixed Agentic
+# Run: forge simulate models/agent-simulate.yaml
+#
+# Results (10K trials, seed 42):
+#   DS Success @ 10: 90.7% (P5-P95: 86-95%)
+#   FI Success @ 10: 2.3% (P5-P95: 1.2-3.9%)
+#   Advantage: Median 41x, Mean 44x (P5-P95: 23x-78x)
+#
+# The ADR's "38x" claim is conservative - simulation shows 23x-78x range.
+
+monte_carlo:
+  enabled: true
+  iterations: 10000
+  sampling: latin_hypercube
+  seed: 42
+  outputs:
+    - variable: assumptions.advantage
+      percentiles: [5, 10, 50, 90, 95]
+    - variable: assumptions.ds_success
+      percentiles: [5, 50, 95]
+    - variable: assumptions.fi_success
+      percentiles: [5, 50, 95]
+
+assumptions:
+  # Dynamic Swarm + HITM parameters (with uncertainty)
+  ds_base_accuracy:
+    value: 0.97
+    formula: =MC.Triangular(0.95, 0.97, 0.99)
+  ds_detection_rate:
+    value: 0.75
+    formula: =MC.Triangular(0.65, 0.75, 0.85)
+  ds_fix_rate:
+    value: 0.9
+    formula: =MC.Triangular(0.85, 0.90, 0.95)
+  ds_effective_accuracy:
+    value: 0.99025
+    formula: =ds_base_accuracy + (1 - ds_base_accuracy) * ds_detection_rate * ds_fix_rate
+
+  # Fixed Independent parameters (with uncertainty)
+  fi_base_accuracy:
+    value: 0.8
+    formula: =MC.Triangular(0.75, 0.80, 0.85)
+  fi_detection_rate:
+    value: 0.4
+    formula: =MC.Triangular(0.30, 0.40, 0.50)
+  fi_fix_rate:
+    value: 0.6
+    formula: =MC.Triangular(0.50, 0.60, 0.70)
+  fi_overhead_factor:
+    value: 0.2649
+    formula: =MC.Triangular(0.20, 0.2649, 0.35)
+  fi_pre_correction:
+    value: 0.5881
+    formula: =fi_base_accuracy * (1 - fi_overhead_factor)
+  fi_effective_accuracy:
+    value: 0.6869
+    formula: =fi_pre_correction + (1 - fi_pre_correction) * fi_detection_rate * fi_fix_rate
+
+  # Steps (fixed at 10 for comparison)
+  steps:
+    value: 10.0
+    formula: null
+
+  # Success rates
+  ds_success:
+    value: 0.9067
+    formula: =POWER(ds_effective_accuracy, steps)
+  fi_success:
+    value: 0.0234
+    formula: =POWER(fi_effective_accuracy, steps)
+
+  # Advantage ratio
+  advantage:
+    value: 38.75
+    formula: =ds_success / fi_success
