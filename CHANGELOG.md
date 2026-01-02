@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.4.0] - 2026-01-01
+
+### Added
+
+- **Limitations section in README** - HOTL bottleneck, Claude dependency, token cost, spawn latency, research transparency callout
+- **Formula derivations** (`docs/FORMULA_DERIVATIONS.md`) - Full Monte Carlo model derivation, O(n^1.724) source, 38x/1502x calculation methodology
+- **Simulation code** (`models/simulate.py`) - Standalone Python Monte Carlo with 95% confidence intervals, validates analytical formulas
+- **DOI citations** (`references.yaml`) - Added DOI format to key arXiv papers, marked secondary sources with citation notes
+
+### Changed
+
+- Addresses feedback on research completeness and credibility
+
+---
+
 ## [10.3.1] - 2026-01-01
 
 ### Changed
