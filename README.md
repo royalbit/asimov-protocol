@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/badge/code-ELv2-blue.svg)](LICENSE)
 [![Docs License](https://img.shields.io/badge/docs-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
+> **[Disclaimer](DISCLAIMER.md):** This project intentionally uses exaggerated claims as part of adversarial R&D. Claims are hypotheses, not guarantees.
+
 > **Dynamic Swarm + HOTL beats Fixed Agentic. We have the math.**
 
 ## The Architecture
