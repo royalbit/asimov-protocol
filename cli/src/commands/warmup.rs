@@ -1,9 +1,7 @@
 //! Warmup command implementation
+//! v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates
 
-use crate::{
-    check_for_update, compile_protocols_for_type, resolve_protocol_dir, to_minified_json_for_type,
-    ProjectType,
-};
+use crate::{check_for_update, compile_protocols, resolve_protocol_dir, to_minified_json, ProjectType};
 use std::path::Path;
 
 /// Information about a detected CLI tool
@@ -218,10 +216,9 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         }
     }
 
-    // Compile protocols based on project type (v9.2.3)
-    // Migrations protocol only included for migration-type projects
-    let _protocols = compile_protocols_for_type(result.project_type);
-    result.protocols_json = Some(to_minified_json_for_type(result.project_type));
+    // Compile protocols (v10.8.0: migrations removed - now part of API templates ADR-062)
+    let _protocols = compile_protocols();
+    result.protocols_json = Some(to_minified_json());
 
     // v9.17.0: Detect available CLI tools
     result.tools_available = detect_tools();
@@ -496,10 +493,12 @@ next:
         // The update check code path was exercised
     }
 
-    // v9.2.3: Conditional migrations protocol tests
+    // v10.8.0: Migrations protocol tests removed (ADR-062)
+    // Migrations is no longer a protocol - it's part of API templates (api-rust, api-go, etc.)
+    // All projects now exclude migrations from protocols - it's template content instead
 
     #[test]
-    fn test_warmup_rust_project_excludes_migrations() {
+    fn test_warmup_protocols_exclude_migrations() {
         let temp = TempDir::new().unwrap();
         let asimov_dir = temp.path().join(".asimov");
         std::fs::create_dir_all(&asimov_dir).unwrap();
@@ -508,85 +507,10 @@ next:
             "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
         )
         .unwrap();
-        std::fs::write(
-            asimov_dir.join("project.yaml"),
-            "identity:\n  name: TestProject\n  type: rust\n",
-        )
-        .unwrap();
 
         let result = run_warmup(temp.path(), false);
         assert!(result.success);
-        assert_eq!(result.project_type, ProjectType::Rust);
-        // Rust projects should NOT include migrations protocol
-        let json = result.protocols_json.unwrap();
-        assert!(!json.contains("\"migrations\""));
-    }
-
-    #[test]
-    fn test_warmup_migration_project_includes_migrations() {
-        let temp = TempDir::new().unwrap();
-        let asimov_dir = temp.path().join(".asimov");
-        std::fs::create_dir_all(&asimov_dir).unwrap();
-        std::fs::write(
-            asimov_dir.join("roadmap.yaml"),
-            "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
-        )
-        .unwrap();
-        std::fs::write(
-            asimov_dir.join("project.yaml"),
-            "identity:\n  name: MigrationProject\n  type: migration\n",
-        )
-        .unwrap();
-
-        let result = run_warmup(temp.path(), false);
-        assert!(result.success);
-        assert_eq!(result.project_type, ProjectType::Migration);
-        // Migration projects SHOULD include migrations protocol
-        let json = result.protocols_json.unwrap();
-        assert!(json.contains("\"migrations\""));
-        assert!(json.contains("functionally equivalent"));
-    }
-
-    #[test]
-    fn test_warmup_generic_project_excludes_migrations() {
-        let temp = TempDir::new().unwrap();
-        let asimov_dir = temp.path().join(".asimov");
-        std::fs::create_dir_all(&asimov_dir).unwrap();
-        std::fs::write(
-            asimov_dir.join("roadmap.yaml"),
-            "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
-        )
-        .unwrap();
-        // No project.yaml means generic type
-
-        let result = run_warmup(temp.path(), false);
-        assert!(result.success);
-        assert_eq!(result.project_type, ProjectType::Generic);
-        // Generic projects should NOT include migrations protocol
-        let json = result.protocols_json.unwrap();
-        assert!(!json.contains("\"migrations\""));
-    }
-
-    #[test]
-    fn test_warmup_python_project_excludes_migrations() {
-        let temp = TempDir::new().unwrap();
-        let asimov_dir = temp.path().join(".asimov");
-        std::fs::create_dir_all(&asimov_dir).unwrap();
-        std::fs::write(
-            asimov_dir.join("roadmap.yaml"),
-            "current:\n  version: '1.0'\n  status: in_progress\n  summary: Test\n",
-        )
-        .unwrap();
-        std::fs::write(
-            asimov_dir.join("project.yaml"),
-            "identity:\n  name: PyProject\n  type: python\n",
-        )
-        .unwrap();
-
-        let result = run_warmup(temp.path(), false);
-        assert!(result.success);
-        assert_eq!(result.project_type, ProjectType::Python);
-        // Python projects should NOT include migrations protocol
+        // v10.8.0: All projects exclude migrations from protocols (ADR-062)
         let json = result.protocols_json.unwrap();
         assert!(!json.contains("\"migrations\""));
     }

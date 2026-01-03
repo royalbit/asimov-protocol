@@ -17,7 +17,7 @@ use output::{
 #[derive(Parser)]
 #[command(name = "asimov")]
 #[command(about = "RoyalBit Asimov CLI - AI development with protocol enforcement")]
-#[command(long_about = "RoyalBit Asimov CLI v10.7.0
+#[command(long_about = "RoyalBit Asimov CLI v10.10.0
 Copyright (c) 2025 RoyalBit Inc.
 Licensed under Elastic License 2.0 (ELv2).
 
@@ -39,14 +39,13 @@ EXAMPLES:
   asimov update                      # Update binary
   asimov init                        # Initialize new project
 
-PROTOCOLS (8 total, loaded from .asimov/protocols/ with embedded fallback):
+PROTOCOLS (7 total, loaded from .asimov/protocols/ with embedded fallback):
   - asimov     - The Three Laws (do no harm, obey human, self-preserve)
   - freshness  - Date-aware search (WebSearch/WebFetch with current date)
   - sycophancy - Truth over comfort, honest disagreement
   - green      - Efficiency benchmarks via WebSearch
   - sprint     - Autonomous execution + compaction survival (run until done)
   - warmup     - Session bootstrap (load, validate, present)
-  - migrations - Functional equivalence (same inputs = same outputs)
   - coding-standards - Human-readable code (RFC2119 compliance)
 
 Docs: https://github.com/royalbit/asimov")]

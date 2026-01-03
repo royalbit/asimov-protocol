@@ -41,9 +41,16 @@ features:
   - Health check endpoint
   - Docker support
 
-# v10.3.0: Reference management for AI research
-references:
-  file: "references.yaml"
-  scan: "ref scan README.md docs/*.md CHANGELOG.md"
-  verify: "ref verify-refs references.yaml"
-  note: "Track AI research sources. Use ref fetch <url> for web content."
+# v10.8.0: Database migrations guidance (ADR-062)
+migrations:
+  principle: "Migration complete = functionally equivalent, not just compiles"
+  tool: "GORM auto-migrate or golang-migrate"
+  strategies:
+    - test_parity: "Same tests pass before and after migration"
+    - contract_testing: "Define input/output contracts, verify both satisfy"
+    - behavioral_snapshots: "Capture old behavior as golden files"
+    - shadow_mode: "Run both implementations, diff results"
+  red_flags:
+    - "Skipping tests for speed"
+    - "Assuming compilation = correctness"
+    - "Silent behavior changes"

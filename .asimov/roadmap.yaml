@@ -4,17 +4,11 @@
 # See: CHANGELOG.md for release history
 
 current:
-  version: "10.7.0"
+  version: "10.10.0"
   status: released
-  summary: "ADR-061: AI Profiles - auto-detect AI CLI, prompt if multiple"
+  summary: "Clean release: migrations as template, cleaner templates, professional sprint"
 
 next:
-  - version: "10.8.0"
-    summary: "Convert migrations protocol to project template"
-  - version: "10.9.0"
-    summary: "Remove deliverables_template and references from project templates"
-  - version: "10.10.0"
-    summary: "Tone down sprint.json (remove ALL CAPS compaction reminder)"
   - version: "11.0.0"
     summary: "Documentation audit: remove/archive all sci-fi references (use agents)"
 

@@ -117,20 +117,21 @@ pub use update::{check_for_update, perform_update, VersionCheck, CURRENT_VERSION
 // v9.2.3: Added conditional migrations support
 // v9.14.0: Merged exhaustive into sprint (ADR-049)
 // v9.18.0: Added Kingship Protocol (Life Honours Life)
+// v10.8.0: Migrations removed (ADR-062) - now part of API templates
 pub use protocols::{
     // v8.14.0: Individual protocol JSON files
     asimov_json,
     compile_protocols,
-    compile_protocols_for_type,
-    compile_protocols_with_options,
+    // v10.8.0: compile_protocols_for_type removed (ADR-062)
+    // v10.8.0: compile_protocols_with_options removed (ADR-062)
     freshness_json,
     green_json,
     inject_dates,
-    migrations_json,
+    // v10.8.0: migrations_json removed (ADR-062)
     sprint_json,
     sycophancy_json,
     to_minified_json,
-    to_minified_json_for_type,
+    // v10.8.0: to_minified_json_for_type removed (ADR-062)
     to_pretty_json,
     warmup_entry_json,
     CompiledProtocols,

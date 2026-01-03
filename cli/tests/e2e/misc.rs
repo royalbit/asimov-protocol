@@ -782,8 +782,11 @@ fn e2e_warmup_rust_project_excludes_migrations() {
     );
 }
 
+// v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates
+// This test verifies migration projects also exclude migrations from protocols
+// since migrations content is now in templates, not protocols
 #[test]
-fn e2e_warmup_migration_project_includes_migrations() {
+fn e2e_warmup_migration_project_excludes_migrations() {
     let temp_dir = TempDir::new().unwrap();
     let asimov_dir = temp_dir.path().join(".asimov");
     fs::create_dir_all(&asimov_dir).unwrap();
@@ -816,14 +819,11 @@ fn e2e_warmup_migration_project_includes_migrations() {
         output.status.success(),
         "Warmup should succeed, stdout: {stdout}, stderr: {stderr}"
     );
-    // Migration projects SHOULD include migrations protocol in output
+    // v10.8.0: All projects exclude migrations from protocols (ADR-062)
+    // Migrations content is now in templates (api-rust, api-go, etc.)
     assert!(
-        stdout.contains("\"migrations\""),
-        "Migration project SHOULD include migrations protocol, got: {stdout}"
-    );
-    assert!(
-        stdout.contains("functionally equivalent"),
-        "Migration protocol should contain principle, got: {stdout}"
+        !stdout.contains("\"migrations\""),
+        "Migration project should NOT include migrations protocol (ADR-062), got: {stdout}"
     );
 }
 

@@ -3,8 +3,8 @@
 //! v10.2.3: Single source of truth - cli/protocols/*.json files are embedded at compile time.
 //! These are copied to .asimov/protocols/ on init/refresh for runtime customization.
 //! Supersedes ADR-031 (hardcoded protocols).
+//! v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates.
 
-use crate::templates::ProjectType;
 use serde::{Deserialize, Serialize};
 
 // ========== Embedded JSON Protocols (compile-time from cli/protocols/) ==========
@@ -29,8 +29,7 @@ const SPRINT_JSON: &str = include_str!("../../protocols/sprint.json");
 /// Warmup protocol - Session bootstrap (Priority 0)
 const WARMUP_JSON: &str = include_str!("../../protocols/warmup.json");
 
-/// Migrations protocol - Functional equivalence (Priority 2)
-const MIGRATIONS_JSON: &str = include_str!("../../protocols/migrations.json");
+// v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates
 
 /// Coding Standards protocol - Human-readable code (Priority 1)
 const CODING_STANDARDS_JSON: &str = include_str!("../../protocols/coding-standards.json");
@@ -50,6 +49,7 @@ fn try_read_protocol(name: &str) -> Option<String> {
 
 /// Compiled protocol context for minimal token usage
 /// v10.0.0: Now uses owned String types for external file support
+/// v10.8.0: Migrations removed (ADR-062) - now part of API templates
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CompiledProtocols {
     pub asimov: AsimovProtocol,
@@ -58,8 +58,6 @@ pub struct CompiledProtocols {
     pub green: GreenProtocol,
     pub sprint: SprintProtocol,
     pub warmup: WarmupProtocol,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub migrations: Option<MigrationsProtocol>,
     pub coding_standards: CodingStandardsProtocol,
 }
 
@@ -105,12 +103,7 @@ pub struct WarmupEntry {
     pub on_start: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct MigrationsProtocol {
-    pub principle: String,
-    pub strategies: Vec<String>,
-    pub red_flags: Vec<String>,
-}
+// v10.8.0: MigrationsProtocol removed (ADR-062) - now part of API templates
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CodingStandardsProtocol {
@@ -172,30 +165,15 @@ pub fn get_warmup_protocol() -> &'static str {
     WARMUP_JSON
 }
 
-pub fn get_migrations_protocol() -> &'static str {
-    MIGRATIONS_JSON
-}
+// v10.8.0: get_migrations_protocol removed (ADR-062) - now part of API templates
 
 pub fn get_coding_standards_protocol() -> &'static str {
     CODING_STANDARDS_JSON
 }
 
 /// Compile all protocols into a minimal JSON blob for context injection
-/// By default, includes all protocols (backward compatible)
+/// v10.8.0: Migrations removed (ADR-062) - now part of API templates
 pub fn compile_protocols() -> CompiledProtocols {
-    compile_protocols_with_options(true)
-}
-
-/// Compile protocols for a specific project type
-/// Migration protocol is only included for Migration-type projects
-pub fn compile_protocols_for_type(project_type: ProjectType) -> CompiledProtocols {
-    let include_migrations = project_type == ProjectType::Migration;
-    compile_protocols_with_options(include_migrations)
-}
-
-/// Compile protocols with explicit control over migrations inclusion
-/// v10.0.0: Tries external files first, falls back to embedded defaults
-pub fn compile_protocols_with_options(include_migrations: bool) -> CompiledProtocols {
     // Try to load from external files, fall back to embedded defaults
     let asimov = load_asimov_protocol();
     let freshness = load_freshness_protocol();
@@ -205,12 +183,6 @@ pub fn compile_protocols_with_options(include_migrations: bool) -> CompiledProto
     let warmup = load_warmup_protocol();
     let coding_standards = load_coding_standards_protocol();
 
-    let migrations = if include_migrations {
-        Some(load_migrations_protocol())
-    } else {
-        None
-    };
-
     CompiledProtocols {
         asimov,
         freshness,
@@ -218,7 +190,6 @@ pub fn compile_protocols_with_options(include_migrations: bool) -> CompiledProto
         green,
         sprint,
         warmup,
-        migrations,
         coding_standards,
     }
 }
@@ -274,13 +245,7 @@ fn load_warmup_protocol() -> WarmupProtocol {
         })
 }
 
-fn load_migrations_protocol() -> MigrationsProtocol {
-    try_read_protocol("migrations")
-        .and_then(|content| serde_json::from_str(&content).ok())
-        .unwrap_or_else(|| {
-            serde_json::from_str(MIGRATIONS_JSON).expect("Embedded migrations.json must be valid")
-        })
-}
+// v10.8.0: load_migrations_protocol removed (ADR-062) - now part of API templates
 
 fn load_coding_standards_protocol() -> CodingStandardsProtocol {
     try_read_protocol("coding-standards")
@@ -292,16 +257,13 @@ fn load_coding_standards_protocol() -> CodingStandardsProtocol {
 }
 
 /// Output compiled protocols as minified JSON (includes all protocols)
+/// v10.8.0: Migrations removed (ADR-062) - now part of API templates
 pub fn to_minified_json() -> String {
     let protocols = compile_protocols();
     serde_json::to_string(&protocols).expect("Protocol serialization should never fail")
 }
 
-/// Output compiled protocols as minified JSON for a specific project type
-pub fn to_minified_json_for_type(project_type: ProjectType) -> String {
-    let protocols = compile_protocols_for_type(project_type);
-    serde_json::to_string(&protocols).expect("Protocol serialization should never fail")
-}
+// v10.8.0: to_minified_json_for_type removed (ADR-062) - migrations was the only conditional
 
 /// Output compiled protocols as pretty JSON (for debugging)
 pub fn to_pretty_json() -> String {
@@ -363,12 +325,7 @@ pub fn sprint_json() -> String {
     serde_json::to_string_pretty(&protocols.sprint).expect("Sprint serialization should never fail")
 }
 
-/// Get migrations protocol JSON (functional equivalence)
-/// Note: Always returns the migrations protocol (for file generation)
-pub fn migrations_json() -> String {
-    let migrations = load_migrations_protocol();
-    serde_json::to_string_pretty(&migrations).expect("Migrations serialization should never fail")
-}
+// v10.8.0: migrations_json removed (ADR-062) - now part of API templates
 
 /// Get coding standards protocol JSON (human-readable code)
 pub fn coding_standards_json() -> String {
@@ -378,6 +335,7 @@ pub fn coding_standards_json() -> String {
 }
 
 /// Protocol files to write
+/// v10.8.0: Migrations removed (ADR-062) - now part of API templates
 #[allow(clippy::type_complexity)]
 pub const PROTOCOL_FILES: &[(&str, fn() -> String)] = &[
     ("warmup.json", warmup_entry_json),
@@ -386,7 +344,6 @@ pub const PROTOCOL_FILES: &[(&str, fn() -> String)] = &[
     ("sycophancy.json", sycophancy_json),
     ("green.json", green_json),
     ("sprint.json", sprint_json),
-    ("migrations.json", migrations_json),
     ("coding-standards.json", coding_standards_json),
 ];
 
@@ -410,7 +367,7 @@ mod tests {
         assert!(protocols.freshness.rule.contains("ref fetch")); // v10.1.0: Use ref for fetching
         assert!(protocols.sycophancy.truth_over_comfort);
         assert!(protocols.green.rule.contains("efficiency")); // Must check efficiency
-        assert!(protocols.sprint.compaction_reminder.contains("COMPACT")); // Must survive compaction (merged from exhaustive ADR-049)
+        assert!(protocols.sprint.compaction_reminder.contains("compaction")); // Must survive compaction (merged from exhaustive ADR-049)
         assert!(protocols
             .coding_standards
             .philosophy
@@ -422,14 +379,14 @@ mod tests {
         let json = to_minified_json();
         // Should be one line, no pretty printing
         assert!(!json.contains('\n'));
-        // Should contain all protocols (v9.14.0: exhaustive merged into sprint)
+        // Should contain all protocols (v10.8.0: migrations removed ADR-062)
         assert!(json.contains("\"asimov\""));
         assert!(json.contains("\"freshness\""));
         assert!(json.contains("\"sycophancy\""));
         assert!(json.contains("\"green\""));
         assert!(json.contains("\"sprint\""));
         assert!(json.contains("\"warmup\""));
-        assert!(json.contains("\"migrations\""));
+        assert!(!json.contains("\"migrations\"")); // v10.8.0: removed (ADR-062)
         assert!(json.contains("\"coding_standards\""));
         assert!(json.contains("\"compaction_reminder\"")); // Merged from exhaustive
     }
@@ -437,21 +394,23 @@ mod tests {
     #[test]
     fn test_embedded_json_protocols_exist() {
         // v10.1.0: Single source of truth - embedded JSON files
+        // v10.8.0: Migrations removed (ADR-062) - now part of API templates
         // These will fail at compile time if JSON files don't exist
         assert!(ASIMOV_JSON.contains("harm"));
         assert!(FRESHNESS_JSON.contains("ref fetch")); // v10.1.0: Use ref for fetching
         assert!(SYCOPHANCY_JSON.contains("truth"));
         assert!(GREEN_JSON.contains("efficiency")); // Must check efficiency
         assert!(SPRINT_JSON.contains("autonomous"));
-        assert!(SPRINT_JSON.contains("COMPACT")); // v9.14.0: Compaction reminder merged from exhaustive
+        assert!(SPRINT_JSON.contains("compaction")); // v9.14.0: Compaction reminder merged from exhaustive
         assert!(WARMUP_JSON.contains("protocol"));
-        assert!(MIGRATIONS_JSON.contains("Migration"));
+        // v10.8.0: MIGRATIONS_JSON removed (ADR-062)
         assert!(CODING_STANDARDS_JSON.contains("Human-readable"));
     }
 
     #[test]
     fn test_get_protocol_functions() {
         // v10.1.0: Test all get_*_protocol functions (now return embedded JSON)
+        // v10.8.0: Migrations removed (ADR-062) - now part of API templates
         let asimov = get_asimov_protocol();
         assert!(asimov.contains("harm"));
 
@@ -466,13 +425,12 @@ mod tests {
 
         let sprint = get_sprint_protocol();
         assert!(sprint.contains("autonomous"));
-        assert!(sprint.contains("COMPACT")); // v9.14.0: Compaction reminder merged from exhaustive
+        assert!(sprint.contains("compaction")); // v9.14.0: Compaction reminder merged from exhaustive
 
         let warmup = get_warmup_protocol();
         assert!(warmup.contains("protocol"));
 
-        let migrations = get_migrations_protocol();
-        assert!(migrations.contains("Migration"));
+        // v10.8.0: get_migrations_protocol removed (ADR-062)
 
         let coding_standards = get_coding_standards_protocol();
         assert!(coding_standards.contains("Human-readable"));
@@ -496,6 +454,7 @@ mod tests {
     #[test]
     fn test_individual_protocol_json() {
         // Test each individual protocol JSON generator
+        // v10.8.0: Migrations removed (ADR-062) - now part of API templates
         let warmup = warmup_entry_json();
         assert!(warmup.contains("\"on_start\"")); // v10.6.0: simplified (ADR-060)
         assert!(!warmup.contains("\"load\"")); // v10.6.0: removed (ADR-060)
@@ -516,8 +475,7 @@ mod tests {
         assert!(sprint.contains("\"rule\""));
         assert!(sprint.contains("\"compaction_reminder\"")); // v9.14.0: Merged from exhaustive
 
-        let migrations = migrations_json();
-        assert!(migrations.contains("\"principle\""));
+        // v10.8.0: migrations_json removed (ADR-062)
 
         let coding_standards = coding_standards_json();
         assert!(coding_standards.contains("\"philosophy\""));
@@ -527,7 +485,8 @@ mod tests {
     #[test]
     fn test_protocol_files_constant() {
         // Test that PROTOCOL_FILES has expected entries
-        assert_eq!(PROTOCOL_FILES.len(), 8); // v10.5.0: removed kingship (was 9)
+        // v10.8.0: migrations removed (ADR-062) - now part of API templates
+        assert_eq!(PROTOCOL_FILES.len(), 7); // v10.8.0: removed migrations (was 8)
         let filenames: Vec<_> = PROTOCOL_FILES.iter().map(|(name, _)| *name).collect();
         assert!(filenames.contains(&"warmup.json"));
         assert!(filenames.contains(&"asimov.json"));
@@ -535,78 +494,10 @@ mod tests {
         assert!(filenames.contains(&"coding-standards.json"));
         assert!(!filenames.contains(&"exhaustive.json")); // v9.14.0: Merged into sprint
         assert!(!filenames.contains(&"kingship.json")); // v10.5.0: Deleted (ADR-059)
+        assert!(!filenames.contains(&"migrations.json")); // v10.8.0: Now in API templates (ADR-062)
     }
 
-    // v9.2.3: Conditional migrations protocol tests
-
-    #[test]
-    fn test_compile_protocols_includes_migrations_by_default() {
-        let protocols = compile_protocols();
-        assert!(protocols.migrations.is_some());
-        let migrations = protocols.migrations.unwrap();
-        assert!(migrations.principle.contains("functionally equivalent"));
-    }
-
-    #[test]
-    fn test_compile_protocols_with_options_includes_migrations() {
-        let protocols = compile_protocols_with_options(true);
-        assert!(protocols.migrations.is_some());
-    }
-
-    #[test]
-    fn test_compile_protocols_with_options_excludes_migrations() {
-        let protocols = compile_protocols_with_options(false);
-        assert!(protocols.migrations.is_none());
-    }
-
-    #[test]
-    fn test_compile_protocols_for_migration_type() {
-        let protocols = compile_protocols_for_type(ProjectType::Migration);
-        assert!(protocols.migrations.is_some());
-    }
-
-    #[test]
-    fn test_compile_protocols_for_rust_type() {
-        let protocols = compile_protocols_for_type(ProjectType::Rust);
-        assert!(protocols.migrations.is_none());
-    }
-
-    #[test]
-    fn test_compile_protocols_for_generic_type() {
-        let protocols = compile_protocols_for_type(ProjectType::Generic);
-        assert!(protocols.migrations.is_none());
-    }
-
-    #[test]
-    fn test_compile_protocols_for_python_type() {
-        let protocols = compile_protocols_for_type(ProjectType::Python);
-        assert!(protocols.migrations.is_none());
-    }
-
-    #[test]
-    fn test_compile_protocols_for_node_type() {
-        let protocols = compile_protocols_for_type(ProjectType::Node);
-        assert!(protocols.migrations.is_none());
-    }
-
-    #[test]
-    fn test_to_minified_json_for_migration_type() {
-        let json = to_minified_json_for_type(ProjectType::Migration);
-        assert!(json.contains("\"migrations\""));
-        assert!(json.contains("functionally equivalent"));
-    }
-
-    #[test]
-    fn test_to_minified_json_for_rust_type() {
-        let json = to_minified_json_for_type(ProjectType::Rust);
-        assert!(!json.contains("\"migrations\""));
-    }
-
-    #[test]
-    fn test_migrations_skipped_in_serialization_when_none() {
-        let protocols = compile_protocols_with_options(false);
-        let json = serde_json::to_string(&protocols).unwrap();
-        // migrations field should not appear in JSON when None
-        assert!(!json.contains("\"migrations\""));
-    }
+    // v10.8.0: Migrations protocol tests removed (ADR-062) - now part of API templates
+    // The conditional migrations protocol tests have been removed since migrations
+    // is no longer a protocol but part of the API templates (api-rust, api-go, etc.)
 }
