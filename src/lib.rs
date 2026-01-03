@@ -127,6 +127,8 @@ pub use protocols::{
     freshness_json,
     green_json,
     inject_dates,
+    // v12.1.0: Bootstrap approach - load warmup protocol
+    load_warmup_protocol,
     // v10.8.0: migrations_json removed (ADR-062)
     sprint_json,
     sycophancy_json,
@@ -136,5 +138,6 @@ pub use protocols::{
     warmup_entry_json,
     CompiledProtocols,
     WarmupEntry,
+    WarmupProtocol,
     PROTOCOL_FILES,
 };

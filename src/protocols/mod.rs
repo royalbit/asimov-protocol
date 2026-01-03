@@ -98,12 +98,20 @@ pub struct SprintProtocol {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WarmupProtocol {
     pub on_start: Vec<String>,
+    /// Protocol files to load in order (v12.1.0: bootstrap approach)
+    #[serde(default)]
+    pub load_order: Vec<String>,
+    /// Human-readable note
+    #[serde(default)]
+    pub note: Option<String>,
 }
 
-/// Warmup entry point - v10.6.0: simplified (ADR-060)
+/// Warmup entry point - v12.1.0: bootstrap approach
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WarmupEntry {
     pub on_start: Vec<String>,
+    pub load_order: Vec<String>,
+    pub note: String,
 }
 
 // v10.8.0: MigrationsProtocol removed (ADR-062) - now part of API templates
@@ -240,7 +248,8 @@ fn load_sprint_protocol() -> SprintProtocol {
         })
 }
 
-fn load_warmup_protocol() -> WarmupProtocol {
+/// Load warmup protocol from external file or embedded default
+pub fn load_warmup_protocol() -> WarmupProtocol {
     try_read_protocol("warmup")
         .and_then(|content| serde_json::from_str(&content).ok())
         .unwrap_or_else(|| {
@@ -282,16 +291,23 @@ pub fn to_yaml() -> String {
 
 // ========== Individual Protocol JSON Output (v8.14.0) ==========
 
-/// Get warmup entry point JSON - v10.6.0: simplified (ADR-060)
+/// Get warmup entry point JSON - v12.1.0: bootstrap approach
 pub fn warmup_entry_json() -> String {
     let entry = WarmupEntry {
         on_start: vec![
-            "load_protocols".into(),
-            "load_project".into(),
-            "validate".into(),
+            "read_project".into(),
             "read_roadmap".into(),
-            "present_milestone".into(),
+            "load_protocols".into(),
         ],
+        load_order: vec![
+            ".asimov/freshness.json".into(),
+            ".asimov/asimov.json".into(),
+            ".asimov/sycophancy.json".into(),
+            ".asimov/coding-standards.json".into(),
+            ".asimov/green.json".into(),
+            ".asimov/sprint.json".into(),
+        ],
+        note: "Load protocols in order above. Each builds on previous context.".into(),
     };
     serde_json::to_string_pretty(&entry).expect("Warmup entry serialization should never fail")
 }
@@ -408,8 +424,8 @@ mod tests {
         assert!(GREEN_JSON.contains("efficiency")); // Must check efficiency
         assert!(SPRINT_JSON.contains("autonomous"));
         assert!(SPRINT_JSON.contains("compaction")); // v9.14.0: Compaction reminder merged from exhaustive
-        assert!(WARMUP_JSON.contains("protocol"));
-        // v10.8.0: MIGRATIONS_JSON removed (ADR-062)
+        assert!(WARMUP_JSON.contains("load_order")); // v12.1.0: Bootstrap approach
+                                                     // v10.8.0: MIGRATIONS_JSON removed (ADR-062)
         assert!(CODING_STANDARDS_JSON.contains("Human-readable"));
     }
 
@@ -503,6 +519,16 @@ mod tests {
         assert!(!filenames.contains(&"exhaustive.json")); // v9.14.0: Merged into sprint
         assert!(!filenames.contains(&"kingship.json")); // v10.5.0: Deleted (ADR-059)
         assert!(!filenames.contains(&"migrations.json")); // v10.8.0: Now in API templates (ADR-062)
+    }
+
+    #[test]
+    fn test_load_warmup_protocol_has_load_order() {
+        let warmup = load_warmup_protocol();
+        assert!(
+            !warmup.load_order.is_empty(),
+            "load_order should not be empty: {:?}",
+            warmup
+        );
     }
 
     // v10.8.0: Migrations protocol tests removed (ADR-062) - now part of API templates

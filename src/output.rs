@@ -54,11 +54,11 @@ fn launch_ai(profile: &AiProfile) -> ExitCode {
         return ExitCode::FAILURE;
     }
 
-    // Build the warmup JSON (same as cmd_warmup non-verbose output)
-    let protocols: serde_json::Value = warmup_result
-        .protocols_json
+    // Build the warmup JSON (v12.1.0: bootstrap approach)
+    let warmup: serde_json::Value = warmup_result
+        .warmup_protocol
         .as_ref()
-        .and_then(|s| serde_json::from_str(s).ok())
+        .map(|w| serde_json::to_value(w).unwrap_or(serde_json::json!({})))
         .unwrap_or(serde_json::json!({}));
 
     let project_json: serde_json::Value = warmup_result
@@ -91,7 +91,7 @@ fn launch_ai(profile: &AiProfile) -> ExitCode {
 
     let warmup_json = serde_json::json!({
         "version": warmup_result.current_version,
-        "protocols": protocols,
+        "warmup": warmup,
         "project": project_json,
         "roadmap": roadmap_json,
         "wip": wip
@@ -217,14 +217,14 @@ pub(crate) fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
         return ExitCode::FAILURE;
     }
 
-    // v9.16.0: Default mode outputs structured JSON with EVERYTHING
-    // One Bash call = complete context, zero Claude file reads
+    // v12.1.0: Bootstrap approach - output warmup protocol only
+    // AI reads warmup.load_order and loads protocols sequentially
     if !verbose {
-        // Parse protocols JSON string back to Value for embedding
-        let protocols: serde_json::Value = result
-            .protocols_json
+        // Serialize warmup protocol to JSON Value
+        let warmup: serde_json::Value = result
+            .warmup_protocol
             .as_ref()
-            .and_then(|s| serde_json::from_str(s).ok())
+            .map(|w| serde_json::to_value(w).unwrap_or(serde_json::json!({})))
             .unwrap_or(serde_json::json!({}));
 
         // Convert YAML values to JSON values
@@ -271,10 +271,10 @@ pub(crate) fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
             })
             .collect();
 
-        // Output single comprehensive JSON blob
+        // Output bootstrap JSON - warmup protocol tells AI which files to load
         let output = serde_json::json!({
             "version": result.current_version,
-            "protocols": protocols,
+            "warmup": warmup,
             "project": project_json,
             "roadmap": roadmap_json,
             "wip": wip,
@@ -325,9 +325,12 @@ pub(crate) fn cmd_warmup(path: &std::path::Path, verbose: bool) -> ExitCode {
         println!();
     }
 
-    if let Some(ref json) = result.protocols_json {
-        println!("{}", "PROTOCOLS".bold());
-        println!("  {} bytes of protocol context loaded", json.len());
+    if let Some(ref warmup) = result.warmup_protocol {
+        println!("{}", "WARMUP PROTOCOL".bold());
+        println!("  Load order: {} protocols", warmup.load_order.len());
+        for p in &warmup.load_order {
+            println!("    - {}", p.bright_cyan());
+        }
         println!();
     }
 

@@ -1,9 +1,7 @@
 //! Warmup command implementation
-//! v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates
+//! v12.1.0: Bootstrap approach - output warmup protocol only, not all protocols
 
-use crate::{
-    check_for_update, compile_protocols, resolve_protocol_dir, to_minified_json, ProjectType,
-};
+use crate::{check_for_update, resolve_protocol_dir, ProjectType, WarmupProtocol};
 use std::path::Path;
 
 /// Information about a detected CLI tool
@@ -24,7 +22,8 @@ pub struct WarmupResult {
     pub current_version: Option<String>,
     pub current_status: Option<String>,
     pub current_summary: Option<String>,
-    pub protocols_json: Option<String>,
+    /// v12.1.0: Bootstrap approach - just warmup protocol, not all protocols
+    pub warmup_protocol: Option<WarmupProtocol>,
     pub update_available: Option<String>,
     pub error: Option<String>,
     // WIP Continuity (ADR-047)
@@ -83,7 +82,7 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         current_version: None,
         current_status: None,
         current_summary: None,
-        protocols_json: None,
+        warmup_protocol: None,
         update_available: None,
         error: None,
         // WIP Continuity (ADR-047)
@@ -218,9 +217,8 @@ pub fn run_warmup(dir: &Path, check_updates: bool) -> WarmupResult {
         }
     }
 
-    // Compile protocols (v10.8.0: migrations removed - now part of API templates ADR-062)
-    let _protocols = compile_protocols();
-    result.protocols_json = Some(to_minified_json());
+    // v12.1.0: Bootstrap approach - load just warmup protocol with load_order
+    result.warmup_protocol = Some(crate::protocols::load_warmup_protocol());
 
     // v9.17.0: Detect available CLI tools
     result.tools_available = detect_tools();
@@ -302,7 +300,11 @@ mod tests {
             current_version: Some("1.0.0".to_string()),
             current_status: Some("active".to_string()),
             current_summary: Some("Test milestone".to_string()),
-            protocols_json: Some("{}".to_string()),
+            warmup_protocol: Some(crate::WarmupProtocol {
+                on_start: vec!["load_protocols".into()],
+                load_order: vec![".asimov/freshness.json".into()],
+                note: Some("test".into()),
+            }),
             update_available: None,
             error: None,
             wip_active: true,
@@ -451,7 +453,7 @@ next:
     }
 
     #[test]
-    fn test_warmup_result_protocols() {
+    fn test_warmup_result_has_warmup_protocol() {
         let temp = TempDir::new().unwrap();
         let asimov_dir = temp.path().join(".asimov");
         std::fs::create_dir_all(&asimov_dir).unwrap();
@@ -461,7 +463,9 @@ next:
         )
         .unwrap();
         let result = run_warmup(temp.path(), false);
-        assert!(result.protocols_json.is_some());
+        assert!(result.warmup_protocol.is_some());
+        let warmup = result.warmup_protocol.unwrap();
+        assert!(!warmup.load_order.is_empty());
     }
 
     #[test]
@@ -495,12 +499,11 @@ next:
         // The update check code path was exercised
     }
 
-    // v10.8.0: Migrations protocol tests removed (ADR-062)
-    // Migrations is no longer a protocol - it's part of API templates (api-rust, api-go, etc.)
-    // All projects now exclude migrations from protocols - it's template content instead
+    // v12.1.0: Bootstrap approach - warmup only loads warmup protocol
+    // Migrations test removed as we no longer bundle all protocols
 
     #[test]
-    fn test_warmup_protocols_exclude_migrations() {
+    fn test_warmup_load_order_excludes_migrations() {
         let temp = TempDir::new().unwrap();
         let asimov_dir = temp.path().join(".asimov");
         std::fs::create_dir_all(&asimov_dir).unwrap();
@@ -512,9 +515,9 @@ next:
 
         let result = run_warmup(temp.path(), false);
         assert!(result.success);
-        // v10.8.0: All projects exclude migrations from protocols (ADR-062)
-        let json = result.protocols_json.unwrap();
-        assert!(!json.contains("\"migrations\""));
+        // v12.1.0: load_order should not include migrations
+        let warmup = result.warmup_protocol.unwrap();
+        assert!(!warmup.load_order.iter().any(|p| p.contains("migrations")));
     }
 
     // v9.17.0: Tool detection tests

@@ -1,9 +1,16 @@
 {
   "on_start": [
-    "load_protocols",
-    "load_project",
-    "validate",
+    "read_project",
     "read_roadmap",
-    "present_milestone"
-  ]
+    "load_protocols"
+  ],
+  "load_order": [
+    ".asimov/freshness.json",
+    ".asimov/asimov.json",
+    ".asimov/sycophancy.json",
+    ".asimov/coding-standards.json",
+    ".asimov/green.json",
+    ".asimov/sprint.json"
+  ],
+  "note": "Load protocols in order above. Each builds on previous context."
 }
