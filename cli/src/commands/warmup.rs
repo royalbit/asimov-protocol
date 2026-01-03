@@ -1,7 +1,9 @@
 //! Warmup command implementation
 //! v10.8.0: Migrations protocol removed (ADR-062) - now part of API templates
 
-use crate::{check_for_update, compile_protocols, resolve_protocol_dir, to_minified_json, ProjectType};
+use crate::{
+    check_for_update, compile_protocols, resolve_protocol_dir, to_minified_json, ProjectType,
+};
 use std::path::Path;
 
 /// Information about a detected CLI tool

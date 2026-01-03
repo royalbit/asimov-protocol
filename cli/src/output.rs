@@ -5,8 +5,8 @@
 use colored::Colorize;
 use royalbit_asimov::commands::{
     check_launch_conditions, run_doctor, run_init, run_lint_docs, run_refresh_with_options,
-    run_replay, run_role, run_stats, run_update, run_validate, run_warmup, AiProfile,
-    LaunchResult, RefreshOptions, RoleError, RoleResult, UpdateResult,
+    run_replay, run_role, run_stats, run_update, run_validate, run_warmup, AiProfile, LaunchResult,
+    RefreshOptions, RoleError, RoleResult, UpdateResult,
 };
 use std::io::{self, Write};
 use std::process::ExitCode;
@@ -42,10 +42,7 @@ fn prompt_ai_selection(profiles: &[AiProfile]) -> Option<AiProfile> {
 /// Launch an AI CLI with warmup command
 #[cfg_attr(feature = "coverage", coverage(off))]
 fn launch_ai(profile: &AiProfile) -> ExitCode {
-    println!(
-        "{}",
-        format!("Launching {}...", profile.name).bright_cyan()
-    );
+    println!("{}", format!("Launching {}...", profile.name).bright_cyan());
     // Execute AI CLI with auto-mode args + warmup
     let mut cmd = std::process::Command::new(profile.binary);
     cmd.args(profile.auto_mode_args);
@@ -77,15 +74,13 @@ pub(crate) fn cmd_launch() -> ExitCode {
             ExitCode::FAILURE
         }
         LaunchResult::Launching(profile) => launch_ai(&profile),
-        LaunchResult::MultipleFound(profiles) => {
-            match prompt_ai_selection(&profiles) {
-                Some(profile) => launch_ai(&profile),
-                None => {
-                    eprintln!("{} Invalid selection", "Error:".bold().red());
-                    ExitCode::FAILURE
-                }
+        LaunchResult::MultipleFound(profiles) => match prompt_ai_selection(&profiles) {
+            Some(profile) => launch_ai(&profile),
+            None => {
+                eprintln!("{} Invalid selection", "Error:".bold().red());
+                ExitCode::FAILURE
             }
-        }
+        },
     }
 }
 

@@ -8,7 +8,7 @@ current:
   status: released
   summary: "Documentation audit: professional language, keep Asimov name and robot laws as ethics inspiration"
 
-next:
+next: []
 
 backlog:
   - "ADR-058 Documentation Standards: All claims require primary sources"
