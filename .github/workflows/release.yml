@@ -28,29 +28,29 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            cli/target
+            target
           key: ${{ runner.os }}-cargo-release-test-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Check formatting
-        run: cd cli && cargo fmt --all -- --check
+        run: cargo fmt --all -- --check
 
       - name: Run clippy
-        run: cd cli && cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets -- -D warnings
 
       - name: Run unit tests
-        run: cd cli && cargo test --verbose
+        run: cargo test --verbose
 
       - name: Run e2e tests
-        run: cd cli && cargo test --test e2e_tests --verbose
+        run: cargo test --test e2e_tests --verbose
 
       - name: Build for validation
-        run: cd cli && cargo build --release
+        run: cargo build --release
 
       - name: Validate protocols
-        run: ./cli/target/release/asimov validate
+        run: ./target/release/asimov validate
 
       - name: Lint documentation
-        run: ./cli/target/release/asimov lint-docs
+        run: ./target/release/asimov lint-docs
 
   publish-crate:
     name: Publish to crates.io
@@ -63,7 +63,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Publish to crates.io
-        run: cd cli && cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
 
   build:
     name: Build ${{ matrix.target }}
@@ -119,7 +119,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            cli/target
+            target
           key: ${{ runner.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install musl-tools (Linux x86_64 musl)
@@ -134,11 +134,11 @@ jobs:
 
       - name: Build release (native)
         if: ${{ !matrix.cross }}
-        run: cd cli && cargo build --release --target ${{ matrix.target }}
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Build release (cross)
         if: matrix.cross
-        run: cd cli && cross build --release --target ${{ matrix.target }}
+        run: cross build --release --target ${{ matrix.target }}
 
       - name: Install UPX (Linux)
         if: matrix.upx && matrix.os == 'ubuntu-latest'
@@ -153,29 +153,29 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            upx --best --lzma cli/target/${{ matrix.target }}/release/asimov.exe || true
+            upx --best --lzma target/${{ matrix.target }}/release/asimov.exe || true
           else
-            upx --best --lzma cli/target/${{ matrix.target }}/release/asimov || true
+            upx --best --lzma target/${{ matrix.target }}/release/asimov || true
           fi
 
       - name: Create archive (Unix)
         if: matrix.archive == 'tar.gz'
         run: |
-          cd cli/target/${{ matrix.target }}/release
+          cd target/${{ matrix.target }}/release
           tar -czvf asimov-${{ matrix.target }}.tar.gz asimov
 
       - name: Create archive (Windows)
         if: matrix.archive == 'zip'
         shell: pwsh
         run: |
-          cd cli/target/${{ matrix.target }}/release
+          cd target/${{ matrix.target }}/release
           Compress-Archive -Path asimov.exe -DestinationPath asimov-${{ matrix.target }}.zip -Force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: asimov-${{ matrix.target }}
-          path: cli/target/${{ matrix.target }}/release/asimov-${{ matrix.target }}.${{ matrix.archive }}
+          path: target/${{ matrix.target }}/release/asimov-${{ matrix.target }}.${{ matrix.archive }}
 
   release:
     name: Create Release

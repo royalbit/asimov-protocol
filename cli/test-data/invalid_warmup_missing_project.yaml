@@ -1,4 +1,0 @@
-# Invalid warmup.yaml - identity missing required project field
-identity:
-  tagline: "No project name"
-  version: "1.0.0"

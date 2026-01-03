@@ -4,7 +4,10 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'cli/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'protocols/**'
+      - 'templates/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
       - 'rust-toolchain.toml'
@@ -15,7 +18,10 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - 'cli/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'protocols/**'
+      - 'templates/**'
       - 'Cargo.toml'
       - 'Cargo.lock'
       - 'rust-toolchain.toml'
@@ -57,14 +63,14 @@ jobs:
       - name: Cache cargo build
         uses: actions/cache@v4
         with:
-          path: cli/target
+          path: target
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run unit tests
-        run: cd cli && cargo test --lib --verbose
+        run: cargo test --lib --verbose
 
       - name: Run e2e tests
-        run: cd cli && cargo test --test e2e_tests --verbose
+        run: cargo test --test e2e_tests --verbose
 
   lint:
     name: Lint
@@ -78,10 +84,10 @@ jobs:
           components: rustfmt, clippy
 
       - name: Check formatting
-        run: cd cli && cargo fmt --all -- --check
+        run: cargo fmt --all -- --check
 
       - name: Run clippy
-        run: cd cli && cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets -- -D warnings
 
   build:
     name: Build
@@ -93,10 +99,10 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Build release
-        run: cd cli && cargo build --release --verbose
+        run: cargo build --release --verbose
 
       - name: Check binary exists
-        run: test -f cli/target/release/asimov && echo "✅ Binary built successfully"
+        run: test -f target/release/asimov && echo "✅ Binary built successfully"
 
   validate:
     name: Protocol Validation
@@ -113,20 +119,20 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            cli/target
+            target
           key: ${{ runner.os }}-cargo-validate-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build asimov
-        run: cd cli && cargo build --release
+        run: cargo build --release
 
       - name: Refresh protocol files
-        run: ./cli/target/release/asimov refresh
+        run: ./target/release/asimov refresh
 
       - name: Validate protocol files
-        run: ./cli/target/release/asimov validate
+        run: ./target/release/asimov validate
 
       - name: Lint documentation
-        run: ./cli/target/release/asimov lint-docs
+        run: ./target/release/asimov lint-docs
 
   # Auto-release: if version changed, create tag to trigger CD
   auto-release:
@@ -145,7 +151,7 @@ jobs:
       - name: Get version from Cargo.toml
         id: cargo_version
         run: |
-          VERSION=$(grep '^version' cli/Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Current version: $VERSION"
 

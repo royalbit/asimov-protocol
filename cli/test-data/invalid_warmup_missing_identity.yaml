@@ -1,4 +1,0 @@
-# Invalid warmup.yaml - missing required identity section
-mission:
-  problem: "No identity section"
-  solution: "Should fail validation"

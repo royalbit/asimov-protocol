@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "11.0.2"
+version = "12.0.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Autonomous AI <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "Ethical guardrails for AI coding assistants (Claude, Gemini, Codex). Dynamic Swarm + HOTL beats Fixed Agentic. Three Laws hardcoded."
@@ -8,7 +8,7 @@ repository = "https://github.com/royalbit/asimov"
 homepage = "https://github.com/royalbit/asimov"
 documentation = "https://github.com/royalbit/asimov#readme"
 license = "Elastic-2.0"
-readme = "../README.md"
+readme = "README.md"
 keywords = ["ai", "ethics", "autonomous", "guardrails", "coding-assistant"]
 categories = ["command-line-utilities", "development-tools"]
 
