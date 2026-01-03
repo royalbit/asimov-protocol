@@ -5,7 +5,7 @@
 
 current:
   version: "11.0.0"
-  status: in_progress
+  status: released
   summary: "Documentation audit: professional language, keep Asimov name and robot laws as ethics inspiration"
 
 next:
