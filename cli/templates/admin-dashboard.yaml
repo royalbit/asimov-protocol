@@ -41,3 +41,10 @@ features:
   - Data tables with pagination
   - Form validation
   - Kbar command palette
+
+# v10.3.0: Reference management for AI research
+references:
+  file: "references.yaml"
+  scan: "ref scan README.md docs/*.md CHANGELOG.md"
+  verify: "ref verify-refs references.yaml"
+  note: "Track AI research sources. Use ref fetch <url> for web content."

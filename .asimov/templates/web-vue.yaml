@@ -37,3 +37,10 @@ features:
   - File-based routing
   - Server API routes
   - Vitest testing
+
+# v10.3.0: Reference management for AI research
+references:
+  file: "references.yaml"
+  scan: "ref scan README.md docs/*.md CHANGELOG.md"
+  verify: "ref verify-refs references.yaml"
+  note: "Track AI research sources. Use ref fetch <url> for web content."
