@@ -24,8 +24,8 @@ pub struct WarmupResult {
     pub tools_available: Vec<ToolInfo>,
 }
 
-/// Detect CLI tools available in PATH
-fn detect_tools() -> Vec<ToolInfo> {
+/// Detect CLI tools available in PATH (v12.3.0: made public for refresh --json)
+pub fn detect_tools() -> Vec<ToolInfo> {
     let mut tools = Vec::new();
 
     // Helper to detect a tool

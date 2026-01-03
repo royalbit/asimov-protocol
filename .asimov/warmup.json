@@ -1,5 +1,7 @@
 {
-  "on_start": ["load_files"],
+  "on_start": [
+    "load_files"
+  ],
   "files": [
     ".asimov/project.yaml",
     ".asimov/roadmap.yaml",

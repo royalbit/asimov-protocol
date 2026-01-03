@@ -1,6 +1,6 @@
 [package]
 name = "royalbit-asimov"
-version = "12.2.0"
+version = "12.3.0"
 edition = "2021"
 authors = ["Claude (Opus 4.5) - Principal Autonomous AI <noreply@anthropic.com>", "RoyalBit Inc. <admin@royalbit.ca>"]
 description = "Ethical guardrails for AI coding assistants (Claude, Gemini, Codex). Dynamic Swarm + HOTL beats Fixed Agentic. Three Laws hardcoded."

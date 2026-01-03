@@ -1,4 +1,5 @@
 {
+  "description": "Harm prevention protocol inspired by Asimov's Three Laws of Robotics. Prioritizes user safety and prevents harmful actions.",
   "harm": [
     "financial",
     "physical",

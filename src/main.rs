@@ -115,6 +115,10 @@ enum Commands {
         /// Show what would change without writing
         #[arg(long)]
         dry_run: bool,
+
+        /// Output self-heal JSON for AI context recovery (v12.3.0)
+        #[arg(long)]
+        json: bool,
     },
 
     /// Check for updates and self-update
@@ -189,7 +193,8 @@ fn main() -> ExitCode {
             verbose,
             yes,
             dry_run,
-        }) => cmd_refresh(verbose, yes, dry_run),
+            json,
+        }) => cmd_refresh(verbose, yes, dry_run, json),
         Some(Commands::Update { check }) => cmd_update(check),
         Some(Commands::Warmup { path, verbose }) => cmd_warmup(&path, verbose),
         Some(Commands::Stats) => cmd_stats(),

@@ -397,8 +397,99 @@ pub(crate) fn cmd_lint_docs(path: &std::path::Path, fix: bool, semantic: bool) -
     }
 }
 
+/// v12.3.0: Parse WIP from roadmap.yaml
+fn parse_wip_from_roadmap() -> Option<String> {
+    let roadmap_path = std::path::Path::new(".asimov/roadmap.yaml");
+    let content = std::fs::read_to_string(roadmap_path).ok()?;
+
+    // Look for deliverables with status: wip
+    // Format: - id: "task-id"\n    status: wip
+    for line in content.lines() {
+        if line.contains("status: wip") || line.contains("status: \"wip\"") {
+            // Look backwards for the id
+            let lines: Vec<&str> = content.lines().collect();
+            if let Some(idx) = lines.iter().position(|l| l.contains("status: wip")) {
+                // Search backwards for id:
+                for i in (0..idx).rev() {
+                    if lines[i].contains("id:") {
+                        let id = lines[i]
+                            .split("id:")
+                            .nth(1)?
+                            .trim()
+                            .trim_matches('"')
+                            .trim_matches('\'')
+                            .to_string();
+                        if !id.is_empty() {
+                            return Some(id);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Also check current.status for wip at milestone level
+    if content.contains("status: wip") {
+        // Try to extract the version/summary from current section
+        for line in content.lines() {
+            if line.trim().starts_with("summary:") {
+                let summary = line
+                    .split("summary:")
+                    .nth(1)?
+                    .trim()
+                    .trim_matches('"')
+                    .trim_matches('\'')
+                    .to_string();
+                if !summary.is_empty() {
+                    return Some(summary);
+                }
+            }
+        }
+    }
+
+    None
+}
+
 #[cfg_attr(feature = "coverage", coverage(off))]
-pub(crate) fn cmd_refresh(verbose: bool, yes: bool, dry_run: bool) -> ExitCode {
+pub(crate) fn cmd_refresh(verbose: bool, yes: bool, dry_run: bool, json: bool) -> ExitCode {
+    use royalbit_asimov::commands::detect_tools;
+    use royalbit_asimov::protocols::load_warmup_protocol;
+
+    // v12.3.0: JSON mode for self-healing context recovery
+    if json {
+        let asimov_dir = std::path::Path::new(".asimov");
+        if !asimov_dir.exists() {
+            eprintln!("{{\"error\": \"Not in an asimov project\"}}");
+            return ExitCode::FAILURE;
+        }
+
+        let warmup = load_warmup_protocol();
+        let tools = detect_tools();
+        let wip = parse_wip_from_roadmap();
+
+        let tools_json: Vec<serde_json::Value> = tools
+            .iter()
+            .map(|t| {
+                serde_json::json!({
+                    "name": t.name,
+                    "directive": t.directive
+                })
+            })
+            .collect();
+
+        let output = serde_json::json!({
+            "action": "SELF_HEAL",
+            "files": warmup.files,
+            "wip": wip,
+            "tools": tools_json,
+            "directive": "Re-read files in order. Continue WIP autonomously if present. Use detected tools."
+        });
+
+        println!("{}", output);
+        return ExitCode::SUCCESS;
+    }
+
+    // Normal refresh mode
     let options = RefreshOptions { yes, dry_run };
     let result = run_refresh_with_options(std::path::Path::new("."), options);
 
@@ -791,7 +882,7 @@ mod tests {
     fn test_cmd_refresh_no_project() {
         let temp = TempDir::new().unwrap();
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh(false, true, false);
+        let result = cmd_refresh(false, true, false, false);
         // Refresh requires .asimov/ to exist (run init first)
         assert_eq!(result, ExitCode::FAILURE);
     }
@@ -805,7 +896,7 @@ mod tests {
         // Use proper template so it passes validation
         std::fs::write(asimov_dir.join("roadmap.yaml"), roadmap_template()).unwrap();
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh(false, true, false);
+        let result = cmd_refresh(false, true, false, false);
         // May succeed or fail depending on parallel test execution changing cwd
         assert!(result == ExitCode::SUCCESS || result == ExitCode::FAILURE);
     }
@@ -1087,7 +1178,7 @@ mod tests {
         std::fs::create_dir_all(&asimov_dir).unwrap();
         // No roadmap - should still work
         std::env::set_current_dir(temp.path()).unwrap();
-        let result = cmd_refresh(false, true, false);
+        let result = cmd_refresh(false, true, false, false);
         assert!(result == ExitCode::SUCCESS || result == ExitCode::FAILURE);
     }
 

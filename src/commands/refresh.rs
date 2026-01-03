@@ -697,7 +697,7 @@ coding_standards:
         assert!(hook_path.exists());
         let content = std::fs::read_to_string(hook_path).unwrap();
         assert!(content.contains("cargo fmt"));
-        assert!(content.contains("asimov refresh || true")); // Soft-fail
+        assert!(content.contains("asimov refresh --json || true")); // v12.3.0: Self-heal JSON
     }
 
     #[test]
